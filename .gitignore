@@ -218,3 +218,22 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local databases and backups (never commit user data)
+*.db
+*.sqlite
+*.sqlite3
+users.db
+users_backup.db
+*.db-journal
+
+# Local secrets and credentials
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# Local logs and runtime files
+*.log
+instance/
