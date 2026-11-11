@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GenZBag is a task and rewards platform concept. Explore the demo and learn how verified activities are recorded.">
+  <meta name="theme-color" content="#080d0a">
+  <title>GenZBag | Discover Opportunities</title>
+  <style>
+    :root{--bg:#080d0a;--panel:#111a14;--panel2:#17231a;--gold:#d4af37;--text:#f4f6f2;--muted:#aab8ae;--line:#294634}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(ellipse at 80% 0%,#1b3020 0,transparent 42%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1120px,92%);margin:auto}
+    header{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid rgba(212,175,55,.18)}
+    .brand{font-size:1.45rem;font-weight:850;letter-spacing:.2px}.brand span{color:var(--gold)}
+    nav{display:flex;gap:24px;color:var(--muted);font-size:.94rem}
+    nav a:hover{color:var(--gold)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 19px;border-radius:9px;font-weight:750;border:1px solid var(--gold);transition:.2s}
+    .btn.primary{background:var(--gold);color:#11160f}.btn.secondary{color:var(--gold);background:transparent}
+    .btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+    .hero{padding:92px 0 76px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+    .eyebrow{color:var(--gold);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.76rem}
+    h1{font-size:clamp(2.5rem,6vw,4.7rem);line-height:1.06;letter-spacing:-2px;margin:16px 0 20px}
+    h1 span{color:var(--gold)}
+    .lead{font-size:1.1rem;color:var(--muted);max-width:620px}
+    .actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}
+    .note{font-size:.83rem;color:var(--muted);margin-top:18px}
+    .showcase{background:linear-gradient(145deg,#1b2a1e,#101812);border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 25px 80px #0008}
+    .showcase-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.86rem}
+    .badge{color:var(--gold);border:1px solid #806b2c;padding:5px 10px;border-radius:99px;font-size:.75rem}
+    .mock-title{font-size:1.5rem;font-weight:800;margin:30px 0 8px}
+    .mock-copy{color:var(--muted);font-size:.92rem}
+    .mock-row{display:flex;justify-content:space-between;gap:12px;padding:15px 0;border-bottom:1px solid #ffffff12}
+    .mock-row:last-child{border:0}.mock-row strong{color:var(--gold)}
+    section{padding:62px 0}
+    .section-head{text-align:center;max-width:700px;margin:0 auto 34px}
+    h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 10px}
+    .section-head p,.muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:24px}
+    .icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#d4af3718;color:var(--gold);font-size:1.3rem;margin-bottom:17px}
+    .card h3{margin:0 0 8px}.card p{margin:0;color:var(--muted);font-size:.94rem}
+    .how{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:step}
+    .step{padding:22px;border-left:2px solid var(--gold);background:#ffffff08}
+    .step b{display:block;color:var(--gold);margin-bottom:8px}
+    .cta{background:linear-gradient(120deg,#17251a,#101710);border:1px solid var(--line);border-radius:20px;padding:42px;text-align:center}
+    .cta p{color:var(--muted);max-width:620px;margin:0 auto 24px}
+    footer{border-top:1px solid #ffffff18;padding:25px 0;color:var(--muted);font-size:.85rem}
+    .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    @media(max-width:800px){.hero{grid-template-columns:1fr;padding:65px 0}.grid,.how{grid-template-columns:1fr 1fr}nav{display:none}}
+    @media(max-width:540px){.grid,.how{grid-template-columns:1fr}.cta{padding:28px 20px}h1{letter-spacing:-1px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="/">GenZ<span>Bag</span></a>
+      <nav aria-label="Main navigation"><a href="#about">About</a><a href="#activities">Activities</a><a href="#how">How it works</a></nav>
+      <a class="btn secondary" href="/login">Sign in</a>
+    </header>
+
+    <main>
+      <section class="hero" id="about">
+        <div>
+          <div class="eyebrow">Discover opportunities</div>
+          <h1>Make your time <span>count.</span></h1>
+          <p class="lead">GenZBag is a platform concept for discovering online activities, tracking completed tasks and recording eligible rewards transparently.</p>
+          <div class="actions">
+            <a class="btn primary" href="/register/bridan">Create an account</a>
+            <a class="btn secondary" href="/demo">Explore the demo</a>
+          </div>
+          <p class="note">Demo information is illustrative. Activities, eligibility and rewards depend on published platform rules; earnings are not guaranteed.</p>
+        </div>
+        <div class="showcase" aria-label="Illustrative activity summary">
+          <div class="showcase-top"><span>GENZBAG OVERVIEW</span><span class="badge">DEMO PREVIEW</span></div>
+          <div class="mock-title">Your activity space</div>
+          <p class="mock-copy">A clear place to explore tasks and review verified activity records.</p>
+          <div class="mock-row"><span>Available activities</span><strong>Explore</strong></div>
+          <div class="mock-row"><span>Task history</span><strong>Track</strong></div>
+          <div class="mock-row"><span>Reward records</span><strong>Review</strong></div>
+          <div class="mock-row"><span>Account support</span><strong>Get help</strong></div>
+        </div>
+      </section>
+
+      <section id="activities">
+        <div class="section-head">
+          <div class="eyebrow">Explore the platform</div>
+          <h2>Activities with clear records</h2>
+          <p>Explore the types of features planned for GenZBag. Availability and reward eligibility will be shown clearly inside the platform.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><div class="icon">✓</div><h3>Online tasks</h3><p>Discover listed activities and review the requirements before participating.</p></article>
+          <article class="card"><div class="icon">↗</div><h3>Referral links</h3><p>Share an invitation link responsibly. Any eligible commission must come from genuine qualifying platform revenue.</p></article>
+          <article class="card"><div class="icon">▤</div><h3>Activity history</h3><p>Review submitted tasks and the status of any verified reward records.</p></article>
+        </div>
+      </section>
+
+      <section id="how">
+        <div class="section-head">
+          <div class="eyebrow">Simple and transparent</div>
+          <h2>How it is intended to work</h2>
+          <p>GenZBag is being developed with a focus on clarity, verification and account safety.</p>
+        </div>
+        <div class="how">
+          <div class="step"><b>01 · Explore</b><span>Read the activity details and eligibility requirements.</span></div>
+          <div class="step"><b>02 · Participate</b><span>Complete an available activity only if you meet its requirements.</span></div>
+          <div class="step"><b>03 · Review</b><span>Check the verification result and any eligible reward record in your account.</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="cta">
+          <div class="eyebrow">Get started</div>
+          <h2>Explore GenZBag</h2>
+          <p>Visit the demo to understand the planned experience. Do not pay anyone or share passwords, verification codes or mobile-money PINs to access this preview.</p>
+          <div class="actions" style="justify-content:center">
+            <a class="btn primary" href="/demo">View demo</a>
+            <a class="btn secondary" href="/register/bridan">Register</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="foot"><span>© <span id="year"></span> GenZBag. All rights reserved.</span><span>Built around transparency and account safety.</span></div></footer>
+  </div>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
