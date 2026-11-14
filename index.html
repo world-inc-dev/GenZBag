@@ -2125,8 +2125,8 @@ async function saveProfileWhatsApp(event){
  const email=String(emailInput?.value||'').trim().toLowerCase(),number=String(phoneInput?.value||'').replace(/[^0-9]/g,'');
  message.classList.remove('error','success');
  if(!supabaseClient){message.textContent='The account service is unavailable. Refresh the page and try again.';message.classList.add('error');return;}
- if(!/^\\S+@\\S+\\.\\S+$/.test(email)){message.textContent='Enter a valid email address.';message.classList.add('error');return;}
- if(!/^\\d{10,15}$/.test(number)){message.textContent='Enter a valid phone number with country code (10–15 digits).';message.classList.add('error');return;}
+ if(!/^\S+@\S+\.\S+$/.test(email)){message.textContent='Enter a valid email address.';message.classList.add('error');return;}
+ if(!/^\d{10,15}$/.test(number)){message.textContent='Enter a valid phone number with country code (10–15 digits).';message.classList.add('error');return;}
  button.disabled=true;button.textContent='Saving…';
  try{
   // Resolve the live Supabase session at save time. currentMember can briefly be
