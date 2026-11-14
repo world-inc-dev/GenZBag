@@ -4713,7 +4713,7 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 
 
 <style id="genzbag-unified-activation-cards">
-/* Keep every activation-page information card visually identical to the activation amount card. */
+/* All activation cards use the same clearly visible blue treatment as the activation amount card. */
 #genzActivationGate .genz-fast-progress>div,
 #genzActivationGate .genz-fast-method,
 #genzActivationGate .genz-fast-instruction,
@@ -4721,9 +4721,10 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #genzActivationGate .genz-activation-status,
 #genzActivationGate .genz-fast-amount{
   box-sizing:border-box!important;
-  border:1px solid #dce7f7!important;
+  border:1px solid #60a5fa!important;
   border-radius:13px!important;
-  background:linear-gradient(110deg,#edf4ff,#fff)!important;
+  background:linear-gradient(110deg,#dbeafe 0%,#bfdbfe 100%)!important;
+  color:#123b70!important;
   box-shadow:none!important;
 }
 #genzActivationGate .genz-fast-progress>div{
@@ -4732,33 +4733,26 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
   gap:10px!important;
   margin:0 0 8px!important;
   padding:12px 14px!important;
-  color:#34435e!important;
 }
 #genzActivationGate .genz-fast-progress>div>b{
   flex:0 0 27px!important;
   width:27px!important;height:27px!important;
   border-radius:9px!important;
-  background:#edf4ff!important;color:#1769e0!important;
+  background:#2563eb!important;color:#fff!important;
 }
-#genzActivationGate .genz-fast-progress>.genz-fast-step-done>b{
-  background:#e7f9ee!important;color:#15803d!important;
-}
+#genzActivationGate .genz-fast-progress>.genz-fast-step-done>b,
 #genzActivationGate .genz-fast-progress>.genz-fast-step-current>b{
-  background:#eaf2ff!important;color:#1769e0!important;
+  background:#1d4ed8!important;color:#fff!important;
 }
 #genzActivationGate .genz-fast-method{
   min-height:63px!important;
   margin:0!important;
   padding:12px 14px!important;
-  border-radius:13px!important;
-  background:linear-gradient(110deg,#edf4ff,#fff)!important;
-  box-shadow:none!important;
 }
 #genzActivationGate .genz-fast-method:hover,
 #genzActivationGate .genz-fast-method:focus-visible{
-  background:linear-gradient(110deg,#edf4ff,#fff)!important;
-  border-color:#b8cfee!important;
-  box-shadow:0 3px 10px #1769e010!important;
+  background:linear-gradient(110deg,#bfdbfe 0%,#93c5fd 100%)!important;
+  border-color:#3b82f6!important;
 }
 #genzActivationGate .genz-fast-instruction{
   grid-template-columns:25px minmax(0,1fr)!important;
@@ -4772,14 +4766,6 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 }
 #genzActivationGate .genz-activation-status{
   padding:12px 14px!important;
-}
-#genzActivationGate .genz-activation-status.pending{
-  background:linear-gradient(110deg,#fff8e7,#fff)!important;
-  border-color:#f5d58a!important;
-}
-#genzActivationGate .genz-activation-status.rejected{
-  background:linear-gradient(110deg,#fff1f2,#fff)!important;
-  border-color:#fecaca!important;
 }
 #genzActivationGate .genz-fast-payment-steps{
   display:grid!important;
