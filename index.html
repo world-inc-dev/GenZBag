@@ -276,7 +276,7 @@ async function loadAdminData(){
   sb.from('engagement_activities').select('*').order('created_at',{ascending:false}).limit(100),
   sb.from('engagement_sessions').select('*,engagement_activities(title,kind,reward_amount,currency)').order('created_at',{ascending:false}).limit(100)
  ]);
- const errors=[p,t,s,w,sup,l,a].filter(x=>x.error);
+ const errors=[p,t,s,w,sup,l,a,ea,es].filter(x=>x.error);
  if(errors.length)console.warn('Admin data loading issue',errors);
  adminCache={profiles:p.data||[],tasks:t.data||[],submissions:s.data||[],withdrawals:w.data||[],support:sup.data||[],ledger:l.data||[],audit:a.data||[],engagement:ea.data||[],engagementSessions:es.data||[]};
 }
@@ -301,6 +301,7 @@ function renderAdmin(el){
   </form>
   <h2 style="margin-top:24px">Recent activity catalogue</h2><div class="list">${adminCache.engagement.slice(0,12).map(x=>'<div class="item"><div class="row"><b>'+esc(x.title)+'</b>'+statusBadge(x.status)+'</div><p>'+esc(x.kind)+' · '+money(x.reward_amount,x.currency)+'</p></div>').join('')||'<div class="empty">No music, video or game activities created.</div>'}</div>
  </div>
+ <div class="panel"><div class="admin-label">Activity completion review</div><h2>Music, video & game submissions</h2><p class="small">Review member evidence. Approval here records completion only; it does not credit a wallet reward.</p><div class="list">${adminCache.engagementSessions.filter(x=>x.status==='pending').slice(0,15).map(x=>'<div class="item"><div class="row"><b>'+esc(x.engagement_activities?.title||'Activity')+'</b>'+statusBadge(x.status)+'</div><p>Member: '+esc(x.user_id.slice(0,8))+' · '+esc(x.engagement_activities?.kind||'')+'</p><p>'+esc(x.evidence||'No evidence supplied')+'</p><div class="admin-actions"><button class="btn mini primary" onclick="adminReviewEngagement(\''+x.id+'\',\'approved\')">Approve completion</button><button class="btn mini" onclick="adminReviewEngagement(\''+x.id+'\',\'rejected\')">Reject</button></div></div>').join('')||'<div class="empty">No pending activity completions.</div>'}</div></div>
  <div class="admin-grid">
   <div class="admin-kpi"><small>Total members</small><b>${members.length}</b></div>
   <div class="admin-kpi"><small>Published tasks</small><b>${adminCache.tasks.filter(x=>x.status==='published').length}</b></div>
@@ -364,6 +365,16 @@ window.adminReview=async(id,decision)=>{
  alert(decision==='approved'?'Submission approved. A simulated reward was added to the test wallet.':'Submission rejected.');
 };
 
+window.adminReviewEngagement=async(id,decision)=>{
+ if(!isAdmin())return;
+ const note=prompt(decision==='approved'?'Optional note for this completion approval:':'Reason for rejecting this completion:');
+ if(note===null)return;
+ const {error}=await sb.from('engagement_sessions').update({status:decision,review_note:note,reviewed_at:new Date().toISOString(),reviewed_by:user.id}).eq('id',id);
+ if(error){alert(error.message);return;}
+ await loadDashboard();
+ renderTab('admin');
+ alert(decision==='approved'?'Completion approved. No wallet reward has been credited.':'Completion rejected.');
+};
 function bindForms(){const wf=$('withdrawForm');if(wf)wf.onsubmit=async e=>{e.preventDefault();const f=new FormData(wf);const {error}=await sb.rpc('create_test_withdrawal_request',{p_amount:Number(f.get('amount')),p_currency:f.get('currency'),p_mobile_number:f.get('number')||''});$('withdrawMsg').innerHTML=error?msg(error.message,'error'):msg('Test request saved. No payment has been made.','ok');if(!error)await loadDashboard();};const sf=$('supportForm');if(sf)sf.onsubmit=async e=>{e.preventDefault();const f=new FormData(sf);const {error}=await sb.from('support_tickets').insert({user_id:user.id,subject:f.get('subject'),message:f.get('message')});$('supportMsg').innerHTML=error?msg(error.message,'error'):msg('Your support request has been sent.','ok');if(!error)sf.reset()};const pf=$('profileForm');if(pf)pf.onsubmit=async e=>{e.preventDefault();const f=new FormData(pf);const {error}=await sb.from('profiles').update({username:String(f.get('username')).toLowerCase(),phone:f.get('phone'),country:f.get('country'),preferred_currency:f.get('currency')}).eq('id',user.id);$('profileMsg').innerHTML=error?msg(error.message,'error'):msg('Profile updated.','ok');if(!error)await loadDashboard()};}
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)renderTab(b.dataset.tab)});
 $('signOut').onclick=async()=>{await sb.auth.signOut();user=null;profile=null;setTop();go('')};
