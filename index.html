@@ -920,6 +920,67 @@ footer {
 @media(max-width:390px){.profile-stat-grid{gap:6px}.profile-stat-card{padding:12px 8px}.profile-stat-card span{font-size:8px}.profile-stat-card strong{font-size:20px}.profile-member-card{gap:8px;padding:13px}.profile-member-copy h2{font-size:15px}.profile-member-card .active-badge{padding:4px 6px;font-size:8px}}
 
 
+
+/* GenZBag dashboard-style profile refresh */
+#profile{
+ box-sizing:border-box;position:relative;isolation:isolate;overflow:hidden;
+ padding:clamp(12px,2.4vw,22px);
+ border:1px solid #183b67;border-radius:20px;
+ color:#edf5ff;
+ background:radial-gradient(ellipse at 100% 0%,#164d78 0%,transparent 37%),linear-gradient(145deg,#07172f 0%,#0b2344 55%,#0b3150 100%);
+ box-shadow:0 16px 38px #07172f24;
+}
+#profile:before{content:"";position:absolute;z-index:-1;right:-115px;top:290px;width:260px;height:260px;border-radius:50%;background:#11b8bd16;filter:blur(4px);pointer-events:none}
+#profile .profile-page-brand{align-items:center;padding:3px 2px 17px;color:#f4f8ff}
+#profile .profile-brand-mark{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#11b9bd,#1769e0);box-shadow:0 7px 20px #11b9bd35}
+#profile .profile-page-brand small{color:#a8c2df}
+#profile .profile-page-intro{margin:0 0 14px;padding:19px;border:1px solid #ffffff20;border-radius:17px;background:linear-gradient(115deg,#123e70,#087d8a);box-shadow:inset 0 1px #ffffff20,0 10px 22px #020b1c28}
+#profile .profile-page-intro h1{color:#fff;font-size:clamp(23px,4vw,29px);letter-spacing:-.6px}
+#profile .profile-page-intro p{color:#d2eaff;font-size:11px}
+#profile .profile-stat-grid{gap:9px;margin-bottom:13px}
+#profile .profile-stat-card{min-width:0;padding:14px 12px;border:1px solid #ffffff1b;border-radius:15px;background:linear-gradient(150deg,#17385e,#102946);box-shadow:0 8px 18px #020b1c30}
+#profile .profile-stat-card span{color:#b0c7e2;font-size:9px}
+#profile .profile-stat-card strong{color:#54d8d1;font-size:clamp(20px,4vw,26px)}
+#profile .profile-member-card{gap:12px;margin-bottom:14px;padding:17px;border:1px solid #4bd6d04d;border-radius:17px;background:linear-gradient(110deg,#0c3b68,#087b83);box-shadow:0 10px 24px #020b1c35}
+#profile .profile-member-avatar{background:#ffffff20;border-color:#9aeee7}
+#profile .profile-member-copy h2{color:#fff}
+#profile .profile-member-copy p{color:#d1f2ef}
+#profile .profile-member-card .active-badge{padding:6px 9px;border:1px solid #b7fff04a;border-radius:20px;background:#d4fff21f;color:#eafffb}
+#profile>section.card:not(.profile-member-card){margin:0 0 13px;border:1px solid #ffffff1b;border-radius:16px;background:linear-gradient(150deg,#142f50,#0e2541);box-shadow:0 8px 22px #020b1c30;color:#edf5ff}
+#profile .profile-section-head{padding:16px 17px 7px}
+#profile .profile-section-head h2{color:#f3f8ff;font-size:14px}
+#profile .profile-section-head p{color:#a4bdd9}
+#profile .profile-details{padding:5px 17px 13px}
+#profile .profile-row{gap:10px;padding:12px 0;border-bottom:1px solid #ffffff14;font-size:11px}
+#profile .profile-row span:first-child{color:#a9c1dc}
+#profile .profile-row strong{max-width:65%;color:#f4f8ff;font-weight:750}
+#profile .profile-form{gap:10px;padding:13px 17px 18px}
+#profile .profile-form label{color:#c1d3e7;font-size:10px}
+#profile .profile-form input,#profile #adminProfileSearch{box-sizing:border-box;width:100%;border:1px solid #315273;border-radius:11px;background:#091d36;color:#f5faff;padding:12px 13px;font-size:13px}
+#profile .profile-form input::placeholder,#profile #adminProfileSearch::placeholder{color:#7892b0}
+#profile .profile-form input:focus,#profile #adminProfileSearch:focus{outline:none;border-color:#31c7c2;box-shadow:0 0 0 3px #31c7c222}
+#profile .profile-form small{color:#9cb5d1;font-size:9px}
+#profile .profile-save-button{border:1px solid #62e0db55;border-radius:11px;background:linear-gradient(100deg,#087f91,#145fb4);color:#fff;padding:13px;font-size:11px;box-shadow:0 7px 16px #020b1c35}
+#profile .profile-save-button:hover{filter:brightness(1.12)}
+#profile .profile-form-message{color:#72e5bd;line-height:1.5}
+#profile .profile-form-message.error{color:#ff9eaa}
+#profile #adminProfileDirectoryList .team-member-row{border-color:#294968;background:#0a2039}
+#profile #adminProfileDirectoryList .team-member-row strong{color:#f3f8ff}
+#profile #adminProfileDirectoryList .team-member-row small{color:#a6bdd8}
+#profile .profile-page-footer{color:#9bb4d0}
+@media(max-width:390px){
+ #profile{padding:11px;border-radius:16px}
+ #profile .profile-stat-grid{gap:6px}
+ #profile .profile-stat-card{padding:12px 8px}
+ #profile .profile-stat-card span{font-size:8px}
+ #profile .profile-stat-card strong{font-size:19px}
+ #profile .profile-member-card{gap:8px;padding:13px}
+ #profile .profile-member-copy h2{font-size:14px}
+ #profile .profile-member-card .active-badge{padding:5px 6px;font-size:8px}
+ #profile .profile-row{align-items:flex-start}
+ #profile .profile-row strong{max-width:60%;text-align:right}
+}
+
 /* Weekly recruiter tournament leaderboard */
 .leaderboard-panel{margin-top:15px;display:grid;gap:13px}
 .leaderboard-panel[hidden]{display:none!important}
