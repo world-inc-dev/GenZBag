@@ -1341,7 +1341,7 @@ img,svg,video,canvas{max-width:100%}
   <header class="terms-dialog-head"><div><span class="terms-eyebrow">ACCOUNT AGREEMENT</span><h2 id="termsPreviewTitle">Terms &amp; Conditions</h2><p>Please review these terms before creating your account.</p></div><button class="terms-close" id="termsClose" type="button" aria-label="Close terms and conditions">×</button></header>
   <div class="terms-dialog-body">
    <article class="terms-item"><span>01</span><div><h3>Your account</h3><p>You must give accurate details when you register. One person may hold one account. You are responsible for keeping your password safe.</p></div></article>
-   <article class="terms-item"><span>02</span><div><h3>Registration fee</h3><p>To open your account you pay the one-time registration fee shown for your country. Your account opens as soon as the payment is confirmed. The fee is non-refundable once your account is open.</p></div></article>
+   <article class="terms-item"><span>02</span><div><h3>Registration fee</h3><p>Your GenZBag login and basic account profile are available after registration. A one-time activation fee shown for your country must be paid and confirmed before activation-restricted earning features become available. The fee is non-refundable once activation is completed.</p></div></article>
    <article class="terms-item"><span>03</span><div><h3>Inviting others</h3><p>You may invite others with your invite link. Creating fake or duplicate accounts to earn invite rewards is not allowed, and the accounts involved will be suspended.</p></div></article>
    <article class="terms-item"><span>04</span><div><h3>Fair use</h3><p>Do not abuse, automate or try to manipulate any activity on the platform. We may suspend accounts that break these rules.</p></div></article>
    <article class="terms-item"><span>05</span><div><h3>Privacy</h3><p>We use your email and phone number to manage your account and contact you about it. We do not sell your personal information.</p></div></article>
@@ -2222,32 +2222,34 @@ function rankFor(n){let i=0;RANKS.forEach((r,k)=>{if(n>=r.min)i=k;});return {...
 function renderNetwork(total,qualified){const rank=rankFor(qualified),next=RANKS[rank.index+1],progress=next?Math.max(0,qualified-rank.min):qualified,target=next?next.min-rank.min:qualified;const setText=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};setText('rankProgressCount',next?progress:'✓');setText('rankProgressTarget',next?'of '+target:'MAX');setText('memberRank',rank.name);setText('rankSymbol',rank.symbol);const badge=document.getElementById('memberRankBadge');if(badge)badge.setAttribute('aria-label','Current member rank: '+rank.name.charAt(0)+rank.name.slice(1).toLowerCase());setText('rankNextLabel',next?'NEXT: '+next.name:'TOP RANK');setText('totalReferralCount',Number(total).toLocaleString());setText('qualifiedReferralCount',Number(qualified).toLocaleString());const left=next?Math.max(0,next.min-qualified):0;setText('networkMessage',next?(left?'You need '+left+' more qualified '+(left===1?'referral':'referrals')+' to reach '+next.name+'.':'You have reached '+rank.name+'. Keep growing your network!'):'Congratulations! You have reached the highest GenZBag member rank.');}
 function renderAccountActivationStatus(record,error){
  const badge=document.getElementById('accountActivationBadge');
+ const profileBadge=document.getElementById('profileAccountStatus');
  const note=document.getElementById('activationAccessNote');
+ const setStatus=(label,className)=>{if(badge){badge.textContent=label;badge.className='active-badge '+className;}if(profileBadge){profileBadge.textContent=label;profileBadge.className='active-badge '+className;}};
  const title=document.getElementById('activationAccessTitle');
  const message=document.getElementById('activationAccessMessage');
  const detail=document.getElementById('activationAccessDetail');
  if(error){
-  if(badge){badge.textContent='Status unavailable';badge.className='active-badge status-error';}
+  setStatus('Status unavailable','status-error');
   if(note){note.classList.add('visible');title.textContent='Your account is accessible';message.textContent='Your dashboard and account details remain available. We could not retrieve your activation status right now.';detail.textContent='Reconnect and refresh to check your latest status.';}
   return;
  }
  const status=String(record?.status||'not_submitted').toLowerCase();
  if(status==='verified'){
-  if(badge){badge.textContent='Active';badge.className='active-badge';}
+  setStatus('Active','');
   if(note)note.classList.remove('visible');
   return;
  }
  if(status==='pending'){
-  if(badge){badge.textContent='Payment under review';badge.className='active-badge status-pending';}
+  setStatus('Payment under review','status-pending');
   if(note){note.classList.add('visible');title.textContent='Your account is open — activation is under review';message.textContent='You can access your dashboard, profile and referral information while the activation payment is being reviewed.';detail.textContent='You will get access to activation-restricted earning features after approval.';}
   return;
  }
  if(status==='rejected'){
-  if(badge){badge.textContent='Activation needs attention';badge.className='active-badge status-inactive';}
+  setStatus('Activation needs attention','status-inactive');
   if(note){note.classList.add('visible');title.textContent='Your account remains accessible';message.textContent='Your activation payment was not approved. You can still sign in and view your account details.';detail.textContent='Please review your payment information and contact GenZBag support for assistance.';}
   return;
  }
- if(badge){badge.textContent='Not activated';badge.className='active-badge status-inactive';}
+ setStatus('Not activated','status-inactive');
  if(note){note.classList.add('visible');title.textContent='Your account is ready — activation is still pending';message.textContent='You can sign in, view your profile, check your referral link and explore your account before activating.';detail.textContent='Activation-restricted earning features will remain unavailable until your payment is confirmed.';}
 }
 function setMemberName(name){const first=(name||'Member').split(/[._\\s-]/)[0],initial=first.charAt(0).toUpperCase();const w=document.querySelector('.welcome-info h2'),p=document.querySelector('#profile .profile-header h2'),a=document.querySelector('.welcome-top .avatar'),b=document.querySelector('#profile .profile-header .avatar'),dn=document.getElementById('dashboardProfileName'),da=document.getElementById('dashboardProfileAvatar');if(w)w.textContent='Hi '+first;if(p)p.textContent=name||'Member';if(a)a.textContent=initial;if(b)b.textContent=initial;if(dn)dn.textContent=name||'Member';if(da)da.textContent=initial;}
