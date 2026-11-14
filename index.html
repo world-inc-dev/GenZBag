@@ -957,6 +957,22 @@ footer {
 .chat-safety,.feature-notice,.auth-foot{display:none!important}
 .withdraw-meta{font-size:11px;line-height:1.55;color:#64748b}
 .withdraw-meta strong{color:#14284f}
+
+/* Compact network card; member rank now lives with the welcome greeting. */
+.network-card{padding:13px 15px}
+.network-card h2{font-size:15px}
+.network-card .subtitle{font-size:10px;margin-top:2px}
+.network-card .progress-circle{width:49px;height:49px;border-width:4px}
+.network-card .progress-circle strong{font-size:14px}
+.network-card .progress-circle small{font-size:8px;margin-top:2px}
+.network-card .network-message{font-size:11px;margin-top:8px;line-height:1.4}
+.network-card .network-stats{gap:6px;margin-top:7px}
+.network-card .network-stat{font-size:9px;padding:5px 8px}
+.network-card .network-stat strong{font-size:10px}
+.welcome-rank-badge{margin-top:7px;padding:4px 9px;background:#ffffff24;border-color:#ffffff55;font-size:9px}
+.welcome-rank-badge .rank-symbol{width:20px;height:20px;font-size:13px}
+.welcome-rank-badge strong{font-size:9px}
+
 </style>
 </head>
 
@@ -1110,7 +1126,7 @@ footer {
 
       <div class="progress-circle" aria-label="Qualified referrals toward next member rank"><strong id="rankProgressCount">0</strong><small id="rankProgressTarget">of 5</small></div>
     </div>
-    <div class="network-meta"><span class="rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span><span class="target-label" id="rankNextLabel">NEXT: BRONZE</span></div>
+    
     <p class="network-message" id="networkMessage">Sign in to view your network results.</p>
     <div class="network-stats"><span class="network-stat">Total referrals: <strong id="totalReferralCount">0</strong></span><span class="network-stat">Qualified: <strong id="qualifiedReferralCount">0</strong></span></div>
   </section>
@@ -1124,6 +1140,7 @@ footer {
       <div class="welcome-info">
         <h2>Hi Bridan</h2>
         <p>A home of Digital Income.</p>
+        <span class="rank-badge welcome-rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span>
       </div>
 
       <span class="active-badge">Active</span>
