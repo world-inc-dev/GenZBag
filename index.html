@@ -1879,6 +1879,29 @@ body.activation-body-locked{
   border-color:#fecaca!important;color:#fff!important;
 }
 
+
+/* Mulaprime-inspired voucher workspace */
+.voucher-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0 14px;padding:7px;border:1px solid #254b61;border-radius:16px;background:linear-gradient(135deg,#0b1c31,#102b43);box-shadow:0 10px 25px #02081730}
+.voucher-tabs[hidden]{display:none!important}
+.voucher-tab{min-width:0;min-height:67px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:9px 5px;border:1px solid transparent;border-radius:12px;background:transparent;color:#a9c1d1;font:inherit;cursor:pointer;transition:.2s}
+.voucher-tab span{font-size:19px;line-height:1}.voucher-tab b{font-size:10px;font-weight:850;white-space:nowrap}
+.voucher-tab.active{color:#052b31;background:linear-gradient(135deg,#5eead4,#20b8b0);border-color:#8af4e4;box-shadow:0 5px 16px #14b8a655}
+#featureWorkspace.voucher-mode>.feature-detail-panel{margin-top:0;padding:clamp(15px,3vw,22px);border-radius:18px;border-color:#28536a;background:linear-gradient(145deg,#10243d,#142f49);box-shadow:0 12px 28px #02081735}
+#featureWorkspace.voucher-mode .feature-stat-grid{gap:10px;margin-bottom:20px}
+#featureWorkspace.voucher-mode .feature-stat-grid>div{position:relative;min-height:94px;justify-content:center;padding:14px 12px;border-radius:14px;background:linear-gradient(145deg,#173b56,#102d46);border:1px solid #2b5a70;box-shadow:inset 0 1px #ffffff0b}
+#featureWorkspace.voucher-mode .feature-stat-grid>div:before{content:"";width:27px;height:3px;border-radius:8px;background:#36cbbb;margin-bottom:2px}
+#featureWorkspace.voucher-mode .feature-stat-grid small{font-size:8px;letter-spacing:.65px;color:#a9c6d5;line-height:1.4}
+#featureWorkspace.voucher-mode .feature-stat-grid strong{font-size:clamp(14px,3.5vw,18px);color:#76ead9;overflow-wrap:anywhere}
+#featureWorkspace.voucher-mode .feature-detail-panel h3{font-size:17px;margin:5px 0 8px;color:#f1fbff}
+#featureWorkspace.voucher-mode .feature-detail-panel>p{font-size:11px;color:#bfd2e1;line-height:1.7}
+#featureWorkspace.voucher-mode .feature-field{font-size:11px;color:#d8eaf2}
+#featureWorkspace.voucher-mode .feature-field input{min-height:46px;border-radius:11px;background:#091a30;border-color:#31566e;color:#f5fbff}
+#featureWorkspace.voucher-mode .feature-calculated{padding:14px;border-radius:12px;font-size:13px;background:linear-gradient(110deg,#103b4a,#124b51);border:1px solid #276b72;color:#9df4e6!important}
+#featureWorkspace.voucher-mode .activity-btn{width:100%;min-height:47px;border-radius:12px;font-weight:900;letter-spacing:.15px;background:linear-gradient(100deg,#19b8a8,#0d9488);box-shadow:0 8px 18px #0d948833}
+#featureWorkspace.voucher-mode .activity-note{display:block;margin-top:12px;padding:11px 12px;border-radius:11px;background:#0b2035;border:1px solid #284b62;color:#a9c2d1;font-size:10px;line-height:1.6}
+#featureWorkspace.voucher-mode .table-responsive{padding:5px;border:1px solid #28516a;border-radius:13px;background:#0b1c31}
+#featureWorkspace.voucher-mode .feature-table{min-width:420px}
+@media(max-width:460px){.voucher-tabs{gap:5px;padding:5px}.voucher-tab{min-height:62px;padding:8px 2px}.voucher-tab b{font-size:9px}#featureWorkspace.voucher-mode .feature-stat-grid{grid-template-columns:1fr 1fr}#featureWorkspace.voucher-mode .feature-stat-grid>div:last-child{grid-column:1/-1}}
 </style>
 
 <style id="genzbag-iphone-typography">
@@ -3275,6 +3298,11 @@ body.activation-screen-open{overflow:hidden!important}
     <div class="feature-workspace-head"><h2 id="featureTitle">Leaderboard</h2><span class="feature-status" id="featureStatus">PREVIEW · SETUP REQUIRED</span></div>
     <p id="featureDescription">See how members are progressing across GenZBag.</p>
     <div class="feature-notice" id="featureNotice">This section is being prepared. No balance changes or payments are made from this preview.</div>
+    <div class="voucher-tabs" id="voucherTabs" hidden role="tablist" aria-label="Voucher pages">
+      <button type="button" class="voucher-tab active" data-voucher-tab="voucher-buy" role="tab" aria-selected="true"><span>🎟️</span><b>Buy Voucher</b></button>
+      <button type="button" class="voucher-tab" data-voucher-tab="voucher-activate" role="tab" aria-selected="false"><span>⚡</span><b>Activate User</b></button>
+      <button type="button" class="voucher-tab" data-voucher-tab="voucher-history" role="tab" aria-selected="false"><span>📜</span><b>History</b></button>
+    </div>
     <div class="leaderboard-panel" id="leaderboardPanel" hidden>
       <div class="leaderboard-hero">
         <span class="leaderboard-kicker">GenZBag weekly tournament</span>
@@ -3681,6 +3709,19 @@ document.getElementById('voucherQuantity')?.addEventListener('input',()=>{const 
 function bindDropdown(toggleId,submenuId){const b=document.getElementById(toggleId),m=document.getElementById(submenuId);if(!b||!m)return;b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));m.classList.toggle('open',!open);});}
 bindDropdown('chatMenuToggle','chatSubmenu');
 bindDropdown('voucherMenuToggle','voucherSubmenu');
+function setVoucherTab(key){
+ const ids={'voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel'};
+ const workspace=document.getElementById('featureWorkspace');
+ Object.entries(ids).forEach(([tab,id])=>{const panel=document.getElementById(id);if(panel)panel.hidden=tab!==key;});
+ document.querySelectorAll('[data-voucher-tab]').forEach(btn=>{const active=btn.dataset.voucherTab===key;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',String(active));});
+ const titles={'voucher-buy':['🎟️','Buy Voucher','Purchase activation vouchers securely from your wallet.'],'voucher-activate':['⚡','Activate User','Activate an eligible direct downline member using a voucher.'],'voucher-history':['📜','Voucher History','Review completed activations made using your vouchers.']};
+ const item=titles[key];if(item){document.getElementById('featureIcon').textContent=item[0];document.getElementById('featureTitle').textContent=item[1];document.getElementById('featureDescription').textContent=item[2];}
+ if(workspace)workspace.scrollIntoView({behavior:'smooth',block:'start'});
+ if(key==='voucher-buy'&&document.getElementById('voucherAccountBalance'))document.getElementById('voucherAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
+ if(typeof loadVoucherSummary==='function')loadVoucherSummary();
+}
+document.querySelectorAll('[data-voucher-tab]').forEach(btn=>btn.addEventListener('click',()=>setVoucherTab(btn.dataset.voucherTab)));
+
 bindDropdown('teamMenuToggle','teamSubmenu');
 [1,2,3].forEach(n=>bindDropdown('teamLevel'+n+'Toggle','teamLevel'+n+'Submenu'));
 document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>{
@@ -3706,7 +3747,11 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':'PREVIEW · SETUP REQUIRED');
   document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
   const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel'};
+  const isVoucherFeature=['voucher-buy','voucher-activate','voucher-history'].includes(featureKey);
+  document.getElementById('voucherTabs').hidden=!isVoucherFeature;
+  document.getElementById('featureWorkspace').classList.toggle('voucher-mode',isVoucherFeature);
   ['leaderboardPanel','payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
+  if(isVoucherFeature)setVoucherTab(featureKey);
   if(featureKey==='leaderboard')loadWeeklyLeaderboard();
   if(featureKey==='pay-client')document.getElementById('clientAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
   if(featureKey==='voucher-buy')document.getElementById('voucherAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
