@@ -780,6 +780,25 @@ footer {
 @media(max-width:420px){.chat-messages{height:300px}.admin-task-form .two{grid-template-columns:1fr 1fr}}
 
 
+/* Dedicated feature pages and three-level team */
+.page-view{display:block;scroll-margin-top:84px}
+.page-view[hidden]{display:none!important}
+.team-level-toggle{font-size:11px!important;padding:9px 10px!important;margin:1px 0!important}
+.team-level-submenu{padding-left:12px}
+.team-level-submenu .nav-link{font-size:10px;padding:8px 9px}
+.team-level-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:15px}
+.team-level-cards>div{padding:12px;border:1px solid #e2eaf5;border-radius:12px;background:#f7faff;display:flex;flex-direction:column;gap:5px}
+.team-level-cards small{font-size:8px;font-weight:900;color:#64748b}
+.team-level-cards strong{font-size:20px;color:#0A2A6B}
+.team-level-cards span{font-size:9px;line-height:1.4;color:#64748b}
+.team-members-list{margin-top:14px;display:grid;gap:8px}
+.team-member-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px;border:1px solid #e5eaf2;border-radius:11px;background:#fff}
+.team-member-row strong{display:block;font-size:11px;color:#1e293b}
+.team-member-row small{display:block;margin-top:4px;font-size:9px;color:#64748b}
+.team-member-state{padding:5px 8px;border-radius:20px;font-size:8px;font-weight:900;white-space:nowrap}
+.team-member-state.active{background:#e9fbef;color:#15803d}
+.team-member-state.inactive{background:#fff4db;color:#996000}
+@media(max-width:420px){.team-level-cards{grid-template-columns:1fr 1fr}.team-level-cards>div:last-child{grid-column:1/-1}}
 /* Finance and rewards navigation */
 .nav-dropdown-toggle{width:100%;display:flex;align-items:center;gap:12px;padding:12px;border:0;border-radius:11px;margin:3px 0;background:transparent;color:#E5EDFF;font:inherit;font-size:13px;font-weight:650;text-align:left;cursor:pointer}
 .nav-dropdown-toggle:hover,.nav-dropdown-toggle[aria-expanded="true"]{background:#ffffff1c;color:#fff}
@@ -861,21 +880,25 @@ footer {
   <a class="nav-link" href="#dashboard"><span class="nav-icon">⌂</span>Home</a>
 
   <div class="nav-label">GENERAL</div>
-  <a class="nav-link" href="#activityHub" data-activity-category="game"><span class="nav-icon">🎡</span>Spins</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="music"><span class="nav-icon">🎵</span>Earn with Spotify</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="sponsored"><span class="nav-icon">🛍️</span>Marketplace</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="challenge"><span class="nav-icon">👆</span>Fix Tap</a>
-  <a class="nav-link" href="#globalChat"><span class="nav-icon">💬</span>Chat foreigners</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="challenge"><span class="nav-icon">🎨</span>Colour Challenge</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">📊</span>Free Forex Classes</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="video"><span class="nav-icon">▶️</span>Youtube Videos</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="video"><span class="nav-icon">🎬</span>Tiktok Videos</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="sponsored"><span class="nav-icon">📢</span>Sponsored Tasks</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">📚</span>Business Ebooks</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="game"><span class="nav-icon">➗</span>Math for fun</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">💻</span>New Tech Classes</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">📈</span>Deriv Education</a>
-  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">💸</span>Financial Education</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="game"><span class="nav-icon">🎡</span>Spins</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="music"><span class="nav-icon">🎵</span>Earn with Spotify</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="sponsored"><span class="nav-icon">🛍️</span>Marketplace</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="challenge"><span class="nav-icon">👆</span>Fix Tap</a>
+  <button class="nav-dropdown-toggle" id="chatMenuToggle" type="button" aria-expanded="false" aria-controls="chatSubmenu"><span class="nav-icon">💬</span>Chat foreigners <span class="nav-chevron" aria-hidden="true">▾</span></button>
+  <div class="nav-submenu" id="chatSubmenu">
+    <a class="nav-link" href="#chatPage">💬 Chat Now</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="chat-claim-bonus">🎁 Claim Bonus</a>
+  </div>
+  <a class="nav-link" href="#activityPage" data-activity-category="challenge"><span class="nav-icon">🎨</span>Colour Challenge</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">📊</span>Free Forex Classes</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="video"><span class="nav-icon">▶️</span>Youtube Videos</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="video"><span class="nav-icon">🎬</span>Tiktok Videos</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="sponsored"><span class="nav-icon">📢</span>Sponsored Tasks</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">📚</span>Business Ebooks</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="game"><span class="nav-icon">➗</span>Math for fun</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">💻</span>New Tech Classes</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">📈</span>Deriv Education</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">💸</span>Financial Education</a>
 
   <div class="nav-label">ACCOUNT & REWARDS</div>
   <a class="nav-link" href="#featureWorkspace" data-feature="leaderboard"><span class="nav-icon">🏆</span>Leaderboard</a>
@@ -891,13 +914,34 @@ footer {
     <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-spotify">🎵 Withdraw Spotify</a>
   </div>
   <a class="nav-link" href="#featureWorkspace" data-feature="welcome-bonus"><span class="nav-icon">🎁</span>Welcome Bonus</a>
+  <button class="nav-dropdown-toggle" id="teamMenuToggle" type="button" aria-expanded="false" aria-controls="teamSubmenu"><span class="nav-icon">👥</span>Team <span class="nav-chevron" aria-hidden="true">▾</span></button>
+  <div class="nav-submenu" id="teamSubmenu">
+    <button class="nav-dropdown-toggle team-level-toggle" id="teamLevel1Toggle" type="button" aria-expanded="false" aria-controls="teamLevel1Submenu">Level 1 <span class="nav-chevron" aria-hidden="true">▾</span></button>
+    <div class="nav-submenu team-level-submenu" id="teamLevel1Submenu">
+      <a class="nav-link" href="#teamWorkspace" data-team-level="1" data-team-view="inactive">Inactive Team</a>
+      <a class="nav-link" href="#teamWorkspace" data-team-level="1" data-team-view="active">Active Team</a>
+      <a class="nav-link" href="#teamWorkspace" data-team-level="1" data-team-view="overview">Overview</a>
+    </div>
+    <button class="nav-dropdown-toggle team-level-toggle" id="teamLevel2Toggle" type="button" aria-expanded="false" aria-controls="teamLevel2Submenu">Level 2 <span class="nav-chevron" aria-hidden="true">▾</span></button>
+    <div class="nav-submenu team-level-submenu" id="teamLevel2Submenu">
+      <a class="nav-link" href="#teamWorkspace" data-team-level="2" data-team-view="inactive">Inactive Team</a>
+      <a class="nav-link" href="#teamWorkspace" data-team-level="2" data-team-view="active">Active Team</a>
+      <a class="nav-link" href="#teamWorkspace" data-team-level="2" data-team-view="overview">Overview</a>
+    </div>
+    <button class="nav-dropdown-toggle team-level-toggle" id="teamLevel3Toggle" type="button" aria-expanded="false" aria-controls="teamLevel3Submenu">Level 3 <span class="nav-chevron" aria-hidden="true">▾</span></button>
+    <div class="nav-submenu team-level-submenu" id="teamLevel3Submenu">
+      <a class="nav-link" href="#teamWorkspace" data-team-level="3" data-team-view="inactive">Inactive Team</a>
+      <a class="nav-link" href="#teamWorkspace" data-team-level="3" data-team-view="active">Active Team</a>
+      <a class="nav-link" href="#teamWorkspace" data-team-level="3" data-team-view="overview">Overview</a>
+    </div>
+  </div>
 
   <div class="nav-label">SETTING</div>
   <a class="nav-link" href="#referrals"><span class="nav-icon">📨</span>Text Upline</a>
-  <a class="nav-link" href="#globalChat"><span class="nav-icon">✉️</span>Read Messages</a>
+  <a class="nav-link" href="#chatPage"><span class="nav-icon">✉️</span>Read Messages</a>
   <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>Profile</a>
-  <a class="nav-link" href="#globalChat"><span class="nav-icon">☎️</span>Contact Us</a>
-  <a class="nav-link" href="#globalChat"><span class="nav-icon">👥</span>Join community</a>
+  <a class="nav-link" href="#chatPage"><span class="nav-icon">☎️</span>Contact Us</a>
+  <a class="nav-link" href="#chatPage"><span class="nav-icon">👥</span>Join community</a>
   <a class="nav-link" href="#schedule"><span class="nav-icon">🗓️</span>Weekly Schedule</a>
   <a class="nav-link" href="#wallet"><span class="nav-icon">💳</span>My Wallet</a>
   <a class="nav-link" href="#app"><span class="nav-icon">📱</span>Get the App</a>
@@ -948,7 +992,7 @@ footer {
 
   <section class="card expenses-card">
     <span class="expenses-title">EXPENSES</span>
-    <strong class="expenses-value">UGX 0</strong>
+    <strong class="expenses-value" title="Configured platform expense figure">UGX 19,500</strong>
   </section>
 
   <!-- BALANCE CARDS -->
@@ -1046,6 +1090,7 @@ footer {
   </section>
 
 
+  <section class="page-view" id="activityPage" hidden>
   <!-- LIVE ACTIVITY HUB -->
   <section class="card" id="activityHub">
     <div class="section-heading"><h2>Activity Hub</h2><small id="activityCount">Loading activities…</small></div>
@@ -1060,15 +1105,6 @@ footer {
     </div>
     <div class="activity-list" id="activityList"><div class="activity-empty">Sign in to load activities published by GenZBag.</div></div>
     <div class="activity-note" style="padding:0 15px 14px">Rewards are credited only after an administrator reviews and approves valid proof. No activity can generate automatic or guaranteed income.</div>
-  </section>
-
-  <!-- GLOBAL CHAT WITH FOREIGN MEMBERS -->
-  <section class="card" id="globalChat">
-    <div class="chat-header"><h2>🌍 Chat with Foreigners</h2><p>Meet GenZBag members from other countries in the global community lounge.</p></div>
-    <div class="chat-safety">Stay safe: never share passwords, verification codes, bank details, home addresses or send money to people you meet here. Report suspicious messages.</div>
-    <div class="chat-messages" id="globalChatMessages"><div class="activity-empty">Sign in with an activated account to join the global lounge.</div></div>
-    <div class="chat-compose"><textarea id="globalChatInput" maxlength="600" rows="2" placeholder="Write a friendly message…" aria-label="Chat message"></textarea><button class="chat-send" id="globalChatSend" type="button">Send</button></div>
-    <div class="chat-presence" id="globalChatStatus">Messages are shared with activated GenZBag members. International members appear as they join.</div>
   </section>
 
   <!-- ADMIN ACTIVITY MANAGEMENT -->
@@ -1096,6 +1132,19 @@ footer {
       <h3 style="font-size:13px;margin:20px 0 8px">Pending submissions</h3>
       <div id="adminSubmissionList"><div class="activity-empty">Loading review queue…</div></div>
     </div>
+  </section>
+  </section>
+
+
+  <section class="page-view" id="chatPage" hidden>
+  <!-- GLOBAL CHAT WITH FOREIGN MEMBERS -->
+  <section class="card" id="globalChat">
+    <div class="chat-header"><h2>🌍 Chat with Foreigners</h2><p>Meet GenZBag members from other countries in the global community lounge.</p></div>
+    <div class="chat-safety">Stay safe: never share passwords, verification codes, bank details, home addresses or send money to people you meet here. Report suspicious messages.</div>
+    <div class="chat-messages" id="globalChatMessages"><div class="activity-empty">Sign in with an activated account to join the global lounge.</div></div>
+    <div class="chat-compose"><textarea id="globalChatInput" maxlength="600" rows="2" placeholder="Write a friendly message…" aria-label="Chat message"></textarea><button class="chat-send" id="globalChatSend" type="button">Send</button></div>
+    <div class="chat-presence" id="globalChatStatus">Messages are shared with activated GenZBag members. International members appear as they join.</div>
+  </section>
   </section>
 
   <!-- REFER AND EARN -->
@@ -1260,8 +1309,8 @@ footer {
     <div class="feature-notice" id="featureNotice">This section is being prepared. No balance changes or payments are made from this preview.</div>
     <div id="withdrawalRulesPanel" hidden style="margin-top:15px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="padding:14px;border-radius:12px;background:#edf4ff"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">MINIMUM WITHDRAWAL</small><strong style="display:block;margin-top:6px;font-size:19px;color:#0A2A6B">UGX 23,000</strong></div>
-        <div style="padding:14px;border-radius:12px;background:#e9fbef"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">DIRECT REFERRALS REQUIRED</small><strong style="display:block;margin-top:6px;font-size:19px;color:#087B3B">3 active</strong></div>
+        <div style="padding:14px;border-radius:12px;background:#edf4ff"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">MINIMUM WITHDRAWAL</small><strong style="display:block;margin-top:6px;font-size:19px;color:#0A2A6B">UGX 23,000</strong><small id="withdrawAvailableBalance" style="display:block;margin-top:5px;font-size:9px;color:#64748b">Available: UGX 0</small></div>
+        <div style="padding:14px;border-radius:12px;background:#e9fbef"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">DIRECT REFERRALS REQUIRED</small><strong id="withdrawDirectActiveCount" style="display:block;margin-top:6px;font-size:19px;color:#087B3B">0 / 3 active</strong></div>
       </div>
       <h3 style="margin-top:16px;font-size:13px;color:#14284f">Withdrawal eligibility</h3>
       <p style="margin-top:6px">You must meet <strong>both</strong> requirements before requesting a withdrawal:</p>
@@ -1269,8 +1318,21 @@ footer {
         <li>At least 3 successfully activated Level 1 (direct) referrals.</li>
         <li>At least UGX 23,000 in verified Available Balance.</li>
       </ul>
-      <div class="feature-notice" style="background:#fff8e8;color:#8a5a00">Only referral commissions count toward Available Balance. Welcome bonuses and approved activity rewards are recorded separately as Net Profit and do not count toward the withdrawal minimum. Payouts remain disabled until secure payout processing is configured.</div>
+      <div class="feature-notice" style="background:#fff8e8;color:#8a5a00">Only referral commissions count toward Available Balance. Welcome bonuses and approved activity rewards are recorded separately as Net Profit and do not count toward the withdrawal minimum. Payouts remain disabled until secure payout processing is configured.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
     </div>
+  </section>
+
+  <section class="feature-workspace page-view" id="teamWorkspace" aria-live="polite" hidden>
+    <div class="feature-icon">👥</div>
+    <div class="feature-workspace-head"><h2 id="teamPageTitle">My Team · Overview</h2><span class="feature-status">LIVE TEAM DATA</span></div>
+    <p id="teamPageDescription">Your referral network across three generations.</p>
+    <div class="team-level-cards">
+      <div><small>LEVEL 1 · DIRECT</small><strong id="teamLevel1Count">0</strong><span>UGX 10,500 per qualified activation</span></div>
+      <div><small>LEVEL 2</small><strong id="teamLevel2Count">0</strong><span>UGX 5,000 per qualified activation</span></div>
+      <div><small>LEVEL 3</small><strong id="teamLevel3Count">0</strong><span>UGX 2,000 per qualified activation</span></div>
+    </div>
+    <div class="feature-notice">Active means the member's activation payment has been verified. The amounts above are the planned commission schedule. The team list shows verified membership status; referral commission credits will be switched on only after the activation-fee and funding allocation is confirmed.</div>
+    <div id="teamMembersList" class="team-members-list"><div class="activity-empty">Choose a team level to load your members.</div></div>
   </section>
 
   <!-- APP DOWNLOAD -->
@@ -1319,9 +1381,14 @@ const featureContent={
  'withdraw-tiktok':{icon:'🎬',title:'Withdraw TikTok videos',description:'View eligible rewards associated with approved TikTok video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
  'withdraw-youtube':{icon:'▶️',title:'Withdraw YouTube Videos',description:'View eligible rewards associated with approved YouTube video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
  'withdraw-spotify':{icon:'🎵',title:'Withdraw Spotify',description:'View eligible rewards associated with approved Spotify activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on artificial streams.'},
- 'welcome-bonus':{icon:'🎁',title:'Welcome Bonus',description:'A planned welcome reward area where new members can check whether an official welcome offer is available to their account.',notice:'No welcome-bonus amount, eligibility rules or funding have been configured yet. No bonus has been credited or promised. The offer will appear here only after it is officially funded and approved.'}
+ 'welcome-bonus':{icon:'🎁',title:'Welcome Bonus',description:'A planned welcome reward area where new members can check whether an official welcome offer is available to their account.',notice:'No welcome-bonus amount, eligibility rules or funding have been configured yet. No bonus has been credited or promised. The offer will appear here only after it is officially funded and approved.'},
+ 'chat-claim-bonus':{icon:'🎁',title:'Chat Bonus',description:'Check official bonus campaigns related to Chat with Foreigners.',notice:'No chat bonus campaign is currently active. This page does not award or credit money. Only verified, funded campaigns approved by GenZBag will appear here.'}
 };
 document.getElementById('withdrawMenuToggle').addEventListener('click',()=>{const b=document.getElementById('withdrawMenuToggle'),menu=document.getElementById('withdrawSubmenu'),open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));menu.classList.toggle('open',!open);});
+function bindDropdown(toggleId,submenuId){const b=document.getElementById(toggleId),m=document.getElementById(submenuId);if(!b||!m)return;b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));m.classList.toggle('open',!open);});}
+bindDropdown('chatMenuToggle','chatSubmenu');
+bindDropdown('teamMenuToggle','teamSubmenu');
+[1,2,3].forEach(n=>bindDropdown('teamLevel'+n+'Toggle','teamLevel'+n+'Submenu'));
 document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>{
  if(a.id==='logoutButton')return;
  e.preventDefault();
@@ -1332,6 +1399,8 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
  const targetId=(a.getAttribute('href')||'').replace(/^#/,'');
  const target=document.getElementById(targetId);
  if(!target){closeMenu();return;}
+ document.querySelectorAll('.page-view').forEach(page=>{page.hidden=page!==target;});
+ if(targetId!=='featureWorkspace')document.getElementById('featureWorkspace').hidden=true;
  if(feature){
   document.getElementById('featureWorkspace').hidden=false;
   document.getElementById('featureIcon').textContent=feature.icon;
@@ -1356,12 +1425,12 @@ const RANKS=[{name:'STARTER',min:0,symbol:'🌱'},{name:'BRONZE',min:5,symbol:'�
 function rankFor(n){let i=0;RANKS.forEach((r,k)=>{if(n>=r.min)i=k;});return {...RANKS[i],index:i};}
 function renderNetwork(total,qualified){const rank=rankFor(qualified),next=RANKS[rank.index+1],progress=next?Math.max(0,qualified-rank.min):qualified,target=next?next.min-rank.min:qualified;document.getElementById('rankProgressCount').textContent=next?progress:'✓';document.getElementById('rankProgressTarget').textContent=next?'of '+target:'MAX';document.getElementById('memberRank').textContent=rank.name;document.getElementById('rankSymbol').textContent=rank.symbol;document.getElementById('memberRankBadge').setAttribute('aria-label','Current member rank: '+rank.name.charAt(0)+rank.name.slice(1).toLowerCase());document.getElementById('rankNextLabel').textContent=next?'NEXT: '+next.name:'TOP RANK';document.getElementById('totalReferralCount').textContent=Number(total).toLocaleString();document.getElementById('qualifiedReferralCount').textContent=Number(qualified).toLocaleString();const left=next?Math.max(0,next.min-qualified):0;document.getElementById('networkMessage').textContent=next?(left?'You need '+left+' more qualified '+(left===1?'referral':'referrals')+' to reach '+next.name+'.':'You have reached '+rank.name+'. Keep growing your network!'):'Congratulations! You have reached the highest GenZBag member rank.';}
 function setMemberName(name){const first=(name||'Member').split(/[._\\s-]/)[0];const w=document.querySelector('.welcome-info h2'),p=document.querySelector('.profile-header h2'),a=document.querySelector('.welcome-top .avatar'),b=document.querySelector('.profile-header .avatar');if(w)w.textContent='Hi '+first;if(p)p.textContent=name||'Member';if(a)a.textContent=first.charAt(0).toUpperCase();if(b)b.textContent=first.charAt(0).toUpperCase();}
-async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');try{const {data:s,error:se}=await supabaseClient.auth.getSession();if(se)throw se;const user=s?.session?.user;if(!user){renderNetwork(0,0);msg.textContent='Sign in to view your network results.';return;}const [p,t,q]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified')]);if(p.error)throw p.error;if(t.error)throw t.error;if(q.error)throw q.error;const profile=p.data||{},total=t.count||0,qualified=q.count||0;renderNetwork(total,qualified);setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const f=document.querySelectorAll('#profile .profile-row strong');if(f[0])f[0].textContent=user.email||'—';if(f[1])f[1].textContent=profile.phone||'—';if(f[2])f[2].textContent=profile.country||'—';if(f[3])f[3].textContent=profile.created_at?new Date(profile.created_at).toLocaleDateString():'—';if(f[4])f[4].textContent=total.toLocaleString();if(profile.referral_code){const u=new URL(location.href);u.searchParams.set('ref',profile.referral_code);referralInput.value=u.toString();}}catch(e){console.error('Member network load:',e);msg.textContent='Could not load referral data. Check account activation and try again.';}}
+async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');try{const {data:s,error:se}=await supabaseClient.auth.getSession();if(se)throw se;const user=s?.session?.user;if(!user){renderNetwork(0,0);msg.textContent='Sign in to view your network results.';return;}const [p,t,q]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified')]);if(p.error)throw p.error;if(t.error)throw t.error;if(q.error)throw q.error;const profile=p.data||{},total=t.count||0,qualified=q.count||0;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const f=document.querySelectorAll('#profile .profile-row strong');if(f[0])f[0].textContent=user.email||'—';if(f[1])f[1].textContent=profile.phone||'—';if(f[2])f[2].textContent=profile.country||'—';if(f[3])f[3].textContent=profile.created_at?new Date(profile.created_at).toLocaleDateString():'—';if(f[4])f[4].textContent=total.toLocaleString();if(profile.referral_code){const u=new URL(location.href);u.searchParams.set('ref',profile.referral_code);referralInput.value=u.toString();}}catch(e){console.error('Member network load:',e);msg.textContent='Could not load referral data. Check account activation and try again.';}}
 async function loadExchangeRate(){const v=document.getElementById('exchangeRateValue'),u=document.getElementById('exchangeRateUpdated');try{const r=await fetch('https://open.er-api.com/v6/latest/UGX',{cache:'no-store'});if(!r.ok)throw Error('Rate API '+r.status);const d=await r.json(),rate=Number(d?.rates?.USD);if(!Number.isFinite(rate)||rate<=0)throw Error('Invalid rate');v.textContent='1,000 UGX ≈ $'+(rate*1000).toFixed(3);const time=d.time_last_update_utc?new Date(d.time_last_update_utc).toLocaleString():'Latest available';u.innerHTML='<span class="rate-dot"></span>'+time;u.title='Reference rate: 1 UGX = $'+rate.toFixed(8)+' · Source: open.er-api.com';}catch(e){console.warn('Exchange rate:',e);v.textContent='Rate unavailable';u.textContent='Retrying automatically';}}
 async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('Supabase did not load. Refresh and try again.','error');return;}const email=document.getElementById('authEmail').value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.textContent=authMode==='signup'?'Creating account…':'Signing in…';showAuthMessage('Please wait…');try{if(authMode==='signup'){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value;if(!/^[a-z0-9_]{3,30}$/.test(username))throw Error('Username must be 3–30 characters using letters, numbers or underscores.');if(password.length<8)throw Error('Use a password with at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:document.getElementById('authPhone').value.trim(),country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(data.session){showDashboard();await loadMemberNetwork();showAuthMessage('Account created successfully.','success');}else{setAuthMode('login');showAuthMessage('Account created. Check your email for the Supabase confirmation link, then return here and sign in.','success');}}else{const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;if(!data.session)throw Error('No session returned. Please try again.');showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.textContent=authMode==='signup'?'Create Account':'Sign In';}}
 authForm.addEventListener('submit',submitAuth);loginTab.addEventListener('click',()=>setAuthMode('login'));signupTab.addEventListener('click',()=>setAuthMode('signup'));document.getElementById('switchAuthMode').addEventListener('click',()=>setAuthMode(authMode==='login'?'signup':'login'));
 document.getElementById('forgotPassword').addEventListener('click',async()=>{if(!supabaseClient)return showAuthMessage('Authentication is unavailable.','error');const email=document.getElementById('authEmail').value.trim();if(!email)return showAuthMessage('Enter your email address first.','error');try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;showAuthMessage('If this email is registered, a password-reset link will be sent. Check your inbox.','success');}catch(e){showAuthMessage(e.message||'Could not request a password reset.','error');}});
-document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();const button=e.currentTarget;button.style.pointerEvents='none';try{if(!supabaseClient)throw new Error('Authentication service is unavailable. Please refresh and try again.');const {error}=await supabaseClient.auth.signOut();if(error)throw error;currentMember=null;activityRows=[];activitySubmissionMap={};if(globalChatChannel){await supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}renderNetwork(0,0);document.getElementById('networkMessage').textContent='You are signed out. Sign in to view your account.';setAuthMode('login');requireAuth();showAuthMessage('You have been signed out successfully.','success');}catch(error){console.error('Logout failed:',error);showAuthMessage(error.message||'Could not sign out. Please try again.','error');}finally{button.style.pointerEvents='';}});
+document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();const button=e.currentTarget;button.style.pointerEvents='none';try{if(!supabaseClient)throw new Error('Authentication service is unavailable. Please refresh and try again.');const {error}=await supabaseClient.auth.signOut();if(error)throw error;currentMember=null;currentAvailableBalance=0;currentDirectActiveReferrals=0;activityRows=[];activitySubmissionMap={};if(globalChatChannel){await supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}teamRows=[];document.getElementById('teamMembersList').innerHTML='<div class="activity-empty">Sign in to view your team.</div>';renderNetwork(0,0);document.getElementById('networkMessage').textContent='You are signed out. Sign in to view your account.';setAuthMode('login');requireAuth();showAuthMessage('You have been signed out successfully.','success');}catch(error){console.error('Logout failed:',error);showAuthMessage(error.message||'Could not sign out. Please try again.','error');}finally{button.style.pointerEvents='';}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
 loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
 
@@ -1374,6 +1443,31 @@ const chatInputEl=document.getElementById('globalChatInput');
 const chatStatusEl=document.getElementById('globalChatStatus');
 const adminPanelEl=document.getElementById('adminActivityPanel');
 let currentActivityFilter='all',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
+let currentAvailableBalance=0,currentDirectActiveReferrals=0;
+let teamRows=[];
+async function loadTeamView(level,view){
+ const page=document.getElementById('teamWorkspace'),list=document.getElementById('teamMembersList');
+ page.hidden=false;
+ document.getElementById('teamPageTitle').textContent='Level '+level+' Team · '+(view==='overview'?'Overview':view==='active'?'Active Team':'Inactive Team');
+ document.getElementById('teamPageDescription').textContent='Members in generation '+level+'. Active status is based on verified activation payments.';
+ list.innerHTML='<div class="activity-empty">Loading your team…</div>';
+ if(!currentMember){list.innerHTML='<div class="activity-empty">Sign in to view your team.</div>';return;}
+ const {data,error}=await supabaseClient.rpc('get_my_referral_team');
+ if(error){console.error('Team load:',error);list.innerHTML='<div class="activity-empty">Team data could not load. '+escapeText(error.message)+'</div>';return;}
+ teamRows=data||[];
+ [1,2,3].forEach(n=>{
+  const group=teamRows.filter(x=>Number(x.member_level)===n);
+  const el=document.getElementById('teamLevel'+n+'Count');
+  if(el)el.textContent=group.length+' · '+group.filter(x=>x.is_active).length+' active';
+ });
+ let rows=teamRows.filter(x=>Number(x.member_level)===Number(level));
+ if(view==='active')rows=rows.filter(x=>x.is_active);
+ if(view==='inactive')rows=rows.filter(x=>!x.is_active);
+ if(!rows.length){list.innerHTML='<div class="activity-empty">No '+(view==='overview'?'members':view+' members')+' found in Level '+level+'. New members will appear here when they join through your network.</div>';return;}
+ list.innerHTML=rows.map(x=>'<article class="team-member-row"><div><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small>'+escapeText(x.country||'Country not set')+' · Joined '+escapeText(x.joined_at?new Date(x.joined_at).toLocaleDateString():'—')+'</small></div><span class="team-member-state '+(x.is_active?'active':'inactive')+'">'+(x.is_active?'ACTIVE':'INACTIVE')+'</span></article>').join('');
+}
+document.querySelectorAll('[data-team-level][data-team-view]').forEach(a=>a.addEventListener('click',()=>loadTeamView(a.dataset.teamLevel,a.dataset.teamView)));
+
 const activityCategoryNames={music:'Music',video:'Video',game:'Game',challenge:'Challenge',learning:'Learning',sponsored:'Sponsored',general:'General'};
 function currentUser(){return currentMember;}
 function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -1432,20 +1526,39 @@ activityListEl.addEventListener('submit',async e=>{
  if(error){alert(error.code==='23505'?'You already have a pending or approved submission for this activity.':error.message);return;}
  form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
 });
+function renderWithdrawalEligibility(){
+ const count=Number(currentDirectActiveReferrals||0),balance=Number(currentAvailableBalance||0);
+ const countEl=document.getElementById('withdrawDirectActiveCount'),balanceEl=document.getElementById('withdrawAvailableBalance'),statusEl=document.getElementById('withdrawEligibilityStatus');
+ if(countEl)countEl.textContent=count+' / 3 active';
+ if(balanceEl)balanceEl.textContent='Available: UGX '+Math.max(0,balance).toLocaleString();
+ if(statusEl){
+  if(count>=3&&balance>=23000)statusEl.textContent='You meet both requirements. Payout requests are not yet enabled.';
+  else statusEl.textContent='Still required: '+Math.max(0,3-count)+' more active direct referral(s) and UGX '+Math.max(0,23000-balance).toLocaleString()+' more Available Balance.';
+ }
+}
 async function loadMemberWallet(){
  if(!supabaseClient||!currentMember)return;
  const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
  if(error){console.warn('Wallet ledger:',error);return;}
- const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX'),balance=ugx.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
- const earned=ugx.filter(x=>x.direction==='credit').reduce((n,x)=>n+Number(x.amount),0);
+ const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
+ const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
+ const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
+ const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
+ const profitRows=ugx.filter(x=>['task_reward','welcome_bonus'].includes(x.entry_type));
+ const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
+ const balance=signed(availableRows),teamEarnings=signed(referralRows),earned=signed(profitRows),welcomeBonus=signed(welcomeRows);
+ currentAvailableBalance=Math.max(0,balance);
  const money=n=>'UGX '+Math.max(0,n).toLocaleString(undefined,{maximumFractionDigits:2});
  const strong=document.querySelectorAll('.balance-grid .balance-card strong');
  if(strong[0])strong[0].textContent=money(balance);
- if(strong[3])strong[3].textContent=money(rows.filter(x=>x.entry_type==='referral_commission'&&x.direction==='credit'&&x.currency==='UGX').reduce((n,x)=>n+Number(x.amount),0));
+ if(strong[3])strong[3].textContent=money(teamEarnings);
+ if(strong[4])strong[4].textContent=money(welcomeBonus);
+ const referralTask=document.querySelector('#tasks .task-row .task-amount');if(referralTask)referralTask.textContent=money(teamEarnings);
  const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
  const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
  if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
  const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
+ renderWithdrawalEligibility();
 }
 function chatTime(v){return new Date(v).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
 async function renderGlobalChat(){
