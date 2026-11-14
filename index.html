@@ -2768,9 +2768,10 @@ async function loadAdminFinancials(){
  if(!host||!adminIsAuthorized())return;
  host.innerHTML='<div class="activity-empty">Calculating platform income and obligations…</div>';
  if(details)details.textContent='';
- const {data,error}=await supabaseClient.rpc('admin_financial_summary');
- if(error){host.textContent='Financial summary unavailable: '+error.message;return;}
- const d=data||{};
+ let result;
+ try{result=await runAdminAction({action:'get_financial_summary'});}
+ catch(error){host.textContent='Financial summary unavailable: '+error.message;return;}
+ const d=result.summary||{};
  const money=v=>'UGX '+Number(v||0).toLocaleString('en-UG',{maximumFractionDigits:0});
  const cards=[
   ['Verified activation income',d.activation_income,'income','Money received from verified, paid mobile-money activations.'],
