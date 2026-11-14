@@ -953,6 +953,8 @@ footer {
   <a class="nav-link" href="#activityPage" data-activity-category="game" data-activity-search="math" data-activity-title="Math for Fun"><span class="nav-icon">➗</span>Math for Fun</a>
   <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="tech" data-activity-title="New Tech Classes"><span class="nav-icon">💻</span>New Tech Classes</a>
   <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="deriv" data-activity-title="Deriv Tips"><span class="nav-icon">📈</span>Deriv Tips</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="financial" data-activity-title="Financial Education"><span class="nav-icon">💸</span>Financial Education</a>
+  <a class="nav-link" href="#featureWorkspace" data-feature="quick-loans"><span class="nav-icon">💳</span>Quick Loans <b class="nav-badge">NEW</b></a>
 
   <div class="nav-label">SETTING</div>
   <a class="nav-link" href="#referrals"><span class="nav-icon">📨</span>Text Upline</a>
@@ -1170,7 +1172,7 @@ footer {
 
   <!-- REFER AND EARN -->
 
-  <section class="card" id="referrals">
+  <section class="card page-view" id="referrals" hidden>
     <div class="ref-header">
       <h2>Refer & Earn 💰</h2>
       <p>Earn commission for every friend who buys through your link</p>
@@ -1205,7 +1207,7 @@ footer {
 
   <!-- MEMBER PROFILE -->
 
-  <section class="card" id="profile">
+  <section class="card page-view" id="profile" hidden>
     <div class="profile-header">
       <div class="avatar">B</div>
 
@@ -1247,7 +1249,7 @@ footer {
 
   <!-- WEEKLY SCHEDULE -->
 
-  <section class="card" id="schedule">
+  <section class="card page-view" id="schedule" hidden>
     <div class="schedule-header">
       <h2>Weekly Schedule</h2>
       <p>GenZBag Task Timetable</p>
@@ -1298,7 +1300,7 @@ footer {
 
   <!-- MY DEPOSIT / WALLET -->
 
-  <section class="card" id="wallet">
+  <section class="card page-view" id="wallet" hidden>
     <div class="wallet-heading">
       <h2>My Deposit / Wallet</h2>
       <p>Account & deposits</p>
@@ -1400,7 +1402,7 @@ footer {
 
   <!-- APP DOWNLOAD -->
 
-  <section class="app-promo" id="app">
+  <section class="app-promo page-view" id="app" hidden>
     <div class="app-icon">📱</div>
     <h2>GenZBag App Available!</h2>
 
@@ -1456,7 +1458,8 @@ const featureContent={
  'withdraw-colour':{icon:'🎨',title:'Withdraw Colour Challenge',description:'View eligible approved Colour Challenge rewards.',notice:'Colour Challenge withdrawals are not configured as a separate payout channel.'},
  'withdraw-spins':{icon:'🎡',title:'Withdraw Spins',description:'View eligible approved Spins rewards.',notice:'Spins withdrawals are not configured as a separate payout channel.'},
  'withdraw-ads':{icon:'📢',title:'Withdraw Ads',description:'View eligible approved advertising rewards.',notice:'Ads withdrawals are not configured as a separate payout channel.'},
- products:{icon:'🛒',title:'Products',description:'Browse products and offers made available through GenZBag.',notice:'No products have been published to the marketplace yet.'}
+ products:{icon:'🛒',title:'Products',description:'Browse products and offers made available through GenZBag.',notice:'No products have been published to the marketplace yet.'},
+ 'quick-loans':{icon:'💳',title:'Quick Loans',description:'Review any official loan information made available by GenZBag.',notice:'No loan provider, eligibility criteria or loan service is connected. Do not pay an upfront fee or share your financial credentials.'}
 };
 document.getElementById('withdrawMenuToggle').addEventListener('click',()=>{const b=document.getElementById('withdrawMenuToggle'),menu=document.getElementById('withdrawSubmenu'),open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));menu.classList.toggle('open',!open);});
 document.getElementById('voucherQuantity')?.addEventListener('input',()=>{const n=Math.max(1,Math.floor(Number(document.getElementById('voucherQuantity').value||1)));document.getElementById('voucherPurchaseTotal').textContent='Estimated total: UGX '+(n*19000).toLocaleString();});
