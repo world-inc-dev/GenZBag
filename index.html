@@ -992,7 +992,7 @@ footer {
 
   <section class="card expenses-card">
     <span class="expenses-title">EXPENSES</span>
-    <strong class="expenses-value">UGX 0</strong>
+    <strong class="expenses-value" title="Configured platform expense figure">UGX 19,500</strong>
   </section>
 
   <!-- BALANCE CARDS -->
@@ -1309,8 +1309,8 @@ footer {
     <div class="feature-notice" id="featureNotice">This section is being prepared. No balance changes or payments are made from this preview.</div>
     <div id="withdrawalRulesPanel" hidden style="margin-top:15px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="padding:14px;border-radius:12px;background:#edf4ff"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">MINIMUM WITHDRAWAL</small><strong style="display:block;margin-top:6px;font-size:19px;color:#0A2A6B">UGX 23,000</strong></div>
-        <div style="padding:14px;border-radius:12px;background:#e9fbef"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">DIRECT REFERRALS REQUIRED</small><strong style="display:block;margin-top:6px;font-size:19px;color:#087B3B">3 active</strong></div>
+        <div style="padding:14px;border-radius:12px;background:#edf4ff"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">MINIMUM WITHDRAWAL</small><strong style="display:block;margin-top:6px;font-size:19px;color:#0A2A6B">UGX 23,000</strong><small id="withdrawAvailableBalance" style="display:block;margin-top:5px;font-size:9px;color:#64748b">Available: UGX 0</small></div>
+        <div style="padding:14px;border-radius:12px;background:#e9fbef"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">DIRECT REFERRALS REQUIRED</small><strong id="withdrawDirectActiveCount" style="display:block;margin-top:6px;font-size:19px;color:#087B3B">0 / 3 active</strong></div>
       </div>
       <h3 style="margin-top:16px;font-size:13px;color:#14284f">Withdrawal eligibility</h3>
       <p style="margin-top:6px">You must meet <strong>both</strong> requirements before requesting a withdrawal:</p>
@@ -1318,7 +1318,7 @@ footer {
         <li>At least 3 successfully activated Level 1 (direct) referrals.</li>
         <li>At least UGX 23,000 in verified Available Balance.</li>
       </ul>
-      <div class="feature-notice" style="background:#fff8e8;color:#8a5a00">Only referral commissions count toward Available Balance. Welcome bonuses and approved activity rewards are recorded separately as Net Profit and do not count toward the withdrawal minimum. Payouts remain disabled until secure payout processing is configured.</div>
+      <div class="feature-notice" style="background:#fff8e8;color:#8a5a00">Only referral commissions count toward Available Balance. Welcome bonuses and approved activity rewards are recorded separately as Net Profit and do not count toward the withdrawal minimum. Payouts remain disabled until secure payout processing is configured.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
     </div>
   </section>
 
@@ -1331,7 +1331,7 @@ footer {
       <div><small>LEVEL 2</small><strong id="teamLevel2Count">0</strong><span>UGX 5,000 per qualified activation</span></div>
       <div><small>LEVEL 3</small><strong id="teamLevel3Count">0</strong><span>UGX 2,000 per qualified activation</span></div>
     </div>
-    <div class="feature-notice">Active means the member's activation payment has been verified. The amounts above are the configured commission schedule; balances are credited only through the secure activation ledger process.</div>
+    <div class="feature-notice">Active means the member's activation payment has been verified. The amounts above are the planned commission schedule. The team list shows verified membership status; referral commission credits will be switched on only after the activation-fee and funding allocation is confirmed.</div>
     <div id="teamMembersList" class="team-members-list"><div class="activity-empty">Choose a team level to load your members.</div></div>
   </section>
 
@@ -1425,7 +1425,7 @@ const RANKS=[{name:'STARTER',min:0,symbol:'🌱'},{name:'BRONZE',min:5,symbol:'�
 function rankFor(n){let i=0;RANKS.forEach((r,k)=>{if(n>=r.min)i=k;});return {...RANKS[i],index:i};}
 function renderNetwork(total,qualified){const rank=rankFor(qualified),next=RANKS[rank.index+1],progress=next?Math.max(0,qualified-rank.min):qualified,target=next?next.min-rank.min:qualified;document.getElementById('rankProgressCount').textContent=next?progress:'✓';document.getElementById('rankProgressTarget').textContent=next?'of '+target:'MAX';document.getElementById('memberRank').textContent=rank.name;document.getElementById('rankSymbol').textContent=rank.symbol;document.getElementById('memberRankBadge').setAttribute('aria-label','Current member rank: '+rank.name.charAt(0)+rank.name.slice(1).toLowerCase());document.getElementById('rankNextLabel').textContent=next?'NEXT: '+next.name:'TOP RANK';document.getElementById('totalReferralCount').textContent=Number(total).toLocaleString();document.getElementById('qualifiedReferralCount').textContent=Number(qualified).toLocaleString();const left=next?Math.max(0,next.min-qualified):0;document.getElementById('networkMessage').textContent=next?(left?'You need '+left+' more qualified '+(left===1?'referral':'referrals')+' to reach '+next.name+'.':'You have reached '+rank.name+'. Keep growing your network!'):'Congratulations! You have reached the highest GenZBag member rank.';}
 function setMemberName(name){const first=(name||'Member').split(/[._\\s-]/)[0];const w=document.querySelector('.welcome-info h2'),p=document.querySelector('.profile-header h2'),a=document.querySelector('.welcome-top .avatar'),b=document.querySelector('.profile-header .avatar');if(w)w.textContent='Hi '+first;if(p)p.textContent=name||'Member';if(a)a.textContent=first.charAt(0).toUpperCase();if(b)b.textContent=first.charAt(0).toUpperCase();}
-async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');try{const {data:s,error:se}=await supabaseClient.auth.getSession();if(se)throw se;const user=s?.session?.user;if(!user){renderNetwork(0,0);msg.textContent='Sign in to view your network results.';return;}const [p,t,q]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified')]);if(p.error)throw p.error;if(t.error)throw t.error;if(q.error)throw q.error;const profile=p.data||{},total=t.count||0,qualified=q.count||0;renderNetwork(total,qualified);setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const f=document.querySelectorAll('#profile .profile-row strong');if(f[0])f[0].textContent=user.email||'—';if(f[1])f[1].textContent=profile.phone||'—';if(f[2])f[2].textContent=profile.country||'—';if(f[3])f[3].textContent=profile.created_at?new Date(profile.created_at).toLocaleDateString():'—';if(f[4])f[4].textContent=total.toLocaleString();if(profile.referral_code){const u=new URL(location.href);u.searchParams.set('ref',profile.referral_code);referralInput.value=u.toString();}}catch(e){console.error('Member network load:',e);msg.textContent='Could not load referral data. Check account activation and try again.';}}
+async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');try{const {data:s,error:se}=await supabaseClient.auth.getSession();if(se)throw se;const user=s?.session?.user;if(!user){renderNetwork(0,0);msg.textContent='Sign in to view your network results.';return;}const [p,t,q]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified')]);if(p.error)throw p.error;if(t.error)throw t.error;if(q.error)throw q.error;const profile=p.data||{},total=t.count||0,qualified=q.count||0;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const f=document.querySelectorAll('#profile .profile-row strong');if(f[0])f[0].textContent=user.email||'—';if(f[1])f[1].textContent=profile.phone||'—';if(f[2])f[2].textContent=profile.country||'—';if(f[3])f[3].textContent=profile.created_at?new Date(profile.created_at).toLocaleDateString():'—';if(f[4])f[4].textContent=total.toLocaleString();if(profile.referral_code){const u=new URL(location.href);u.searchParams.set('ref',profile.referral_code);referralInput.value=u.toString();}}catch(e){console.error('Member network load:',e);msg.textContent='Could not load referral data. Check account activation and try again.';}}
 async function loadExchangeRate(){const v=document.getElementById('exchangeRateValue'),u=document.getElementById('exchangeRateUpdated');try{const r=await fetch('https://open.er-api.com/v6/latest/UGX',{cache:'no-store'});if(!r.ok)throw Error('Rate API '+r.status);const d=await r.json(),rate=Number(d?.rates?.USD);if(!Number.isFinite(rate)||rate<=0)throw Error('Invalid rate');v.textContent='1,000 UGX ≈ $'+(rate*1000).toFixed(3);const time=d.time_last_update_utc?new Date(d.time_last_update_utc).toLocaleString():'Latest available';u.innerHTML='<span class="rate-dot"></span>'+time;u.title='Reference rate: 1 UGX = $'+rate.toFixed(8)+' · Source: open.er-api.com';}catch(e){console.warn('Exchange rate:',e);v.textContent='Rate unavailable';u.textContent='Retrying automatically';}}
 async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('Supabase did not load. Refresh and try again.','error');return;}const email=document.getElementById('authEmail').value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.textContent=authMode==='signup'?'Creating account…':'Signing in…';showAuthMessage('Please wait…');try{if(authMode==='signup'){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value;if(!/^[a-z0-9_]{3,30}$/.test(username))throw Error('Username must be 3–30 characters using letters, numbers or underscores.');if(password.length<8)throw Error('Use a password with at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:document.getElementById('authPhone').value.trim(),country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(data.session){showDashboard();await loadMemberNetwork();showAuthMessage('Account created successfully.','success');}else{setAuthMode('login');showAuthMessage('Account created. Check your email for the Supabase confirmation link, then return here and sign in.','success');}}else{const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;if(!data.session)throw Error('No session returned. Please try again.');showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.textContent=authMode==='signup'?'Create Account':'Sign In';}}
 authForm.addEventListener('submit',submitAuth);loginTab.addEventListener('click',()=>setAuthMode('login'));signupTab.addEventListener('click',()=>setAuthMode('signup'));document.getElementById('switchAuthMode').addEventListener('click',()=>setAuthMode(authMode==='login'?'signup':'login'));
@@ -1443,6 +1443,7 @@ const chatInputEl=document.getElementById('globalChatInput');
 const chatStatusEl=document.getElementById('globalChatStatus');
 const adminPanelEl=document.getElementById('adminActivityPanel');
 let currentActivityFilter='all',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
+let currentAvailableBalance=0,currentDirectActiveReferrals=0;
 let teamRows=[];
 async function loadTeamView(level,view){
  const page=document.getElementById('teamWorkspace'),list=document.getElementById('teamMembersList');
@@ -1525,20 +1526,39 @@ activityListEl.addEventListener('submit',async e=>{
  if(error){alert(error.code==='23505'?'You already have a pending or approved submission for this activity.':error.message);return;}
  form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
 });
+function renderWithdrawalEligibility(){
+ const count=Number(currentDirectActiveReferrals||0),balance=Number(currentAvailableBalance||0);
+ const countEl=document.getElementById('withdrawDirectActiveCount'),balanceEl=document.getElementById('withdrawAvailableBalance'),statusEl=document.getElementById('withdrawEligibilityStatus');
+ if(countEl)countEl.textContent=count+' / 3 active';
+ if(balanceEl)balanceEl.textContent='Available: UGX '+Math.max(0,balance).toLocaleString();
+ if(statusEl){
+  if(count>=3&&balance>=23000)statusEl.textContent='You meet both requirements. Payout requests are not yet enabled.';
+  else statusEl.textContent='Still required: '+Math.max(0,3-count)+' more active direct referral(s) and UGX '+Math.max(0,23000-balance).toLocaleString()+' more Available Balance.';
+ }
+}
 async function loadMemberWallet(){
  if(!supabaseClient||!currentMember)return;
  const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
  if(error){console.warn('Wallet ledger:',error);return;}
- const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX'),balance=ugx.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
- const earned=ugx.filter(x=>x.direction==='credit').reduce((n,x)=>n+Number(x.amount),0);
+ const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
+ const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
+ const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
+ const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
+ const profitRows=ugx.filter(x=>['task_reward','welcome_bonus'].includes(x.entry_type));
+ const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
+ const balance=signed(availableRows),teamEarnings=signed(referralRows),earned=signed(profitRows),welcomeBonus=signed(welcomeRows);
+ currentAvailableBalance=Math.max(0,balance);
  const money=n=>'UGX '+Math.max(0,n).toLocaleString(undefined,{maximumFractionDigits:2});
  const strong=document.querySelectorAll('.balance-grid .balance-card strong');
  if(strong[0])strong[0].textContent=money(balance);
- if(strong[3])strong[3].textContent=money(rows.filter(x=>x.entry_type==='referral_commission'&&x.direction==='credit'&&x.currency==='UGX').reduce((n,x)=>n+Number(x.amount),0));
+ if(strong[3])strong[3].textContent=money(teamEarnings);
+ if(strong[4])strong[4].textContent=money(welcomeBonus);
+ const referralTask=document.querySelector('#tasks .task-row .task-amount');if(referralTask)referralTask.textContent=money(teamEarnings);
  const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
  const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
  if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
  const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
+ renderWithdrawalEligibility();
 }
 function chatTime(v){return new Date(v).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
 async function renderGlobalChat(){
