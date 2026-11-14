@@ -1989,7 +1989,95 @@ async function ensureMemberSession(){
    }catch(refreshError){console.warn('Session refresh:',refreshError);}
   }
   return hasRecentAuthGrace()?currentMember:null;
- })();
+ /* ADMIN CONTROL CENTRE: all privileged reads/writes are also enforced by Supabase RLS. */
+const adminConsoleNav=document.getElementById('adminConsoleNav');
+let adminConsoleLoaded={};
+function adminIsAuthorized(){return !!currentMember&&currentMember.app_metadata?.role==='admin';}
+function adminMessage(t){const el=document.getElementById('adminConsoleMessage');if(el)el.textContent=t||'';}
+function adminSafe(v){return escapeText(v===null||v===undefined?'':String(v));}
+function adminTable(headers,rows){if(!rows.length)return '<div class="activity-empty">No records found.</div>';return '<div class="admin-console-table-wrap"><table><thead><tr>'+headers.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table></div>';}
+function adminStatus(v){const x=String(v||'unknown');return '<span class="admin-status '+adminSafe(x)+'">'+adminSafe(x.replace(/_/g,' '))+'</span>';}
+async function adminCount(table,filter){let q=supabaseClient.from(table).select('*',{count:'exact',head:true});if(filter)q=filter(q);const r=await q;return r.error?null:r.count;}
+async function loadAdminConsoleOverview(){
+ if(!adminIsAuthorized())return;
+ adminMessage('Refreshing secure platform statistics…');
+ const specs=[['admMetricMembers','profiles'],['admMetricTasks','tasks'],['admMetricReviews','task_submissions'],['admMetricWithdrawals','withdrawal_requests'],['admMetricActivations','activation_payment_submissions'],['admMetricReferrals','referrals']];
+ const counts=await Promise.all(specs.map(async([id,table])=>{let f=null;if(table==='tasks')f=q=>q.eq('status','published');if(table==='task_submissions'||table==='withdrawal_requests'||table==='activation_payment_submissions')f=q=>q.eq('status','pending');return [id,await adminCount(table,f)];}));
+ counts.forEach(([id,n])=>{const el=document.getElementById(id);if(el)el.textContent=n===null?'—':Number(n).toLocaleString();});
+ const [tasks,withdrawals]=await Promise.all([
+  supabaseClient.from('tasks').select('title,status,created_at').order('created_at',{ascending:false}).limit(4),
+  supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at').order('created_at',{ascending:false}).limit(4)
+ ]);
+ const recent=document.getElementById('adminOverviewRecent');
+ if(recent){const a=(tasks.data||[]).map(x=>'• Task: '+adminSafe(x.title)+' — '+adminSafe(x.status));const b=(withdrawals.data||[]).map(x=>'• Withdrawal request: '+adminSafe(x.amount)+' '+adminSafe(x.currency)+' — '+adminSafe(x.status));recent.innerHTML='<strong style="color:#eaf2ff">Recent platform records</strong><p style="margin-top:8px;line-height:1.9">'+(a.concat(b).join('<br>')||'No recent records yet.')+'</p>';}
+ adminMessage('Administrator access verified. Data is governed by Supabase row-level security.');
+}
+async function loadAdminMembers(){
+ const host=document.getElementById('adminMembersMount');if(!host||!adminIsAuthorized())return;
+ host.innerHTML='<div class="activity-empty">Loading member profiles…</div>';
+ const {data,error}=await supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(500);
+ if(error){host.textContent='Member directory unavailable: '+error.message;return;}
+ const render=()=>{const term=(document.getElementById('adminMembersSearch')?.value||'').trim().toLowerCase();const rows=(data||[]).filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(term)));host.innerHTML=adminTable(['Member','Contact','Country','Joined'],rows.map(x=>'<tr><td><strong>'+adminSafe(x.username||'Member')+'</strong><br><small>'+adminSafe(x.id)+'</small></td><td>'+adminSafe(x.contact_email||'Not provided')+'<br>'+adminSafe(x.phone||'Not provided')+'</td><td>'+adminSafe(x.country||'—')+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString():'—')+'</td></tr>'));};
+ render();const input=document.getElementById('adminMembersSearch');if(input&&!input.dataset.adminBound){input.addEventListener('input',render);input.dataset.adminBound='1';}
+}
+async function loadAdminWithdrawals(){
+ const host=document.getElementById('adminWithdrawalsList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading withdrawal requests…</div>';
+ const {data,error}=await supabaseClient.from('withdrawal_requests').select('id,user_id,amount,currency,payout_method,payout_details,status,admin_note,created_at').order('created_at',{ascending:false}).limit(150);
+ if(error){host.textContent='Withdrawal requests unavailable: '+error.message;return;}
+ host.innerHTML=adminTable(['Request','Amount','Payout details','Status / decision'],(data||[]).map(x=>'<tr data-admin-withdrawal="'+adminSafe(x.id)+'"><td>'+adminSafe(x.id)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td><strong>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'</strong></td><td>'+adminSafe(x.payout_method)+'<br><small>'+adminSafe(JSON.stringify(x.payout_details||{}))+'</small></td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No note')+'</small><div class="admin-row-actions" style="margin-top:7px"><button class="admin-action secondary" data-withdraw-status="under_review">Review</button><button class="admin-action" data-withdraw-status="approved">Approve</button><button class="admin-action danger" data-withdraw-status="rejected">Reject</button></div></td></tr>'));
+}
+async function loadAdminActivations(){
+ const host=document.getElementById('adminActivationList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading activation submissions…</div>';
+ const {data,error}=await supabaseClient.from('activation_payment_submissions').select('id,user_id,amount,currency,payment_method,payment_reference,status,admin_note,created_at').order('created_at',{ascending:false}).limit(150);
+ if(error){host.textContent='Activation submissions unavailable: '+error.message;return;}
+ host.innerHTML=adminTable(['Submission','Payment','Reference','Status / decision'],(data||[]).map(x=>'<tr data-admin-activation="'+adminSafe(x.id)+'"><td>'+adminSafe(x.id)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'<br>'+adminSafe(x.payment_method)+'</td><td>'+adminSafe(x.payment_reference||'Not supplied')+'</td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No note')+'</small><div class="admin-row-actions" style="margin-top:7px"><button class="admin-action" data-activation-status="verified">Verify</button><button class="admin-action danger" data-activation-status="rejected">Reject</button></div></td></tr>'));
+}
+async function loadAdminReferralsLedger(){
+ const a=document.getElementById('adminReferralsList'),b=document.getElementById('adminLedgerList');if(!adminIsAuthorized())return;
+ const [r,l]=await Promise.all([supabaseClient.from('referrals').select('id,referrer_id,referred_user_id,status,created_at,qualified_at').order('created_at',{ascending:false}).limit(100),supabaseClient.from('reward_ledger').select('id,user_id,entry_type,direction,amount,currency,note,created_at').order('created_at',{ascending:false}).limit(100)]);
+ if(a)a.innerHTML=r.error?'Could not load referrals: '+adminSafe(r.error.message):adminTable(['Referrer','New member','Status','Date'],(r.data||[]).map(x=>'<tr><td>'+adminSafe(x.referrer_id)+'</td><td>'+adminSafe(x.referred_user_id)+'</td><td>'+adminStatus(x.status)+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString():'')+'</td></tr>'));
+ if(b)b.innerHTML=l.error?'Could not load ledger: '+adminSafe(l.error.message):adminTable(['Member','Entry','Amount','Note / date'],(l.data||[]).map(x=>'<tr><td>'+adminSafe(x.user_id)+'</td><td>'+adminSafe(x.entry_type)+'<br>'+adminSafe(x.direction)+'</td><td>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'</td><td>'+adminSafe(x.note||'—')+'<br><small>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td></tr>'));
+}
+async function loadAdminSupport(){
+ const host=document.getElementById('adminSupportList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading support tickets…</div>';
+ const {data,error}=await supabaseClient.from('support_tickets').select('id,user_id,subject,message,status,priority,created_at').order('created_at',{ascending:false}).limit(100);
+ if(error){host.textContent='Support tickets unavailable: '+error.message;return;}
+ host.innerHTML=adminTable(['Ticket','Message','Priority','Status'],(data||[]).map(x=>'<tr data-admin-ticket="'+adminSafe(x.id)+'"><td>'+adminSafe(x.subject)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td>'+adminSafe(x.message)+'</td><td>'+adminSafe(x.priority)+'</td><td>'+adminStatus(x.status)+'<div class="admin-row-actions" style="margin-top:7px"><button class="admin-action secondary" data-ticket-status="in_progress">In progress</button><button class="admin-action" data-ticket-status="resolved">Resolve</button><button class="admin-action danger" data-ticket-status="closed">Close</button></div></td></tr>'));
+}
+async function loadAdminReports(){
+ const host=document.getElementById('adminReportsList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading chat reports…</div>';
+ const {data,error}=await supabaseClient.from('global_chat_reports').select('id,message_id,reporter_id,reason,created_at').order('created_at',{ascending:false}).limit(100);
+ if(error){host.textContent='Chat reports unavailable: '+error.message;return;}
+ host.innerHTML=adminTable(['Report','Message ID','Reason','Submitted'],(data||[]).map(x=>'<tr><td>'+adminSafe(x.id)+'<br><small>Reporter: '+adminSafe(x.reporter_id)+'</small></td><td>'+adminSafe(x.message_id)+'</td><td>'+adminSafe(x.reason)+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</td></tr>'));
+}
+async function loadAdminAuditSettings(){
+ const a=document.getElementById('adminAuditList'),b=document.getElementById('adminSettingsList');
+ const [logs,settings]=await Promise.all([supabaseClient.from('admin_audit_logs').select('id,admin_id,action,target_type,target_id,details,created_at').order('created_at',{ascending:false}).limit(100),supabaseClient.from('platform_settings').select('key,value,updated_at,updated_by').order('key')]);
+ if(a)a.innerHTML=logs.error?'Audit log unavailable: '+adminSafe(logs.error.message):adminTable(['Action','Target','Details','Date'],(logs.data||[]).map(x=>'<tr><td>'+adminSafe(x.action)+'<br><small>'+adminSafe(x.admin_id)+'</small></td><td>'+adminSafe(x.target_type||'—')+'<br>'+adminSafe(x.target_id||'')+'</td><td>'+adminSafe(JSON.stringify(x.details||{}))+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</td></tr>'));
+ if(b)b.innerHTML=settings.error?'Settings unavailable: '+adminSafe(settings.error.message):adminTable(['Setting','Value','Updated'],(settings.data||[]).map(x=>'<tr><td>'+adminSafe(x.key)+'</td><td>'+adminSafe(JSON.stringify(x.value))+'</td><td>'+adminSafe(x.updated_at?new Date(x.updated_at).toLocaleString():'')+'</td></tr>'));
+}
+async function loadAdminConsoleTab(id){
+ if(!adminIsAuthorized()){adminMessage('Administrator authorization required.');return;}
+ if(id==='adminOverviewPanel')return loadAdminConsoleOverview();
+ const jobs={'adminMembersPanel':loadAdminMembers,'adminActivitiesPanel':async()=>{if(adminProfileDirectoryMount()){};await loadAdminActivityTools();},'adminWithdrawalsPanel':loadAdminWithdrawals,'adminActivationPanel':loadAdminActivations,'adminReferralsPanel':loadAdminReferralsLedger,'adminSupportPanel':loadAdminSupport,'adminModerationPanel':loadAdminReports,'adminAuditPanel':loadAdminAuditSettings};
+ const job=jobs[id];if(job)await job();
+}
+function adminProfileDirectoryMount(){const panel=document.getElementById('adminProfileDirectory'),mount=document.getElementById('adminMembersMount');if(panel&&mount){panel.hidden=false;mount.appendChild(panel);}return true;}
+function setupAdminConsole(){
+ const authorized=adminIsAuthorized();if(adminConsoleNav)adminConsoleNav.hidden=!authorized;
+ if(!authorized){const page=document.getElementById('adminPage');if(page)page.hidden=true;return;}
+ const activityMount=document.getElementById('adminActivityMount');if(activityMount&&adminPanelEl){activityMount.appendChild(adminPanelEl);adminPanelEl.classList.add('visible');}
+ adminProfileDirectoryMount();
+ document.querySelectorAll('[data-admin-tab]').forEach(btn=>{if(btn.dataset.bound)return;btn.dataset.bound='1';btn.addEventListener('click',()=>{document.querySelectorAll('[data-admin-tab]').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('.admin-console-panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.adminTab));loadAdminConsoleTab(btn.dataset.adminTab);});});
+ if(adminConsoleNav&&!adminConsoleNav.dataset.bound){adminConsoleNav.dataset.bound='1';adminConsoleNav.addEventListener('click',()=>{if(adminIsAuthorized())loadAdminConsoleTab('adminOverviewPanel');});}
+ loadAdminConsoleOverview();
+}
+document.getElementById('adminWithdrawalsList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-withdraw-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-withdrawal]');const note=prompt('Add an administrator review note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('withdrawal_requests').update({status:b.dataset.withdrawStatus,admin_note:note,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminWithdrawal);if(error)alert('Could not update request: '+error.message);else{adminMessage('Withdrawal review decision saved. No money has been transferred.');await loadAdminWithdrawals();}});
+document.getElementById('adminActivationList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-activation-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-activation]');const note=prompt('Confirm payment reference verification and enter a note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('activation_payment_submissions').update({status:b.dataset.activationStatus,admin_note:note,reviewed_by:currentMember.id,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminActivation);if(error)alert('Could not update activation: '+error.message);else{adminMessage('Activation review saved.');await loadAdminActivations();}});
+document.getElementById('adminSupportList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-ticket-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-ticket]');const {error}=await supabaseClient.from('support_tickets').update({status:b.dataset.ticketStatus,updated_at:new Date().toISOString()}).eq('id',row.dataset.adminTicket);if(error)alert('Could not update ticket: '+error.message);else await loadAdminSupport();});
+})();
+
+})();
  try{return await memberSessionCheck;}finally{memberSessionCheck=null;}
 }
 function beginAuthGrace(){
@@ -2652,93 +2740,6 @@ if(supabaseClient){
   window.addEventListener('offline',()=>{if(hasRecentAuthGrace())beginAuthGrace();else showSessionNotice('You are offline. Reconnect to load live Supabase data.');});
 
 }else{requireAuth();}
-/* ADMIN CONTROL CENTRE: all privileged reads/writes are also enforced by Supabase RLS. */
-const adminConsoleNav=document.getElementById('adminConsoleNav');
-let adminConsoleLoaded={};
-function adminIsAuthorized(){return !!currentMember&&currentMember.app_metadata?.role==='admin';}
-function adminMessage(t){const el=document.getElementById('adminConsoleMessage');if(el)el.textContent=t||'';}
-function adminSafe(v){return escapeText(v===null||v===undefined?'':String(v));}
-function adminTable(headers,rows){if(!rows.length)return '<div class="activity-empty">No records found.</div>';return '<div class="admin-console-table-wrap"><table><thead><tr>'+headers.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table></div>';}
-function adminStatus(v){const x=String(v||'unknown');return '<span class="admin-status '+adminSafe(x)+'">'+adminSafe(x.replace(/_/g,' '))+'</span>';}
-async function adminCount(table,filter){let q=supabaseClient.from(table).select('*',{count:'exact',head:true});if(filter)q=filter(q);const r=await q;return r.error?null:r.count;}
-async function loadAdminConsoleOverview(){
- if(!adminIsAuthorized())return;
- adminMessage('Refreshing secure platform statistics…');
- const specs=[['admMetricMembers','profiles'],['admMetricTasks','tasks'],['admMetricReviews','task_submissions'],['admMetricWithdrawals','withdrawal_requests'],['admMetricActivations','activation_payment_submissions'],['admMetricReferrals','referrals']];
- const counts=await Promise.all(specs.map(async([id,table])=>{let f=null;if(table==='tasks')f=q=>q.eq('status','published');if(table==='task_submissions'||table==='withdrawal_requests'||table==='activation_payment_submissions')f=q=>q.eq('status','pending');return [id,await adminCount(table,f)];}));
- counts.forEach(([id,n])=>{const el=document.getElementById(id);if(el)el.textContent=n===null?'—':Number(n).toLocaleString();});
- const [tasks,withdrawals]=await Promise.all([
-  supabaseClient.from('tasks').select('title,status,created_at').order('created_at',{ascending:false}).limit(4),
-  supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at').order('created_at',{ascending:false}).limit(4)
- ]);
- const recent=document.getElementById('adminOverviewRecent');
- if(recent){const a=(tasks.data||[]).map(x=>'• Task: '+adminSafe(x.title)+' — '+adminSafe(x.status));const b=(withdrawals.data||[]).map(x=>'• Withdrawal request: '+adminSafe(x.amount)+' '+adminSafe(x.currency)+' — '+adminSafe(x.status));recent.innerHTML='<strong style="color:#eaf2ff">Recent platform records</strong><p style="margin-top:8px;line-height:1.9">'+(a.concat(b).join('<br>')||'No recent records yet.')+'</p>';}
- adminMessage('Administrator access verified. Data is governed by Supabase row-level security.');
-}
-async function loadAdminMembers(){
- const host=document.getElementById('adminMembersMount');if(!host||!adminIsAuthorized())return;
- host.innerHTML='<div class="activity-empty">Loading member profiles…</div>';
- const {data,error}=await supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(500);
- if(error){host.textContent='Member directory unavailable: '+error.message;return;}
- const render=()=>{const term=(document.getElementById('adminMembersSearch')?.value||'').trim().toLowerCase();const rows=(data||[]).filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(term)));host.innerHTML=adminTable(['Member','Contact','Country','Joined'],rows.map(x=>'<tr><td><strong>'+adminSafe(x.username||'Member')+'</strong><br><small>'+adminSafe(x.id)+'</small></td><td>'+adminSafe(x.contact_email||'Not provided')+'<br>'+adminSafe(x.phone||'Not provided')+'</td><td>'+adminSafe(x.country||'—')+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString():'—')+'</td></tr>'));};
- render();const input=document.getElementById('adminMembersSearch');if(input&&!input.dataset.adminBound){input.addEventListener('input',render);input.dataset.adminBound='1';}
-}
-async function loadAdminWithdrawals(){
- const host=document.getElementById('adminWithdrawalsList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading withdrawal requests…</div>';
- const {data,error}=await supabaseClient.from('withdrawal_requests').select('id,user_id,amount,currency,payout_method,payout_details,status,admin_note,created_at').order('created_at',{ascending:false}).limit(150);
- if(error){host.textContent='Withdrawal requests unavailable: '+error.message;return;}
- host.innerHTML=adminTable(['Request','Amount','Payout details','Status / decision'],(data||[]).map(x=>'<tr data-admin-withdrawal="'+adminSafe(x.id)+'"><td>'+adminSafe(x.id)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td><strong>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'</strong></td><td>'+adminSafe(x.payout_method)+'<br><small>'+adminSafe(JSON.stringify(x.payout_details||{}))+'</small></td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No note')+'</small><div class="admin-row-actions" style="margin-top:7px"><button class="admin-action secondary" data-withdraw-status="under_review">Review</button><button class="admin-action" data-withdraw-status="approved">Approve</button><button class="admin-action danger" data-withdraw-status="rejected">Reject</button></div></td></tr>'));
-}
-async function loadAdminActivations(){
- const host=document.getElementById('adminActivationList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading activation submissions…</div>';
- const {data,error}=await supabaseClient.from('activation_payment_submissions').select('id,user_id,amount,currency,payment_method,payment_reference,status,admin_note,created_at').order('created_at',{ascending:false}).limit(150);
- if(error){host.textContent='Activation submissions unavailable: '+error.message;return;}
- host.innerHTML=adminTable(['Submission','Payment','Reference','Status / decision'],(data||[]).map(x=>'<tr data-admin-activation="'+adminSafe(x.id)+'"><td>'+adminSafe(x.id)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'<br>'+adminSafe(x.payment_method)+'</td><td>'+adminSafe(x.payment_reference||'Not supplied')+'</td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No note')+'</small><div class="admin-row-actions" style="margin-top:7px"><button class="admin-action" data-activation-status="verified">Verify</button><button class="admin-action danger" data-activation-status="rejected">Reject</button></div></td></tr>'));
-}
-async function loadAdminReferralsLedger(){
- const a=document.getElementById('adminReferralsList'),b=document.getElementById('adminLedgerList');if(!adminIsAuthorized())return;
- const [r,l]=await Promise.all([supabaseClient.from('referrals').select('id,referrer_id,referred_user_id,status,created_at,qualified_at').order('created_at',{ascending:false}).limit(100),supabaseClient.from('reward_ledger').select('id,user_id,entry_type,direction,amount,currency,note,created_at').order('created_at',{ascending:false}).limit(100)]);
- if(a)a.innerHTML=r.error?'Could not load referrals: '+adminSafe(r.error.message):adminTable(['Referrer','New member','Status','Date'],(r.data||[]).map(x=>'<tr><td>'+adminSafe(x.referrer_id)+'</td><td>'+adminSafe(x.referred_user_id)+'</td><td>'+adminStatus(x.status)+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString():'')+'</td></tr>'));
- if(b)b.innerHTML=l.error?'Could not load ledger: '+adminSafe(l.error.message):adminTable(['Member','Entry','Amount','Note / date'],(l.data||[]).map(x=>'<tr><td>'+adminSafe(x.user_id)+'</td><td>'+adminSafe(x.entry_type)+'<br>'+adminSafe(x.direction)+'</td><td>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'</td><td>'+adminSafe(x.note||'—')+'<br><small>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td></tr>'));
-}
-async function loadAdminSupport(){
- const host=document.getElementById('adminSupportList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading support tickets…</div>';
- const {data,error}=await supabaseClient.from('support_tickets').select('id,user_id,subject,message,status,priority,created_at').order('created_at',{ascending:false}).limit(100);
- if(error){host.textContent='Support tickets unavailable: '+error.message;return;}
- host.innerHTML=adminTable(['Ticket','Message','Priority','Status'],(data||[]).map(x=>'<tr data-admin-ticket="'+adminSafe(x.id)+'"><td>'+adminSafe(x.subject)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td>'+adminSafe(x.message)+'</td><td>'+adminSafe(x.priority)+'</td><td>'+adminStatus(x.status)+'<div class="admin-row-actions" style="margin-top:7px"><button class="admin-action secondary" data-ticket-status="in_progress">In progress</button><button class="admin-action" data-ticket-status="resolved">Resolve</button><button class="admin-action danger" data-ticket-status="closed">Close</button></div></td></tr>'));
-}
-async function loadAdminReports(){
- const host=document.getElementById('adminReportsList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading chat reports…</div>';
- const {data,error}=await supabaseClient.from('global_chat_reports').select('id,message_id,reporter_id,reason,created_at').order('created_at',{ascending:false}).limit(100);
- if(error){host.textContent='Chat reports unavailable: '+error.message;return;}
- host.innerHTML=adminTable(['Report','Message ID','Reason','Submitted'],(data||[]).map(x=>'<tr><td>'+adminSafe(x.id)+'<br><small>Reporter: '+adminSafe(x.reporter_id)+'</small></td><td>'+adminSafe(x.message_id)+'</td><td>'+adminSafe(x.reason)+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</td></tr>'));
-}
-async function loadAdminAuditSettings(){
- const a=document.getElementById('adminAuditList'),b=document.getElementById('adminSettingsList');
- const [logs,settings]=await Promise.all([supabaseClient.from('admin_audit_logs').select('id,admin_id,action,target_type,target_id,details,created_at').order('created_at',{ascending:false}).limit(100),supabaseClient.from('platform_settings').select('key,value,updated_at,updated_by').order('key')]);
- if(a)a.innerHTML=logs.error?'Audit log unavailable: '+adminSafe(logs.error.message):adminTable(['Action','Target','Details','Date'],(logs.data||[]).map(x=>'<tr><td>'+adminSafe(x.action)+'<br><small>'+adminSafe(x.admin_id)+'</small></td><td>'+adminSafe(x.target_type||'—')+'<br>'+adminSafe(x.target_id||'')+'</td><td>'+adminSafe(JSON.stringify(x.details||{}))+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</td></tr>'));
- if(b)b.innerHTML=settings.error?'Settings unavailable: '+adminSafe(settings.error.message):adminTable(['Setting','Value','Updated'],(settings.data||[]).map(x=>'<tr><td>'+adminSafe(x.key)+'</td><td>'+adminSafe(JSON.stringify(x.value))+'</td><td>'+adminSafe(x.updated_at?new Date(x.updated_at).toLocaleString():'')+'</td></tr>'));
-}
-async function loadAdminConsoleTab(id){
- if(!adminIsAuthorized()){adminMessage('Administrator authorization required.');return;}
- if(id==='adminOverviewPanel')return loadAdminConsoleOverview();
- const jobs={'adminMembersPanel':loadAdminMembers,'adminActivitiesPanel':async()=>{if(adminProfileDirectoryMount()){};await loadAdminActivityTools();},'adminWithdrawalsPanel':loadAdminWithdrawals,'adminActivationPanel':loadAdminActivations,'adminReferralsPanel':loadAdminReferralsLedger,'adminSupportPanel':loadAdminSupport,'adminModerationPanel':loadAdminReports,'adminAuditPanel':loadAdminAuditSettings};
- const job=jobs[id];if(job)await job();
-}
-function adminProfileDirectoryMount(){const panel=document.getElementById('adminProfileDirectory'),mount=document.getElementById('adminMembersMount');if(panel&&mount){panel.hidden=false;mount.appendChild(panel);}return true;}
-function setupAdminConsole(){
- const authorized=adminIsAuthorized();if(adminConsoleNav)adminConsoleNav.hidden=!authorized;
- if(!authorized){const page=document.getElementById('adminPage');if(page)page.hidden=true;return;}
- const activityMount=document.getElementById('adminActivityMount');if(activityMount&&adminPanelEl){activityMount.appendChild(adminPanelEl);adminPanelEl.classList.add('visible');}
- adminProfileDirectoryMount();
- document.querySelectorAll('[data-admin-tab]').forEach(btn=>{if(btn.dataset.bound)return;btn.dataset.bound='1';btn.addEventListener('click',()=>{document.querySelectorAll('[data-admin-tab]').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('.admin-console-panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.adminTab));loadAdminConsoleTab(btn.dataset.adminTab);});});
- if(adminConsoleNav&&!adminConsoleNav.dataset.bound){adminConsoleNav.dataset.bound='1';adminConsoleNav.addEventListener('click',()=>{if(adminIsAuthorized())loadAdminConsoleTab('adminOverviewPanel');});}
- loadAdminConsoleOverview();
-}
-document.getElementById('adminWithdrawalsList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-withdraw-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-withdrawal]');const note=prompt('Add an administrator review note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('withdrawal_requests').update({status:b.dataset.withdrawStatus,admin_note:note,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminWithdrawal);if(error)alert('Could not update request: '+error.message);else{adminMessage('Withdrawal review decision saved. No money has been transferred.');await loadAdminWithdrawals();}});
-document.getElementById('adminActivationList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-activation-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-activation]');const note=prompt('Confirm payment reference verification and enter a note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('activation_payment_submissions').update({status:b.dataset.activationStatus,admin_note:note,reviewed_by:currentMember.id,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminActivation);if(error)alert('Could not update activation: '+error.message);else{adminMessage('Activation review saved.');await loadAdminActivations();}});
-document.getElementById('adminSupportList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-ticket-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-ticket]');const {error}=await supabaseClient.from('support_tickets').update({status:b.dataset.ticketStatus,updated_at:new Date().toISOString()}).eq('id',row.dataset.adminTicket);if(error)alert('Could not update ticket: '+error.message);else await loadAdminSupport();});
-})();
 </script>
 
 </body>
