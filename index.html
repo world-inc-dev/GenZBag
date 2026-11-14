@@ -3336,22 +3336,22 @@ body.activation-screen-open{overflow:hidden!important}
       <div class="table-responsive"><table class="feature-table"><thead><tr><th>#</th><th>Username</th><th>Status</th></tr></thead><tbody><tr><td colspan="3">No users activated by you recently.</td></tr></tbody></table></div>
     </div>
     <div id="voucherBuyPanel" class="feature-detail-panel" hidden>
-      <div class="feature-stat-grid"><div><small>ACCOUNT BALANCE</small><strong id="voucherAccountBalance">UGX 0</strong></div><div><small>VOUCHER BALANCE</small><strong>0 vouchers</strong></div><div><small>REFERENCE COST PER VOUCHER</small><strong>UGX 19,500</strong></div></div>
-      <h3>Purchase Vouchers</h3><p>Activation Country: Uganda. Reference cost shown: UGX 19,500 per voucher; confirm the final fee before enabling purchases.</p>
+      <div class="feature-stat-grid"><div><small>ACCOUNT BALANCE</small><strong id="voucherAccountBalance">UGX 0</strong></div><div><small>VOUCHER BALANCE</small><strong id="voucherAvailableCount">0 vouchers</strong></div><div><small>REFERENCE COST PER VOUCHER</small><strong>UGX 19,500</strong></div></div>
+      <h3>Purchase Vouchers</h3><p>Activation Country: Uganda. Each voucher costs UGX 19,500 and is deducted from your available wallet balance.</p>
       <label class="feature-field">Number of Vouchers<input id="voucherQuantity" type="number" min="1" step="1" value="1"></label>
       <p id="voucherPurchaseTotal" class="feature-calculated">Estimated total: UGX 19,500</p>
-      <button class="activity-btn" type="button" disabled>Purchase Vouchers · Not enabled</button><p class="activity-note">Voucher purchases and balance deductions are disabled until a verified payment and voucher issuance workflow is configured.</p>
+      <button class="activity-btn" id="voucherPurchaseButton" type="button">Purchase Vouchers</button><p id="voucherPurchaseMessage" class="activity-note" role="status">Vouchers are issued instantly after a successful wallet deduction. Maximum 20 per purchase.</p>
     </div>
     <div id="voucherActivatePanel" class="feature-detail-panel" hidden>
-      <div class="feature-stat-grid"><div><small>YOUR VOUCHER BALANCE</small><strong>0 vouchers</strong></div><div><small>ACTIVATIONS TODAY</small><strong>0 / 2</strong></div><div><small>ACTIVATION COUNTRY</small><strong>Uganda</strong></div></div>
+      <div class="feature-stat-grid"><div><small>YOUR VOUCHER BALANCE</small><strong id="voucherActivateCount">0 vouchers</strong></div><div><small>ACTIVATIONS TODAY</small><strong id="voucherTodayCount">0 / 2</strong></div><div><small>ACTIVATION COUNTRY</small><strong>Uganda</strong></div></div>
       <h3>Activate an Account</h3><p>Use a voucher to activate a downline account. Daily limit: 2 activations.</p>
       <label class="feature-field">Username to Activate<input id="voucherActivateUsername" type="text" maxlength="60" placeholder="Enter downline username"></label>
-      <button class="activity-btn" type="button" disabled>Activate User · Not enabled</button><p class="activity-note">Activation cannot be completed until voucher ownership, direct-downline relationship and daily limits are verified on the server.</p>
+      <button class="activity-btn" id="voucherActivateButton" type="button">Activate User</button><p id="voucherActivateMessage" class="activity-note" role="status">Only your direct downline members registered in Uganda can be activated. Daily limit: 2.</p>
     </div>
     <div id="voucherHistoryPanel" class="feature-detail-panel" hidden>
       <h3>Voucher History</h3><p>Users you have activated using vouchers.</p>
-      <div class="feature-stat-grid"><div><small>TOTAL ACTIVATED</small><strong>0 users</strong></div></div>
-      <div class="table-responsive"><table class="feature-table"><thead><tr><th>S/No</th><th>Activated User</th><th>Activation Date</th></tr></thead><tbody><tr><td colspan="3">No activation records available.</td></tr></tbody></table></div>
+      <div class="feature-stat-grid"><div><small>TOTAL ACTIVATED</small><strong id="voucherActivatedTotal">0 users</strong></div></div>
+      <div class="table-responsive"><table class="feature-table"><thead><tr><th>S/No</th><th>Activated User</th><th>Activation Date</th></tr></thead><tbody id="voucherHistoryRows"><tr><td colspan="3">Loading voucher history…</td></tr></tbody></table></div>
     </div>
     <div id="withdrawHistoryPanel" class="feature-detail-panel" hidden>
       <h3>Withdrawal History</h3><p>Review withdrawal requests and their current status.</p><div id="withdrawHistoryList" class="activity-empty">Sign in to view withdrawal history.</div>
@@ -3630,9 +3630,9 @@ const featureContent={
  'withdraw-spotify':{icon:'🎵',title:'Withdraw Spotify',description:'View eligible rewards associated with approved Spotify activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on artificial streams.'},
  'welcome-bonus':{icon:'🎁',title:'Welcome Bonus',description:'A planned welcome reward area where new members can check whether an official welcome offer is available to their account.',notice:'No welcome-bonus amount, eligibility rules or funding have been configured yet. No bonus has been credited or promised. The offer will appear here only after it is officially funded and approved.'},
  'chat-claim-bonus':{icon:'🎁',title:'Chat Bonus',description:'Check official bonus campaigns related to Chat with Foreigners.',notice:'No chat bonus campaign is currently active. This page does not award or credit money. Only verified, funded campaigns approved by GenZBag will appear here.'},
- 'voucher-buy':{icon:'🎟️',title:'Buy Voucher',description:'Purchase activation vouchers for eligible downline members.',notice:'Voucher purchasing is a visual preview only. No money is charged and no vouchers are issued.'},
- 'voucher-activate':{icon:'🔑',title:'Activate User',description:'Use a voucher to activate a downline account.',notice:'Voucher activation is not connected to a verified voucher inventory or activation workflow yet.'},
- 'voucher-history':{icon:'📜',title:'Voucher History',description:'View accounts activated using your vouchers.',notice:'This history panel is awaiting verified voucher transaction records.'},
+ 'voucher-buy':{icon:'🎟️',title:'Buy Voucher',description:'Purchase activation vouchers for eligible downline members.',notice:'Each voucher costs UGX 19,500 and is deducted securely from your available wallet balance.'},
+ 'voucher-activate':{icon:'🔑',title:'Activate User',description:'Use a voucher to activate a direct downline account.',notice:'Activations are verified on the server. Only direct downline members in Uganda qualify; maximum two per day.'},
+ 'voucher-history':{icon:'📜',title:'Voucher History',description:'View accounts activated using your vouchers.',notice:'Your completed voucher activations are loaded from verified records.'},
  'withdraw-history':{icon:'📜',title:'Withdrawal History',description:'Review your submitted withdrawal requests.',notice:'Read-only list of withdrawal requests already recorded for your account. New withdrawal requests remain disabled until secure payout processing is enabled.'},
  'withdraw-trivia':{icon:'🧠',title:'Withdraw Trivia',description:'View eligible approved trivia rewards.',notice:'Trivia withdrawals are not configured as a separate payout channel.'},
  'withdraw-fix':{icon:'👆',title:'Withdraw Fix Tap',description:'View eligible approved Fix Tap rewards.',notice:'Fix Tap withdrawals are not configured as a separate payout channel.'},
@@ -3644,7 +3644,40 @@ const featureContent={
  'quick-loans':{icon:'💳',title:'Quick Loans',description:'Review any official loan information made available by GenZBag.',notice:'No loan provider, eligibility criteria or loan service is connected. Do not pay an upfront fee or share your financial credentials.'}
 };
 document.getElementById('withdrawMenuToggle').addEventListener('click',()=>{const b=document.getElementById('withdrawMenuToggle'),menu=document.getElementById('withdrawSubmenu'),open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));menu.classList.toggle('open',!open);});
-document.getElementById('voucherQuantity')?.addEventListener('input',()=>{const n=Math.max(1,Math.floor(Number(document.getElementById('voucherQuantity').value||1)));document.getElementById('voucherPurchaseTotal').textContent='Estimated total: UGX '+(n*19000).toLocaleString();});
+
+async function loadVoucherSummary(){
+ if(!supabaseClient||!currentMember)return;
+ const {data,error}=await supabaseClient.rpc('get_my_voucher_summary');
+ if(error){console.warn('Voucher summary:',error);return;}
+ const d=data||{},available=Number(d.available||0),today=Number(d.today||0),history=Array.isArray(d.activations)?d.activations:[];
+ const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+ set('voucherAvailableCount',available+' vouchers');set('voucherActivateCount',available+' vouchers');set('voucherTodayCount',today+' / 2');set('voucherActivatedTotal',history.length+' users');
+ const rows=document.getElementById('voucherHistoryRows');
+ if(rows)rows.innerHTML=history.length?history.map((x,i)=>'<tr><td>'+(i+1)+'</td><td>'+escapeText(x.username||'Member')+'</td><td>'+escapeText(new Date(x.redeemed_at).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}))+'</td></tr>').join(''):'<tr><td colspan="3">No voucher activations yet.</td></tr>';
+}
+document.getElementById('voucherPurchaseButton')?.addEventListener('click',async()=>{
+ const button=document.getElementById('voucherPurchaseButton'),msg=document.getElementById('voucherPurchaseMessage'),qty=Math.floor(Number(document.getElementById('voucherQuantity')?.value||1));
+ if(!currentMember){msg.textContent='Please sign in to purchase vouchers.';return;}
+ if(!Number.isInteger(qty)||qty<1||qty>20){msg.textContent='Choose between 1 and 20 vouchers.';return;}
+ const total=qty*19500;if(currentAvailableBalance<total){msg.textContent='Insufficient available balance. You need UGX '+total.toLocaleString()+'.';return;}
+ if(!confirm('Purchase '+qty+' voucher(s) for UGX '+total.toLocaleString()+' from your available wallet balance?'))return;
+ button.disabled=true;button.textContent='Processing…';msg.textContent='Securing your voucher purchase…';
+ try{const {data,error}=await supabaseClient.rpc('buy_member_vouchers',{p_quantity:qty});if(error)throw error;msg.textContent='Success! '+data.quantity+' voucher(s) purchased for UGX '+Number(data.total).toLocaleString()+'.';await loadMemberWallet();await loadVoucherSummary();}
+ catch(err){msg.textContent=err.message||'Voucher purchase failed. No voucher was issued.';}
+ finally{button.disabled=false;button.textContent='Purchase Vouchers';}
+});
+document.getElementById('voucherActivateButton')?.addEventListener('click',async()=>{
+ const button=document.getElementById('voucherActivateButton'),msg=document.getElementById('voucherActivateMessage'),username=document.getElementById('voucherActivateUsername')?.value.trim();
+ if(!currentMember){msg.textContent='Please sign in to activate a member.';return;}
+ if(!username){msg.textContent='Enter the username of your direct downline member.';return;}
+ if(!confirm('Use one voucher to activate @'+username+'? This action cannot be reversed.'))return;
+ button.disabled=true;button.textContent='Activating…';msg.textContent='Checking voucher ownership, downline relationship and daily limit…';
+ try{const {data,error}=await supabaseClient.rpc('redeem_member_voucher',{p_username:username});if(error)throw error;msg.textContent='Success! @'+data.username+' has been activated. '+data.activations_today+' of 2 daily activations used.';document.getElementById('voucherActivateUsername').value='';await loadVoucherSummary();await loadMemberWallet();}
+ catch(err){msg.textContent=err.message||'Activation failed. Your voucher was not used.';}
+ finally{button.disabled=false;button.textContent='Activate User';}
+});
+
+document.getElementById('voucherQuantity')?.addEventListener('input',()=>{const n=Math.max(1,Math.floor(Number(document.getElementById('voucherQuantity').value||1)));document.getElementById('voucherPurchaseTotal').textContent='Total: UGX '+(n*19500).toLocaleString();});
 function bindDropdown(toggleId,submenuId){const b=document.getElementById(toggleId),m=document.getElementById(submenuId);if(!b||!m)return;b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));m.classList.toggle('open',!open);});}
 bindDropdown('chatMenuToggle','chatSubmenu');
 bindDropdown('voucherMenuToggle','voucherSubmenu');
@@ -3670,13 +3703,14 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   const featureNotice=document.getElementById('featureNotice');
   featureNotice.textContent=feature.notice;
   featureNotice.hidden=featureKey==='leaderboard';
-  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':'PREVIEW · SETUP REQUIRED';
+  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':'PREVIEW · SETUP REQUIRED');
   document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
   const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel'};
   ['leaderboardPanel','payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
   if(featureKey==='leaderboard')loadWeeklyLeaderboard();
   if(featureKey==='pay-client')document.getElementById('clientAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
   if(featureKey==='voucher-buy')document.getElementById('voucherAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
+  if(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey))loadVoucherSummary();
   if(featureKey==='withdraw-history')loadWithdrawalHistory();
  }
  const category=a.dataset.activityCategory;
@@ -4185,7 +4219,7 @@ async function loadMemberWallet(){
  updateTaskEarningsFromLedger(rows);
  renderDashboardWalletInsights(rows);
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
- const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
+ const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal','voucher_purchase'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
  const profitRows=ugx.filter(x=>['task_reward','welcome_bonus','referral_commission'].includes(x.entry_type));
  const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
