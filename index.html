@@ -833,6 +833,23 @@ footer {
 .feature-status{display:inline-flex;align-items:center;padding:6px 10px;border-radius:20px;background:#fff4db;color:#996000;font-size:9px;font-weight:900;letter-spacing:.4px}
 .feature-notice{margin-top:14px;padding:12px;border-radius:11px;background:#f3f7ff;color:#425778;font-size:11px;line-height:1.6}
 .feature-workspace .feature-icon{font-size:27px;margin-bottom:9px}
+
+/* Dedicated member profile */
+.profile-page-brand{display:flex;align-items:center;gap:11px;padding:5px 2px 18px;color:var(--blue)}
+.profile-brand-mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#0a2a6b,#1769e0);display:grid;place-items:center;color:#fff;font-weight:950;font-size:22px;box-shadow:0 6px 16px #0a2a6b25}
+.profile-page-brand strong{display:block;font-size:18px;font-weight:950}.profile-page-brand small{display:block;color:#78849a;font-size:10px;margin-top:3px}
+.profile-page-intro{margin:2px 0 16px}.profile-page-intro h1{font-size:23px;color:#15294f;font-weight:950}.profile-page-intro p{font-size:11px;color:#78849a;margin-top:5px;line-height:1.5}
+.profile-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:14px}
+.profile-stat-card{padding:14px 11px;border-radius:14px;background:#fff;box-shadow:var(--shadow);border:1px solid #e8eef8;min-width:0}
+.profile-stat-card span{display:block;color:#718096;font-size:9px;font-weight:800;line-height:1.4}.profile-stat-card strong{display:block;color:var(--blue);font-size:23px;font-weight:950;margin-top:8px}
+.profile-member-card{display:flex;align-items:center;gap:12px;padding:17px;background:linear-gradient(110deg,#0a2a6b,#1769e0);color:#fff}
+.profile-member-avatar{width:52px;height:52px;border-radius:50%;background:#ffffff20;border:2px solid #ffffff65;display:grid;place-items:center;font-size:21px;font-weight:950;flex-shrink:0}
+.profile-member-copy{flex:1;min-width:0}.profile-member-copy h2{font-size:17px;font-weight:900;overflow-wrap:anywhere}.profile-member-copy p{font-size:10px;color:#d5e2ff;margin-top:4px}
+.profile-member-card .active-badge{font-size:9px}
+.profile-section-head{padding:16px 17px 5px}.profile-section-head h2{font-size:15px;color:#172b50;font-weight:900}.profile-section-head p{font-size:10px;color:#8490a4;margin-top:4px}
+.profile-whatsapp-card{padding-bottom:4px}.profile-form{padding:13px 17px 17px;display:grid;gap:9px}.profile-form label{font-size:10px;font-weight:850;color:#59677f}.profile-form input{width:100%;border:1px solid #dce4f1;border-radius:10px;padding:12px;background:#f9fbff;color:#18243b;font-size:13px;outline:none}.profile-form input:focus{border-color:#1769e0;box-shadow:0 0 0 3px #1769e01a}.profile-form small{font-size:9px;color:#8490a4;line-height:1.5}.profile-save-button{border:0;border-radius:10px;padding:12px;background:#0a2a6b;color:#fff;font-size:11px;font-weight:900}.profile-save-button:disabled{opacity:.6}.profile-form-message{font-size:10px;min-height:14px;color:#15803d}.profile-form-message.error{color:#dc2626}.profile-page-footer{padding:8px 8px 22px}
+@media(max-width:390px){.profile-stat-grid{gap:6px}.profile-stat-card{padding:12px 8px}.profile-stat-card span{font-size:8px}.profile-stat-card strong{font-size:20px}.profile-member-card{gap:8px;padding:13px}.profile-member-copy h2{font-size:15px}.profile-member-card .active-badge{padding:4px 6px;font-size:8px}}
+
 </style>
 </head>
 
@@ -1222,46 +1239,42 @@ footer {
     </div>
   </section>
 
-  <!-- MEMBER PROFILE -->
-
-  <section class="card page-view" id="profile" hidden>
-    <div class="profile-header">
-      <div class="avatar">B</div>
-
-      <div style="flex:1">
-        <h2>Bridan</h2>
-        <p>Member Profile</p>
-      </div>
-
-      <span class="active-badge">Active</span>
+  <!-- FULL MEMBER PROFILE -->
+  <section class="page-view" id="profile" hidden>
+    <div class="profile-page-brand"><span class="profile-brand-mark">G</span><div><strong>GenZBag</strong><small>A home of Digital Income.</small></div></div>
+    <div class="profile-page-intro"><h1>My Profile</h1><p>Your personal account information and referral summary</p></div>
+    <div class="profile-stat-grid">
+      <article class="profile-stat-card"><span>Total Referrals</span><strong id="profileTotalReferrals">0</strong></article>
+      <article class="profile-stat-card"><span>Active Referrals</span><strong id="profileActiveReferrals">0</strong></article>
+      <article class="profile-stat-card"><span>Inactive Referrals</span><strong id="profileInactiveReferrals">0</strong></article>
     </div>
-
-    <div class="profile-details">
-      <div class="profile-row">
-        <span>Email</span>
-        <strong>you@example.com</strong>
+    <section class="card profile-member-card">
+      <div class="profile-member-avatar" id="profileMemberAvatar">G</div>
+      <div class="profile-member-copy"><h2 id="profileMemberName">Member</h2><p id="profileMemberRole">GenZBag Member · Uganda</p></div>
+      <span class="active-badge" id="profileAccountStatus">Member</span>
+    </section>
+    <section class="card">
+      <div class="profile-section-head"><h2>Personal Information</h2><p>Your account details</p></div>
+      <div class="profile-details">
+        <div class="profile-row"><span>Email</span><strong id="profileEmail">—</strong></div>
+        <div class="profile-row"><span>Phone</span><strong id="profilePhone">—</strong></div>
+        <div class="profile-row"><span>Joining Date</span><strong id="profileJoiningDate">—</strong></div>
+        <div class="profile-row"><span>Upline</span><strong id="profileUpline">Not available</strong></div>
+        <div class="profile-row"><span>WhatsApp</span><strong id="profileWhatsAppDisplay">—</strong></div>
+        <div class="profile-row"><span>Account Balance</span><strong id="profileAccountBalance">UGX 0</strong></div>
       </div>
-
-      <div class="profile-row">
-        <span>Phone</span>
-        <strong>+256 000 000000</strong>
-      </div>
-
-      <div class="profile-row">
-        <span>Country</span>
-        <strong>Uganda</strong>
-      </div>
-
-      <div class="profile-row">
-        <span>Active Since</span>
-        <strong>2026</strong>
-      </div>
-
-      <div class="profile-row">
-        <span>Total Referrals</span>
-        <strong>0</strong>
-      </div>
-    </div>
+    </section>
+    <section class="card profile-whatsapp-card">
+      <div class="profile-section-head"><h2>Update WhatsApp Number</h2><p>Used for support and team communication</p></div>
+      <form id="profileWhatsAppForm" class="profile-form">
+        <label for="profileWhatsAppInput">WhatsApp Number (with country code)</label>
+        <input id="profileWhatsAppInput" type="tel" inputmode="numeric" autocomplete="tel" maxlength="15" placeholder="256771234567" required>
+        <small>Include country code, numbers only — no + sign or spaces (e.g. 256771234567).</small>
+        <button type="submit" class="profile-save-button" id="profileWhatsAppSave">Save WhatsApp Number</button>
+        <p id="profileWhatsAppMessage" class="profile-form-message" aria-live="polite"></p>
+      </form>
+    </section>
+    <footer class="profile-page-footer">Copyright © 2026 GenZBag. All rights reserved.</footer>
   </section>
 
   <!-- WEEKLY SCHEDULE -->
@@ -1495,7 +1508,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
  const feature=featureKey?featureContent[featureKey]:null;
  const targetId=(a.getAttribute('href')||'').replace(/^#/,'');
  const target=document.getElementById(targetId);
- if(!target){closeMenu();return;}
+ if(!target){closeMenu();return;}if(targetId==='profile'&&currentMember)loadMemberNetwork();
  document.querySelectorAll('.page-view').forEach(page=>{page.hidden=page!==target;});
  if(targetId!=='featureWorkspace')document.getElementById('featureWorkspace').hidden=true;
  if(feature){
@@ -1539,7 +1552,7 @@ const RANKS=[{name:'STARTER',min:0,symbol:'🌱'},{name:'BRONZE',min:5,symbol:'�
 function rankFor(n){let i=0;RANKS.forEach((r,k)=>{if(n>=r.min)i=k;});return {...RANKS[i],index:i};}
 function renderNetwork(total,qualified){const rank=rankFor(qualified),next=RANKS[rank.index+1],progress=next?Math.max(0,qualified-rank.min):qualified,target=next?next.min-rank.min:qualified;document.getElementById('rankProgressCount').textContent=next?progress:'✓';document.getElementById('rankProgressTarget').textContent=next?'of '+target:'MAX';document.getElementById('memberRank').textContent=rank.name;document.getElementById('rankSymbol').textContent=rank.symbol;document.getElementById('memberRankBadge').setAttribute('aria-label','Current member rank: '+rank.name.charAt(0)+rank.name.slice(1).toLowerCase());document.getElementById('rankNextLabel').textContent=next?'NEXT: '+next.name:'TOP RANK';document.getElementById('totalReferralCount').textContent=Number(total).toLocaleString();document.getElementById('qualifiedReferralCount').textContent=Number(qualified).toLocaleString();const left=next?Math.max(0,next.min-qualified):0;document.getElementById('networkMessage').textContent=next?(left?'You need '+left+' more qualified '+(left===1?'referral':'referrals')+' to reach '+next.name+'.':'You have reached '+rank.name+'. Keep growing your network!'):'Congratulations! You have reached the highest GenZBag member rank.';}
 function setMemberName(name){const first=(name||'Member').split(/[._\\s-]/)[0],initial=first.charAt(0).toUpperCase();const w=document.querySelector('.welcome-info h2'),p=document.querySelector('#profile .profile-header h2'),a=document.querySelector('.welcome-top .avatar'),b=document.querySelector('#profile .profile-header .avatar'),dn=document.getElementById('dashboardProfileName'),da=document.getElementById('dashboardProfileAvatar');if(w)w.textContent='Hi '+first;if(p)p.textContent=name||'Member';if(a)a.textContent=initial;if(b)b.textContent=initial;if(dn)dn.textContent=name||'Member';if(da)da.textContent=initial;}
-async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');try{const {data:s,error:se}=await supabaseClient.auth.getSession();if(se)throw se;const user=s?.session?.user;if(!user){renderNetwork(0,0);msg.textContent='Sign in to view your network results.';return;}const [p,t,q]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified')]);if(p.error)throw p.error;if(t.error)throw t.error;if(q.error)throw q.error;const profile=p.data||{},total=t.count||0,qualified=q.count||0;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const f=document.querySelectorAll('#profile .profile-row strong');if(f[0])f[0].textContent=user.email||'—';if(f[1])f[1].textContent=profile.phone||'—';if(f[2])f[2].textContent=profile.country||'—';if(f[3])f[3].textContent=profile.created_at?new Date(profile.created_at).toLocaleDateString():'—';if(f[4])f[4].textContent=total.toLocaleString();const de=document.getElementById('dashboardProfileEmail'),dp=document.getElementById('dashboardProfilePhone'),dc=document.getElementById('dashboardProfileCountry'),ds=document.getElementById('dashboardProfileSince'),dr=document.getElementById('dashboardProfileReferrals');if(de)de.textContent=user.email||'—';if(dp)dp.textContent=profile.phone||'—';if(dc)dc.textContent=profile.country||'—';if(ds)ds.textContent=profile.created_at?new Date(profile.created_at).toLocaleDateString('en-GB',{timeZone:'Africa/Kampala'}):'—';if(dr)dr.textContent=total.toLocaleString();if(profile.referral_code){const u=new URL(location.href);u.searchParams.set('ref',profile.referral_code);syncReferralLinks(u.toString());}}catch(e){console.error('Member network load:',e);msg.textContent='Could not load referral data. Check account activation and try again.';}}
+async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');try{const {data:s,error:se}=await supabaseClient.auth.getSession();if(se)throw se;const user=s?.session?.user;if(!user){renderNetwork(0,0);msg.textContent='Sign in to view your network results.';return;}const [p,t,q]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified')]);if(p.error)throw p.error;if(t.error)throw t.error;if(q.error)throw q.error;const profile=p.data||{},total=t.count||0,qualified=q.count||0;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};put('profileEmail',user.email||'—');put('profilePhone',profile.phone||user.user_metadata?.phone||'—');put('profileWhatsAppDisplay',profile.phone||user.user_metadata?.phone||'Not set');put('profileJoiningDate',profile.created_at?new Date(profile.created_at).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'—');put('profileTotalReferrals',total.toLocaleString());put('profileActiveReferrals',qualified.toLocaleString());put('profileInactiveReferrals',Math.max(0,total-qualified).toLocaleString());put('profileMemberName',profile.username||(user.email?user.email.split('@')[0]:'Member'));put('profileMemberAvatar',(profile.username||(user.email||'G')).charAt(0).toUpperCase());put('profileMemberRole','GenZBag Member · '+(profile.country||'Country not set'));const wa=document.getElementById('profileWhatsAppInput');if(wa&&!wa.value)wa.value=String(profile.phone||user.user_metadata?.phone||'').replace(/[^0-9]/g,'');const de=document.getElementById('dashboardProfileEmail'),dp=document.getElementById('dashboardProfilePhone'),dc=document.getElementById('dashboardProfileCountry'),ds=document.getElementById('dashboardProfileSince'),dr=document.getElementById('dashboardProfileReferrals');if(de)de.textContent=user.email||'—';if(dp)dp.textContent=profile.phone||'—';if(dc)dc.textContent=profile.country||'—';if(ds)ds.textContent=profile.created_at?new Date(profile.created_at).toLocaleDateString('en-GB',{timeZone:'Africa/Kampala'}):'—';if(dr)dr.textContent=total.toLocaleString();if(profile.referral_code){const u=new URL(location.href);u.searchParams.set('ref',profile.referral_code);syncReferralLinks(u.toString());}}catch(e){console.error('Member network load:',e);msg.textContent='Could not load referral data. Check account activation and try again.';}}
 async function loadExchangeRate(){const v=document.getElementById('exchangeRateValue'),u=document.getElementById('exchangeRateUpdated');try{const r=await fetch('https://open.er-api.com/v6/latest/UGX',{cache:'no-store'});if(!r.ok)throw Error('Rate API '+r.status);const d=await r.json(),rate=Number(d?.rates?.USD);if(!Number.isFinite(rate)||rate<=0)throw Error('Invalid rate');v.textContent='1,000 UGX ≈ $'+(rate*1000).toFixed(3);const time=d.time_last_update_utc?new Date(d.time_last_update_utc).toLocaleString():'Latest available';u.innerHTML='<span class="rate-dot"></span>'+time;u.title='Reference rate: 1 UGX = $'+rate.toFixed(8)+' · Source: open.er-api.com';}catch(e){console.warn('Exchange rate:',e);v.textContent='Rate unavailable';u.textContent='Retrying automatically';}}
 async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('Supabase did not load. Refresh and try again.','error');return;}const email=document.getElementById('authEmail').value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.textContent=authMode==='signup'?'Creating account…':'Signing in…';showAuthMessage('Please wait…');try{if(authMode==='signup'){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value;if(!/^[a-z0-9_]{3,30}$/.test(username))throw Error('Username must be 3–30 characters using letters, numbers or underscores.');if(password.length<8)throw Error('Use a password with at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:document.getElementById('authPhone').value.trim(),country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(data.session){showDashboard();await loadMemberNetwork();showAuthMessage('Account created successfully.','success');}else{setAuthMode('login');showAuthMessage('Account created. Check your email for the Supabase confirmation link, then return here and sign in.','success');}}else{const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;if(!data.session)throw Error('No session returned. Please try again.');showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.textContent=authMode==='signup'?'Create Account':'Sign In';}}
 authForm.addEventListener('submit',submitAuth);loginTab.addEventListener('click',()=>setAuthMode('login'));signupTab.addEventListener('click',()=>setAuthMode('signup'));document.getElementById('switchAuthMode').addEventListener('click',()=>setAuthMode(authMode==='login'?'signup':'login'));
@@ -1714,6 +1727,18 @@ async function updateTaskEarningsFromLedger(ledgerRows){
   el.textContent='UGX '+Math.max(0,totals[keys[index]]||0).toLocaleString(undefined,{maximumFractionDigits:2});
  });
 }
+async function saveProfileWhatsApp(event){
+ event.preventDefault();const input=document.getElementById('profileWhatsAppInput'),button=document.getElementById('profileWhatsAppSave'),message=document.getElementById('profileWhatsAppMessage');
+ const number=String(input?.value||'').replace(/[^0-9]/g,'');message.classList.remove('error');
+ if(!currentMember){message.textContent='Please sign in again to update your WhatsApp number.';message.classList.add('error');return;}
+ if(!/^\d{10,15}$/.test(number)){message.textContent='Enter a valid number with country code, digits only.';message.classList.add('error');return;}
+ button.disabled=true;button.textContent='Saving…';
+ try{const {error}=await supabaseClient.from('profiles').update({phone:'+'+number}).eq('id',currentMember.id);if(error)throw error;
+ message.textContent='WhatsApp number updated successfully.';const display=document.getElementById('profileWhatsAppDisplay');if(display)display.textContent='+'+number;const phone=document.getElementById('profilePhone');if(phone)phone.textContent='+'+number;
+ }catch(err){console.error('WhatsApp update:',err);message.textContent='Could not save the number. '+(err.message||'Please try again.');message.classList.add('error');}
+ finally{button.disabled=false;button.textContent='Save WhatsApp Number';}
+}
+document.getElementById('profileWhatsAppForm')?.addEventListener('submit',saveProfileWhatsApp);
 function loadMemberWallet(){
  if(!supabaseClient||!currentMember)return;
  const payoutEl=document.getElementById('withdrawPayoutNumber');
@@ -1736,7 +1761,7 @@ function loadMemberWallet(){
  const strong=document.querySelectorAll('.balance-grid .balance-card strong');
  if(strong[0])strong[0].textContent=money(balance);
  if(strong[3])strong[3].textContent=money(teamEarnings);
- if(strong[4])strong[4].textContent=money(welcomeBonus);
+ if(strong[4])strong[4].textContent=money(welcomeBonus);const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent=money(balance);
  const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
  const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
  if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
