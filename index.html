@@ -1258,6 +1258,19 @@ footer {
     <div class="feature-workspace-head"><h2 id="featureTitle">Leaderboard</h2><span class="feature-status" id="featureStatus">PREVIEW · SETUP REQUIRED</span></div>
     <p id="featureDescription">See how members are progressing across GenZBag.</p>
     <div class="feature-notice" id="featureNotice">This section is being prepared. No balance changes or payments are made from this preview.</div>
+    <div id="withdrawalRulesPanel" hidden style="margin-top:15px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="padding:14px;border-radius:12px;background:#edf4ff"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">MINIMUM WITHDRAWAL</small><strong style="display:block;margin-top:6px;font-size:19px;color:#0A2A6B">UGX 23,000</strong></div>
+        <div style="padding:14px;border-radius:12px;background:#e9fbef"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">DIRECT REFERRALS REQUIRED</small><strong style="display:block;margin-top:6px;font-size:19px;color:#087B3B">3 active</strong></div>
+      </div>
+      <h3 style="margin-top:16px;font-size:13px;color:#14284f">Withdrawal eligibility</h3>
+      <p style="margin-top:6px">You must meet <strong>both</strong> requirements before requesting a withdrawal:</p>
+      <ul style="margin:9px 0 0 18px;color:#53627c;font-size:11px;line-height:1.8">
+        <li>At least 3 successfully activated Level 1 (direct) referrals.</li>
+        <li>At least UGX 23,000 in verified Available Balance.</li>
+      </ul>
+      <div class="feature-notice" style="background:#fff8e8;color:#8a5a00">Only referral commissions count toward Available Balance. Welcome bonuses and approved activity rewards are recorded separately as Net Profit and do not count toward the withdrawal minimum. Payouts remain disabled until secure payout processing is configured.</div>
+    </div>
   </section>
 
   <!-- APP DOWNLOAD -->
@@ -1301,7 +1314,7 @@ const featureContent={
  voucher:{icon:'🎟️',title:'Voucher',description:'A place to view and redeem official GenZBag vouchers when voucher campaigns are available.',notice:'Voucher issuance and redemption are not enabled yet. Do not pay anyone for a voucher code or share your account password.'},
  'pay-client':{icon:'🤝',title:'Pay for client',description:'A planned payment area for making an authorised payment on behalf of a client.',notice:'Client payments are not enabled. No payment will be collected or sent here until a secure payment provider, recipient verification and transaction records are integrated.'},
  deposit:{icon:'➕',title:'Deposit',description:'A planned area for adding funds to your GenZBag account and viewing deposit instructions.',notice:'Deposits are not enabled from this screen. No mobile-money or bank payment should be sent to an unofficial number. Official payment instructions will be shown only after verification and payment integration.'},
- 'withdraw-balance':{icon:'💰',title:'Withdraw balance',description:'Request a withdrawal of an eligible, verified available balance.',notice:'Withdrawal requests are not enabled yet. Your displayed balance is not a promise of cash payout; withdrawals require verified ledger balances, identity and payout details, approval rules and a secure payment integration.'},
+ 'withdraw-balance':{icon:'💰',title:'Withdraw balance',description:'Referral commissions are withdrawable only after you have at least three successfully activated direct (Level 1) referrals and UGX 23,000 in Available Balance.',notice:'Withdrawal requests are not enabled yet. This page shows the eligibility rules only; it does not submit a payout or transfer money. A secure, funded payout integration and server-side verification are still required.'},
  'withdraw-chat':{icon:'💬',title:'Withdraw chat with foreigners',description:'View eligible rewards associated with approved Chat with Foreigners activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Only approved and funded rewards can become withdrawable.'},
  'withdraw-tiktok':{icon:'🎬',title:'Withdraw TikTok videos',description:'View eligible rewards associated with approved TikTok video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
  'withdraw-youtube':{icon:'▶️',title:'Withdraw YouTube Videos',description:'View eligible rewards associated with approved YouTube video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
@@ -1326,6 +1339,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   document.getElementById('featureDescription').textContent=feature.description;
   document.getElementById('featureNotice').textContent=feature.notice;
   document.getElementById('featureStatus').textContent='PREVIEW · SETUP REQUIRED';
+  document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
  }
  const category=a.dataset.activityCategory;
  if(category){currentActivityFilter=category;activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===category));renderActivities();}
