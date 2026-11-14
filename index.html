@@ -912,6 +912,14 @@ footer {
 #featureWorkspace.withdraw-mode .withdraw-status-line{margin:8px 0 5px;font-size:9px;line-height:1.4;color:#9ee9dc}
 #featureWorkspace.withdraw-mode #withdrawRequestButton{width:100%;min-height:40px;margin-top:4px;border-radius:10px;font-size:11px;font-weight:900}
 #featureWorkspace.withdraw-mode .withdraw-small-note{margin:6px 0 0;font-size:8px;line-height:1.4;color:#9db7c5}
+#featureWorkspace.withdraw-mode .withdraw-success-card{margin-top:10px;padding:22px 20px;border-radius:15px;background:linear-gradient(115deg,#2fb77f 0%,#079bb5 100%);color:#fff;box-shadow:0 12px 28px #03152630}
+#featureWorkspace.withdraw-mode .withdraw-success-heading{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+#featureWorkspace.withdraw-mode .withdraw-success-heading h3{margin:0;color:#fff;font-size:clamp(15px,4vw,20px);font-weight:900}
+#featureWorkspace.withdraw-mode .withdraw-success-check{width:31px;height:31px;flex:0 0 31px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:900}
+#featureWorkspace.withdraw-mode .withdraw-success-card p{margin:8px 0;color:#f4ffff;font-size:12px;line-height:1.65}
+#featureWorkspace.withdraw-mode .withdraw-success-card strong{color:#fff;font-weight:900}
+#featureWorkspace.withdraw-mode .withdraw-success-card .activity-btn{margin-top:12px;background:#fff;color:#087e85;border:0}
+
 #featureWorkspace.withdraw-mode #withdrawRequestButton:disabled{opacity:.45;cursor:not-allowed}
 #featureWorkspace.withdraw-mode .withdraw-history-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px;border:1px solid #294c61;border-radius:11px;background:#102940;margin:7px 0}
 #featureWorkspace.withdraw-mode .withdraw-history-item strong{display:block;color:#effaff;font-size:12px}
@@ -3457,6 +3465,13 @@ body.activation-screen-open{overflow:hidden!important}
         <button class="activity-btn" id="withdrawRequestButton" type="button" disabled>Submit request</button>
         <p id="withdrawRequestMessage" class="withdraw-small-note" role="status">Your amount is reserved while the request is reviewed. Payout is sent manually after approval.</p>
       </div>
+      <section id="withdrawSuccessCard" class="withdraw-success-card" role="status" aria-live="polite" hidden>
+        <div class="withdraw-success-heading"><span class="withdraw-success-check">✓</span><h3>Withdrawal Initiated Successfully</h3></div>
+        <p>Your request for <strong id="withdrawSuccessAmount">UGX 0</strong> has been queued for processing.</p>
+        <p><strong id="withdrawSuccessReserved">UGX 0</strong> has been reserved from your available balance, including a service fee of <strong id="withdrawSuccessFee">UGX 0</strong>.</p>
+        <p>You'll receive <strong id="withdrawSuccessNet">UGX 0</strong> to <strong id="withdrawSuccessNetwork">MTN</strong> <strong id="withdrawSuccessPhone"></strong> after approval and payout.</p>
+        <button type="button" id="withdrawAnotherButton" class="activity-btn">Make another request</button>
+      </section>
     </div>
     <div id="payClientPanel" class="feature-detail-panel" hidden>
       <div class="feature-stat-grid">
@@ -4311,11 +4326,26 @@ document.getElementById('withdrawRequestButton')?.addEventListener('click',async
  try{
   const {data,error}=await supabaseClient.rpc('create_withdrawal_request',{p_amount:amount,p_network:network,p_mobile_number:mobile});
   if(error)throw error;
-  msg.textContent='Request submitted. UGX '+amount.toLocaleString()+' is reserved. Net payout: UGX '+Number(data.net_receive||net).toLocaleString()+'.';
+  const actualFee=Number(data.service_fee??fee),actualNet=Number(data.net_receive??net);
+  const money=n=>'UGX '+Number(n).toLocaleString('en-UG');
+  document.getElementById('withdrawSuccessAmount').textContent=money(amount);
+  document.getElementById('withdrawSuccessReserved').textContent=money(amount);
+  document.getElementById('withdrawSuccessFee').textContent=money(actualFee);
+  document.getElementById('withdrawSuccessNet').textContent=money(actualNet);
+  document.getElementById('withdrawSuccessNetwork').textContent=network.toUpperCase();
+  document.getElementById('withdrawSuccessPhone').textContent=mobile;
+  document.getElementById('withdrawSuccessCard').hidden=false;
+  document.querySelector('#featureWorkspace.withdraw-mode .withdraw-form-card').hidden=true;
   document.getElementById('withdrawAmountInput').value='';
   await loadMemberWallet();await loadWithdrawalHistory();
  }catch(err){msg.textContent=err.message||'Could not submit your withdrawal request.';}
  finally{button.textContent='Submit request';renderWithdrawalQuote();}
+});
+document.getElementById('withdrawAnotherButton')?.addEventListener('click',()=>{
+ document.getElementById('withdrawSuccessCard').hidden=true;
+ document.querySelector('#featureWorkspace.withdraw-mode .withdraw-form-card').hidden=false;
+ document.getElementById('withdrawRequestMessage').textContent='Your next request will be checked against your available balance and eligibility.';
+ renderWithdrawalQuote();
 });
 async function loadWithdrawalHistory(){
  const box=document.getElementById('withdrawHistoryList');if(!box)return;
