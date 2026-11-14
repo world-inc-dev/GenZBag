@@ -884,6 +884,73 @@ footer {
 .leaderboard-footnote{font-size:9px;line-height:1.6;color:#8490a4}
 @media(max-width:360px){.leaderboard-stat strong{font-size:18px}.leaderboard-timer strong{font-size:13px}.leaderboard-window-grid{grid-template-columns:1fr}}
 
+
+/* On-demand exchange rate and premium feature workspace theme */
+.exchange-toggle{background:linear-gradient(135deg,#0d9488,#075985);color:#fff;box-shadow:0 5px 14px #0d948833}
+.exchange-rate[hidden]{display:none!important}
+.exchange-rate{background:linear-gradient(145deg,#102b4a,#0b1b33);border:1px solid #1e6170;box-shadow:0 8px 22px #02081755}
+.exchange-rate .rate-label{color:#8ee8df}
+.exchange-rate strong{color:#fff}
+.exchange-rate small{color:#9de8c2}
+.feature-workspace{
+ background:radial-gradient(circle at 90% 0%,#164e63 0,transparent 34%),linear-gradient(145deg,#08172d,#0c2340 58%,#102d45);
+ border:1px solid #1c5365;color:#e8f4ff;
+ box-shadow:0 18px 42px #06132635;padding:19px;
+}
+.feature-workspace h2,.feature-workspace h3,.feature-workspace h4{color:#f2fbff}
+.feature-workspace p{color:#b9cddd}
+.feature-workspace .feature-status{background:#173d4c;color:#8de8d8;border:1px solid #276477}
+.feature-workspace .feature-notice{background:linear-gradient(120deg,#102f4a,#12394a);border:1px solid #24596a;color:#c8e4ed}
+.feature-workspace .feature-detail-panel{background:linear-gradient(145deg,#10243d,#142f49);border:1px solid #28536a;box-shadow:0 8px 22px #02081730}
+.feature-workspace .feature-detail-panel h3{color:#f0fbff}
+.feature-workspace .feature-detail-panel p,.feature-workspace .feature-bullet-list{color:#bfd2e1}
+.feature-workspace .feature-stat-grid>div{background:linear-gradient(145deg,#173650,#123047);border:1px solid #28566b}
+.feature-workspace .feature-stat-grid small{color:#a6c4d5}
+.feature-workspace .feature-stat-grid strong{color:#72e2d1}
+.feature-workspace .feature-field{color:#d4e9f2}
+.feature-workspace .feature-field input{background:#091a30;border:1px solid #31536b;color:#f2fbff}
+.feature-workspace .feature-field input::placeholder{color:#7994a8}
+.feature-workspace .feature-field input:focus{border-color:#36c7b7;box-shadow:0 0 0 3px #36c7b722}
+.feature-workspace .feature-calculated{background:#123c4b;color:#a7f3e7!important;border:1px solid #276b72}
+.feature-workspace .feature-table-wrap,.feature-workspace .leaderboard-table-wrap{background:#0b1c31;border-color:#28516a}
+.feature-workspace .feature-table th,.feature-workspace .leaderboard-table th{background:#173650;color:#b9d4e2}
+.feature-workspace .feature-table td,.feature-workspace .leaderboard-table td{border-color:#25445c;color:#d8eaf4}
+.feature-workspace .leaderboard-hero{background:linear-gradient(125deg,#0b3150,#075b67);border:1px solid #247487;box-shadow:0 10px 24px #02081740}
+.feature-workspace .leaderboard-kicker{color:#9be9e0}
+.feature-workspace .leaderboard-hero p{color:#d2eaf0}
+.feature-workspace .leaderboard-stat{background:linear-gradient(145deg,#15344e,#102940);border-color:#2a566b}
+.feature-workspace .leaderboard-stat small{color:#a8c4d3}
+.feature-workspace .leaderboard-stat strong{color:#73e4d2}
+.feature-workspace .leaderboard-stat span{color:#a7bdca}
+.feature-workspace .leaderboard-timer{background:#3b2b16;border-color:#775323}
+.feature-workspace .leaderboard-timer span,.feature-workspace .leaderboard-timer strong{color:#ffda91}
+.feature-workspace .leaderboard-window{background:#122e46;border:1px solid #28546a}
+.feature-workspace .leaderboard-window h4{color:#edfaff}
+.feature-workspace .leaderboard-window-grid small{color:#9cb7c8}
+.feature-workspace .leaderboard-window-grid strong{color:#d7eaf2}
+.feature-workspace .leaderboard-table tr:nth-child(-n+4) td:first-child{color:#f4c66c}
+.feature-workspace .leaderboard-table td:first-child,.feature-workspace .leaderboard-table .leaderboard-count{color:#75dfd1}
+.feature-workspace .leaderboard-empty{color:#b4cad8}
+.feature-workspace .leaderboard-toolbar h4{color:#eefaff}
+.feature-workspace .leaderboard-refresh{background:#164b5b;color:#a4f3e8;border:1px solid #287183}
+.feature-workspace .leaderboard-footnote,.feature-workspace .activity-note{color:#9db6c5}
+.feature-workspace .withdraw-summary{background:#0b1c31;border:1px solid #294d65}
+.feature-workspace .withdraw-summary div{color:#b6ccd9;border-color:#294d65}
+.feature-workspace .withdraw-summary strong{color:#f0fbff}
+.feature-workspace #withdrawalRulesPanel>div>div{background:linear-gradient(145deg,#15344e,#102940)!important;border:1px solid #2b586e}
+.feature-workspace #withdrawalRulesPanel>div>div small{color:#a9c6d4!important}
+.feature-workspace #withdrawalRulesPanel>div>div strong{color:#75e1d2!important}
+.feature-workspace .team-level-cards>div{background:#15344e;border-color:#2b586e}
+.feature-workspace .team-level-cards small,.feature-workspace .team-level-cards span{color:#aac3d1}
+.feature-workspace .team-level-cards strong{color:#75e1d2}
+.feature-workspace .team-member-row{background:#102940;border-color:#2b536a}
+.feature-workspace .team-member-row strong{color:#edfaff}
+.feature-workspace .team-member-row small{color:#a9c0ce}
+.feature-workspace .activity-empty{color:#b8cedb}
+.feature-workspace .activity-btn{background:linear-gradient(120deg,#0d9488,#087c91);color:#fff}
+.feature-workspace .activity-btn:disabled{opacity:.55}
+@media(max-width:420px){.feature-workspace{padding:14px}.exchange-toggle{width:36px;height:36px;font-size:18px}}
+
 </style>
 </head>
 
@@ -912,7 +979,8 @@ footer {
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
-    <div class="exchange-rate" aria-live="polite"><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
+    <button class="icon-btn exchange-toggle" id="exchangeRateToggle" type="button" aria-label="Show live currency rate" aria-expanded="false" aria-controls="exchangeRatePanel" title="Live currency rate">💱</button>
+    <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite" hidden><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
   </div>
 
   <div class="header-right">
@@ -1680,6 +1748,13 @@ function updateWeeklyScheduleLive(){
 }
 updateWeeklyScheduleLive();setInterval(updateWeeklyScheduleLive,1000);
 document.getElementById('dashboardAppButton').addEventListener('click',()=>{const a=document.querySelector('.nav-link[href="#app"]');if(a)a.click();});
+const exchangeRateToggle=document.getElementById('exchangeRateToggle'),exchangeRatePanel=document.getElementById('exchangeRatePanel');
+exchangeRateToggle?.addEventListener('click',()=>{
+ const opening=exchangeRatePanel.hidden;
+ exchangeRatePanel.hidden=!opening;
+ exchangeRateToggle.setAttribute('aria-expanded',String(opening));
+ exchangeRateToggle.setAttribute('aria-label',opening?'Hide live currency rate':'Show live currency rate');
+});
 loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
 
 /* GENZBAG ACTIVITIES + GLOBAL CHAT */
