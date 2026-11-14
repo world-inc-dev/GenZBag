@@ -1,682 +1,684 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07130f">
-<meta name="description" content="GenZBag — discover online opportunities, complete activities and track verified rewards.">
-<title>GenZBag | Discover. Participate. Grow.</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0A2A6B">
+<title>GenZBag | Member Dashboard</title>
 <style>
-:root{--bg:#07130f;--panel:#101f18;--panel2:#15291f;--line:#244b37;--green:#35d07f;--gold:#e5bd58;--text:#f3f7f3;--muted:#a4b9ab;--red:#ff7777}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#17432c 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}a{color:inherit;text-decoration:none}.wrap{width:min(1160px,92%);margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid #ffffff16}.brand{font-size:1.55rem;font-weight:900;letter-spacing:-1px}.brand span{color:var(--green)}.topnav{display:flex;gap:22px;color:var(--muted)}.topnav a:hover{color:var(--green)}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:11px 16px;border-radius:10px;cursor:pointer;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn.primary{background:var(--green);border-color:var(--green);color:#062012}.btn.gold{background:var(--gold);border-color:var(--gold);color:#201807}.btn.ghost{background:transparent}.btn:disabled{opacity:.55;cursor:wait}.hero{padding:78px 0 65px;display:grid;grid-template-columns:1.15fr .85fr;gap:38px;align-items:center}.eyebrow{color:var(--green);font-size:.76rem;font-weight:850;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(2.7rem,6vw,5rem);line-height:1.03;letter-spacing:-3px;margin:14px 0}.hero h1 em{font-style:normal;color:var(--green)}.lead{color:var(--muted);font-size:1.08rem;max-width:610px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}.small{font-size:.82rem;color:var(--muted)}.preview,.card,.authbox,.stat{background:linear-gradient(145deg,#14271c,#0e1b14);border:1px solid var(--line);border-radius:18px}.preview{padding:25px;box-shadow:0 24px 80px #0007}.preview-head,.row{display:flex;justify-content:space-between;align-items:center;gap:14px}.pill{border:1px solid #3b7854;color:var(--green);padding:4px 9px;border-radius:99px;font-size:.72rem;font-weight:800}.preview h2{font-size:1.45rem;margin:26px 0 5px}.preview p{color:var(--muted)}.preview-line{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #ffffff12}.preview-line:last-child{border:0}.preview-line b{color:var(--gold)}section{padding:55px 0}.section-head{text-align:center;max-width:700px;margin:0 auto 28px}.section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:8px 0}.section-head p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{padding:22px}.ico{width:42px;height:42px;border-radius:12px;background:#35d07f18;color:var(--green);display:grid;place-items:center;font-size:1.25rem;margin-bottom:15px}.card h3{margin:0 0 7px}.card p{margin:0;color:var(--muted)}footer{border-top:1px solid #ffffff18;padding:25px 0;color:var(--muted);font-size:.84rem}.hidden{display:none!important}.auth-wrap{min-height:75vh;display:grid;place-items:center;padding:42px 0}.authbox{width:min(480px,100%);padding:28px}.authbox h1{margin:5px 0 4px;font-size:2rem}.authbox>p{color:var(--muted);margin:0 0 20px}.field{margin:13px 0}.field label{display:block;font-size:.83rem;color:var(--muted);margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:12px 13px;border-radius:9px;border:1px solid #31523f;background:#08150f;color:var(--text);outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green)}.field textarea{min-height:90px;resize:vertical}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.msg{padding:10px 12px;border-radius:9px;background:#ffffff0d;color:var(--muted);margin:12px 0;font-size:.88rem}.msg.error{color:#ffaaaa;background:#ff55551a}.msg.ok{color:#8df0b5;background:#35d07f18}.linkbtn{background:none;border:0;color:var(--green);padding:0;cursor:pointer}.dash{padding:28px 0 60px}.dashhead{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:22px}.dashhead h1{margin:0;font-size:1.8rem}.dashgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:18px 0}.stat{padding:17px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:1.55rem;margin-top:5px}.tabs{display:flex;gap:8px;overflow:auto;padding:8px 0 16px}.tab{white-space:nowrap;border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#0c1b13;color:var(--muted);cursor:pointer}.tab.active{background:#1b3928;color:var(--green);border-color:#39885a}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:20px;margin:12px 0}.panel h2{margin:0 0 12px;font-size:1.2rem}.list{display:grid;gap:10px}.item{border:1px solid #ffffff14;border-radius:12px;padding:14px;background:#ffffff05}.item p{color:var(--muted);margin:5px 0}.badge{display:inline-block;padding:3px 8px;border-radius:99px;background:#ffffff10;color:var(--muted);font-size:.74rem}.badge.good{color:#8df0b5;background:#35d07f18}.badge.wait{color:#f2d48c;background:#e5bd5818}.badge.bad{color:#ffaaaa;background:#ff55551a}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:480px}th,td{text-align:left;padding:11px;border-bottom:1px solid #ffffff12;font-size:.87rem}th{color:var(--muted);font-weight:650}.copy{word-break:break-all;color:var(--green)}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed #ffffff25;border-radius:12px}.footrow{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
-@media(max-width:800px){.hero{grid-template-columns:1fr;padding:52px 0}.grid{grid-template-columns:1fr 1fr}.dashgrid{grid-template-columns:1fr 1fr}.topnav{display:none}}@media(max-width:540px){.grid,.two,.formgrid{grid-template-columns:1fr}.hero h1{letter-spacing:-1.5px}.authbox{padding:22px}.dashgrid{gap:8px}.stat{padding:13px}.stat strong{font-size:1.2rem}.panel{padding:14px}}
-
-/* GenZBag premium dashboard refresh */
-:root{--bg:#06100c;--panel:#0d1b14;--panel2:#12251a;--line:#234532;--green:#45e08b;--gold:#f0c66a;--text:#f4fbf6;--muted:#9db4a5}
-body{background:radial-gradient(ellipse at 14% 0%,#16472d 0,transparent 34%),radial-gradient(ellipse at 100% 12%,#123b2b 0,transparent 28%),#06100c;letter-spacing:.005em}
-.wrap{width:min(1240px,94%)}
-.top{padding:17px 0;border-bottom:1px solid #b5f2cb18;backdrop-filter:blur(16px)}
-.brand{font-size:1.7rem;letter-spacing:-1.4px}.brand span{color:var(--green)}
-.btn{border-radius:12px;padding:11px 17px;transition:transform .18s ease,border-color .18s ease,filter .18s ease;box-shadow:0 7px 20px #0002}
-.btn:hover{transform:translateY(-1px);filter:brightness(1.08);border-color:#4bdc8c}
-.btn.primary{background:linear-gradient(135deg,#54e99a,#27bd70);border:0;color:#062012;box-shadow:0 9px 24px #25c9792b}
-.btn.gold{background:linear-gradient(135deg,#f8d783,#d8a941)}
-.hero{padding:88px 0 72px;gap:54px}
-.hero h1{font-weight:850;letter-spacing:-3.5px}
-.preview,.card,.authbox,.stat,.panel{background:linear-gradient(145deg,#12251aee,#0a1711f5);border:1px solid #4e966b45;box-shadow:0 18px 55px #0002}
-.preview{border-radius:24px;padding:28px;position:relative;overflow:hidden}
-.preview:before{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-80px;top:-90px;background:#39dc8420;filter:blur(5px)}
-.card{border-radius:20px;transition:transform .2s,border-color .2s}
-.card:hover{transform:translateY(-3px);border-color:#50d88c88}
-.ico{border:1px solid #43d98230;background:linear-gradient(135deg,#2cd17c2b,#2cd17c09);border-radius:14px}
-section{padding:62px 0}
-.section-head h2{letter-spacing:-1.2px}
-.auth-wrap{min-height:78vh}
-.authbox{border-radius:22px;box-shadow:0 25px 90px #0006}
-.field input,.field select,.field textarea{border-radius:11px;background:#07130d;border-color:#2b4b38;padding:13px 14px}
-.field input:focus,.field textarea:focus,.field select:focus{box-shadow:0 0 0 3px #35d07f1c}
-.dash{padding:30px 0 72px}
-.dashhead{padding:23px 25px;border:1px solid #4e966b45;border-radius:20px;background:linear-gradient(120deg,#143321,#0d1c14);box-shadow:0 15px 45px #0003}
-.dashhead h1{font-size:2rem;letter-spacing:-1px}
-.dashgrid{gap:15px;margin:18px 0 22px}
-.stat{border-radius:17px;padding:20px;position:relative;overflow:hidden}
-.stat:after{content:"";position:absolute;right:-28px;bottom:-50px;width:105px;height:105px;border-radius:50%;background:#35d07f12}
-.stat small{font-size:.77rem;text-transform:uppercase;letter-spacing:.08em}
-.stat strong{font-size:1.65rem;letter-spacing:-.8px}
-.tabs{gap:9px;padding:12px 0 18px;flex-wrap:wrap}
-.tab{border-radius:11px;padding:10px 15px;background:#0d1d14;border-color:#315a40;color:#b6cabb;font-weight:700}
-.tab:hover{border-color:#48d98a;color:#e9fff1}
-.tab.active{background:linear-gradient(135deg,#1e4b31,#153824);border-color:#45d985;color:#72f2aa;box-shadow:inset 0 0 0 1px #45d98520}
-.panel{border-radius:18px;padding:22px}
-.panel h2{letter-spacing:-.35px}
-.item{border-radius:13px;border-color:#ffffff15;background:linear-gradient(120deg,#ffffff08,#ffffff03)}
-.item:hover{border-color:#47d98755}
-.badge{border:1px solid #ffffff10}
-.empty{border-radius:14px;background:#ffffff04}
-.tablewrap{border:1px solid #ffffff12;border-radius:13px}
-table{border-collapse:separate;border-spacing:0}
-th{background:#ffffff08;text-transform:uppercase;letter-spacing:.06em;font-size:.72rem}
-td,th{padding:13px 14px}
-tr:last-child td{border-bottom:0}
-.copy{padding:12px;border:1px dashed #3d8056;border-radius:11px;background:#07150e}
-footer{border-color:#b5f2cb18}
-.admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.admin-kpi{padding:17px;border-radius:16px;border:1px solid #3a684a;background:linear-gradient(140deg,#173323,#0c1b13)}
-.admin-kpi small{display:block;color:#a9c2b1;text-transform:uppercase;font-size:.7rem;letter-spacing:.08em}
-.admin-kpi b{display:block;font-size:1.55rem;margin-top:5px}
-.admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.btn.mini{padding:7px 10px;font-size:.78rem;border-radius:9px}
-.admin-two{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
-.admin-label{font-size:.73rem;color:#8fbaa0;text-transform:uppercase;letter-spacing:.1em;font-weight:800}
-@media(max-width:800px){.hero{padding:55px 0;gap:28px}.dashhead{padding:18px}.admin-grid{grid-template-columns:1fr 1fr}.admin-two{grid-template-columns:1fr}}
-@media(max-width:540px){.wrap{width:93%}.hero h1{font-size:2.8rem;letter-spacing:-1.8px}.dash{padding-top:18px}.dashhead h1{font-size:1.55rem}.stat{padding:14px}.stat strong{font-size:1.18rem}.tabs{display:grid;grid-template-columns:1fr 1fr}.tab{font-size:.78rem;padding:10px 8px}.panel{padding:15px}.admin-grid{gap:8px}.admin-kpi{padding:13px}.admin-kpi b{font-size:1.2rem}}
-
-
-/* GenZBag public brand experience */
-:root{--bg:#07110c;--panel:#101e16;--panel2:#15291d;--line:#294936;--green:#63ed9c;--gold:#eacb78;--text:#f5fbf6;--muted:#a4b9aa}
-.landing{overflow:hidden}
-.top{position:relative;z-index:5;padding:19px 0}
-.brand{display:inline-flex;align-items:center;gap:9px;font-size:1.65rem;letter-spacing:-1.3px}
-.brand:before{content:"G";display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:linear-gradient(145deg,#75f5aa,#20ad69);color:#062313;font-size:1.15rem;font-weight:950;box-shadow:0 6px 22px #39d98035}
-.brand span{color:var(--green)}
-.topnav{gap:28px;font-size:.91rem;font-weight:650}
-.topnav a{transition:color .2s}
-#topActions{display:flex;gap:9px}
-.hero-pro{position:relative;min-height:620px;padding:82px 0 76px;grid-template-columns:1.02fr .98fr;gap:35px}
-.hero-copy{position:relative;z-index:2}
-.eyebrow{display:flex;align-items:center;gap:9px;font-size:.7rem;letter-spacing:.16em;color:#78eaa6}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#65ee9c;box-shadow:0 0 0 5px #65ee9c1b,0 0 16px #65ee9c}
-.hero-pro h1{font-size:clamp(3.5rem,6.3vw,5.8rem);line-height:.99;letter-spacing:-.075em;margin:24px 0 20px;font-weight:900}
-.hero-pro h1 em,.section-head h2 em,.how-intro h2 em,.final-cta h2 em{color:var(--green);font-style:normal}
-.hero-pro .lead{max-width:560px;font-size:1.06rem;line-height:1.8;color:#b0c2b5}
-.hero-cta{padding:14px 20px;min-height:51px}
-.hero-cta span{font-size:1.1rem}
-.hero-login{border-color:#41614b;background:#0b1911}
-.hero-proof{display:flex;gap:17px;flex-wrap:wrap;margin:23px 0 0;color:#c0d2c5;font-size:.78rem}
-.hero-proof span{white-space:nowrap}.hero-proof span::first-letter{color:var(--green)}
-.hero-disclaimer{max-width:540px;line-height:1.6;margin-top:22px;font-size:.73rem}
-.hero-visual{min-height:445px;position:relative;display:grid;place-items:center}
-.visual-glow{position:absolute;width:390px;height:390px;border-radius:50%;background:radial-gradient(circle,#2bd77b27 0,transparent 68%);filter:blur(8px)}
-.dash-preview{position:relative;width:min(100%,485px);padding:22px;border:1px solid #5a9c704a;border-radius:25px;background:linear-gradient(145deg,#14271cfa,#0b1710fa);box-shadow:0 35px 100px #0008,0 0 65px #2fcb7020;transform:rotate(1.3deg);backdrop-filter:blur(20px)}
-.mock-top,.mock-brand,.mock-welcome,.mock-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.mock-brand{justify-content:flex-start;font-size:1rem;letter-spacing:-.5px}.mock-brand> b span{color:var(--green)}
-.mini-mark{display:grid;place-items:center;width:27px;height:27px;border-radius:8px;background:var(--green);color:#062313;font-weight:950}
-.mock-status{font-size:.55rem;letter-spacing:.12em;color:#9db6a5;border:1px solid #ffffff18;padding:6px 9px;border-radius:99px}
-.mock-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px}
-.mock-welcome{margin:29px 0 17px}.mock-welcome small,.mock-balance small{font-size:.58rem;letter-spacing:.14em;color:#8da997}.mock-welcome h3{font-size:1.2rem;margin:4px 0 0;letter-spacing:-.5px}
-.mock-avatar{width:37px;height:37px;display:grid;place-items:center;border-radius:13px;background:#1c5033;color:#8af5b2;font-weight:900}
-.mock-balance{display:flex;justify-content:space-between;align-items:center;padding:21px;border:1px solid #4a8e6045;border-radius:17px;background:linear-gradient(110deg,#173d29,#10291c)}
-.mock-balance b{display:block;font-size:1.27rem;margin:5px 0}.mock-balance p{font-size:.7rem;color:#a9c2b2;margin:0}
-.mock-orbit{width:57px;height:57px;border-radius:50%;display:grid;place-items:center;border:1px solid #65ed9c55;color:#78f0a9;font-size:1.7rem;box-shadow:0 0 30px #48dc8525}
-.mock-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0}
-.mock-cards>div{padding:13px 11px;border:1px solid #ffffff16;border-radius:13px;background:#ffffff06}
-.mock-icon{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#4cdb8721;color:var(--green);margin-bottom:9px}
-.mock-cards small{display:block;font-size:.62rem;color:#94ac9b}.mock-cards b{font-size:.82rem}
-.mock-bottom{padding:14px 2px 1px;border-top:1px solid #ffffff13;font-size:.55rem;letter-spacing:.1em;color:#8ea797}
-.mock-bars{display:flex;align-items:end;height:22px;gap:3px}.mock-bars i{display:block;width:5px;border-radius:4px;background:#4de18d}.mock-bars i:nth-child(1){height:35%}.mock-bars i:nth-child(2){height:58%}.mock-bars i:nth-child(3){height:42%}.mock-bars i:nth-child(4){height:80%}.mock-bars i:nth-child(5){height:55%}.mock-bars i:nth-child(6){height:100%}.mock-bars i:nth-child(7){height:72%}
-.float-chip{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid #5c9a704c;border-radius:14px;background:#102219ed;box-shadow:0 15px 40px #0006;backdrop-filter:blur(12px)}
-.float-chip b,.float-chip small{display:block}.float-chip b{font-size:.77rem}.float-chip small{font-size:.65rem;color:#9eb5a5;margin-top:2px}
-.chip-top{top:27px;right:-5px}.chip-bottom{bottom:23px;left:-15px}
-.chip-icon,.chip-check{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#45db8722;color:var(--green);font-size:1.1rem}
-.trust-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #ffffff16;border-bottom:1px solid #ffffff16;background:#ffffff03}
-.trust-strip>div{display:flex;align-items:center;justify-content:center;gap:12px;padding:19px 8px;border-right:1px solid #ffffff12;font-size:.79rem;color:#bdcfc2}
-.trust-strip>div:last-child{border:0}.trust-strip b{color:var(--green);font-size:.68rem;letter-spacing:.08em}
-.feature-section{padding:90px 0 82px}
-.section-head{margin-bottom:38px}.section-head h2{font-size:clamp(2.2rem,4.2vw,3.3rem);line-height:1.06;letter-spacing:-.06em;margin:14px 0}
-.section-head p{font-size:.96rem;line-height:1.7;max-width:590px;margin:0 auto}
-.feature-grid{gap:17px}.feature-card{position:relative;min-height:245px;padding:25px;overflow:hidden}
-.feature-no{display:block;font-size:.62rem;letter-spacing:.13em;color:#83b897;margin:0 0 11px}
-.feature-card h3{font-size:1.18rem;margin:0 0 9px}.feature-card p{font-size:.87rem;line-height:1.75}
-.feature-arrow{position:absolute;right:23px;bottom:20px;color:var(--green);font-size:1.25rem}
-.how-section{padding:82px 0;background:linear-gradient(110deg,#0d2015,#0a1710);border-top:1px solid #ffffff12;border-bottom:1px solid #ffffff12}
-.how-inner{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:center}
-.how-intro h2,.final-cta h2{font-size:clamp(2.7rem,5vw,4rem);line-height:1.02;letter-spacing:-.07em;margin:15px 0}
-.how-intro .lead{font-size:.93rem;line-height:1.8;margin-bottom:24px}
-.steps article{display:grid;grid-template-columns:43px 1fr 20px;gap:17px;align-items:start;padding:22px 0;border-bottom:1px solid #ffffff17}
-.steps article:first-child{border-top:1px solid #ffffff17}
-.steps article>b{font-size:.76rem;color:var(--green);padding-top:3px}
-.steps h3{font-size:1rem;margin:0 0 5px}.steps p{font-size:.83rem;color:var(--muted);margin:0;line-height:1.7}.steps article>span{color:#75eaa2}
-.safety-section{padding:68px 0}
-.safety-card{display:grid;grid-template-columns:56px 1fr auto;gap:22px;align-items:center;padding:29px;border:1px solid #477c574c;border-radius:20px;background:linear-gradient(110deg,#14291c,#0d1b13)}
-.safety-symbol{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#50df8c20;color:var(--green);font-size:1.8rem}
-.safety-card h2{font-size:1.3rem;margin:7px 0}.safety-card p{max-width:750px;color:#a8bdae;font-size:.84rem;line-height:1.75;margin:0}
-.safety-tag{font-size:.62rem;letter-spacing:.12em;color:#9fe9b9;border:1px solid #4a9a6655;border-radius:99px;padding:8px 11px;white-space:nowrap}
-.final-cta{padding:22px 0 88px}
-.final-cta-inner{text-align:center;padding:62px 20px;border:1px solid #4c8d624d;border-radius:25px;background:radial-gradient(ellipse at 50% 0%,#1c593628,transparent 58%),linear-gradient(145deg,#12251a,#0b1710)}
-.final-cta h2{font-size:clamp(2.8rem,5vw,4.2rem);margin:15px 0}.final-cta p{color:#aec1b3;margin:0 0 22px}.final-cta .small{margin-top:15px;font-size:.7rem}
-@media(max-width:850px){.hero-pro{grid-template-columns:1fr;padding:62px 0 58px}.hero-visual{min-height:405px}.dash-preview{width:min(100%,520px)}.chip-top{right:0}.chip-bottom{left:0}.how-inner{grid-template-columns:1fr;gap:30px}.trust-strip{grid-template-columns:1fr 1fr}.trust-strip>div:nth-child(2){border-right:0}.trust-strip>div:nth-child(-n+2){border-bottom:1px solid #ffffff12}}
-@media(max-width:560px){.top{padding:13px 0}.brand{font-size:1.4rem}.brand:before{width:30px;height:30px}.topnav{display:none}#topActions .btn{padding:9px 11px;font-size:.77rem}.hero-pro{padding:49px 0 43px;gap:8px}.hero-pro h1{font-size:3.35rem;letter-spacing:-.075em}.hero-pro .lead{font-size:.94rem;line-height:1.7}.hero-proof{gap:9px 13px;font-size:.7rem}.hero-visual{min-height:340px;margin:0 -3px}.dash-preview{padding:15px;border-radius:19px;transform:none}.mock-welcome{margin:20px 0 13px}.mock-balance{padding:15px}.mock-orbit{width:44px;height:44px}.mock-cards{gap:6px}.mock-cards>div{padding:10px 8px}.mock-cards b{font-size:.72rem}.mock-cards small{font-size:.57rem}.chip-top{top:0;right:-3px;padding:8px 10px}.chip-bottom{bottom:0;left:-3px;padding:8px 10px}.float-chip b{font-size:.68rem}.float-chip small{font-size:.57rem}.trust-strip>div{justify-content:flex-start;padding:15px 10px;font-size:.69rem;gap:8px}.feature-section{padding:66px 0}.section-head h2{font-size:2.3rem}.feature-grid{grid-template-columns:1fr}.feature-card{min-height:205px}.how-section{padding:60px 0}.how-intro h2{font-size:3rem}.safety-card{grid-template-columns:42px 1fr;gap:13px;padding:20px}.safety-symbol{width:40px;height:40px;font-size:1.4rem}.safety-card h2{font-size:1.08rem}.safety-tag{grid-column:2;justify-self:start}.final-cta{padding-bottom:60px}.final-cta-inner{padding:48px 17px}.final-cta h2{font-size:2.8rem}}
-
-
-/* Stateflix-inspired GenZBag member portal: original branding and responsive layout */
-.member-shell{width:min(1480px,100%);min-height:calc(100vh - 85px);margin:0 auto;display:grid;grid-template-columns:255px minmax(0,1fr);gap:0;border:1px solid #ffffff12;border-radius:22px;overflow:hidden;background:#08150e;box-shadow:0 28px 90px #0005}
-.member-sidebar{background:linear-gradient(180deg,#0e2116,#09160f);border-right:1px solid #ffffff13;padding:24px 16px;display:flex;flex-direction:column;min-height:850px}
-.side-brand{display:flex;align-items:center;gap:11px;font-size:1.22rem;font-weight:900;letter-spacing:-.8px;padding:3px 8px 27px}.side-brand>span:last-child>span{color:var(--green)}.side-brand small{display:block;font-size:.57rem;letter-spacing:.18em;color:#83a791;margin-top:2px;font-weight:750}
-.side-mark{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#75f5aa,#20ad69);color:#062313;font-size:1.25rem;box-shadow:0 7px 22px #39d98035}
-.side-caption{font-size:.62rem;letter-spacing:.16em;color:#70917c;font-weight:850;padding:10px 11px}.side-caption-gap{margin-top:18px}
-.side-nav{display:flex;flex-direction:column;gap:5px}.side-nav .tab{display:flex;align-items:center;gap:12px;text-align:left;width:100%;border:1px solid transparent;background:transparent;color:#a8beaf;padding:11px 12px;border-radius:11px;font-size:.84rem;font-weight:700;white-space:nowrap}.side-nav .tab i{font-style:normal;width:20px;text-align:center;color:#7f9e89;font-size:1.05rem}.side-nav .tab:hover{background:#ffffff08;color:#eafff0}.side-nav .tab.active{background:linear-gradient(100deg,#1c4930,#143321);border-color:#3d80564a;color:#7df0aa;box-shadow:inset 3px 0 #55e491}.side-nav .tab.active i{color:#7df0aa}.side-new{margin-left:auto;font-size:.55rem;letter-spacing:.08em;color:#062313;background:#68e99c;border-radius:99px;padding:3px 6px}.sidebar-bottom{display:flex;gap:10px;align-items:center;margin-top:auto;padding:15px 9px 2px;border-top:1px solid #ffffff13}.safe-dot,.member-status i{width:7px;height:7px;border-radius:50%;background:#55e491;box-shadow:0 0 12px #55e491}.sidebar-bottom b,.sidebar-bottom small{display:block}.sidebar-bottom b{font-size:.72rem}.sidebar-bottom small{font-size:.62rem;color:#83a18e;margin-top:2px}
-.member-main{min-width:0;padding:26px 28px 45px;background:radial-gradient(ellipse at 90% 0%,#17432a38,transparent 33%),#09170f}.member-topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:0 0 22px;border-bottom:1px solid #ffffff14}.crumb{font-size:.62rem;letter-spacing:.14em;color:#7f9c89;font-weight:800;margin-bottom:7px}.crumb span{padding:0 6px;color:#496b54}.crumb b{color:#78e9a3}.member-topbar h1{font-size:1.65rem;letter-spacing:-.8px;margin:0}.topbar-actions{display:flex;align-items:center;gap:12px}.member-status{display:flex;align-items:center;gap:8px;font-size:.7rem;color:#a6c1ae;border:1px solid #3c6c4a;border-radius:99px;padding:8px 11px}.member-stats{margin:21px 0 23px;gap:12px}.member-stats .stat{padding:17px 18px;border-radius:15px;background:linear-gradient(145deg,#12251a,#0d1b13);box-shadow:0 12px 28px #0002}.member-stats .stat small{font-size:.62rem;letter-spacing:.11em;font-weight:800}.member-stats .stat strong{font-size:1.42rem}.member-stats .stat>span{display:block;color:#779583;font-size:.68rem;margin-top:5px}.member-stats .balance-stat{background:linear-gradient(120deg,#17452c,#10291b);border-color:#4ba66a66}.member-content{min-width:0}.member-content .panel{margin:0 0 14px}.member-content .two{gap:13px}
-@media(max-width:900px){.member-shell{grid-template-columns:205px minmax(0,1fr)}.member-sidebar{padding:20px 11px}.member-main{padding:22px 18px}.side-nav .tab{font-size:.77rem;padding:10px 9px;gap:9px}.member-stats .stat{padding:14px}.member-stats .stat strong{font-size:1.18rem}}
-@media(max-width:680px){.member-shell{display:block;border-radius:15px;width:100%;border-left:0;border-right:0}.member-sidebar{min-height:0;padding:12px 13px 8px;border-right:0;border-bottom:1px solid #ffffff16}.side-brand{padding:0 3px 12px}.side-caption,.sidebar-bottom{display:none}.side-nav{display:flex;flex-direction:row;overflow-x:auto;gap:7px;padding-bottom:5px;scrollbar-width:thin}.side-nav .tab{flex:0 0 auto;width:auto;padding:9px 11px;font-size:.72rem;border:1px solid #ffffff12}.side-nav .tab.active{box-shadow:inset 0 -2px #55e491}.side-nav .tab i{width:auto}.side-new{display:none}.member-main{padding:18px 13px 35px}.member-topbar{padding-bottom:16px}.member-topbar h1{font-size:1.35rem}.topbar-actions{gap:7px}.member-status{font-size:.62rem;padding:7px 9px}.member-stats{grid-template-columns:1fr 1fr;gap:8px;margin:13px 0 17px}.member-stats .stat{padding:12px}.member-stats .stat small{font-size:.56rem}.member-stats .stat strong{font-size:1.05rem}.member-stats .stat>span{font-size:.61rem}.member-content .two{grid-template-columns:1fr}}
-
-/* GenZBag member dashboard layout */
-.member-shell{width:min(1580px,100%);min-height:calc(100vh - 85px);margin:0 auto;display:grid;grid-template-columns:286px minmax(0,1fr);gap:0;border:1px solid #ffffff14;border-radius:22px;overflow:hidden;background:#07140e;box-shadow:0 28px 90px #0005}
-.member-sidebar{background:linear-gradient(180deg,#0d2116,#08140e);border-right:1px solid #ffffff15;padding:20px 14px;display:flex;flex-direction:column;min-height:100vh;max-height:calc(100vh - 30px);overflow-y:auto;scrollbar-width:thin}
-.side-brand{display:flex;align-items:center;gap:11px;font-size:1.22rem;font-weight:900;letter-spacing:-.8px;padding:3px 8px 22px}.side-brand>span:last-child>span{color:var(--green)}.side-brand small{display:block;font-size:.57rem;letter-spacing:.18em;color:#83a791;margin-top:2px;font-weight:750}
-.side-mark{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:linear-gradient(145deg,#75f5aa,#20ad69);color:#062313;font-size:1.25rem;box-shadow:0 7px 22px #39d98035}
-.side-caption{font-size:.62rem;letter-spacing:.16em;color:#70917c;font-weight:850;padding:10px 11px}.side-caption-gap{margin-top:14px}
-.side-nav{display:flex;flex-direction:column;gap:3px}.side-nav .tab{display:flex;align-items:center;gap:10px;text-align:left;width:100%;border:1px solid transparent;background:transparent;color:#a8beaf;padding:9px 10px;border-radius:10px;font-size:.79rem;font-weight:700;white-space:nowrap}.side-nav .tab i{font-style:normal;width:19px;text-align:center;color:#7f9e89;font-size:1rem;flex:0 0 19px}.side-nav .tab:hover{background:#ffffff08;color:#eafff0}.side-nav .tab.active{background:linear-gradient(100deg,#1c4930,#143321);border-color:#3d80564a;color:#7df0aa;box-shadow:inset 3px 0 #55e491}.side-nav .tab.active i{color:#7df0aa}.side-new,.side-hot{margin-left:auto;font-size:.53rem;letter-spacing:.07em;border-radius:99px;padding:3px 6px}.side-new{color:#062313;background:#68e99c}.side-hot{color:#281805;background:#f2c66b}
-.side-logout{margin-top:8px!important;color:#ffaaaa!important}.sidebar-bottom{display:flex;gap:10px;align-items:center;margin-top:auto;padding:15px 9px 2px;border-top:1px solid #ffffff13}.safe-dot,.member-status i{width:7px;height:7px;border-radius:50%;background:#55e491;box-shadow:0 0 12px #55e491}.sidebar-bottom b,.sidebar-bottom small{display:block}.sidebar-bottom b{font-size:.72rem}.sidebar-bottom small{font-size:.62rem;color:#83a18e;margin-top:2px}
-.member-main{min-width:0;padding:25px 28px 48px;background:radial-gradient(ellipse at 90% 0%,#17432a38,transparent 33%),#09170f}.member-topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:0 0 21px;border-bottom:1px solid #ffffff14;margin-bottom:20px}.member-heading{display:flex;align-items:center;gap:12px}.crumb{font-size:.62rem;letter-spacing:.14em;color:#7f9c89;font-weight:800;margin-bottom:7px}.crumb span{padding:0 6px;color:#496b54}.crumb b{color:#78e9a3}.member-topbar h1{font-size:1.65rem;letter-spacing:-.8px;margin:0}.topbar-actions{display:flex;align-items:center;gap:12px}.member-status{display:flex;align-items:center;gap:8px;font-size:.7rem;color:#a6c1ae;border:1px solid #3c6c4a;border-radius:99px;padding:8px 11px}.member-content{min-width:0}.member-content .panel{margin:0 0 14px}.member-content .two{gap:13px}.mobile-menu-btn{display:none;border:1px solid #3b7650;background:#10271a;color:#8cf0b1;border-radius:10px;padding:9px 11px;font-size:1.1rem}
-.home-welcome{padding:22px 24px!important;background:linear-gradient(115deg,#17452c,#0d2418)!important;border-color:#4ba66a66!important}.home-welcome h2{font-size:1.55rem!important;margin:4px 0!important}.home-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:14px 0}.home-kpi{padding:18px;border-radius:16px;border:1px solid #3b6749;background:linear-gradient(145deg,#12251a,#0c1a12);min-width:0}.home-kpi small{display:block;color:#9db9a6;font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.home-kpi strong{display:block;font-size:1.45rem;letter-spacing:-.5px;margin-top:7px;overflow-wrap:anywhere}.home-kpi .kpi-icon{float:right;color:#74e8a1;font-size:1.1rem}.home-kpi.primary-kpi{background:linear-gradient(125deg,#174a2e,#10271a);border-color:#4ba66a88}.home-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 10px}.home-section-title h2{margin:0;font-size:1.12rem}.home-activity-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.home-activity{border:1px solid #ffffff18;background:#ffffff06;border-radius:13px;padding:13px;min-width:0}.home-activity b{display:block;font-size:.82rem}.home-activity strong{display:block;margin-top:5px;color:#79e9a4;font-size:1rem}.home-activity small{color:#8da996;font-size:.68rem}.home-network{display:flex;justify-content:space-between;align-items:center;gap:14px;background:linear-gradient(110deg,#172b45,#102033)!important;border-color:#416c9a55!important}.home-network .network-count{font-size:1.7rem;font-weight:900;color:#9dc8ff}
-@media(max-width:1050px){.member-shell{grid-template-columns:250px minmax(0,1fr)}.member-main{padding:22px 18px}.home-activity-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:700px){.member-shell{display:block;border-radius:15px;width:100%;border-left:0;border-right:0;overflow:visible}.member-sidebar{position:fixed;z-index:1001;left:0;top:0;bottom:0;width:min(310px,86vw);height:100dvh;max-height:100dvh;min-height:100dvh;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px #0008;padding:17px 13px}.member-shell.mobile-nav-open .member-sidebar{transform:translateX(0)}.member-shell.mobile-nav-open:before{content:"";position:fixed;inset:0;background:#0009;z-index:1000}.member-main{padding:16px 12px 32px}.member-topbar{padding-bottom:15px;margin-bottom:14px}.member-topbar h1{font-size:1.32rem}.mobile-menu-btn{display:inline-flex}.topbar-actions{gap:7px}.member-status{font-size:.61rem;padding:7px 9px}.home-kpis{grid-template-columns:1fr 1fr;gap:8px}.home-kpi{padding:13px}.home-kpi strong{font-size:1.08rem}.home-activity-grid{grid-template-columns:1fr 1fr}.home-welcome{padding:17px!important}.member-content .two{grid-template-columns:1fr}}
-</style>
-<style id="genzbag-dashboard-refresh">
-/* GenZBag dashboard refresh — adapted from the supplied layout */
-#dashboardView{background:#f4f4f7;color:#171722}
-#dashboardView .member-shell{width:100%;max-width:1600px;min-height:100vh;margin:0 auto;border:0;border-radius:0;background:#f4f4f7;box-shadow:none;grid-template-columns:250px minmax(0,1fr);overflow:visible}
-#dashboardView .member-sidebar{background:#111118;border:0;padding:22px 15px;min-height:100vh;max-height:none;color:#fff}
-#dashboardView .side-brand{color:#fff;padding-bottom:28px}
-#dashboardView .side-brand>span:last-child>span{color:#ff2e8a}
-#dashboardView .side-mark{background:linear-gradient(135deg,#ff2e8a,#7c3aed);color:#fff;box-shadow:0 8px 24px #ff2e8a35}
-#dashboardView .side-caption{color:#858594}
-#dashboardView .side-nav .tab{color:#d2d2dc;border-radius:10px;padding:11px 12px;font-size:.82rem}
-#dashboardView .side-nav .tab i{color:#aaa9b8}
-#dashboardView .side-nav .tab:hover{background:#ffffff12;color:#fff}
-#dashboardView .side-nav .tab.active{background:#ff2e8a;color:#fff;border-color:#ff2e8a;box-shadow:none}
-#dashboardView .side-nav .tab.active i{color:#fff}
-#dashboardView .side-new{background:#bfff00;color:#171717}
-#dashboardView .side-hot{background:#7c3aed;color:#fff}
-#dashboardView .side-logout{color:#ff9aa8!important}
-#dashboardView .sidebar-bottom{border-color:#ffffff20}
-#dashboardView .sidebar-bottom small{color:#aaaab8}
-#dashboardView .member-main{background:#f4f4f7;padding:22px 26px 42px;color:#171722}
-#dashboardView .member-topbar{background:#fff;border:0;border-radius:14px;padding:14px 18px;margin-bottom:18px;box-shadow:0 2px 12px #1515220b}
-#dashboardView .crumb{color:#888895}
-#dashboardView .crumb b{color:#7c3aed}
-#dashboardView .member-topbar h1{color:#171722}
-#dashboardView .member-topbar .small{color:#777783}
-#dashboardView .mobile-menu-btn{background:#fff;color:#7c3aed;border-color:#e5d9f4}
-#dashboardView .dashboard-search-wrap{background:#fafafd;border:1px solid #e5e5ec;border-radius:22px;color:#7c3aed}
-#dashboardView .dashboard-search-wrap input{color:#222}
-#dashboardView .member-profile-chip{color:#222}
-#dashboardView .member-avatar{background:#7c3aed;color:#fff}
-#dashboardView .member-display-name{color:#222}
-#dashboardView .member-status{background:#f7f7fb;color:#666;border-color:#e7e7ed}
-#dashboardView .member-main .btn{border-radius:10px}
-#dashboardView .member-main .btn.primary{background:#7c3aed;border-color:#7c3aed;color:#fff}
-#dashboardView .member-main .btn:not(.primary){background:#17171d;color:#fff;border-color:#17171d}
-#dashboardView .member-content .panel,#dashboardView .member-content .stat,#dashboardView .home-kpi{background:#fff!important;color:#171722;border:1px solid #ececf1!important;border-radius:14px;box-shadow:0 2px 12px #1515220a}
-#dashboardView .member-content .panel h2,#dashboardView .member-content .panel h3{color:#171722}
-#dashboardView .member-content .panel p,#dashboardView .member-content .small{color:#777783}
-#dashboardView .home-welcome{background:linear-gradient(100deg,#ff2e8a,#7c3aed)!important;color:#fff;border:0!important}
-#dashboardView .home-welcome h2,#dashboardView .home-welcome p,#dashboardView .home-welcome .small{color:#fff!important}
-#dashboardView .home-welcome .pill{color:#fff;border-color:#ffffff55}
-#dashboardView .home-network{background:linear-gradient(100deg,#ff2e8a,#7c3aed)!important;color:#fff;border:0!important}
-#dashboardView .home-network h2,#dashboardView .home-network p,#dashboardView .home-network .small{color:#fff!important}
-#dashboardView .home-network .network-count{color:#fff}
-#dashboardView .home-network .btn{background:#bfff00!important;border-color:#bfff00!important;color:#171717!important}
-#dashboardView .home-kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-#dashboardView .home-kpi{padding:17px}
-#dashboardView .home-kpi small{color:#858592}
-#dashboardView .home-kpi strong{color:#171722;font-size:1.3rem}
-#dashboardView .home-kpi.primary-kpi{background:#fff!important;border-color:#eadcfb!important}
-#dashboardView .home-kpi.primary-kpi strong{color:#7c3aed}
-#dashboardView .home-kpi .kpi-icon{color:#ff2e8a}
-#dashboardView .home-section-title h2{color:#171722}
-#dashboardView .home-activity-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-#dashboardView .home-activity{background:#fff;border:1px solid #ececf1}
-#dashboardView .home-activity b{color:#272733}
-#dashboardView .home-activity strong{color:#7c3aed}
-#dashboardView .home-activity small{color:#858592}
-#dashboardView .item{background:#fafafd;border:1px solid #ececf1;color:#292936}
-#dashboardView .item p{color:#777783}
-#dashboardView .badge{background:#f0eafd;color:#6d28d9;border-color:#e7dafb}
-#dashboardView .badge.good{background:#e8f9ef;color:#15803d}
-#dashboardView .badge.wait{background:#fff7df;color:#946200}
-#dashboardView .badge.bad{background:#fff0f0;color:#c62828}
-#dashboardView .copy{background:#faf8ff;border-color:#d9c5f6;color:#6d28d9}
-#dashboardView .empty{background:#fafafd;color:#777783;border-color:#dedee8}
-#dashboardView .tablewrap{border-color:#ececf1}
-#dashboardView table th{background:#f7f7fa;color:#777783}
-#dashboardView table td{color:#333}
-#dashboardView .msg{background:#f5f0ff;color:#5b4b75}
-#dashboardView .genz-promo-banner{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:25px 28px;margin:0 0 16px;border-radius:16px;background:linear-gradient(100deg,#ff2e8a,#7c3aed);color:#fff;box-shadow:0 12px 28px #7c3aed20}
-#dashboardView .genz-banner-tag{font-size:.65rem;font-weight:850;letter-spacing:.13em;color:#ffe4f0}
-#dashboardView .genz-promo-banner h2{font-size:1.45rem;margin:6px 0;color:#fff}
-#dashboardView .genz-promo-banner p{margin:0;color:#fff;opacity:.9;font-size:.86rem}
-#dashboardView .genz-banner-button{background:#bfff00;border:0;color:#171717;border-radius:22px;padding:12px 18px;font-weight:850;white-space:nowrap;cursor:pointer}
-#dashboardView .genz-feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
-#dashboardView .genz-feature-card{display:flex;flex-direction:column;gap:7px;min-width:0;padding:15px;border:1px solid #ececf1;border-radius:13px;background:#fff;box-shadow:0 2px 10px #15152208}
-#dashboardView .genz-feature-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#f4eaff;color:#7c3aed}
-#dashboardView .genz-feature-card>small{color:#858592;text-transform:uppercase;font-size:.64rem;letter-spacing:.08em}
-#dashboardView .genz-feature-card>b{color:#20202a;font-size:.94rem}
-#dashboardView .genz-feature-card>p{color:#777783;font-size:.78rem;line-height:1.5;margin:0;flex:1}
-#dashboardView .genz-feature-card .row{margin-top:5px}
-#dashboardView .genz-feature-card strong{font-size:.85rem;color:#7c3aed}
-#dashboardView .genz-feature-card .btn{padding:7px 10px}
-@media(max-width:1050px){#dashboardView .home-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}#dashboardView .genz-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:700px){#dashboardView .member-main{padding:14px 12px 30px}#dashboardView .member-topbar{padding:12px;margin-bottom:13px}#dashboardView .dashboard-search-wrap{display:none}#dashboardView .home-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#dashboardView .home-activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#dashboardView .genz-promo-banner{align-items:flex-start;flex-direction:column;padding:20px}#dashboardView .genz-promo-banner h2{font-size:1.2rem}#dashboardView .genz-feature-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:420px){#dashboardView .genz-feature-grid{grid-template-columns:1fr}#dashboardView .home-kpi{padding:12px}#dashboardView .home-kpi strong{font-size:1.02rem}}
-</style>
-<style id="activation-page-styles">
-.activation-shell{max-width:560px;margin:0 auto;padding:18px 14px 26px}
-.activation-brand{display:flex;align-items:center;gap:12px;padding:10px 4px 20px;color:#f5fbff}
-.activation-brand b{display:block;font-size:1.25rem;letter-spacing:.2px}
-.activation-brand small{display:block;color:#9bb9d7;margin-top:2px}
-.activation-logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:1.35rem;color:#04131b;background:linear-gradient(135deg,#6ef2d1,#48a9ff);box-shadow:0 8px 28px #26d7c533}
-.activation-choice,.activation-instructions{border:1px solid #2c4963;background:linear-gradient(155deg,#10283c,#091725);border-radius:20px;padding:22px;box-shadow:0 18px 55px #0005}
-.activation-network{width:100%;min-height:66px;margin-top:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:13px}
-.activation-network small{font-size:.78rem;font-weight:400;opacity:.85}
-.activation-network.airtel{background:linear-gradient(110deg,#e8414a,#b91e32);color:#fff;border:0}
-.activation-demo{margin-top:20px;padding:14px;border:1px solid #35516a;border-radius:13px;background:#0a1a29}
-.activation-demo summary{cursor:pointer;color:#d9f5ff}
-.activation-demo p{font-size:.86rem;color:#a9bfd1}
-.demo-preview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.demo-preview-grid>div{padding:11px 8px;border-radius:10px;background:#132d40}
-.demo-preview-grid b,.demo-preview-grid small{display:block}
-.demo-preview-grid small{font-size:.7rem;color:#a9bfd1;margin-top:5px}
-.activation-step{display:flex;align-items:flex-start;gap:12px}
-.activation-step-number{flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#153c50;color:#7af0d3;font-weight:800}
-.activation-footer{text-align:center;color:#7893a9;font-size:.75rem;padding:18px 4px}
-@media(max-width:420px){.activation-choice,.activation-instructions{padding:17px}.demo-preview-grid{grid-template-columns:1fr}.activation-brand{padding-bottom:15px}}
-</style>
-<style id="genzbag-commerce-dashboard">
-#dashboardView{background:#f4f4f7;color:#191923;min-height:100vh}
-#dashboardView .member-shell{background:#f4f4f7;min-height:100vh}
-#dashboardView .member-sidebar{background:#111116;border-right:1px solid #292932;color:#fff}
-#dashboardView .side-brand{color:#fff}
-#dashboardView .side-brand>span:last-child>span{color:#ff2e8a}
-#dashboardView .side-mark{background:linear-gradient(135deg,#ff2e8a,#7c3aed);color:#fff;box-shadow:0 8px 22px #ff2e8a35}
-#dashboardView .side-caption{color:#8c8c98}
-#dashboardView .side-nav .tab{color:#d1d1da;border-radius:10px}
-#dashboardView .side-nav .tab i{color:#aaaab7}
-#dashboardView .side-nav .tab:hover{background:#ffffff10;color:#fff}
-#dashboardView .side-nav .tab.active{background:linear-gradient(100deg,#ff2e8a,#7c3aed);border-color:transparent;color:#fff;box-shadow:0 7px 20px #7c3aed25}
-#dashboardView .side-nav .tab.active i{color:#fff}
-#dashboardView .side-new{background:#bfff00;color:#171717}
-#dashboardView .side-hot{background:#ff2e8a;color:#fff}
-#dashboardView .side-logout{color:#ff9aa9!important}
-#dashboardView .sidebar-bottom{border-color:#ffffff1a}
-#dashboardView .sidebar-bottom small{color:#aaaab7}
-#dashboardView .member-main{background:#f4f4f7;padding:24px 28px 48px}
-#dashboardView .member-topbar{background:#fff;border:1px solid #ececf1;border-radius:15px;padding:14px 18px;margin-bottom:18px;box-shadow:0 2px 10px #11111108}
-#dashboardView .crumb{color:#858591}
-#dashboardView .crumb b{color:#7c3aed}
-#dashboardView .member-topbar h1{color:#191923}
-#dashboardView .member-topbar .small{color:#858591}
-#dashboardView .dashboard-search-wrap{display:flex;align-items:center;gap:9px;width:min(320px,28vw);padding:9px 13px;border:1px solid #e2e2e9;border-radius:24px;background:#fafafd;color:#858591}
-#dashboardView .dashboard-search-wrap span{font-size:1.25rem}
-#dashboardView .dashboard-search-wrap input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#191923;font:inherit;font-size:.83rem}
-#dashboardView .topbar-actions{display:flex;align-items:center;gap:12px}
-#dashboardView .member-profile-chip{display:flex;align-items:center;gap:9px;color:#252530;font-weight:750;font-size:.83rem}
-#dashboardView .member-avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#7c3aed;color:#fff;font-weight:900}
-#dashboardView .member-status{display:inline-flex;align-items:center;gap:6px;background:#e8f9ef;color:#168348;border-radius:20px;padding:5px 9px;font-size:.67rem;font-weight:800}
-#dashboardView .member-status i{background:#22c55e;box-shadow:none}
-#dashboardView .btn{border-radius:10px}
-#dashboardView .btn.primary{background:linear-gradient(100deg,#ff2e8a,#7c3aed);border:0;color:#fff}
-#dashboardView .btn.ghost{background:#fff;border:1px solid #e6e6ed;color:#343440}
-#dashboardView .member-content .panel,#dashboardView .home-welcome,#dashboardView .home-kpi,#dashboardView .home-activity,#dashboardView .admin-kpi{background:#fff!important;color:#20202b;border:1px solid #ececf1!important;border-radius:15px;box-shadow:0 2px 10px #11111108}
-#dashboardView .member-content .panel p,#dashboardView .home-welcome p{color:#6e6e7a}
-#dashboardView .member-content h2,#dashboardView .member-content h3,#dashboardView .home-welcome h2{color:#20202b}
-#dashboardView .home-welcome{background:linear-gradient(110deg,#ff2e8a,#7c3aed)!important;color:#fff!important;border:0!important}
-#dashboardView .home-welcome h2,#dashboardView .home-welcome p,#dashboardView .home-welcome .admin-label{color:#fff!important}
-#dashboardView .home-network{background:linear-gradient(110deg,#21152f,#39205c)!important;color:#fff;border:0!important}
-#dashboardView .home-network h2,#dashboardView .home-network p{color:#fff!important}
-#dashboardView .home-kpi small,#dashboardView .home-activity small,#dashboardView .admin-kpi small{color:#858591}
-#dashboardView .home-kpi strong,#dashboardView .home-activity strong{color:#7c3aed}
-#dashboardView .home-kpi.primary-kpi{background:#fff!important;border-color:#eadcf8!important}
-#dashboardView .home-kpi .kpi-icon{color:#ff2e8a}
-#dashboardView .home-activity{background:#fafafd!important}
-#dashboardView .admin-label{color:#7c3aed}
-#dashboardView .item{background:#fafafd;border-color:#ececf1;color:#252530}
-#dashboardView .item p,#dashboardView .small{color:#737380}
-#dashboardView .tablewrap{border-color:#ececf1}
-#dashboardView th{background:#f7f7fb;color:#686875}
-#dashboardView td{color:#33333e;border-color:#ededf2}
-#dashboardView .copy{background:#fafafd;border-color:#d8c7ef;color:#6b31bc}
-#dashboardView .empty{color:#858591;border-color:#dedee7;background:#fafafd}
-#dashboardView .tab{background:#fff;color:#555563;border-color:#e8e8ef}
-#dashboardView .tab.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
-#dashboardView .field input,#dashboardView .field select,#dashboardView .field textarea{background:#fff;color:#222;border-color:#dedee7}
-#dashboardView .msg{background:#f5f2fb;color:#555}
-#dashboardView footer{color:#858591}
-@media(max-width:900px){#dashboardView .member-main{padding:16px 14px 35px}#dashboardView .dashboard-search-wrap{width:min(260px,30vw)}}
-@media(max-width:700px){#dashboardView .member-topbar{padding:12px;margin-bottom:14px;gap:12px}#dashboardView .dashboard-search-wrap{order:3;width:100%;max-width:none}#dashboardView .topbar-actions{margin-left:auto}#dashboardView .member-display-name{display:none}#dashboardView .member-profile-chip{gap:6px}#dashboardView .member-status{font-size:.59rem;padding:5px 7px}#dashboardView .member-main{padding:12px 10px 28px}}
-@media(max-width:430px){#dashboardView .member-topbar h1{font-size:1.15rem}#dashboardView .topbar-actions .btn{padding:8px 9px;font-size:.72rem}#dashboardView .member-avatar{width:33px;height:33px}}
+:root{
+  --blue:#0A2A6B;
+  --light-blue:#E8F0FF;
+  --pink:#FF2E8A;
+  --purple:#7C3AED;
+  --orange:#FF8A00;
+  --green:#16A34A;
+  --red:#E11D48;
+  --white:#fff;
+  --text:#18243B;
+  --muted:#78849A;
+  --radius:19px;
+  --shadow:0 5px 20px rgba(10,42,107,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--light-blue);
+  color:var(--text);
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.app{min-height:100vh}
+.topbar{
+  height:68px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  box-shadow:0 2px 12px rgba(10,42,107,.07);
+}
+.header-left,.header-right{display:flex;align-items:center;gap:12px}
+.icon-btn{
+  width:39px;height:39px;border:0;border-radius:12px;
+  background:#F1F5FF;color:var(--blue);
+  display:grid;place-items:center;position:relative;
+  font-size:21px;
+}
+.icon-btn svg{width:21px;height:21px}
+.count{
+  position:absolute;top:-4px;right:-4px;
+  min-width:16px;height:16px;border-radius:20px;
+  background:var(--red);color:#fff;font-size:10px;
+  display:grid;place-items:center;border:2px solid white;
+}
+.brand-button{
+  display:flex;align-items:center;gap:8px;
+  border:0;border-radius:30px;padding:8px 14px;
+  background:var(--blue);color:#fff;font-weight:800;
+  font-size:13px;
+}
+.brand-logo{
+  width:27px;height:27px;border-radius:50%;
+  background:#fff;color:var(--blue);
+  display:grid;place-items:center;font-weight:900;
+}
+.layout{display:flex;min-height:calc(100vh - 68px)}
+.sidebar{
+  width:260px;flex-shrink:0;background:var(--blue);
+  color:#fff;padding:22px 15px;
+  position:fixed;top:68px;bottom:0;left:0;
+  overflow-y:auto;z-index:90;
+  transform:translateX(-105%);transition:transform .25s ease;
+}
+.sidebar.open{transform:translateX(0)}
+.sidebar-brand{font-size:20px;font-weight:900;padding:8px 12px 22px}
+.sidebar-brand span{color:#FF8A00}
+.nav-label{
+  color:#AFC5F7;font-size:10px;font-weight:800;
+  letter-spacing:1.5px;padding:15px 12px 8px;
+}
+.nav-link{
+  display:flex;align-items:center;gap:12px;
+  color:#E5EDFF;padding:12px;border-radius:11px;
+  font-size:13px;font-weight:650;margin:3px 0;
+  transition:.2s;
+}
+.nav-link:hover,.nav-link.active{background:#ffffff1c;color:#fff}
+.nav-link.active{border-left:3px solid var(--pink)}
+.nav-link .nav-icon{width:22px;text-align:center;font-size:17px}
+.sidebar-footer{
+  margin-top:25px;padding:15px 12px;
+  border-top:1px solid #ffffff25;
+  color:#B9CCF6;font-size:11px;
+}
+.overlay{
+  position:fixed;inset:68px 0 0;background:#06163880;
+  z-index:80;display:none;
+}
+.overlay.show{display:block}
+.main{
+  width:100%;max-width:760px;
+  margin:0 auto;padding:18px 14px 35px;
+}
+.card{
+  background:#fff;border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;margin-bottom:15px;
+}
+.network-card{
+  background:linear-gradient(120deg,#FF8A00,#FFB12E);
+  color:#fff;padding:19px;position:relative;
+}
+.network-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.network-card h2{font-size:18px;font-weight:850}
+.network-card .subtitle{font-size:11px;opacity:.9;margin-top:4px}
+.progress-circle{
+  width:67px;height:67px;border-radius:50%;
+  border:5px solid #ffffff75;background:#ffffff25;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;flex-shrink:0;
+}
+.progress-circle strong{font-size:17px;line-height:1}
+.progress-circle small{font-size:9px;margin-top:3px}
+.network-message{font-size:12px;line-height:1.55;margin-top:14px;max-width:440px}
+.target-label{
+  display:inline-block;margin-top:13px;
+  padding:5px 10px;border-radius:20px;
+  background:#ffffff30;font-size:10px;font-weight:800;
+}
+.welcome-card{background:var(--blue);color:#fff}
+.welcome-top{padding:19px;display:flex;align-items:center;gap:13px}
+.avatar{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,#FF2E8A,#7C3AED);
+  display:grid;place-items:center;color:#fff;
+  font-size:20px;font-weight:900;flex-shrink:0;
+  border:2px solid #ffffff55;
+}
+.welcome-info{flex:1;min-width:0}
+.welcome-info h2{font-size:19px;font-weight:850}
+.welcome-info p{font-size:12px;color:#D5E2FF;margin-top:4px}
+.active-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 9px;border-radius:20px;
+  background:#DCFCE7;color:#15803D;
+  font-size:10px;font-weight:850;white-space:nowrap;
+}
+.active-badge:before{
+  content:"";width:6px;height:6px;border-radius:50%;background:#16A34A;
+}
+.profit-box{
+  background:#fff;color:var(--blue);
+  padding:15px 19px;display:flex;
+  align-items:center;justify-content:space-between;gap:12px;
+}
+.profit-box small{font-size:10px;font-weight:850;letter-spacing:1px;color:#75819A}
+.profit-box strong{font-size:21px;font-weight:900}
+.expenses-card{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:17px 19px;
+}
+.expenses-title{font-size:12px;color:#68748A;font-weight:850;letter-spacing:.5px}
+.expenses-value{font-size:17px;font-weight:900;color:var(--blue)}
+.balance-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
+.balance-card{
+  position:relative;overflow:hidden;min-height:125px;
+  border-radius:17px;padding:15px;color:#fff;
+  box-shadow:0 5px 14px #0a2a6b12;
+}
+.balance-card.blue{background:linear-gradient(135deg,#1769E0,#0A2A6B)}
+.balance-card.purple{background:linear-gradient(135deg,#9B5CFA,#6426CA)}
+.balance-card.red{background:linear-gradient(135deg,#F04467,#BE123C)}
+.balance-card.green{background:linear-gradient(135deg,#25C66A,#087B3B)}
+.balance-card.orange{background:linear-gradient(135deg,#FFAD32,#E66B00)}
+.balance-card .balance-icon{
+  position:absolute;right:14px;top:12px;
+  font-size:23px;opacity:.9;
+}
+.balance-card small{
+  display:block;font-size:10px;font-weight:800;
+  letter-spacing:.5px;opacity:.88;padding-right:30px;
+}
+.balance-card strong{
+  display:block;font-size:19px;font-weight:900;
+  margin-top:12px;position:relative;z-index:2;
+}
+.wave{
+  position:absolute;bottom:-2px;left:0;width:100%;
+  height:37px;opacity:.3;
+}
+.section-heading{
+  background:var(--blue);color:#fff;
+  padding:15px 18px;display:flex;
+  align-items:center;justify-content:space-between;gap:10px;
+}
+.section-heading h2{font-size:16px;font-weight:850}
+.section-heading small{font-size:10px;color:#D5E2FF}
+.task-list{padding:4px 17px 9px}
+.task-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 0;border-bottom:1px solid #EDF0F6;
+}
+.task-row:last-child{border-bottom:0}
+.task-icon{
+  width:37px;height:37px;border-radius:12px;
+  display:grid;place-items:center;font-size:17px;flex-shrink:0;
+}
+.task-icon.pink{background:#FFF0F6}
+.task-icon.purple{background:#F3ECFF}
+.task-icon.red{background:#FFF0F1}
+.task-icon.green{background:#E9FBEF}
+.task-icon.blue{background:#EAF2FF}
+.task-icon.orange{background:#FFF3E5}
+.task-name{flex:1;font-size:12px;font-weight:750}
+.task-amount{font-size:12px;font-weight:850;color:var(--green)}
+.ref-header{
+  padding:17px 18px;color:#fff;
+  background:linear-gradient(110deg,#16A34A,#07834C);
+}
+.ref-header h2{font-size:17px;font-weight:850}
+.ref-header p{font-size:11px;opacity:.92;margin-top:5px;line-height:1.5}
+.ref-body{padding:17px}
+.ref-body label{
+  display:block;color:#78849A;font-size:10px;
+  font-weight:850;letter-spacing:.8px;margin-bottom:8px;
+}
+.ref-input-row{display:flex;gap:7px}
+.ref-input-row input{
+  width:100%;min-width:0;border:1px solid #DCE4F1;
+  border-radius:10px;padding:11px 10px;
+  color:#65718A;background:#F8FAFF;font-size:11px;
+}
+.copy-btn{
+  border:0;background:#1769E0;color:#fff;
+  border-radius:10px;padding:0 15px;font-size:11px;font-weight:850;
+}
+.share-buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.share-btn{
+  border:0;border-radius:10px;padding:11px 8px;
+  color:#fff;font-size:11px;font-weight:850;
+}
+.whatsapp{background:#16A34A}
+.share-link{background:#1769E0}
+.copy-feedback{font-size:11px;color:var(--green);margin-top:9px;min-height:14px}
+.profile-header{
+  background:var(--blue);color:#fff;padding:17px;
+  display:flex;align-items:center;gap:12px;
+}
+.profile-header h2{font-size:16px}
+.profile-header p{font-size:11px;color:#C9D9FF;margin-top:3px}
+.profile-details{padding:7px 17px 12px}
+.profile-row{
+  display:flex;justify-content:space-between;gap:12px;
+  padding:12px 0;border-bottom:1px solid #EDF0F6;font-size:12px;
+}
+.profile-row:last-child{border:0}
+.profile-row span:first-child{color:#78849A}
+.profile-row strong{text-align:right;overflow-wrap:anywhere}
+.schedule-header{
+  background:linear-gradient(110deg,#FF8A00,#FFB12E);
+  color:#fff;padding:16px 18px;
+}
+.schedule-header h2{font-size:15px;font-weight:850}
+.schedule-header p{font-size:10px;opacity:.9;margin-top:4px}
+.schedule-list{padding:6px 16px 10px}
+.schedule-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:10px 0;border-bottom:1px solid #EDF0F6;
+}
+.schedule-row:last-child{border:0}
+.day{font-size:12px;font-weight:850;width:38px}
+.schedule-pill{
+  flex:1;text-align:center;padding:7px 8px;
+  border-radius:8px;font-size:10px;font-weight:800;
+}
+.pill-blue{background:#EAF2FF;color:#1769E0}
+.pill-pink{background:#FFF0F6;color:#DB2777}
+.pill-purple{background:#F3ECFF;color:#7C3AED}
+.pill-green{background:#E9FBEF;color:#15803D}
+.pill-orange{background:#FFF3E5;color:#D97706}
+.pill-red{background:#FFF0F1;color:#BE123C}
+.wallet-heading{
+  background:#1769E0;color:#fff;padding:16px 18px;
+}
+.wallet-heading h2{font-size:16px}
+.wallet-heading p{font-size:10px;color:#DCE9FF;margin-top:4px}
+.wallet-body{padding:17px}
+.deposit-box{
+  background:#F0F5FF;border:1px solid #DCE7FF;
+  border-radius:12px;padding:16px;
+}
+.deposit-box small{font-size:10px;color:#78849A;font-weight:850;letter-spacing:.8px}
+.deposit-box strong{display:block;color:var(--blue);font-size:21px;margin-top:7px}
+.wallet-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}
+.wallet-btn{
+  padding:12px;border:0;border-radius:10px;
+  color:#fff;font-size:12px;font-weight:850;
+}
+.add-funds{background:var(--green)}
+.withdraw{background:#1769E0}
+.app-promo{
+  background:var(--blue);color:#fff;
+  border:2px solid #FFCA28;border-radius:18px;
+  padding:21px 18px;text-align:center;
+  box-shadow:var(--shadow);margin-bottom:16px;
+}
+.app-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:grid;place-items:center;margin:0 auto 10px;
+  background:#ffffff18;font-size:25px;
+}
+.app-promo h2{font-size:17px;color:#FFDA57}
+.app-promo p{
+  color:#D8E5FF;font-size:11px;line-height:1.6;
+  max-width:370px;margin:8px auto 14px;
+}
+.download-btn{
+  border:0;border-radius:10px;background:#FFCA28;
+  color:#172B55;padding:11px 21px;font-size:12px;font-weight:900;
+}
+footer{
+  text-align:center;color:#78849A;
+  font-size:10px;padding:12px 8px 20px;
+}
+@media(min-width:850px){
+  .main{padding:24px 20px 40px}
+}
+@media(max-width:420px){
+  .topbar{padding:0 11px}
+  .header-left,.header-right{gap:8px}
+  .brand-button{padding:7px 10px;font-size:12px}
+  .main{padding:13px 10px 28px}
+  .network-card{padding:16px}
+  .balance-card{padding:13px;min-height:118px}
+  .balance-card strong{font-size:16px}
+  .balance-card small{font-size:9px}
+  .profile-row{font-size:11px}
+  .ref-input-row input{font-size:10px}
+  .copy-btn{padding:0 11px}
+}
+@media(min-width:1100px){
+  .sidebar{transform:translateX(0)}
+  .overlay{display:none!important}
+  .main{margin-left:260px;max-width:900px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header class="top"><a class="brand" href="#" onclick="location.hash='';return false">GenZ<span>Bag</span></a><nav class="topnav"><a href="#activities">Activities</a><a href="#how">How it works</a></nav><div id="topActions"><button class="btn ghost" onclick="go('login')">Sign in</button><button class="btn primary" onclick="go('register')">Join GenZBag</button></div></header>
-<main id="publicView" class="landing">
-<section class="hero hero-pro">
- <div class="hero-copy">
-  <div class="eyebrow"><span class="live-dot"></span> THE EVERYDAY OPPORTUNITY PLATFORM</div>
-  <h1>Your time has<br><em>more potential.</em></h1>
-  <p class="lead">A smarter space to discover digital activities, take part in opportunities and keep every submission organised — all from one simple dashboard.</p>
-  <div class="actions"><button class="btn primary hero-cta" onclick="go('register')">Create your free account <span>↗</span></button><button class="btn ghost hero-login" onclick="go('login')">I already have an account</button></div>
-  <div class="hero-proof"><span>✓ Free to join</span><span>✓ Clear activity requirements</span><span>✓ Personal activity records</span></div>
-  <p class="small hero-disclaimer">Currently operating in test mode. Displayed rewards are simulated and do not represent guaranteed income or available cash payouts.</p>
- </div>
- <div class="hero-visual" aria-label="Preview of the GenZBag member dashboard">
-  <div class="visual-glow"></div>
-  <div class="float-chip chip-top"><span class="chip-icon">✦</span><span><b>Discover</b><small>New opportunities</small></span></div>
-  <div class="dash-preview">
-   <div class="mock-top"><div class="mock-brand"><span class="mini-mark">G</span><b>GenZ<span>Bag</span></b></div><span class="mock-status"><i></i> MEMBER SPACE</span></div>
-   <div class="mock-welcome"><div><small>YOUR PERSONAL SPACE</small><h3>Good things start here.</h3></div><div class="mock-avatar">G</div></div>
-   <div class="mock-balance"><div><small>ACTIVITY OVERVIEW</small><b>Stay in control.</b><p>Track progress and review your records.</p></div><div class="mock-orbit">✦</div></div>
-   <div class="mock-cards"><div><span class="mock-icon">▤</span><small>Activities</small><b>Explore</b></div><div><span class="mock-icon">◷</span><small>Submissions</small><b>Track</b></div><div><span class="mock-icon">↗</span><small>Referrals</small><b>Connect</b></div></div>
-   <div class="mock-bottom"><span>YOUR PROGRESS, IN ONE PLACE</span><span class="mock-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<div class="app">
+
+<header class="topbar">
+  <div class="header-left">
+    <button class="icon-btn" id="menuButton" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
   </div>
-  <div class="float-chip chip-bottom"><span class="chip-check">✓</span><span><b>One clear dashboard</b><small>Activities · Wallet · Support</small></span></div>
- </div>
-</section>
-<div class="trust-strip"><div><b>01</b><span>Discover activities</span></div><div><b>02</b><span>Follow clear instructions</span></div><div><b>03</b><span>Track your submissions</span></div><div><b>04</b><span>Review your records</span></div></div>
-<section id="activities" class="feature-section"><div class="section-head"><div class="eyebrow">WHAT YOU CAN DO</div><h2>Everything organised.<br><em>Nothing confusing.</em></h2><p>GenZBag brings useful online activities and your account tools together in one focused experience.</p></div><div class="grid feature-grid"><article class="card feature-card"><div class="ico">▶</div><span class="feature-no">01 / DISCOVER</span><h3>Explore activities</h3><p>Browse available surveys, video activities, reviews and digital tasks with requirements shown up front.</p><span class="feature-arrow">↗</span></article><article class="card feature-card"><div class="ico">✓</div><span class="feature-no">02 / PARTICIPATE</span><h3>Submit with clarity</h3><p>Understand what is expected, send your proof and follow the status of each submission.</p><span class="feature-arrow">↗</span></article><article class="card feature-card"><div class="ico">▥</div><span class="feature-no">03 / STAY INFORMED</span><h3>Keep track</h3><p>Review account activity, recorded rewards, referrals and support updates in your own space.</p><span class="feature-arrow">↗</span></article></div></section>
-<section id="how" class="how-section"><div class="how-inner"><div class="how-intro"><div class="eyebrow">A SIMPLE START</div><h2>Start in a few<br><em>clear steps.</em></h2><p class="lead">No complicated setup. Create your account, explore what is available and keep track as you go.</p><button class="btn primary" onclick="go('register')">Get started <span>↗</span></button></div><div class="steps"><article><b>01</b><div><h3>Create your account</h3><p>Register with your email and set up your profile securely.</p></div><span>↗</span></article><article><b>02</b><div><h3>Find an activity</h3><p>Read the task details and make sure you meet the requirements.</p></div><span>↗</span></article><article><b>03</b><div><h3>Submit and follow up</h3><p>Send the requested proof and check its review status from your dashboard.</p></div><span>↗</span></article></div></div></section>
-<section class="safety-section"><div class="safety-card"><div class="safety-symbol">⌑</div><div><div class="eyebrow">BUILT AROUND TRANSPARENCY</div><h2>Your account. Your information. Your control.</h2><p>GenZBag displays activity requirements and account records in one place. Never pay anyone to unlock an activity, and never share your password, verification code or mobile-money PIN.</p></div><span class="safety-tag">SAFETY FIRST</span></div></section>
-<section class="final-cta"><div class="final-cta-inner"><div class="eyebrow">YOUR NEXT STEP STARTS HERE</div><h2>Make room for<br><em>new opportunities.</em></h2><p>Create your free account and explore the GenZBag experience.</p><button class="btn primary hero-cta" onclick="go('register')">Join GenZBag <span>↗</span></button><div class="small">Free registration · Test environment · No guaranteed earnings</div></div></section>
+
+  <div class="header-right">
+    <button class="icon-btn" aria-label="Notifications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+        <path d="M10 21h4"/>
+      </svg>
+      <span class="count">0</span>
+    </button>
+    <button class="icon-btn" aria-label="Messages">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.3A8.5 8.5 0 1 1 21 11.5Z"/>
+        <path d="M8 11h8M8 14h5"/>
+      </svg>
+      <span class="count">0</span>
+    </button>
+    <button class="brand-button" aria-label="GenZBag home">
+      <span class="brand-logo">G</span>
+      GenZBag
+    </button>
+  </div>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">GenZ<span>Bag</span> 👜</div>
+  <div class="nav-label">MAIN MENU</div>
+  <a class="nav-link active" href="#dashboard"><span class="nav-icon">🏠</span>Dashboard</a>
+  <a class="nav-link" href="#network"><span class="nav-icon">🤝</span>Grow Your Network</a>
+  <a class="nav-link" href="#wallet"><span class="nav-icon">💰</span>My Wallet</a>
+  <a class="nav-link" href="#tasks"><span class="nav-icon">✅</span>Task Earnings</a>
+  <a class="nav-link" href="#referrals"><span class="nav-icon">🔗</span>Refer & Earn</a>
+  <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>My Profile</a>
+  <div class="nav-label">SHOP</div>
+  <a class="nav-link" href="#schedule"><span class="nav-icon">👜</span>Weekly Schedule</a>
+  <a class="nav-link" href="#app"><span class="nav-icon">📱</span>Get the App</a>
+  <div class="sidebar-footer">GenZBag · Shop Smart. Earn Fast.</div>
+</aside>
+
+<main class="main" id="dashboard">
+
+  <section class="card network-card" id="network">
+    <div class="network-top">
+      <div>
+        <h2>Grow Your Network</h2>
+        <p class="subtitle">Build your community</p>
+      </div>
+      <div class="progress-circle">
+        <strong>0</strong>
+        <small>of 5</small>
+      </div>
+    </div>
+    <p class="network-message">No new members yet today. Share your referral link and start building your team now!</p>
+    <span class="target-label">TODAY'S TARGET</span>
+  </section>
+
+  <section class="card welcome-card">
+    <div class="welcome-top">
+      <div class="avatar">B</div>
+      <div class="welcome-info">
+        <h2>Hi Bridan</h2>
+        <p>Shop Smart. Earn Fast.</p>
+      </div>
+      <span class="active-badge">Active</span>
+    </div>
+    <div class="profit-box">
+      <div><small>NET PROFIT EARNED</small></div>
+      <strong>UGX 0</strong>
+    </div>
+  </section>
+
+  <section class="card expenses-card">
+    <span class="expenses-title">EXPENSES</span>
+    <strong class="expenses-value">UGX 0</strong>
+  </section>
+
+  <section class="balance-grid" aria-label="Account balances">
+    <article class="balance-card blue">
+      <span class="balance-icon">💳</span>
+      <small>AVAILABLE BALANCE</small>
+      <strong>UGX 0</strong>
+      <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
+        <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
+      </svg>
+    </article>
+    <article class="balance-card purple">
+      <span class="balance-icon">📈</span>
+      <small>TOTAL SALES</small>
+      <strong>UGX 0</strong>
+      <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
+        <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
+      </svg>
+    </article>
+    <article class="balance-card red">
+      <span class="balance-icon">📦</span>
+      <small>PENDING ORDERS</small>
+      <strong>UGX 0</strong>
+      <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
+        <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
+      </svg>
+    </article>
+    <article class="balance-card green">
+      <span class="balance-icon">👥</span>
+      <small>TEAM EARNINGS</small>
+      <strong>UGX 0</strong>
+      <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
+        <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
+      </svg>
+    </article>
+    <article class="balance-card orange">
+      <span class="balance-icon">🎁</span>
+      <small>WELCOME BONUS</small>
+      <strong>UGX 0</strong>
+      <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
+        <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
+      </svg>
+    </article>
+  </section>
+
+  <section class="card" id="tasks">
+    <div class="section-heading">
+      <h2>Task Earnings</h2>
+      <small>All activity income</small>
+    </div>
+    <div class="task-list">
+      <div class="task-row">
+        <span class="task-icon pink">🤝</span>
+        <span class="task-name">Referrals</span>
+        <strong class="task-amount">UGX 0</strong>
+      </div>
+      <div class="task-row">
+        <span class="task-icon purple">🎵</span>
+        <span class="task-name">TikTok Promo</span>
+        <strong class="task-amount">UGX 0</strong>
+      </div>
+      <div class="task-row">
+        <span class="task-icon red">▶️</span>
+        <span class="task-name">YouTube Promo</span>
+        <strong class="task-amount">UGX 0</strong>
+      </div>
+      <div class="task-row">
+        <span class="task-icon green">📅</span>
+        <span class="task-name">Daily Check-in</span>
+        <strong class="task-amount">UGX 0</strong>
+      </div>
+      <div class="task-row">
+        <span class="task-icon blue">🔗</span>
+        <span class="task-name">Share Product</span>
+        <strong class="task-amount">UGX 0</strong>
+      </div>
+      <div class="task-row">
+        <span class="task-icon orange">👥</span>
+        <span class="task-name">Invite Friends</span>
+        <strong class="task-amount">UGX 0</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="referrals">
+    <div class="ref-header">
+      <h2>Refer & Earn 💰</h2>
+      <p>Earn commission for every friend who buys through your link</p>
+    </div>
+    <div class="ref-body">
+      <label for="refLink">YOUR UNIQUE REFERRAL LINK</label>
+      <div class="ref-input-row">
+        <input id="refLink" type="text" value="https://genzbag.com/register?ref=YOURNAME" readonly>
+        <button class="copy-btn" id="copyButton" type="button">Copy</button>
+      </div>
+      <div class="share-buttons">
+        <button class="share-btn whatsapp" id="whatsappButton" type="button">WhatsApp</button>
+        <button class="share-btn share-link" id="shareButton" type="button">Share Link</button>
+      </div>
+      <p class="copy-feedback" id="copyFeedback" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="card" id="profile">
+    <div class="profile-header">
+      <div class="avatar">B</div>
+      <div style="flex:1">
+        <h2>Bridan</h2>
+        <p>Member Profile</p>
+      </div>
+      <span class="active-badge">Active</span>
+    </div>
+    <div class="profile-details">
+      <div class="profile-row"><span>Email</span><strong>you@example.com</strong></div>
+      <div class="profile-row"><span>Phone</span><strong>+256 000 000000</strong></div>
+      <div class="profile-row"><span>Country</span><strong>Uganda</strong></div>
+      <div class="profile-row"><span>Active Since</span><strong>2026</strong></div>
+      <div class="profile-row"><span>Total Referrals</span><strong>0</strong></div>
+    </div>
+  </section>
+
+  <section class="card" id="schedule">
+    <div class="schedule-header">
+      <h2>Weekly Schedule</h2>
+      <p>GenZBag Task Timetable</p>
+    </div>
+    <div class="schedule-list">
+      <div class="schedule-row"><span class="day">Mon</span><span class="schedule-pill pill-blue">New Drop + TikTok</span></div>
+      <div class="schedule-row"><span class="day">Tue</span><span class="schedule-pill pill-purple">Share + Trivia</span></div>
+      <div class="schedule-row"><span class="day">Wed</span><span class="schedule-pill pill-green">Promo + YouTube</span></div>
+      <div class="schedule-row"><span class="day">Thu</span><span class="schedule-pill pill-pink">TikTok Challenge</span></div>
+      <div class="schedule-row"><span class="day">Fri</span><span class="schedule-pill pill-orange">Flash Sale</span></div>
+      <div class="schedule-row"><span class="day">Sat</span><span class="schedule-pill pill-red">New Arrivals</span></div>
+      <div class="schedule-row"><span class="day">Sun</span><span class="schedule-pill pill-blue">Restock</span></div>
+      <div class="schedule-row"><span class="day">Daily</span><span class="schedule-pill pill-green">Referrals</span></div>
+    </div>
+  </section>
+
+  <section class="card" id="wallet">
+    <div class="wallet-heading">
+      <h2>My Wallet</h2>
+      <p>Account & deposits</p>
+    </div>
+    <div class="wallet-body">
+      <div class="deposit-box">
+        <small>TOTAL DEPOSIT</small>
+        <strong>UGX 0</strong>
+      </div>
+      <div class="wallet-buttons">
+        <button class="wallet-btn add-funds" type="button">＋ Add Funds</button>
+        <button class="wallet-btn withdraw" type="button">↗ Withdraw</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="app-promo" id="app">
+    <div class="app-icon">📱</div>
+    <h2>GenZBag App Available!</h2>
+    <p>Get faster access to your dashboard, orders & team - right from your phone.</p>
+    <button class="download-btn" type="button">Download App</button>
+  </section>
+
+  <footer>Copyright © 2026 GenZBag. All rights reserved.</footer>
 </main>
-<main id="authView" class="hidden"><div class="auth-wrap"><div class="authbox" id="authBox"></div></div></main>
-<main id="dashboardView" class="hidden"><div class="member-shell" id="memberShell">
-<aside class="member-sidebar" id="memberSidebar">
-<a class="side-brand" href="#" onclick="selectTab('overview');return false"><span class="side-mark">G</span><span>GenZ<span>Bag</span><small>MEMBER PORTAL</small></span></a>
-<div class="side-caption">MAIN MENU</div><nav class="side-nav" id="tabs">
-<button class="tab active" data-tab="overview"><i>⌂</i> Dashboard</button>
-<button class="tab" data-tab="overview"><i>▦</i> Home</button>
-<button class="tab" data-tab="accounts"><i>◉</i> Accounts</button>
-<button class="tab" data-tab="vouchers"><i>▤</i> Vouchers</button>
-<button class="tab" data-tab="deposit"><i>＋</i> Deposit</button>
-<button class="tab" data-tab="daily"><i>🎁</i> Claim Bonus</button>
-<button class="tab" data-tab="leaderboard"><i>♛</i> Leaderboard</button>
-<button class="tab" data-tab="payclient"><i>⇄</i> Pay For Client</button>
-<button class="tab" data-tab="wallet"><i>↗</i> Withdraw</button>
-<button class="tab" data-tab="referrals"><i>♧</i> Team</button>
-<button class="tab" data-tab="products"><i>▣</i> My Bags / Products</button>
-<button class="tab" data-tab="daily"><i>✧</i> Spins</button>
-<button class="tab" data-tab="music"><i>♫</i> Earn with Spotify <b class="side-new">NEW</b></button>
-<button class="tab" data-tab="tasks"><i>▧</i> Marketplace <b class="side-hot">HOT</b></button>
-<button class="tab" data-tab="fixtap"><i>⌁</i> Fix Tap <b class="side-new">NEW</b></button>
-<button class="tab" data-tab="chat"><i>✉</i> Chat foreigners <b class="side-new">NEW</b></button>
-<button class="tab" data-tab="games"><i>◈</i> Colour Challenge <b class="side-hot">HOT</b></button>
-<button class="tab" data-tab="forex"><i>▥</i> Free Forex Classes</button>
-<button class="tab" data-tab="videos"><i>▶</i> Youtube Videos</button>
-<button class="tab" data-tab="videos"><i>▷</i> Tiktok Videos</button>
-<button class="tab" data-tab="tasks"><i>◉</i> Click Ads</button>
-<button class="tab" data-tab="games"><i>◈</i> Trivia Challenge</button>
-<button class="tab" data-tab="ebooks"><i>▣</i> Business Ebooks</button>
-<button class="tab" data-tab="games"><i>∑</i> Math for fun</button>
-<button class="tab" data-tab="videos"><i>⌘</i> New Tech Classes</button>
-<button class="tab" data-tab="deriv"><i>↗</i> Deriv Tips</button>
-<button class="tab" data-tab="loans"><i>＋</i> Quick Loans <b class="side-new">NEW</b></button>
-<div class="side-caption side-caption-gap">ACCOUNT & SUPPORT</div>
-<button class="tab" data-tab="settings"><i>⚙</i> Setting</button>
-<button class="tab" data-tab="support"><i>↩</i> Text Upline</button>
-<button class="tab" data-tab="messages"><i>▣</i> Read Messages</button>
-<button class="tab" data-tab="settings"><i>♙</i> Profile</button>
-<button class="tab" data-tab="support"><i>?</i> Contact Us</button>
-<button class="tab" data-tab="community"><i>◎</i> Join community</button>
-<button class="tab hidden" id="adminTab" data-tab="admin"><i>◆</i> Admin console</button>
-<button class="tab side-logout" data-action="logout"><i>⇥</i> Logout</button>
-</nav><div class="sidebar-bottom"><div class="safe-dot"></div><div><b>Secure member account</b><small>Keep your sign-in details private</small></div></div></aside>
-<section class="member-main"><header class="member-topbar"><div class="member-heading"><button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">☰</button><div><div class="crumb">GENZBAG <span>/</span> <b id="activeCrumb">DASHBOARD</b></div><h1 id="welcome">Welcome to GenZBag</h1><div class="small" id="userEmail"></div></div></div><label class="dashboard-search-wrap" aria-label="Search dashboard"><span>⌕</span><input id="dashboardSearch" type="search" placeholder="Search activities, messages..."></label><div class="topbar-actions"><div class="member-profile-chip"><span class="member-avatar" id="memberAvatar">G</span><span class="member-display-name" id="memberDisplay">Member</span><span class="member-status"><i></i> Active</span></div><button class="btn ghost" id="signOut">Sign out ↗</button></div></header>
-<div class="member-content" id="dashContent"></div></section></div></main>
-<footer><div class="footrow"><span>© <span id="year"></span> GenZBag</span><span>Built for transparency, verification and account safety.</span></div></footer>
 </div>
-<script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-const SUPABASE_URL='https://pihesnxftmrzmsoikvfz.supabase.co';
-const SUPABASE_KEY='sb_publishable_r14npkqDg7b8nthhvljX3A_HugjXL1S';
-const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
-const ACTIVATION_FEE=19500;
-const ACTIVATION_PAYMENT_OPTIONS=[{number:'+256 748 244 429',name:'Ronnie'},{number:'+256 788 271 972',name:'Elly'}]; // Official activation collection lines supplied by the project owner.
-let user=null,profile=null,accountActivated=false,adminCache={profiles:[],tasks:[],submissions:[],withdrawals:[],support:[],ledger:[],audit:[],engagement:[],engagementSessions:[],activationPayments:[]},cache={tasks:[],submissions:[],ledger:[],withdrawals:[],referrals:[],notifications:[],balances:[],engagement:[],engagementSessions:[]};
-const isAdmin=()=>user?.app_metadata?.role==='admin';
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=(n,c='UGX')=>new Intl.NumberFormat(undefined,{style:'currency',currency:c,maximumFractionDigits:2}).format(Number(n||0));
-const safeHttpsUrl=s=>{try{const u=new URL(String(s||''));return u.protocol==='https:'?u.href:''}catch{return''}};
-const msg=(text,type='')=>'<div class="msg '+type+'">'+esc(text)+'</div>';
-window.go=route=>{location.hash=route};
-$('year').textContent=new Date().getFullYear();
-function setTop(){ $('topActions').innerHTML=user?'<button class="btn primary" onclick="go(\'dashboard\')">My dashboard</button>':'<button class="btn ghost" onclick="go(\'login\')">Sign in</button><button class="btn primary" onclick="go(\'register\')">Join GenZBag</button>'; }
-function show(which){$('publicView').classList.toggle('hidden',which!=='public');$('authView').classList.toggle('hidden',which!=='auth');$('dashboardView').classList.toggle('hidden',which!=='dashboard');document.querySelector('.top')?.classList.toggle('hidden',which==='dashboard');}
-function renderAuth(mode){show('auth');const ref=new URLSearchParams(location.search).get('ref')||'';const register=mode==='register';$('authBox').innerHTML=register?`
-<div class="eyebrow">Join the community</div><h1>Create account</h1><p>Set up your secure GenZBag profile.</p><form id="authForm"><div class="field"><label>Username</label><input name="username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" placeholder="e.g. brian_world"></div><div class="field"><label>Email address</label><input name="email" type="email" required autocomplete="email"></div><div class="formgrid"><div class="field"><label>Phone number</label><input name="phone" type="tel" placeholder="+256..."></div><div class="field"><label>Country</label><select name="country" required><option value="">Select country</option><option>Uganda</option><option>Nigeria</option><option>Kenya</option><option>Tanzania</option><option>Rwanda</option><option>Ghana</option><option>South Africa</option><option>Other</option></select></div></div><div class="field"><label>Preferred currency</label><select name="currency"><option value="UGX">UGX — Uganda Shilling</option><option value="NGN">NGN — Nigerian Naira</option><option value="KES">KES — Kenyan Shilling</option><option value="TZS">TZS — Tanzanian Shilling</option><option value="RWF">RWF — Rwandan Franc</option><option value="GHS">GHS — Ghanaian Cedi</option><option value="USD">USD — US Dollar</option></select></div><div class="field"><label>Password (at least 10 characters)</label><input name="password" type="password" required minlength="10" autocomplete="new-password"></div><div class="field"><label>Referral code (optional)</label><input name="referral_code" value="${esc(ref)}" placeholder="Enter referral code if you have one"></div><div class="field"><label><input type="checkbox" name="terms" required style="width:auto"> I agree to the platform terms and understand that rewards are not guaranteed.</label></div><button class="btn primary" style="width:100%" id="authSubmit">Create my account</button><div id="authMsg"></div></form><p class="small" style="margin-top:18px">Already registered? <button class="linkbtn" onclick="go('login')">Sign in</button></p>`:`
-<div class="eyebrow">Welcome back</div><h1>Sign in</h1><p>Access your GenZBag dashboard.</p><form id="authForm"><div class="field"><label>Email address</label><input name="email" type="email" required autocomplete="email"></div><div class="field"><label>Password</label><input name="password" type="password" required autocomplete="current-password"></div><button class="btn primary" style="width:100%" id="authSubmit">Sign in</button><div id="authMsg"></div></form><p class="small" style="margin-top:18px"><button class="linkbtn" id="forgot">Forgot password?</button> · New here? <button class="linkbtn" onclick="go('register')">Create account</button></p>`;
-$('authForm').addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.currentTarget),b=$('authSubmit'),m=$('authMsg');b.disabled=true;b.textContent=register?'Creating account…':'Signing in…';m.innerHTML='';try{if(register){const username=String(f.get('username')).trim().toLowerCase();if(!/^[a-z0-9_]{3,30}$/.test(username))throw Error('Use 3–30 letters, numbers or underscores for your username.');const {data,error}=await sb.auth.signUp({email:f.get('email'),password:f.get('password'),options:{emailRedirectTo:location.origin+location.pathname,data:{username,phone:f.get('phone'),country:f.get('country'),preferred_currency:f.get('currency'),referral_code:f.get('referral_code')}}});if(error)throw error;if(data.session){user=data.user;await loadDashboard();go('dashboard')}else{m.innerHTML=msg('Account created. Check your email for the verification link, then sign in.','ok');$('authForm').reset()}}else{const {data,error}=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('password')});if(error)throw error;user=data.user;await loadDashboard();go('dashboard')}}catch(err){m.innerHTML=msg(err.message||'Something went wrong. Please try again.','error')}finally{b.disabled=false;b.textContent=register?'Create my account':'Sign in'}});
-if(!register)$('forgot').addEventListener('click',async()=>{const email=$('authForm').elements.email.value.trim();if(!email){$('authMsg').innerHTML=msg('Enter your email address first.','error');return}const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});$('authMsg').innerHTML=error?msg(error.message,'error'):msg('Password reset instructions have been sent if the account exists.','ok')});
-}
-function renderActivationGate(rows=[],selectedNetwork=''){
- const latest=rows[0]||null;
- const status=latest?.status||'not_submitted';
- const statusText=status==='pending'?'Payment details submitted — awaiting manual verification.':status==='rejected'?'Your previous payment details were rejected. Read the administrator note before trying again.':'Your account needs activation before member access is enabled.';
- const username=profile?.username||user?.email?.split('@')[0]||'Member';
- const networks={
-  MTN:{number:'+256 788 271 972',name:'Elly',dial:'*165#',steps:['Dial *165# on your MTN SIM card.','Choose Send Money.','Choose Mobile User.','Enter +256 788 271 972.','Enter UGX '+ACTIVATION_FEE.toLocaleString('en-UG')+'.','Enter your GenZBag username as the reason.','Before confirming, check that the recipient name is ELLY.','Confirm on your phone using your MTN PIN. Keep your transaction ID.']},
-  Airtel:{number:'+256 748 244 429',name:'Ronnie',dial:'*185#',steps:['Dial *185# on your Airtel SIM card.','Choose Send Money and follow the Airtel Money prompts for sending to another Airtel user.','Enter +256 748 244 429.','Enter UGX '+ACTIVATION_FEE.toLocaleString('en-UG')+'.','Enter your GenZBag username as the reason/reference if prompted.','Before confirming, check that the recipient name is RONNIE.','Confirm on your phone using your Airtel Money PIN. Keep your transaction ID.']}
- };
- const paymentSteps=selectedNetwork&&networks[selectedNetwork]?'<div class="panel activation-instructions"><div class="row"><div><div class="admin-label">UGANDA ACTIVATION</div><h2 style="margin:5px 0">Pay with '+selectedNetwork+'</h2></div><button class="btn mini" id="activationBack">← Back</button></div><div class="home-kpi" style="margin:14px 0"><small>Dial on your '+selectedNetwork+' SIM</small><strong style="font-size:1.8rem">'+networks[selectedNetwork].dial+'</strong></div><div class="list">'+networks[selectedNetwork].steps.map((step,i)=>'<div class="item activation-step"><span class="activation-step-number">'+(i+1)+'</span><span>'+esc(step)+'</span></div>').join('')+'</div><div class="msg" style="margin-top:14px">Only confirm if the amount is UGX '+ACTIVATION_FEE.toLocaleString('en-UG')+' and the recipient name matches <b>'+esc(networks[selectedNetwork].name.toUpperCase())+'</b>. Never share your PIN or OTP.</div><div class="home-kpi" style="margin:14px 0"><small>Amount due</small><strong>UGX '+ACTIVATION_FEE.toLocaleString('en-UG')+'</strong></div><form id="activationPaymentForm"><div class="field"><label>Phone number used to pay</label><input name="payerPhone" type="tel" required minlength="9" maxlength="20" placeholder="e.g. 07XXXXXXXX"></div><div class="field"><label>Mobile Money transaction ID / reference</label><input name="reference" required minlength="5" maxlength="55" placeholder="Enter the exact transaction ID"></div><button class="btn primary" style="width:100%">Confirm payment details</button><div id="activationPaymentMsg"></div></form><p class="small">Your account will remain pending until an administrator checks the transaction in the receiving mobile-money account. Do not submit a PIN or OTP.</p></div>':'';
- const chooseNetwork='<div class="panel activation-choice"><div class="admin-label">UGANDA ACTIVATION</div><h2 style="margin:5px 0">UGX '+ACTIVATION_FEE.toLocaleString('en-UG')+' due</h2><p class="small">Choose how you want to pay to activate your account.</p><p class="small">Logged in as <b>'+esc(username)+'</b></p><div class="msg">'+esc(statusText)+'</div>'+(latest?.admin_note?'<p class="small">Administrator note: '+esc(latest.admin_note)+'</p>':'')+'<button class="btn primary activation-network" data-network="MTN"><b>Click here to pay with MTN</b><small>View steps & confirm payment</small></button><button class="btn activation-network airtel" data-network="Airtel"><b>Click here to pay with Airtel</b><small>View steps & confirm payment</small></button><details class="activation-demo"><summary><b>Not sure yet? Try the Demo</b></summary><p>Preview how GenZBag works before activating your account.</p><div class="demo-preview-grid"><div><b>Chat</b><small>Explore member conversations.</small></div><div><b>Music</b><small>Preview listening activities.</small></div><div><b>Colour Challenge</b><small>See a sample challenge.</small></div></div><p class="small">Demo previews do not create earnings, submit activities or change your account balance.</p></details></div>';
- $('dashContent').innerHTML='<div class="activation-shell"><div class="activation-brand"><div class="activation-logo">G</div><div><b>GenZBag</b><small>Earn smart. Grow steadily.</small></div></div>'+(selectedNetwork?paymentSteps:chooseNetwork)+'<footer class="activation-footer">© 2026 GenZBag. All rights reserved.</footer></div>';
- document.querySelectorAll('[data-network]').forEach(btn=>btn.addEventListener('click',()=>renderActivationGate(rows,btn.dataset.network)));
- const back=$('activationBack');if(back)back.onclick=()=>renderActivationGate(rows);
- const form=$('activationPaymentForm');
- if(form)form.onsubmit=async e=>{
-  e.preventDefault();
-  const data=new FormData(form);
-  const payerPhone=String(data.get('payerPhone')||'').trim();
-  const reference=String(data.get('reference')||'').trim();
-  const button=form.querySelector('button');button.disabled=true;
-  const paymentReference='Network: '+selectedNetwork+' | Payer: '+payerPhone+' | Transaction ID: '+reference;
-  const {error}=await sb.from('activation_payment_submissions').insert({user_id:user.id,amount:ACTIVATION_FEE,currency:'UGX',payment_method:'mobile_money',payment_reference:paymentReference,status:'pending'});
-  $('activationPaymentMsg').innerHTML=error?msg(error.message,'error'):msg('Payment details submitted. Your account remains pending until the transaction is manually verified.','ok');
-  if(!error)await loadDashboard();else button.disabled=false;
- };
-}
-async function loadDashboard(){if(!user)return;show('dashboard');$('userEmail').textContent=user.email||'';const [p,t,s,l,w,r,n,b,ea,es]=await Promise.all([
-sb.from('profiles').select('*').eq('id',user.id).maybeSingle(),
-sb.from('tasks').select('*').eq('status','published').order('created_at',{ascending:false}),
-sb.from('task_submissions').select('*,tasks(title,reward_amount,currency)').eq('user_id',user.id).order('submitted_at',{ascending:false}).limit(50),
-sb.from('reward_ledger').select('*').eq('user_id',user.id).order('created_at',{ascending:false}).limit(250),
-sb.from('withdrawal_requests').select('*').eq('user_id',user.id).order('created_at',{ascending:false}).limit(50),
-sb.from('referrals').select('id,status,created_at').eq('referrer_id',user.id),
-sb.from('notifications').select('*').eq('user_id',user.id).order('created_at',{ascending:false}).limit(15),
-sb.from('wallet_balances').select('*').eq('user_id',user.id),
-sb.from('engagement_activities').select('*').eq('status','published').order('created_at',{ascending:false}),
-sb.from('engagement_sessions').select('*,engagement_activities(title,kind,reward_amount,currency)').eq('user_id',user.id).order('created_at',{ascending:false}).limit(50)
-]);if(p.error)console.warn(p.error);profile=p.data;cache={tasks:t.data||[],submissions:s.data||[],ledger:l.data||[],withdrawals:w.data||[],referrals:r.data||[],notifications:n.data||[],balances:b.data||[],engagement:ea.data||[],engagementSessions:es.data||[]};const {data:activationRows,error:activationError}=await sb.from('activation_payment_submissions').select('*').eq('user_id',user.id).order('created_at',{ascending:false}).limit(10);if(activationError)console.warn('Activation status could not be loaded',activationError);cache.activationPayments=activationRows||[];accountActivated=isAdmin()||cache.activationPayments.some(x=>x.status==='verified');if(!accountActivated){renderActivationGate(activationRows||[]);return;}$('welcome').textContent='Hi '+(profile?.username||'there')+' 👋';if($('memberDisplay'))$('memberDisplay').textContent=profile?.username||'Member';if($('memberAvatar'))$('memberAvatar').textContent=(profile?.username||user.email||'G').trim().charAt(0).toUpperCase();const currency=profile?.preferred_currency||'UGX';const bal=cache.balances.find(x=>x.currency===currency)?.balance||0;const credits=cache.ledger.filter(x=>x.direction==='credit'&&x.currency===currency).reduce((a,x)=>a+Number(x.amount),0);const debits=cache.ledger.filter(x=>x.direction==='debit'&&x.currency===currency);const expenses=debits.filter(x=>x.entry_type!=='withdrawal_debit').reduce((a,x)=>a+Number(x.amount),0);const paidWithdrawals=cache.withdrawals.filter(x=>x.status==='paid'&&x.currency===currency).reduce((a,x)=>a+Number(x.amount),0);const pendingWithdrawals=cache.withdrawals.filter(x=>['pending','under_review','approved'].includes(x.status)&&x.currency===currency).reduce((a,x)=>a+Number(x.amount),0);const taskRewards=cache.ledger.filter(x=>x.entry_type==='task_reward'&&x.direction==='credit'&&x.currency===currency).reduce((a,x)=>a+Number(x.amount),0);const teamEarnings=cache.ledger.filter(x=>x.entry_type==='referral_commission'&&x.direction==='credit'&&x.currency===currency).reduce((a,x)=>a+Number(x.amount),0);const welcomeBonus=cache.ledger.filter(x=>x.direction==='credit'&&x.currency===currency&&(/welcome/i.test(x.note||'')||/welcome/i.test(x.idempotency_key||''))).reduce((a,x)=>a+Number(x.amount),0);window.memberFinance={currency,balance:Number(bal),credits,expenses,profit:credits-expenses-paidWithdrawals,paidWithdrawals,pendingWithdrawals,teamEarnings,welcomeBonus,taskRewards};if(isAdmin()){ $('adminTab').classList.remove('hidden'); await loadAdminData(); } else { $('adminTab').classList.add('hidden'); }
-renderTab('overview');}
-function statusBadge(s){const c=s==='approved'||s==='paid'||s==='qualified'?'good':s==='rejected'||s==='cancelled'?'bad':'wait';return '<span class="badge '+c+'">'+esc(s.replaceAll('_',' '))+'</span>'}
-function renderTab(tab){if(!accountActivated&&!isAdmin()&&tab!=='activation'){renderActivationGate(cache.activationPayments||[]);return;}document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));const el=$('dashContent');const labels={overview:'HOME',accounts:'ACCOUNTS',vouchers:'VOUCHERS',deposit:'DEPOSIT',daily:'CLAIM BONUS / SPINS',leaderboard:'LEADERBOARD',payclient:'PAY FOR CLIENT',wallet:'WITHDRAW',referrals:'TEAM',products:'PRODUCTS',music:'SPOTIFY',tasks:'MARKETPLACE / CLICK ADS',fixtap:'FIX TAP',chat:'CHAT FOREIGNERS',games:'CHALLENGES',forex:'FREE FOREX CLASSES',videos:'VIDEO ACTIVITIES',ebooks:'BUSINESS EBOOKS',deriv:'DERIV TIPS',loans:'QUICK LOANS',messages:'READ MESSAGES',community:'JOIN COMMUNITY',support:'CONTACT & UPLINE',settings:'PROFILE SETTINGS',admin:'ADMIN CONSOLE'};if($('activeCrumb'))$('activeCrumb').textContent=labels[tab]||'OVERVIEW';if(tab==='overview'){const f=window.memberFinance||{currency:profile?.preferred_currency||'UGX',balance:0,profit:0,expenses:0,paidWithdrawals:0,pendingWithdrawals:0,teamEarnings:0,welcomeBonus:0,credits:0,taskRewards:0};const cur=f.currency;const today=new Date();today.setHours(0,0,0,0);const newToday=cache.referrals.filter(x=>new Date(x.created_at)>=today).length;const earningsBy=(needle)=>cache.ledger.filter(x=>x.direction==='credit'&&x.currency===cur&&((x.note||'').toLowerCase().includes(needle)||(x.reference_type||'').toLowerCase().includes(needle))).reduce((a,x)=>a+Number(x.amount),0);const activityCards=[['Foreign Chat',earningsBy('chat')],['Earn with Spotify',earningsBy('spotify')],['Tap Earnings',earningsBy('tap')],['Colour Challenge',earningsBy('colour')+earningsBy('color')],['Trivia',earningsBy('trivia')],['YouTube',earningsBy('youtube')],['TikTok',earningsBy('tiktok')],['Casino & Spin',earningsBy('spin')],['Math Challenge',earningsBy('math')],['Ad Tasks',earningsBy('ad')]];const featuredItems=[...cache.tasks.map(x=>({title:x.title,description:x.description,kind:x.category||'Activity',reward:x.reward_amount,currency:x.currency,tab:'tasks'})),...cache.engagement.map(x=>({title:x.title,description:x.description,kind:x.kind||'Activity',reward:x.reward_amount,currency:x.currency,tab:x.kind==='music'?'music':x.kind==='video'?'videos':'games'}))].slice(0,6);const featuredMarkup=featuredItems.map(x=>'<article class="genz-feature-card"><span class="genz-feature-icon">✦</span><small>'+esc(x.kind)+'</small><b>'+esc(x.title)+'</b><p>'+esc(x.description||'Explore this activity and read its instructions.')+'</p><div class="row"><strong>'+money(x.reward,x.currency)+'</strong><button class="btn mini primary" onclick="selectTab(\''+x.tab+'\')">Explore</button></div></article>').join('')||'<div class="empty">New opportunities will appear here when published.</div>';const link=location.origin+location.pathname+'?ref='+(profile?.referral_code||'');el.innerHTML='<div class="genz-promo-banner"><div><span class="genz-banner-tag">WELCOME TO GENZBAG</span><h2>Discover. Participate. Track your progress.</h2><p>Explore available activities, follow your submissions and keep your account organised.</p></div><button class="genz-banner-button" onclick="selectTab(\'tasks\')">Explore activities →</button></div><div class="panel home-network"><div><div class="admin-label">GROW YOUR NETWORK</div><h2 style="margin:4px 0">Invite people to your team</h2><p class="small">'+(newToday?'You have '+newToday+' new referral'+(newToday===1?'':'s')+' today.':'No new members yet today. Share your referral link and build your community.')+'</p><button class="btn mini primary" onclick="selectTab(\'referrals\')">Open Team ↗</button></div><div class="network-count">'+newToday+'<small style="display:block;font-size:.62rem;color:#9bb9d7">TODAY</small></div></div><div class="panel home-welcome"><div class="row"><div><div class="admin-label">YOUR GENZBAG DASHBOARD</div><h2>Hi '+esc(profile?.username||'Member')+' 👋</h2><p class="small">Earn smart. Grow steadily. Your account overview is below.</p></div><span class="pill">MEMBER SPACE</span></div></div><div class="home-kpis"><div class="home-kpi primary-kpi"><span class="kpi-icon">◉</span><small>Available Balance</small><strong>'+money(f.balance,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">↗</span><small>Net Profit Earned</small><strong>'+money(f.profit,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">▤</span><small>Expenses</small><strong>'+money(f.expenses,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">⇧</span><small>Total Withdrawals</small><strong>'+money(f.paidWithdrawals,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">◷</span><small>Pending Withdrawals</small><strong>'+money(f.pendingWithdrawals,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">♧</span><small>Team Earnings</small><strong>'+money(f.teamEarnings,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">🎁</span><small>Welcome Bonus</small><strong>'+money(f.welcomeBonus,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">✓</span><small>Total Task Earnings</small><strong>'+money(f.taskRewards,cur)+'</strong></div><div class="home-kpi"><span class="kpi-icon">◎</span><small>All Activity Income</small><strong>'+money(f.credits,cur)+'</strong></div></div><div class="home-section-title"><h2>Task Earnings</h2><span class="small">Recorded credits only · '+esc(cur)+'</span></div><div class="home-activity-grid">'+activityCards.map(a=>'<div class="home-activity"><b>'+esc(a[0])+'</b><strong>'+money(a[1],cur)+'</strong><small>Recorded earnings</small></div>').join('')+'</div><div class="home-section-title"><h2>Featured opportunities</h2><span class="small">Published on GenZBag</span></div><div class="genz-feature-grid">'+featuredMarkup+'</div><div class="two" style="margin-top:16px"><div class="panel"><div class="row"><h2>Recent Activity</h2><button class="btn mini" onclick="selectTab(\'tasks\')">View activities</button></div><div class="list">'+(cache.submissions.slice(0,5).map(x=>'<div class="item"><b>'+esc(x.tasks?.title||'Task submission')+'</b><div class="row">'+statusBadge(x.status)+'<small>'+new Date(x.submitted_at).toLocaleDateString()+'</small></div></div>').join('')||'<div class="empty">Your activity submissions will appear here.</div>')+'</div></div><div class="panel"><div class="row"><h2>Read Messages</h2><button class="btn mini" onclick="selectTab(\'messages\')">View all</button></div><div class="list">'+(cache.notifications.slice(0,5).map(x=>'<div class="item"><b>'+esc(x.title)+'</b><p>'+esc(x.message)+'</p><small>'+new Date(x.created_at).toLocaleDateString()+'</small></div>').join('')||'<div class="empty">You are all caught up.</div>')+'</div></div></div><div class="panel"><h2>Your Referral Link</h2><p class="copy">'+esc(link)+'</p><button class="btn mini primary" onclick="navigator.clipboard.writeText('+JSON.stringify(link)+').then(()=>alert(\'Referral link copied\'))">Copy referral link</button><p class="small" style="margin-top:10px">Referral rewards are shown only when verified and recorded in your account ledger.</p></div>';}
-else if(['chat','music','videos','games','daily'].includes(tab)){const modules={chat:['Chat & earn','Member conversations with clear activity rules, safety controls and verified participation.','Private member chat is the next module being connected.'],music:['Music rewards','Listen to available audio activities and submit completion for review.','No music activities are published yet.'],videos:['Watch videos','Watch available video activities and submit completion for review.','No video activities are published yet.'],games:['Games & challenges','Explore skill-based activities and submit your completed round for review.','No games or challenges are published yet.'],daily:['Daily rewards','Daily check-ins and streak tracking will be connected after the activity catalogue.','Daily check-in tracking is still being built.']};const m=modules[tab];if(tab==='chat'){renderChatTab(el);return;}else if(tab==='daily'){el.innerHTML='<div class="panel"><div class="admin-label">GENZBAG ACTIVITIES</div><h2 style="font-size:1.55rem;margin:6px 0">'+m[0]+'</h2><p>'+m[1]+'</p><div class="msg">'+m[2]+'</div><p class="small">No simulated cash or automatic rewards are issued by this section.</p></div>';}else{const kind=tab==='music'?'music':tab==='videos'?'video':'game';const items=cache.engagement.filter(a=>a.kind===kind||((kind==='game')&&a.kind==='challenge'));const sessions=cache.engagementSessions.filter(x=>x.engagement_activities?.kind===kind||((kind==='game')&&x.engagement_activities?.kind==='challenge'));el.innerHTML='<div class="panel"><div class="admin-label">GENZBAG ACTIVITIES</div><h2 style="font-size:1.55rem;margin:6px 0">'+m[0]+'</h2><p>'+m[1]+'</p><p class="small">Any activity submission is reviewed before it can qualify for a reward. Listed reward amounts are test values only.</p><div class="list">'+(items.map(a=>{const media=safeHttpsUrl(a.content_url);const player=media?(kind==='music'?'<audio controls preload="none" style="width:100%" src="'+esc(media)+'"></audio>':kind==='video'?'<video controls preload="metadata" playsinline style="width:100%;max-height:260px;border-radius:12px" src="'+esc(media)+'"></video>':'<a class="btn mini" href="'+esc(media)+'" target="_blank" rel="noopener">Open game</a>'):'<span class="small">No media link attached.</span>';return '<article class="item"><div class="row"><b>'+esc(a.title)+'</b><span class="badge">'+money(a.reward_amount,a.currency)+' test value</span></div><p>'+esc(a.description)+'</p>'+player+'<p>'+esc(a.instructions)+'</p><small>'+((a.duration_seconds||0)>0?'Suggested duration: '+Math.ceil(a.duration_seconds/60)+' min':'')+'</small><div class="actions"><button class="btn primary mini" onclick="submitEngagement(\''+a.id+'\')">Submit completion</button></div></article>'}).join('')||'<div class="empty">'+m[2]+'</div>')+'</div></div><div class="panel"><h2>My activity submissions</h2><div class="list">'+(sessions.map(x=>'<div class="item"><div class="row"><b>'+esc(x.engagement_activities?.title||'Activity')+'</b>'+statusBadge(x.status)+'</div><p>'+esc(x.review_note||'Submitted for review. No reward has been credited.')+'</p><small>'+new Date(x.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">Your submissions will appear here.</div>')+'</div></div>';}}
-else if(tab==='tasks'){el.innerHTML='<div class="panel"><h2>Available activities</h2><p class="small">Read each activity carefully. Submit proof only after completing the stated requirements.</p><div class="list">'+(cache.tasks.map(t=>'<div class="item"><div class="row"><b>'+esc(t.title)+'</b><span class="badge good">'+money(t.reward_amount,t.currency)+'</span></div><p>'+esc(t.description)+'</p><small>Category: '+esc(t.category)+'</small><p>'+esc(t.instructions)+'</p><button class="btn primary" onclick="submitTask(\''+t.id+'\')">Submit activity</button></div>').join('')||'<div class="empty">No activities are published right now. Check back later.</div>')+'</div></div><div class="panel"><h2>Your submissions</h2><div class="list">'+(cache.submissions.map(x=>'<div class="item"><div class="row"><b>'+esc(x.tasks?.title||'Activity')+'</b>'+statusBadge(x.status)+'</div><p>'+esc(x.review_note||'Awaiting review or completed.')+'</p><small>'+new Date(x.submitted_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">Your submitted activities will appear here.</div>')+'</div></div>'}
-else if(tab==='wallet'){el.innerHTML=`<div class="two"><div class="panel"><h2>Request a test withdrawal</h2><p class="small">Payouts are disabled in this test environment. Requests are recorded for testing only; no money will be sent.</p><form id="withdrawForm"><div class="field"><label>Amount</label><input name="amount" type="number" min="1" step="0.01" required></div><div class="field"><label>Currency</label><select name="currency">${['UGX','NGN','KES','TZS','RWF','GHS','USD'].map(c=>'<option '+(c===(profile?.preferred_currency||'UGX')?'selected':'')+'>'+c+'</option>').join('')}</select></div><div class="field"><label>Mobile money number (test only)</label><input name="number" placeholder="+256..."></div><button class="btn primary">Submit test request</button><div id="withdrawMsg"></div></form></div><div class="panel"><h2>Withdrawal history</h2><div class="list">${cache.withdrawals.map(x=>'<div class="item"><div class="row"><b>'+money(x.amount,x.currency)+'</b>'+statusBadge(x.status)+'</div><small>'+new Date(x.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">No withdrawal requests yet.</div>'}</div></div></div><div class="panel"><h2>Reward ledger</h2><div class="tablewrap"><table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Direction</th></tr></thead><tbody>${cache.ledger.map(x=>'<tr><td>'+new Date(x.created_at).toLocaleDateString()+'</td><td>'+esc(x.entry_type.replaceAll('_',' '))+'</td><td>'+money(x.amount,x.currency)+'</td><td>'+esc(x.direction)+'</td></tr>').join('')||'<tr><td colspan="4">No ledger entries yet.</td></tr>'}</tbody></table></div></div>`}
-else if(tab==='referrals'){const link=location.origin+location.pathname+'?ref='+(profile?.referral_code||'');el.innerHTML='<div class="panel"><h2>Your invitation link</h2><p class="small">Share your link responsibly. Referral rewards, if introduced, will only be paid from verified qualifying revenue — not simply for recruiting people.</p><p class="copy" id="refLink">'+esc(link)+'</p><button class="btn primary" id="copyRef">Copy invitation link</button><p class="small">Referral code: <b>'+esc(profile?.referral_code||'Not assigned')+'</b></p></div><div class="panel"><h2>Referral activity ('+cache.referrals.length+')</h2><div class="list">'+(cache.referrals.map(x=>'<div class="item row"><span>Joined '+new Date(x.created_at).toLocaleDateString()+'</span>'+statusBadge(x.status)+'</div>').join('')||'<div class="empty">No referrals yet.</div>')+'</div></div>';$('copyRef').onclick=async()=>{await navigator.clipboard.writeText(link);$('copyRef').textContent='Copied!'}}
-else if(tab==='support'){el.innerHTML='<div class="two"><div class="panel"><h2>Contact support</h2><form id="supportForm"><div class="field"><label>Subject</label><input name="subject" required minlength="3" maxlength="160"></div><div class="field"><label>Message</label><textarea name="message" required minlength="5"></textarea></div><button class="btn primary">Send support request</button><div id="supportMsg"></div></form></div><div class="panel"><h2>Help & safety</h2><p class="small">Never share your password, one-time verification code or mobile-money PIN. Do not pay anyone to activate tasks or release rewards. Contact support if you notice suspicious activity.</p></div></div>'}
-else if(tab==='admin'&&isAdmin()){renderAdmin(el)}
-else if(tab==='settings'){el.innerHTML='<div class="panel"><h2>Profile settings</h2><form id="profileForm"><div class="field"><label>Username</label><input name="username" value="'+esc(profile?.username||'')+'" minlength="3" maxlength="30" pattern="[a-z0-9_]+" required></div><div class="field"><label>Phone</label><input name="phone" value="'+esc(profile?.phone||'')+'"></div><div class="field"><label>Country</label><input name="country" value="'+esc(profile?.country||'')+'"></div><div class="field"><label>Preferred currency</label><select name="currency">'+['UGX','NGN','KES','TZS','RWF','GHS','USD'].map(c=>'<option '+(c===(profile?.preferred_currency||'UGX')?'selected':'')+'>'+c+'</option>').join('')+'</select></div><button class="btn primary">Save profile</button><div id="profileMsg"></div></form><p class="small">Email: '+esc(user.email||'')+'</p></div>'}
-else if(tab==='messages'){el.innerHTML='<div class="panel"><h2>Your Messages</h2><div class="list">'+cache.notifications.map(x=>'<div class="item"><div class="row"><b>'+esc(x.title)+'</b><small>'+new Date(x.created_at).toLocaleString()+'</small></div><p>'+esc(x.message)+'</p></div>').join('')||'<div class="empty">No messages or notifications yet.</div>'+'</div></div>'}
-else if(tab==='fixtap'||tab==='forex'||tab==='ebooks'||tab==='deriv'||tab==='loans'||tab==='community'||tab==='accounts'||tab==='vouchers'||tab==='deposit'||tab==='leaderboard'||tab==='payclient'||tab==='products'){const titles={fixtap:'Fix Tap',forex:'Free Forex Classes',ebooks:'Business Ebooks',deriv:'Deriv Tips',loans:'Quick Loans',community:'Join the GenZBag Community',accounts:'Accounts',vouchers:'Vouchers',deposit:'Deposit',leaderboard:'Leaderboard',payclient:'Pay For Client',products:'Products'};const descriptions={fixtap:'Tap-based activities will appear here when published and verified by the GenZBag team.',forex:'Learning materials and class schedules will be published here when available.',ebooks:'Business learning resources and downloadable ebooks will be listed here.',deriv:'Educational market information will appear here. This is not financial advice or a promise of trading returns.',loans:'Loan services are not currently available. Never pay an upfront fee to an unverified lender.',community:'Community access details and official group links will be published here.',accounts:'Your account profile, account status and identity details are managed securely in Profile.',vouchers:'Available vouchers and redemption history will appear here when this feature is enabled.',deposit:'Deposit instructions will be displayed here once an approved payment method is configured. Do not send money to personal numbers.',leaderboard:'Member rankings will appear here when verified platform activity is available.',payclient:'This service is not yet enabled. Contact support for verified information.',products:'Products and digital resources will be listed here when available.'};el.innerHTML='<div class="panel"><div class="admin-label">GENZBAG MEMBER SERVICES</div><h2 style="font-size:1.5rem">'+titles[tab]+'</h2><p>'+descriptions[tab]+'</p><div class="msg">This section is not active yet. We will display it here when the feature is ready and its rules are published.</div><button class="btn mini" onclick="selectTab(\'overview\')">Back to dashboard</button></div>'}
-bindForms();}
-async function renderChatTab(el,conversationId=null){
- window.activeChatId=conversationId;
- if(conversationId){
-  const {data:conversation,error:convError}=await sb.from('member_conversations').select('*').eq('id',conversationId).maybeSingle();
-  if(convError||!conversation){el.innerHTML=msg(convError?.message||'Conversation not found.','error');return;}
-  const other=conversation.member_a===user.id?conversation.member_b:conversation.member_a;
-  const {data:person}=await sb.from('member_directory').select('username,country').eq('id',other).maybeSingle();
-  const {data:messages,error:messagesError}=await sb.from('member_messages').select('*').eq('conversation_id',conversationId).order('created_at',{ascending:true}).limit(150);if(messagesError){el.innerHTML=msg(messagesError.message,'error');return;}
-  el.innerHTML='<div class="panel"><div class="row"><div><div class="admin-label">PRIVATE CONVERSATION</div><h2>'+esc(person?.username||'GenZBag member')+'</h2><p class="small">'+esc(person?.country||'')+'</p></div><button class="btn mini" onclick="openChat(\''+conversationId+'\')">Refresh</button></div><button class="btn mini ghost" onclick="selectTab(\'chat\')">← All conversations</button><div class="list" style="margin:18px 0">'+((messages||[]).map(m=>'<div class="item" style="max-width:85%;margin-left:'+(m.sender_id===user.id?'auto':'0')+'"><p style="margin:0;color:var(--text)">'+esc(m.body)+'</p><small>'+new Date(m.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">Say hello to start the conversation.</div>')+'</div><form id="chatSendForm"><div class="field"><label>Message</label><textarea name="body" required maxlength="2000" placeholder="Write a message…"></textarea></div><button class="btn primary">Send message</button><div id="chatSendMsg"></div></form></div>';
-  const send=$('chatSendForm');send.onsubmit=async e=>{e.preventDefault();const body=String(new FormData(send).get('body')||'').trim();if(!body)return;const {error}=await sb.from('member_messages').insert({conversation_id:conversationId,sender_id:user.id,body});if(error){$('chatSendMsg').innerHTML=msg(error.message,'error');return;}await renderChatTab(el,conversationId);};
-  return;
- }
 
- el.innerHTML='<div class="panel"><div class="admin-label">MEMBER COMMUNITY</div><h2>Chat with members</h2><p class="small">Connect respectfully. Never share passwords, verification codes or mobile-money PINs. Chat messages do not earn automatic rewards.</p><form id="chatSearchForm"><div class="field"><label>Find a member by username</label><input name="username" required minlength="2" maxlength="30" placeholder="Enter a username"></div><button class="btn primary">Search members</button></form><div id="chatSearchResults" class="list"></div></div><div class="panel"><h2>Your conversations</h2><div id="chatConversationList" class="list"><div class="empty">Loading conversations…</div></div></div>';
- const form=$('chatSearchForm');
- form.onsubmit=async e=>{
-  e.preventDefault();const term=String(new FormData(form).get('username')||'').trim();
-  const box=$('chatSearchResults');box.innerHTML='<div class="small">Searching…</div>';
-  const {data,error}=await sb.from('member_directory').select('id,username,country').ilike('username','%'+term+'%').neq('id',user.id).limit(15);
-  if(error){box.innerHTML=msg(error.message,'error');return;}
-  box.innerHTML=(data||[]).map(m=>'<div class="item row"><div><b>'+esc(m.username)+'</b><p>'+esc(m.country||'')+'</p></div><button class="btn mini primary" onclick="startChat(\''+m.id+'\')">Message</button></div>').join('')||'<div class="empty">No members found. Check the username and try again.</div>';
- };
- const {data:conversations,error}=await sb.from('member_conversations').select('*').order('last_message_at',{ascending:false}).limit(50);
- const list=$('chatConversationList');
- if(error){list.innerHTML=msg(error.message,'error');return;}
- if(!conversations?.length){list.innerHTML='<div class="empty">No conversations yet. Search for a member above to start one.</div>';return;}
- const ids=[...new Set(conversations.flatMap(c=>[c.member_a,c.member_b]))];
- const [{data:people},{data:messages}]=await Promise.all([
-  sb.from('member_directory').select('id,username,country').in('id',ids),
-  sb.from('member_messages').select('conversation_id,body,sender_id,created_at').in('conversation_id',conversations.map(c=>c.id)).order('created_at',{ascending:false}).limit(100)
- ]);
- const byId=new Map((people||[]).map(x=>[x.id,x]));
- list.innerHTML=conversations.map(c=>{const other=c.member_a===user.id?c.member_b:c.member_a;const person=byId.get(other);const latest=(messages||[]).find(m=>m.conversation_id===c.id);return '<button class="item row" style="width:100%;text-align:left;color:inherit;cursor:pointer" onclick="openChat(\''+c.id+'\')"><span><b>'+esc(person?.username||'GenZBag member')+'</b><p>'+(latest?esc(latest.body.slice(0,90)):'No messages yet')+'</p></span><small>'+new Date(latest?.created_at||c.created_at).toLocaleDateString()+'</small></button>'}).join('');
-}
-window.startChat=async targetId=>{
- if(!user||targetId===user.id)return;
- const [a,b]=[user.id,targetId].sort();
- let {data,error}=await sb.from('member_conversations').select('*').eq('member_a',a).eq('member_b',b).maybeSingle();
- if(error){alert(error.message);return;}
- if(!data){const created=await sb.from('member_conversations').insert({member_a:a,member_b:b}).select('*').single();data=created.data;error=created.error;if(error){const retry=await sb.from('member_conversations').select('*').eq('member_a',a).eq('member_b',b).maybeSingle();data=retry.data;error=retry.error;}}
- if(error||!data){alert(error?.message||'Could not start conversation.');return;}
- await renderChatTab($('dashContent'),data.id);
-};
-window.openChat=async id=>renderChatTab($('dashContent'),id);
-window.selectTab=tab=>renderTab(tab);
-window.submitEngagement=async id=>{if(!user)return;const evidence=prompt('Briefly describe what you completed. If the activity requests proof, include it here:');if(evidence===null||!evidence.trim())return;const {error}=await sb.from('engagement_sessions').insert({activity_id:id,user_id:user.id,evidence:evidence.trim(),submitted_at:new Date().toISOString()});if(error){alert(error.message);return}await loadDashboard();const kind=cache.engagement.find(x=>x.id===id)?.kind;renderTab(kind==='music'?'music':kind==='video'?'videos':'games');alert('Your completion was submitted for review. No reward has been credited.');};
-window.submitTask=async id=>{const proof=prompt('Describe how you completed this activity or enter the requested proof:');if(proof===null||!proof.trim())return;const {error}=await sb.from('task_submissions').insert({task_id:id,user_id:user.id,proof_text:proof.trim()});if(error){alert(error.message);return}await loadDashboard();renderTab('tasks');alert('Submission received and awaiting review.')};
+<script>
+(function(){
+  const sidebar=document.getElementById('sidebar');
+  const overlay=document.getElementById('overlay');
+  const menuButton=document.getElementById('menuButton');
 
-async function loadAdminData(){
- if(!isAdmin())return;
- const [p,t,s,w,sup,l,a,ea,es,act]=await Promise.all([
-  sb.from('profiles').select('*').order('created_at',{ascending:false}).limit(150),
-  sb.from('tasks').select('*').order('created_at',{ascending:false}).limit(100),
-  sb.from('task_submissions').select('*,tasks(title,reward_amount,currency)').order('submitted_at',{ascending:false}).limit(150),
-  sb.from('withdrawal_requests').select('*').order('created_at',{ascending:false}).limit(100),
-  sb.from('support_tickets').select('*').order('created_at',{ascending:false}).limit(100),
-  sb.from('reward_ledger').select('*').order('created_at',{ascending:false}).limit(150),
-  sb.from('admin_audit_logs').select('*').order('created_at',{ascending:false}).limit(50),
-  sb.from('engagement_activities').select('*').order('created_at',{ascending:false}).limit(100),
-  sb.from('engagement_sessions').select('*,engagement_activities(title,kind,reward_amount,currency)').order('created_at',{ascending:false}).limit(100),
-  sb.from('activation_payment_submissions').select('*').order('created_at',{ascending:false}).limit(150)
- ]);
- const errors=[p,t,s,w,sup,l,a,ea,es,act].filter(x=>x.error);
- if(errors.length)console.warn('Admin data loading issue',errors);
- adminCache={profiles:p.data||[],tasks:t.data||[],submissions:s.data||[],withdrawals:w.data||[],support:sup.data||[],ledger:l.data||[],audit:a.data||[],engagement:ea.data||[],engagementSessions:es.data||[],activationPayments:act.data||[]};
-}
-function renderAdmin(el){
- if(!isAdmin()){el.innerHTML='<div class="empty">Administrator access is required.</div>';return;}
- const pending=adminCache.submissions.filter(x=>x.status==='pending');
- const pendingWithdrawals=adminCache.withdrawals.filter(x=>x.status==='pending');
- const members=adminCache.profiles;
- el.innerHTML=`
- <div class="panel"><div class="row"><div><div class="admin-label">Platform administration</div><h2 style="font-size:1.55rem;margin:4px 0">GenZBag Control Centre</h2><p class="small">Restricted workspace · Actions are recorded in the audit log.</p></div><span class="pill">ADMIN VERIFIED</span></div></div><div class="panel"><div class="admin-label">Account activation payments</div><h2>Manual payment verification</h2><p class="small">Verify the transaction against the official mobile-money statement before activating a member. A submitted reference or screenshot alone is not proof of payment.</p><div class="list">${adminCache.activationPayments.filter(x=>x.status==='pending').map(x=>{const m=members.find(v=>v.id===x.user_id);return '<div class="item"><div class="row"><b>'+esc(m?.username||x.user_id.slice(0,8))+'</b>'+statusBadge(x.status)+'</div><p>Fee: '+money(x.amount,x.currency)+' · Ref: <b>'+esc(x.payment_reference||'Not provided')+'</b></p><small>Submitted '+new Date(x.created_at).toLocaleString()+'</small><div class="admin-actions"><button class="btn mini primary" onclick="adminReviewActivation(\''+x.id+'\',\'verified\')">Verify payment & activate</button><button class="btn mini" onclick="adminReviewActivation(\''+x.id+'\',\'rejected\')">Reject</button></div></div>';}).join('')||'<div class="empty">No activation payments are awaiting review.</div>'}</div></div>
- <div class="panel"><div class="admin-label">Music, video & game catalogue</div><h2>Create an activity</h2>
-  <form id="adminEngagementForm">
-   <div class="formgrid"><div class="field"><label>Activity type</label><select name="kind"><option value="music">Music</option><option value="video">Video</option><option value="game">Game</option><option value="challenge">Challenge</option></select></div><div class="field"><label>Currency</label><select name="currency"><option>UGX</option><option>NGN</option><option>KES</option><option>TZS</option><option>RWF</option><option>GHS</option><option>USD</option></select></div></div>
-   <div class="field"><label>Title</label><input name="title" required minlength="3" maxlength="140"></div>
-   <div class="field"><label>Description</label><textarea name="description" maxlength="1500"></textarea></div>
-   <div class="field"><label>Instructions & proof required</label><textarea name="instructions" required maxlength="4000"></textarea></div>
-   <div class="field"><label>HTTPS media/game URL (optional)</label><input name="content_url" type="url" placeholder="https://..."></div>
-   <div class="formgrid"><div class="field"><label>Duration in seconds (optional)</label><input name="duration" type="number" min="1" step="1"></div><div class="field"><label>Test reward amount</label><input name="reward" type="number" min="0" step="0.01" value="0" required></div></div>
-   <div class="field"><label>Publish status</label><select name="status"><option value="draft">Save as draft</option><option value="published">Publish activity</option></select></div>
-   <div class="msg">Test environment only. Member completions are submitted for manual review. This form does not send real money.</div>
-   <button class="btn primary">Save activity</button><div id="adminEngagementMsg"></div>
-  </form>
-  <h2 style="margin-top:24px">Recent activity catalogue</h2><div class="list">${adminCache.engagement.slice(0,12).map(x=>'<div class="item"><div class="row"><b>'+esc(x.title)+'</b>'+statusBadge(x.status)+'</div><p>'+esc(x.kind)+' · '+money(x.reward_amount,x.currency)+'</p></div>').join('')||'<div class="empty">No music, video or game activities created.</div>'}</div>
- </div>
- <div class="panel"><div class="admin-label">Activity completion review</div><h2>Music, video & game submissions</h2><p class="small">Review member evidence. Approval here records completion only; it does not credit a wallet reward.</p><div class="list">${adminCache.engagementSessions.filter(x=>x.status==='pending').slice(0,15).map(x=>'<div class="item"><div class="row"><b>'+esc(x.engagement_activities?.title||'Activity')+'</b>'+statusBadge(x.status)+'</div><p>Member: '+esc(x.user_id.slice(0,8))+' · '+esc(x.engagement_activities?.kind||'')+'</p><p>'+esc(x.evidence||'No evidence supplied')+'</p><div class="admin-actions"><button class="btn mini primary" onclick="adminReviewEngagement(\''+x.id+'\',\'approved\')">Approve completion</button><button class="btn mini" onclick="adminReviewEngagement(\''+x.id+'\',\'rejected\')">Reject</button></div></div>').join('')||'<div class="empty">No pending activity completions.</div>'}</div></div>
- <div class="admin-grid">
-  <div class="admin-kpi"><small>Total members</small><b>${members.length}</b></div>
-  <div class="admin-kpi"><small>Published tasks</small><b>${adminCache.tasks.filter(x=>x.status==='published').length}</b></div>
-  <div class="admin-kpi"><small>Pending reviews</small><b>${pending.length}</b></div>
-  <div class="admin-kpi"><small>Withdrawal requests</small><b>${pendingWithdrawals.length}</b></div>
- </div>
- <div class="admin-two">
-  <div class="panel"><div class="admin-label">Task management</div><h2>Create a new activity</h2>
-   <form id="adminTaskForm">
-    <div class="field"><label>Task title</label><input name="title" required maxlength="140" placeholder="e.g. Product feedback survey"></div>
-    <div class="formgrid"><div class="field"><label>Category</label><select name="category"><option value="survey">Survey</option><option value="video">Video activity</option><option value="review">Product review</option><option value="research">Research</option><option value="digital">Digital task</option><option value="general">General</option></select></div><div class="field"><label>Reward currency</label><select name="currency"><option>UGX</option><option>NGN</option><option>KES</option><option>TZS</option><option>RWF</option><option>GHS</option><option>USD</option></select></div></div>
-    <div class="field"><label>Short description</label><textarea name="description" required maxlength="1500"></textarea></div>
-    <div class="field"><label>Instructions & proof required</label><textarea name="instructions" required maxlength="4000"></textarea></div>
-    <div class="formgrid"><div class="field"><label>Test reward amount</label><input name="reward" type="number" min="0" step="0.01" required value="0"></div><div class="field"><label>Maximum submissions (optional)</label><input name="max_submissions" type="number" min="1" step="1"></div></div>
-    <div class="msg">Test environment: approved rewards are simulated wallet credits only. No cash payout is enabled.</div>
-    <button class="btn primary" style="width:100%">Publish activity</button><div id="adminTaskMsg"></div>
-   </form>
-  </div>
-  <div class="panel"><div class="admin-label">Review queue</div><h2>Submissions awaiting review</h2>
-   <div class="list">${pending.slice(0,12).map(x=>{
-    const member=members.find(m=>m.id===x.user_id);
-    return '<div class="item"><div class="row"><b>'+esc(x.tasks?.title||'Task submission')+'</b>'+statusBadge(x.status)+'</div><p>Member: '+esc(member?.username||x.user_id.slice(0,8))+' · '+new Date(x.submitted_at).toLocaleString()+'</p><p>'+esc(x.proof_text||x.proof_url||'No proof text provided')+'</p><div class="admin-actions"><button class="btn mini primary" onclick="adminReview(\''+x.id+'\',\'approved\')">Approve & credit test reward</button><button class="btn mini" onclick="adminReview(\''+x.id+'\',\'rejected\')">Reject</button></div></div>';
-   }).join('')||'<div class="empty">No pending submissions.</div>'}</div>
-  </div>
- </div>
- <div class="panel"><div class="admin-label">Members</div><h2>Recent member accounts</h2><div class="tablewrap"><table><thead><tr><th>Username</th><th>Country</th><th>Currency</th><th>Joined</th><th>Referral code</th></tr></thead><tbody>${members.slice(0,50).map(m=>'<tr><td><b>'+esc(m.username)+'</b></td><td>'+esc(m.country||'—')+'</td><td>'+esc(m.preferred_currency)+'</td><td>'+new Date(m.created_at).toLocaleDateString()+'</td><td>'+esc(m.referral_code)+'</td></tr>').join('')||'<tr><td colspan="5">No member records.</td></tr>'}</tbody></table></div></div>
- <div class="admin-two">
-  <div class="panel"><div class="admin-label">Activity catalogue</div><h2>All activities</h2><div class="list">${adminCache.tasks.slice(0,20).map(t=>'<div class="item"><div class="row"><b>'+esc(t.title)+'</b>'+statusBadge(t.status)+'</div><p>'+esc(t.category)+' · '+money(t.reward_amount,t.currency)+'</p></div>').join('')||'<div class="empty">No activities created yet.</div>'}</div></div>
-  <div class="panel"><div class="admin-label">Finance oversight</div><h2>Withdrawal requests</h2><p class="small">Requests are visible for review only. This environment does not transfer money or mark payouts as paid.</p><div class="list">${adminCache.withdrawals.slice(0,15).map(w=>'<div class="item"><div class="row"><b>'+money(w.amount,w.currency)+'</b>'+statusBadge(w.status)+'</div><p>'+esc(w.payout_details?.mobile_number||'No number supplied')+'</p><small>'+new Date(w.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">No withdrawal requests.</div>'}</div></div>
- </div>
- <div class="panel"><div class="admin-label">Support & governance</div><h2>Recent support tickets</h2><div class="list">${adminCache.support.slice(0,12).map(x=>'<div class="item"><div class="row"><b>'+esc(x.subject)+'</b>'+statusBadge(x.status)+'</div><p>'+esc(x.message)+'</p><small>Member '+esc(x.user_id.slice(0,8))+' · '+new Date(x.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">No support tickets.</div>'}</div></div>
- <div class="panel"><div class="admin-label">Audit trail</div><h2>Recent administrator actions</h2><div class="list">${adminCache.audit.slice(0,10).map(x=>'<div class="item row"><span>'+esc(x.action.replaceAll('_',' '))+'</span><small>'+new Date(x.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">No administrative actions recorded yet.</div>'}</div></div>`;
- const engagementForm=$('adminEngagementForm');
- if(engagementForm)engagementForm.onsubmit=async e=>{
-  e.preventDefault();const f=new FormData(engagementForm);const reward=Number(f.get('reward'));const duration=f.get('duration')?Number(f.get('duration')):null;const media=String(f.get('content_url')||'').trim();
-  if(!Number.isFinite(reward)||reward<0|| (duration!==null&&(!Number.isInteger(duration)||duration<1))){$('adminEngagementMsg').innerHTML=msg('Enter a valid reward and duration.','error');return;}
-  if(media&&!safeHttpsUrl(media)){$('adminEngagementMsg').innerHTML=msg('Media links must use HTTPS.','error');return;}
-  const payload={kind:f.get('kind'),title:String(f.get('title')).trim(),description:String(f.get('description')||'').trim(),instructions:String(f.get('instructions')).trim(),content_url:media||null,duration_seconds:duration,reward_amount:reward,currency:f.get('currency'),status:f.get('status'),created_by:user.id};
-  const {error}=await sb.from('engagement_activities').insert(payload);
-  $('adminEngagementMsg').innerHTML=error?msg(error.message,'error'):msg('Activity saved. Published activities are now visible to members.','ok');
-  if(!error){engagementForm.reset();await loadAdminData();renderAdmin(el);}
- };
- const form=$('adminTaskForm');
- if(form)form.onsubmit=async e=>{
-  e.preventDefault();const f=new FormData(form);const reward=Number(f.get('reward'));
-  if(!Number.isFinite(reward)||reward<0){$('adminTaskMsg').innerHTML=msg('Enter a valid reward amount.','error');return;}
-  const payload={title:f.get('title').trim(),category:f.get('category'),description:f.get('description').trim(),instructions:f.get('instructions').trim(),reward_amount:reward,currency:f.get('currency'),status:'published',created_by:user.id,max_submissions:f.get('max_submissions')?Number(f.get('max_submissions')):null};
-  const {error}=await sb.from('tasks').insert(payload);
-  $('adminTaskMsg').innerHTML=error?msg(error.message,'error'):msg('Activity published successfully.','ok');
-  if(!error){form.reset();await loadAdminData();renderAdmin(el);}
- };
-}
-window.adminReviewActivation=async(id,decision)=>{
- if(!isAdmin()||!['verified','rejected'].includes(decision))return;
- const note=prompt(decision==='verified'?'Optional verification note (confirm against the official payment statement):':'Reason for rejecting this payment reference:');
- if(note===null)return;
- const {error}=await sb.from('activation_payment_submissions').update({status:decision,admin_note:note.trim()||null,reviewed_by:user.id,reviewed_at:new Date().toISOString()}).eq('id',id).eq('status','pending');
- if(error){alert(error.message);return;}
- await loadDashboard();
- renderTab('admin');
- alert(decision==='verified'?'Payment marked verified. The member can now access the dashboard.':'Payment reference rejected.');
-};
-window.adminReview=async(id,decision)=>{
- if(!isAdmin())return;
- const note=prompt(decision==='approved'?'Optional review note for this approval:':'Reason for rejecting this submission:');
- if(note===null)return;
- const {data,error}=await sb.rpc('admin_review_task_submission',{p_submission_id:id,p_decision:decision,p_review_note:note});
- if(error){alert(error.message);return;}
- await loadDashboard();
- renderTab('admin');
- alert(decision==='approved'?'Submission approved. A simulated reward was added to the test wallet.':'Submission rejected.');
-};
+  function openMenu(){
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    menuButton.setAttribute('aria-expanded','true');
+  }
+  function closeMenu(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    menuButton.setAttribute('aria-expanded','false');
+  }
 
-window.adminReviewEngagement=async(id,decision)=>{
- if(!isAdmin())return;
- const note=prompt(decision==='approved'?'Optional note for this completion approval:':'Reason for rejecting this completion:');
- if(note===null)return;
- const {error}=await sb.from('engagement_sessions').update({status:decision,review_note:note,reviewed_at:new Date().toISOString(),reviewed_by:user.id}).eq('id',id);
- if(error){alert(error.message);return;}
- await loadDashboard();
- renderTab('admin');
- alert(decision==='approved'?'Completion approved. No wallet reward has been credited.':'Completion rejected.');
-};
-function bindForms(){const wf=$('withdrawForm');if(wf)wf.onsubmit=async e=>{e.preventDefault();const f=new FormData(wf);const {error}=await sb.rpc('create_test_withdrawal_request',{p_amount:Number(f.get('amount')),p_currency:f.get('currency'),p_mobile_number:f.get('number')||''});$('withdrawMsg').innerHTML=error?msg(error.message,'error'):msg('Test request saved. No payment has been made.','ok');if(!error)await loadDashboard();};const sf=$('supportForm');if(sf)sf.onsubmit=async e=>{e.preventDefault();const f=new FormData(sf);const {error}=await sb.from('support_tickets').insert({user_id:user.id,subject:f.get('subject'),message:f.get('message')});$('supportMsg').innerHTML=error?msg(error.message,'error'):msg('Your support request has been sent.','ok');if(!error)sf.reset()};const pf=$('profileForm');if(pf)pf.onsubmit=async e=>{e.preventDefault();const f=new FormData(pf);const {error}=await sb.from('profiles').update({username:String(f.get('username')).toLowerCase(),phone:f.get('phone'),country:f.get('country'),preferred_currency:f.get('currency')}).eq('id',user.id);$('profileMsg').innerHTML=error?msg(error.message,'error'):msg('Profile updated.','ok');if(!error)await loadDashboard()};}
-$('dashboardSearch')?.addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();document.querySelectorAll('#tabs .tab[data-tab]').forEach(b=>{b.style.display=!q||b.textContent.toLowerCase().includes(q)?'flex':'none'})});$('tabs').addEventListener('click',e=>{const logout=e.target.closest('[data-action="logout"]');if(logout){sb.auth.signOut();return;}const b=e.target.closest('[data-tab]');if(b){renderTab(b.dataset.tab);$('memberShell')?.classList.remove('mobile-nav-open')}});$('mobileMenuBtn').onclick=()=> $('memberShell')?.classList.toggle('mobile-nav-open');
-$('signOut').onclick=async()=>{await sb.auth.signOut();user=null;profile=null;setTop();go('')};
-function route(){const r=location.hash.replace('#','').split('?')[0];if(r==='register'||r==='login'){if(user){go('dashboard');return}setTop();renderAuth(r)}else if(r==='dashboard'){if(user){setTop();loadDashboard()}else{go('login')}}else{show('public');setTop()}}
-sb.auth.onAuthStateChange((_event,session)=>{user=session?.user||null;setTop();if(location.hash==='#dashboard'&&user)loadDashboard()});
-window.addEventListener('hashchange',route);
-(async()=>{const {data}=await sb.auth.getSession();user=data.session?.user||null;setTop();route()})();
+  menuButton.addEventListener('click',function(){
+    sidebar.classList.contains('open')?closeMenu():openMenu();
+  });
+  overlay.addEventListener('click',closeMenu);
+
+  document.querySelectorAll('.nav-link').forEach(function(link){
+    link.addEventListener('click',function(){
+      document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+      link.classList.add('active');
+      closeMenu();
+    });
+  });
+
+  const referralInput=document.getElementById('refLink');
+  const feedback=document.getElementById('copyFeedback');
+
+  async function copyReferralLink(){
+    const value=referralInput.value;
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(value);
+      }else{
+        referralInput.focus();
+        referralInput.select();
+        referralInput.setSelectionRange(0,value.length);
+        const successful=document.execCommand('copy');
+        if(!successful) throw new Error('Copy command failed');
+      }
+      feedback.textContent='Referral link copied successfully!';
+    }catch(error){
+      referralInput.focus();
+      referralInput.select();
+      feedback.textContent='Select and copy your referral link.';
+    }
+  }
+
+  document.getElementById('copyButton').addEventListener('click',copyReferralLink);
+
+  document.getElementById('whatsappButton').addEventListener('click',function(){
+    const message='Join me on GenZBag! Shop smart and explore the latest bags. '+referralInput.value;
+    window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
+  });
+
+  document.getElementById('shareButton').addEventListener('click',async function(){
+    const shareData={
+      title:'GenZBag',
+      text:'Join me on GenZBag! Shop smart and explore the latest bags.',
+      url:referralInput.value
+    };
+    if(navigator.share){
+      try{await navigator.share(shareData);}
+      catch(error){if(error.name!=='AbortError') feedback.textContent='Sharing was not completed.';}
+    }else{
+      await copyReferralLink();
+    }
+  });
+
+  document.addEventListener('keydown',function(event){
+    if(event.key==='Escape') closeMenu();
+  });
+})();
 </script>
-</body></html>
+</body>
+</html>
