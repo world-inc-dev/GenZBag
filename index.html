@@ -861,11 +861,14 @@ footer {
   <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">💸</span>Financial Education</a>
 
   <div class="nav-label">SETTING</div>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">📨</span>Text Upline</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">✉️</span>Read Messages</a>
+  <a class="nav-link" href="#referrals"><span class="nav-icon">📨</span>Text Upline</a>
+  <a class="nav-link" href="#globalChat"><span class="nav-icon">✉️</span>Read Messages</a>
   <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>Profile</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">☎️</span>Contact Us</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">👥</span>Join community</a>
+  <a class="nav-link" href="#globalChat"><span class="nav-icon">☎️</span>Contact Us</a>
+  <a class="nav-link" href="#globalChat"><span class="nav-icon">👥</span>Join community</a>
+  <a class="nav-link" href="#schedule"><span class="nav-icon">🗓️</span>Weekly Schedule</a>
+  <a class="nav-link" href="#wallet"><span class="nav-icon">💳</span>My Wallet</a>
+  <a class="nav-link" href="#app"><span class="nav-icon">📱</span>Get the App</a>
   <a class="nav-link" href="#" id="logoutButton"><span class="nav-icon">↪️</span>Logout</a>
 
   <div class="sidebar-footer">GenZBag · A home of Digital Income.</div>
@@ -1253,7 +1256,25 @@ const sidebar=document.getElementById('sidebar'),overlay=document.getElementById
 function closeMenu(){sidebar.classList.remove('open');overlay.classList.remove('show');menuButton.setAttribute('aria-expanded','false');}
 function openMenu(){sidebar.classList.add('open');overlay.classList.add('show');menuButton.setAttribute('aria-expanded','true');}
 menuButton.addEventListener('click',()=>sidebar.classList.contains('open')?closeMenu():openMenu());overlay.addEventListener('click',closeMenu);
-document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',()=>{if(a.id==='logoutButton')return;document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));a.classList.add('active');closeMenu();}));
+document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>{
+ if(a.id==='logoutButton')return;
+ e.preventDefault();
+ document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
+ a.classList.add('active');
+ const targetId=(a.getAttribute('href')||'').replace(/^#/,'');
+ const target=document.getElementById(targetId);
+ if(!target){closeMenu();return;}
+ const category=a.dataset.activityCategory;
+ if(category){
+  currentActivityFilter=category;
+  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===category));
+  renderActivities();
+ }
+ closeMenu();
+ target.scrollIntoView({behavior:'smooth',block:'start'});
+ if(targetId==='globalChat'&&!currentMember)showAuthMessage('Sign in to use the global chat.','error');
+ if(['referrals','profile','wallet','schedule','app'].includes(targetId))history.replaceState(null,'','#'+targetId);
+}));
 const referralInput=document.getElementById('refLink'),feedback=document.getElementById('copyFeedback');
 async function copyReferralLink(){const v=referralInput.value;try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(v);else{referralInput.focus();referralInput.select();referralInput.setSelectionRange(0,v.length);if(!document.execCommand('copy'))throw Error('Copy failed');}feedback.textContent='Referral link copied successfully!';}catch(e){referralInput.focus();referralInput.select();feedback.textContent='Select and copy your referral link.';}}
 document.getElementById('copyButton').addEventListener('click',copyReferralLink);
