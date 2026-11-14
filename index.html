@@ -2788,13 +2788,16 @@ async function loadAdminFinancials(){
  const updated=document.getElementById('adminFinancialUpdated');if(updated)updated.textContent='Last refreshed: '+(d.updated_at?new Date(d.updated_at).toLocaleString('en-GB'):'just now');
 }
 document.getElementById('adminFinancialRefresh')?.addEventListener('click',loadAdminFinancials);
+async function adminFetchAllPages(makeQuery,pageSize=1000){
+ const all=[];for(let from=0;;from+=pageSize){const {data,error}=await makeQuery().range(from,from+pageSize-1);if(error)return {data:null,error};all.push(...(data||[]));if(!data||data.length<pageSize)break;}return {data:all,error:null};
+}
 async function loadAdminMembers(){
  const host=document.getElementById('adminMembersMount');if(!host||!adminIsAuthorized())return;
- host.innerHTML='<div class="activity-empty">Loading member profiles and referral hierarchy…</div>';
+ host.innerHTML='<div class="activity-empty">Loading all member profiles and referral hierarchy…</div>';
  const [pr,ar,lr]=await Promise.all([
-  supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at,referred_by').order('created_at',{ascending:false}).limit(500),
-  supabaseClient.from('activation_payment_submissions').select('user_id,status,created_at').order('created_at',{ascending:false}).limit(2000),
-  supabaseClient.from('reward_ledger').select('user_id,entry_type,direction,amount,currency').eq('currency','UGX').limit(5000)
+  adminFetchAllPages(()=>supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at,referred_by').order('created_at',{ascending:false})),
+  adminFetchAllPages(()=>supabaseClient.from('activation_payment_submissions').select('user_id,status,created_at').order('created_at',{ascending:false})),
+  adminFetchAllPages(()=>supabaseClient.from('reward_ledger').select('user_id,entry_type,direction,amount,currency').eq('currency','UGX'))
  ]);
  if(pr.error){host.textContent='Member directory unavailable: '+pr.error.message;return;}
  if(ar.error){host.textContent='Activation status could not be loaded: '+ar.error.message;return;}
