@@ -1546,6 +1546,114 @@ input,select,textarea{font-size:14px}
 .genz-activation-card .genz-activation-submit{color:#fff!important}
 .genz-activation-card .genz-activation-secondary{color:#0A2A6B!important}
 
+
+/* GenZBag activation visual system: royal-blue/violet backdrop + MTN yellow */
+.genz-activation-gate{
+  isolation:isolate;
+  overflow:hidden;
+  background:linear-gradient(112deg,#173A9A 0%,#3546C6 48%,#7138D8 100%)!important;
+  color:#0A2E2E!important;
+}
+.genz-activation-gate:before,
+.genz-activation-gate:after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:50%;
+}
+.genz-activation-gate:before{
+  width:min(76vw,620px);height:min(76vw,620px);
+  left:-18%;top:-34%;
+  background:radial-gradient(circle at 38% 38%,rgba(255,255,255,.19),rgba(255,255,255,.055) 55%,rgba(255,255,255,0) 72%);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 0 90px rgba(255,255,255,.07);
+}
+.genz-activation-gate:after{
+  width:min(88vw,700px);height:min(88vw,700px);
+  right:-25%;bottom:-48%;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.15),rgba(255,255,255,.045) 58%,transparent 73%);
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 0 110px rgba(191,166,255,.12),inset 0 0 80px rgba(255,255,255,.06);
+}
+.genz-activation-card{
+  position:relative;z-index:1;
+  color:#0A2E2E!important;
+  background:rgba(242,246,247,.97)!important;
+  border:1px solid rgba(255,255,255,.72)!important;
+  box-shadow:0 28px 90px rgba(8,18,58,.28),0 2px 12px rgba(10,46,46,.06)!important;
+  backdrop-filter:blur(18px) saturate(125%);
+}
+.genz-activation-brand{color:#0A2E2E!important}
+.genz-activation-icon{background:#FFCC00!important;color:#0A2E2E!important}
+.genz-activation-card h1,
+.genz-activation-card h2,
+.genz-activation-card h3,
+.genz-activation-card strong{color:#0A2E2E}
+.genz-activation-card p,
+.genz-activation-card span,
+.genz-activation-card small{color:#6B7A7A}
+.genz-activation-fee,
+.genz-activation-status,
+.genz-activation-method,
+.genz-activation-detail{
+  background:#FFFFFF!important;
+  border:1px solid rgba(10,46,46,.09)!important;
+  border-radius:16px!important;
+  box-shadow:0 7px 22px rgba(10,46,46,.055),inset 0 1px 0 rgba(255,255,255,.9);
+}
+.genz-activation-fee span,
+.genz-activation-form label,
+.genz-activation-small,
+.genz-activation-method span{color:#6B7A7A!important}
+.genz-activation-fee strong{color:#0A2E2E!important}
+.genz-activation-progress>div,
+.genz-activation-step{color:#0A2E2E!important}
+.genz-activation-progress b,
+.genz-activation-step b{
+  background:#FFCC00!important;
+  color:#0A2E2E!important;
+  box-shadow:0 3px 9px rgba(255,204,0,.22);
+}
+.genz-activation-step strong{color:#0A2E2E!important}
+.genz-activation-form input{
+  background:#FFFFFF!important;color:#0A2E2E!important;
+  border:1px solid #D7E1E3!important;
+}
+.genz-activation-form input::placeholder{color:#9AA8A8}
+.genz-activation-form input:focus{
+  border-color:#FFCC00!important;
+  box-shadow:0 0 0 3px rgba(255,204,0,.22)!important;
+}
+.genz-activation-submit{
+  background:#2ECC71!important;color:#073B28!important;
+  box-shadow:0 8px 18px rgba(46,204,113,.22);
+}
+.genz-activation-secondary{
+  background:linear-gradient(105deg,#3B82F6,#7C3AED)!important;
+  color:#FFFFFF!important;border:0!important;
+  box-shadow:0 8px 18px rgba(84,92,220,.2);
+}
+.genz-activation-method{color:#0A2E2E!important}
+.genz-activation-method:hover,
+.genz-activation-method:focus-visible{
+  border-color:#FFCC00!important;background:#FFFDF2!important;
+}
+.genz-activation-copy{
+  background:#FFCC00!important;border-color:#FFCC00!important;
+  color:#0A2E2E!important;
+}
+.genz-activation-back{color:#3B82F6!important}
+.genz-activation-status{color:#0A2E2E!important}
+.genz-activation-status.pending{background:#FFF9E5!important;color:#725600!important;border-color:#FFCC00!important}
+.genz-activation-status.rejected{background:#FFF1F1!important;color:#9B2525!important;border-color:#F3C4C4!important}
+.genz-activation-page{color:#0A2E2E}
+.genz-activation-card .genz-activation-small{color:#6B7A7A!important}
+@media(prefers-reduced-motion:no-preference){
+ .genz-activation-card{animation:activationCardIn .55s cubic-bezier(.2,.8,.2,1) both}
+}
+@keyframes activationCardIn{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+
 </style>
 </head>
 
