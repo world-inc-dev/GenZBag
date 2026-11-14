@@ -3263,7 +3263,7 @@ body.activation-screen-open{overflow:hidden!important}
  <section class="genz-activation-card">
   <header class="genz-fast-topbar">
    <div class="genz-fast-brand"><span class="genz-fast-logo">G</span><strong>GenZBag</strong></div>
-   <div class="genz-fast-user" id="genzActivationUsername" aria-live="polite"></div>
+   <div class="genz-fast-account"><span class="genz-fast-user" id="genzActivationUsername" aria-live="polite"></span><button type="button" class="genz-fast-logout" id="genzActivationLogout">Logout</button></div>
   </header>
   <div id="genzActivationHome" class="genz-activation-page">
    <div class="genz-fast-hero">
@@ -3288,6 +3288,7 @@ body.activation-screen-open{overflow:hidden!important}
      <button type="button" class="genz-activation-method genz-fast-method" data-activation-method="airtel"><span class="genz-fast-network genz-fast-airtel">airtel</span><span class="genz-fast-method-copy"><strong>Airtel Money</strong><small>Step-by-step guide</small></span><span class="genz-fast-arrow">›</span></button>
     </div>
    </section>
+   <div class="genz-fast-help"><a href="https://wa.me/256761537538" target="_blank" rel="noopener">Need help?</a></div>
    <p class="genz-fast-footer">© 2026 GenZBag. All rights reserved.</p>
   </div>
   <div id="genzActivationMtn" class="genz-activation-page genz-fast-payment-page" hidden>
@@ -3360,6 +3361,7 @@ async function updateActivationUsername(member=currentMember){
  }catch(error){console.warn('Activation username lookup:',error);}
 }
 
+document.getElementById('genzActivationLogout')?.addEventListener('click',()=>document.getElementById('logoutButton')?.click());
 function showActivationPage(page){['genzActivationHome','genzActivationMtn','genzActivationAirtel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=id!==page;});}
 function chooseActivationMethod(method){selectedActivationMethod=method;showActivationPage(method==='mtn'?'genzActivationMtn':'genzActivationAirtel');activationForm.hidden=false;activationGate.classList.add('genz-fast-detail-open');document.getElementById('genzActivationReference').placeholder=method==='mtn'?'Transaction ID, e.g. 123456...':'Airtel transaction ID, e.g. 123456...';document.getElementById('genzActivationFormHint').textContent=method==='mtn'?'Enter the Transaction ID (TID) from your MTN confirmation SMS.':'Enter the transaction ID from your Airtel Money confirmation SMS.';window.setTimeout(()=>activationGate.scrollTo({top:0,behavior:'smooth'}),30);}
 document.querySelectorAll('[data-activation-method]').forEach(btn=>btn.addEventListener('click',()=>chooseActivationMethod(btn.dataset.activationMethod)));
@@ -4486,6 +4488,15 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
  #genzActivationGate .genz-fast-amount{min-height:78px!important;padding:11px!important}
  #genzActivationGate .genz-fast-amount strong{font-size:clamp(25px,7vw,31px)!important}
 }
+
+#genzActivationGate .genz-fast-account{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:7px!important;min-width:0!important}
+#genzActivationGate .genz-fast-user{max-width:min(34vw,150px)!important;min-width:0!important}
+#genzActivationGate .genz-fast-logout{flex:0 0 auto!important;min-height:34px!important;padding:0 10px!important;border:1px solid #3a5269!important;border-radius:7px!important;background:#172d42!important;color:#dce8f2!important;font-size:11px!important;font-weight:700!important;cursor:pointer!important}
+#genzActivationGate .genz-fast-logout:hover{border-color:#62cdbd!important;color:#fff!important}
+#genzActivationGate .genz-fast-help{margin:15px 0 0!important;text-align:center!important}
+#genzActivationGate .genz-fast-help a{color:#70d9cb!important;font-size:11px!important;font-weight:700!important;text-decoration:none!important}
+#genzActivationGate .genz-fast-help a:hover{text-decoration:underline!important}
+@media(max-width:360px){#genzActivationGate{padding:12px 9px!important}#genzActivationGate .genz-activation-card{padding:15px!important}#genzActivationGate .genz-fast-topbar{gap:6px!important}#genzActivationGate .genz-fast-user{max-width:105px!important;padding:6px 7px!important;font-size:10px!important}#genzActivationGate .genz-fast-logout{min-height:31px!important;padding:0 7px!important;font-size:10px!important}#genzActivationGate .genz-fast-methods{grid-template-columns:1fr!important}}
 </style>
 </body>
 </html>
