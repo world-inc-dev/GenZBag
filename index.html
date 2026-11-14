@@ -3403,17 +3403,19 @@ body.activation-screen-open{overflow:hidden!important}
     </div>
     <div id="payClientPanel" class="feature-detail-panel" hidden>
       <div class="feature-stat-grid">
-        <div><small>ACCOUNT BALANCE</small><strong id="clientAccountBalance">UGX 0</strong></div>
-        <div><small>ACTIVATION COUNTRY</small><strong>Uganda</strong></div>
-        <div><small>REFERENCE ACTIVATION FEE</small><strong>UGX 19,500</strong></div>
+        <div><small>AVAILABLE BALANCE</small><strong id="clientAccountBalance">UGX 0</strong></div>
+        <div><small>ACTIVATION FEE</small><strong>UGX 19,500</strong></div>
+        <div><small>COUNTRY</small><strong>Uganda</strong></div>
       </div>
-      <h3>Pay for a Downline Client</h3><p>Pay toward activation for a direct downline member. Installment support can be configured after payment processing is connected.</p>
-      <ul class="feature-bullet-list"><li>Client must be your direct downline member.</li><li>Client country must be Uganda.</li><li>Reference fee shown: UGX 19,500. Final fee must be confirmed before live use.</li><li>Any payment must be deducted through a verified, secure transaction.</li></ul>
-      <label class="feature-field">Client Username<input id="payClientUsername" type="text" maxlength="60" placeholder="Enter direct downline username"></label>
-      <label class="feature-field">Amount to Pay (UGX)<input id="payClientAmount" type="number" min="1" step="1" placeholder="Minimum: UGX 1.00"></label>
-      <button class="activity-btn" type="button" disabled>Pay for Client · Not enabled</button><p class="activity-note">Payments are not processed from this preview. No balance will be deducted.</p>
-      <h3 style="margin-top:20px">Recently Activated by You</h3>
-      <div class="table-responsive"><table class="feature-table"><thead><tr><th>#</th><th>Username</th><th>Status</th></tr></thead><tbody><tr><td colspan="3">No users activated by you recently.</td></tr></tbody></table></div>
+      <h3>Pay for a Downline Client</h3>
+      <p>Enter any amount toward your direct downline member’s UGX 19,500 activation fee. You can pay in instalments. The account activates automatically when the full fee is covered.</p>
+      <label class="feature-field">Client Username<input id="payClientUsername" type="text" maxlength="60" autocomplete="off" placeholder="Enter direct downline username"></label>
+      <label class="feature-field">Amount to Pay (UGX)<input id="payClientAmount" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter any amount"></label>
+      <div class="feature-calculated" id="payClientBalanceHint">Available balance: UGX 0 · Maximum payment depends on the client's remaining fee.</div>
+      <button class="activity-btn" id="payClientButton" type="button">Pay for Client</button>
+      <p class="activity-note" id="payClientMessage" role="status">Only direct downline members registered in Uganda qualify. Payments are deducted securely from your available balance. Partial payments are saved.</p>
+      <h3 style="margin-top:18px">Your Client Payments</h3>
+      <div class="table-responsive"><table class="feature-table"><thead><tr><th>#</th><th>Username</th><th>Paid</th><th>Remaining</th><th>Status</th></tr></thead><tbody id="payClientHistoryRows"><tr><td colspan="5">No client payments yet.</td></tr></tbody></table></div>
     </div>
     <div id="voucherBuyPanel" class="feature-detail-panel" hidden>
       <div class="feature-stat-grid"><div><small>ACCOUNT BALANCE</small><strong id="voucherAccountBalance">UGX 0</strong></div><div><small>VOUCHER BALANCE</small><strong id="voucherAvailableCount">0 vouchers</strong></div><div><small>REFERENCE COST PER VOUCHER</small><strong>UGX 19,500</strong></div></div>
@@ -3715,7 +3717,7 @@ menuButton.addEventListener('click',()=>sidebar.classList.contains('open')?close
 const featureContent={
  leaderboard:{icon:'🏆',title:'E-Tournament Leaderboard',description:'Weekly ranking of the top 20 GenZBag recruiters, refreshed from verified referral registration records.',notice:'Your weekly direct-referral count and the top 20 recruiters are shown below. The tournament week runs Monday to Sunday in East Africa Time.'},
  voucher:{icon:'🎟️',title:'Voucher',description:'A place to view and redeem official GenZBag vouchers when voucher campaigns are available.',notice:'Voucher issuance and redemption are not enabled yet. Do not pay anyone for a voucher code or share your account password.'},
- 'pay-client':{icon:'🤝',title:'Pay for Client',description:'Activate a direct downline member by paying toward their registration fee.',notice:'This screen is a layout preview. No payment is collected, no balance is deducted and no client is activated.'},
+ 'pay-client':{icon:'🤝',title:'Pay for Client',description:'Pay any amount toward a direct downline member’s activation fee. Instalments are supported.',notice:'Secure wallet payments are processed server-side. A client is activated automatically after the full UGX 19,500 fee is paid.'},
  deposit:{icon:'➕',title:'Deposit',description:'A planned area for adding funds to your GenZBag account and viewing deposit instructions.',notice:'Deposits are not enabled from this screen. No mobile-money or bank payment should be sent to an unofficial number. Official payment instructions will be shown only after verification and payment integration.'},
  'withdraw-balance':{icon:'💰',title:'Withdraw balance',description:'Referral commissions are withdrawable only after you have at least three successfully activated direct (Level 1) referrals and UGX 23,000 in Available Balance.',notice:'Withdrawal requests are not enabled yet. This page shows the eligibility rules only; it does not submit a payout or transfer money. A secure, funded payout integration and server-side verification are still required.'},
  'withdraw-chat':{icon:'💬',title:'Withdraw chat with foreigners',description:'View eligible rewards associated with approved Chat with Foreigners activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Only approved and funded rewards can become withdrawable.'},
@@ -3738,6 +3740,45 @@ const featureContent={
  'quick-loans':{icon:'💳',title:'Quick Loans',description:'Review any official loan information made available by GenZBag.',notice:'No loan provider, eligibility criteria or loan service is connected. Do not pay an upfront fee or share your financial credentials.'}
 };
 document.getElementById('withdrawMenuToggle').addEventListener('click',()=>{const b=document.getElementById('withdrawMenuToggle'),menu=document.getElementById('withdrawSubmenu'),open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));menu.classList.toggle('open',!open);});
+
+async function loadPayClientHistory(){
+ if(!supabaseClient||!currentMember)return;
+ const body=document.getElementById('payClientHistoryRows');if(!body)return;
+ body.innerHTML='<tr><td colspan="5">Loading payment history…</td></tr>';
+ try{
+  const {data,error}=await supabaseClient.rpc('get_my_client_activation_history');if(error)throw error;
+  const rows=Array.isArray(data)?data:[];
+  body.innerHTML=rows.length?rows.map((x,i)=>'<tr><td>'+(i+1)+'</td><td>'+escapeText(x.username||'Client')+'</td><td>UGX '+Number(x.paid||0).toLocaleString()+'</td><td>UGX '+Number(x.remaining||0).toLocaleString()+'</td><td>'+(x.activated?'<span class="status-pill success">Activated</span>':'<span class="status-pill pending">Part-paid</span>')+'</td></tr>').join(''):'<tr><td colspan="5">No client payments yet.</td></tr>';
+ }catch(err){body.innerHTML='<tr><td colspan="5">Could not load payment history.</td></tr>';console.warn('Client payment history:',err);}
+}
+document.getElementById('payClientAmount')?.addEventListener('input',()=>{
+ const amount=Math.floor(Number(document.getElementById('payClientAmount').value||0));
+ const hint=document.getElementById('payClientBalanceHint');
+ if(hint)hint.textContent='Available balance: UGX '+Math.max(0,currentAvailableBalance).toLocaleString()+' · Enter an amount up to your available balance. The server checks the client’s remaining fee.';
+});
+document.getElementById('payClientButton')?.addEventListener('click',async()=>{
+ const button=document.getElementById('payClientButton'),msg=document.getElementById('payClientMessage');
+ const username=document.getElementById('payClientUsername')?.value.trim();
+ const amount=Math.floor(Number(document.getElementById('payClientAmount')?.value||0));
+ if(!currentMember){msg.textContent='Please sign in to pay for a client.';return;}
+ if(!username){msg.textContent='Enter the username of your direct downline client.';return;}
+ if(!Number.isSafeInteger(amount)||amount<1){msg.textContent='Enter a whole-number amount greater than UGX 0.';return;}
+ if(amount>currentAvailableBalance){msg.textContent='Insufficient available balance. Your balance is UGX '+Math.max(0,currentAvailableBalance).toLocaleString()+'.';return;}
+ if(!confirm('Pay UGX '+amount.toLocaleString()+' toward @'+username+'’s UGX 19,500 activation fee? This wallet payment cannot be reversed.'))return;
+ button.disabled=true;button.textContent='Processing…';msg.textContent='Verifying your balance and the client’s eligibility…';
+ try{
+  const {data,error}=await supabaseClient.rpc('pay_for_downline_client',{p_username:username,p_amount:amount});if(error)throw error;
+  if(data.activated){
+   msg.textContent='🎉 Success! @'+data.username+' has been fully paid and activated. Total paid: UGX '+Number(data.total_paid).toLocaleString()+'.';
+  }else{
+   msg.textContent='Payment successful. UGX '+Number(data.amount_paid_now).toLocaleString()+' paid for @'+data.username+'. Total paid: UGX '+Number(data.total_paid).toLocaleString()+'. Remaining to activate: UGX '+Number(data.remaining).toLocaleString()+'.';
+  }
+  document.getElementById('payClientAmount').value='';
+  await loadMemberWallet();document.getElementById('clientAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
+  await loadPayClientHistory();
+ }catch(err){msg.textContent=err.message||'Payment failed. Your balance was not deducted.';}
+ finally{button.disabled=false;button.textContent='Pay for Client';}
+});
 
 async function loadVoucherSummary(){
  if(!supabaseClient||!currentMember)return;
@@ -3823,7 +3864,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   const featureNotice=document.getElementById('featureNotice');
   featureNotice.textContent=feature.notice;
   featureNotice.hidden=featureKey==='leaderboard';
-  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':'PREVIEW · SETUP REQUIRED');
+  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':(featureKey==='pay-client'?'LIVE CLIENT PAYMENTS':'PREVIEW · SETUP REQUIRED'));
   document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
   const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel'};
   const isVoucherFeature=['voucher-buy','voucher-activate','voucher-history'].includes(featureKey);
@@ -3832,7 +3873,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   ['leaderboardPanel','payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
   if(isVoucherFeature)setVoucherTab(featureKey);
   if(featureKey==='leaderboard')loadWeeklyLeaderboard();
-  if(featureKey==='pay-client')document.getElementById('clientAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
+  if(featureKey==='pay-client'){document.getElementById('clientAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();loadPayClientHistory();}
   if(featureKey==='voucher-buy')document.getElementById('voucherAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
   if(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey))loadVoucherSummary();
   if(featureKey==='withdraw-history')loadWithdrawalHistory();
