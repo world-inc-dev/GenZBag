@@ -1329,13 +1329,19 @@ footer {
         <div style="padding:14px;border-radius:12px;background:#edf4ff"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">MINIMUM WITHDRAWAL</small><strong style="display:block;margin-top:6px;font-size:19px;color:#0A2A6B">UGX 23,000</strong><small id="withdrawAvailableBalance" style="display:block;margin-top:5px;font-size:9px;color:#64748b">Available: UGX 0</small></div>
         <div style="padding:14px;border-radius:12px;background:#e9fbef"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">DIRECT REFERRALS REQUIRED</small><strong id="withdrawDirectActiveCount" style="display:block;margin-top:6px;font-size:19px;color:#087B3B">0 / 3 active</strong></div>
       </div>
-      <h3 style="margin-top:16px;font-size:13px;color:#14284f">Withdrawal eligibility</h3>
-      <p style="margin-top:6px">You must meet <strong>both</strong> requirements before requesting a withdrawal:</p>
-      <ul style="margin:9px 0 0 18px;color:#53627c;font-size:11px;line-height:1.8">
-        <li>At least 3 successfully activated Level 1 (direct) referrals.</li>
-        <li>At least UGX 23,000 in verified Available Balance.</li>
-      </ul>
-      <div class="feature-notice" style="background:#fff8e8;color:#8a5a00">Only referral commissions count toward Available Balance. Welcome bonuses and approved activity rewards are recorded separately as Net Profit and do not count toward the withdrawal minimum. Payouts remain disabled until secure payout processing is configured.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
+      <h3 style="margin-top:16px;font-size:13px;color:#14284f">Withdraw Funds</h3>
+      <p style="margin-top:6px">Enter the amount you want to withdraw. Minimum withdrawal is UGX 23,000 and you must have 3 active direct referrals.</p>
+      <label class="feature-field">Amount to Withdraw (UGX)<input id="withdrawAmountInput" type="number" min="23000" step="1" placeholder="Enter amount in UGX"></label>
+      <div class="withdraw-summary">
+        <div><span>Current Balance</span><strong id="withdrawCurrentBalance">UGX 0</strong></div>
+        <div><span>Requested Amount</span><strong id="withdrawRequestedAmount">—</strong></div>
+        <div><span>Service Fees (incl. 0.5% tax)</span><strong id="withdrawServiceFee">—</strong></div>
+        <div class="grand"><span>Total Deducted from Balance</span><strong id="withdrawTotalDeducted">—</strong></div>
+        <div class="grand"><span>You Will Receive</span><strong id="withdrawNetReceive">—</strong></div>
+      </div>
+      <div class="feature-notice" style="margin-top:14px">Safety note: your payout number will be shown here after it is confirmed in your account profile. Verify it before requesting a payout.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
+      <button class="activity-btn" type="button" disabled style="margin-top:14px;width:100%">Request Withdrawal · Coming Soon</button>
+      <p class="activity-note">The calculator is active, but cash payouts are not yet enabled. This page will not transfer money or create a withdrawal request.</p>
     </div>
     <div id="payClientPanel" class="feature-detail-panel" hidden>
       <div class="feature-stat-grid">
@@ -1449,6 +1455,7 @@ const featureContent={
  products:{icon:'🛒',title:'Products',description:'Browse products and offers made available through GenZBag.',notice:'No products have been published to the marketplace yet.'}
 };
 document.getElementById('withdrawMenuToggle').addEventListener('click',()=>{const b=document.getElementById('withdrawMenuToggle'),menu=document.getElementById('withdrawSubmenu'),open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));menu.classList.toggle('open',!open);});
+document.getElementById('voucherQuantity')?.addEventListener('input',()=>{const n=Math.max(1,Math.floor(Number(document.getElementById('voucherQuantity').value||1)));document.getElementById('voucherPurchaseTotal').textContent='Estimated total: UGX '+(n*19000).toLocaleString();});
 function bindDropdown(toggleId,submenuId){const b=document.getElementById(toggleId),m=document.getElementById(submenuId);if(!b||!m)return;b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));m.classList.toggle('open',!open);});}
 bindDropdown('chatMenuToggle','chatSubmenu');
 bindDropdown('voucherMenuToggle','voucherSubmenu');
@@ -1474,9 +1481,20 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   document.getElementById('featureNotice').textContent=feature.notice;
   document.getElementById('featureStatus').textContent='PREVIEW · SETUP REQUIRED';
   document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
+  const panelMap={'pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel'};
+  ['payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
+  if(featureKey==='pay-client')document.getElementById('clientAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
+  if(featureKey==='voucher-buy')document.getElementById('voucherAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
+  if(featureKey==='withdraw-history')loadWithdrawalHistory();
  }
  const category=a.dataset.activityCategory;
- if(category){currentActivityFilter=category;activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===category));renderActivities();}
+ if(category){
+  currentActivityFilter=category;
+  currentActivitySearch=a.dataset.activitySearch||'';
+  document.getElementById('activityPageTitle').textContent=a.dataset.activityTitle||a.textContent.trim();
+  document.getElementById('activityPageDescription').textContent='Browse '+(a.dataset.activityTitle||'this activity')+' tasks, follow the instructions and submit proof for review.';
+  renderActivities();
+ }
  closeMenu();target.scrollIntoView({behavior:'smooth',block:'start'});
  if(targetId==='globalChat'&&!currentMember)showAuthMessage('Sign in to use the global chat.','error');
  if(['referrals','profile','wallet','schedule','app','featureWorkspace'].includes(targetId))history.replaceState(null,'','#'+(featureKey||targetId));
@@ -1507,10 +1525,21 @@ const chatMessagesEl=document.getElementById('globalChatMessages');
 const chatInputEl=document.getElementById('globalChatInput');
 const chatStatusEl=document.getElementById('globalChatStatus');
 const adminPanelEl=document.getElementById('adminActivityPanel');
-let currentActivityFilter='all',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
+let currentActivityFilter='all',currentActivitySearch='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
 let currentAvailableBalance=0,currentDirectActiveReferrals=0;
-let teamRows=[];
+let teamRows=[],currentTeamLevel=1,currentTeamView='overview';
+function renderTeamMembers(){
+ const list=document.getElementById('teamMembersList'),q=(document.getElementById('teamSearchInput')?.value||'').trim().toLowerCase();
+ let rows=teamRows.filter(x=>Number(x.member_level)===Number(currentTeamLevel));
+ if(currentTeamView==='active')rows=rows.filter(x=>x.is_active);
+ if(currentTeamView==='inactive')rows=rows.filter(x=>!x.is_active);
+ if(q)rows=rows.filter(x=>String(x.username||'').toLowerCase().includes(q)||String(x.phone||'').toLowerCase().includes(q));
+ if(!rows.length){list.innerHTML='<div class="activity-empty">No matching team members found. Try another username or phone number.</div>';return;}
+ list.innerHTML=rows.map(x=>'<article class="team-member-row"><div><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small>'+escapeText(x.phone||'Phone not provided')+' · '+escapeText(x.country||'Country not set')+' · Joined '+escapeText(x.joined_at?new Date(x.joined_at).toLocaleDateString():'—')+'</small></div><span class="team-member-state '+(x.is_active?'active':'inactive')+'">'+(x.is_active?'ACTIVE':'INACTIVE')+'</span></article>').join('');
+}
+document.getElementById('teamSearchInput').addEventListener('input',renderTeamMembers);
 async function loadTeamView(level,view){
+ currentTeamLevel=Number(level);currentTeamView=view;
  const page=document.getElementById('teamWorkspace'),list=document.getElementById('teamMembersList');
  page.hidden=false;
  document.getElementById('teamPageTitle').textContent='Level '+level+' Team · '+(view==='overview'?'Overview':view==='active'?'Active Team':'Inactive Team');
@@ -1525,11 +1554,7 @@ async function loadTeamView(level,view){
   const el=document.getElementById('teamLevel'+n+'Count');
   if(el)el.textContent=group.length+' · '+group.filter(x=>x.is_active).length+' active';
  });
- let rows=teamRows.filter(x=>Number(x.member_level)===Number(level));
- if(view==='active')rows=rows.filter(x=>x.is_active);
- if(view==='inactive')rows=rows.filter(x=>!x.is_active);
- if(!rows.length){list.innerHTML='<div class="activity-empty">No '+(view==='overview'?'members':view+' members')+' found in Level '+level+'. New members will appear here when they join through your network.</div>';return;}
- list.innerHTML=rows.map(x=>'<article class="team-member-row"><div><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small>'+escapeText(x.country||'Country not set')+' · Joined '+escapeText(x.joined_at?new Date(x.joined_at).toLocaleDateString():'—')+'</small></div><span class="team-member-state '+(x.is_active?'active':'inactive')+'">'+(x.is_active?'ACTIVE':'INACTIVE')+'</span></article>').join('');
+ renderTeamMembers();
 }
 document.querySelectorAll('[data-team-level][data-team-view]').forEach(a=>a.addEventListener('click',()=>loadTeamView(a.dataset.teamLevel,a.dataset.teamView)));
 
@@ -1539,7 +1564,8 @@ function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function categoryName(v){return activityCategoryNames[v]||String(v||'General').replace(/_/g,' ');}
 function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
 function renderActivities(){
- const rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
+ let rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
+ if(currentActivitySearch){const q=currentActivitySearch.toLowerCase();rows=rows.filter(x=>(x.title+' '+(x.description||'')+' '+(x.instructions||'')).toLowerCase().includes(q));}
  activityCountEl.textContent=rows.length+' available';
  if(!rows.length){setActivityMessage(activityRows.length?'No activities in this category yet.':'No activities have been published yet. Check again later.');return;}
  activityListEl.innerHTML=rows.map(t=>{
@@ -1591,15 +1617,36 @@ activityListEl.addEventListener('submit',async e=>{
  if(error){alert(error.code==='23505'?'You already have a pending or approved submission for this activity.':error.message);return;}
  form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
 });
+function renderWithdrawalQuote(){
+ const amount=Number(document.getElementById('withdrawAmountInput')?.value||0),balance=Number(currentAvailableBalance||0),fee=amount>0?Math.round(amount*0.005):0,valid=amount>=23000&&amount<=balance;
+ const money=n=>'UGX '+Math.max(0,n).toLocaleString();
+ const fields={withdrawCurrentBalance:money(balance),withdrawRequestedAmount:amount>0?money(amount):'—',withdrawServiceFee:amount>0?money(fee):'—',withdrawTotalDeducted:amount>0?money(amount):'—',withdrawNetReceive:amount>0?money(amount-fee):'—'};
+ Object.entries(fields).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
+ const status=document.getElementById('withdrawEligibilityStatus');
+ if(status){
+  if(currentDirectActiveReferrals<3)status.textContent='You need '+(3-currentDirectActiveReferrals)+' more active direct referral(s) before withdrawing.';
+  else if(balance<23000)status.textContent='Your balance is below the minimum withdrawal of UGX 23,000.';
+  else if(amount>0&&!valid)status.textContent='Enter an amount between UGX 23,000 and your Available Balance.';
+  else if(valid)status.textContent='You meet the referral and balance requirements. Payout processing is not enabled yet.';
+  else status.textContent='You are eligible to withdraw once you enter an amount.';
+ }
+}
+document.getElementById('withdrawAmountInput')?.addEventListener('input',renderWithdrawalQuote);
 function renderWithdrawalEligibility(){
  const count=Number(currentDirectActiveReferrals||0),balance=Number(currentAvailableBalance||0);
- const countEl=document.getElementById('withdrawDirectActiveCount'),balanceEl=document.getElementById('withdrawAvailableBalance'),statusEl=document.getElementById('withdrawEligibilityStatus');
+ const countEl=document.getElementById('withdrawDirectActiveCount'),balanceEl=document.getElementById('withdrawAvailableBalance');
  if(countEl)countEl.textContent=count+' / 3 active';
  if(balanceEl)balanceEl.textContent='Available: UGX '+Math.max(0,balance).toLocaleString();
- if(statusEl){
-  if(count>=3&&balance>=23000)statusEl.textContent='You meet both requirements. Payout requests are not yet enabled.';
-  else statusEl.textContent='Still required: '+Math.max(0,3-count)+' more active direct referral(s) and UGX '+Math.max(0,23000-balance).toLocaleString()+' more Available Balance.';
- }
+ renderWithdrawalQuote();
+}
+async function loadWithdrawalHistory(){
+ const box=document.getElementById('withdrawHistoryList');if(!box)return;
+ if(!currentMember){box.textContent='Sign in to view withdrawal history.';return;}
+ box.textContent='Loading withdrawal history…';
+ const {data,error}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at,admin_note').eq('user_id',currentMember.id).order('created_at',{ascending:false}).limit(50);
+ if(error){box.textContent='Withdrawal history is not available yet.';console.warn(error);return;}
+ if(!data?.length){box.textContent='No withdrawal requests found.';return;}
+ box.innerHTML=data.map(x=>'<article class="team-member-row"><div><strong>UGX '+Number(x.amount).toLocaleString()+'</strong><small>'+new Date(x.created_at).toLocaleString()+(x.admin_note?' · '+escapeText(x.admin_note):'')+'</small></div><span class="team-member-state '+(x.status==='paid'?'active':'inactive')+'">'+escapeText(String(x.status||'pending').toUpperCase())+'</span></article>').join('');
 }
 async function loadMemberWallet(){
  if(!supabaseClient||!currentMember)return;
