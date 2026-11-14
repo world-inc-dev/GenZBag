@@ -1936,6 +1936,27 @@ input, select, textarea {
 .genz-fast-detail-open .genz-activation-actions{margin-top:12px}
 @media(max-width:390px){.genz-fast-preview{gap:7px;padding:10px}.genz-fast-preview>strong{font-size:10px}.genz-fast-amount strong{font-size:15px}.genz-fast-instruction{gap:9px}}
 </style>
+
+<style id="genzbag-payment-text-visibility-fix">
+/* Keep payment instructions readable and prevent copy/help controls covering text. */
+.genz-fast-instruction{grid-template-columns:34px minmax(0,1fr)!important;align-items:start!important;min-height:0!important}
+.genz-fast-instruction>div{min-width:0!important;width:100%!important;padding:0!important;overflow:visible!important}
+.genz-fast-instruction small{position:static!important;display:block!important;white-space:normal!important;color:#667b91!important}
+.genz-fast-instruction p{position:static!important;display:block!important;max-width:100%!important;margin:4px 0 0!important;padding:0!important;color:#405873!important;white-space:normal!important;overflow:visible!important;overflow-wrap:anywhere!important;line-height:1.6!important}
+.genz-fast-instruction>div>strong{position:static!important;display:block!important;max-width:100%!important;color:#173653!important;white-space:normal!important;overflow-wrap:anywhere!important}
+.genz-fast-instruction button{position:static!important;display:inline-flex!important;align-items:center!important;margin:7px 0 0!important;white-space:nowrap!important}
+.genz-fast-instruction p strong{display:inline!important;color:#173653!important}
+.genz-fast-payment-steps{overflow:visible!important;padding-bottom:18px!important}
+.genz-activation-gate.genz-fast-detail-open{padding-bottom:24px!important}
+.genz-activation-gate.genz-fast-detail-open .genz-fast-help{position:static!important;align-self:flex-end!important;display:inline-flex!important;margin:14px max(0px,calc((100vw - 470px)/2)) 8px 0!important;float:none!important}
+.genz-activation-gate.genz-fast-detail-open .genz-activation-card{flex:0 0 auto!important}
+.genz-fast-confirm{clear:both!important}
+@media(max-width:520px){
+ .genz-activation-gate.genz-fast-detail-open{padding-left:13px!important;padding-right:13px!important}
+ .genz-activation-gate.genz-fast-detail-open .genz-fast-help{margin-right:0!important}
+ .genz-fast-instruction{grid-template-columns:31px minmax(0,1fr)!important;gap:9px!important}
+}
+</style>
 </head>
 
 <body>
