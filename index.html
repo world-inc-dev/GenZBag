@@ -2112,7 +2112,7 @@ function renderActivationGate(record,error){
  if(error){lockActivationGate('We could not verify your activation status. Your dashboard remains locked for your security. Check again when your connection is stable.');activationForm.hidden=true;return;}
  const status=String(record?.status||'not_submitted').toLowerCase();
  if(status==='verified'){hideActivationGate();return;}
- if(status==='pending'){lockActivationGate('Payment submitted successfully. Your payment is awaiting administrator verification. This page will update automatically after approval.');activationStatusEl.className='genz-activation-status pending';activationForm.hidden=true;return;}
+ if(status==='pending'){lockActivationGate('Payment submitted successfully. Your payment is awaiting administrator verification. This page will update automatically after approval.');activationStatusEl.className='genz-activation-status pending';activationForm.hidden=true;if(!activationStatusTimer)activationStatusTimer=setInterval(refreshActivationGate,15000);return;}
  if(status==='rejected'){lockActivationGate('Your previous payment submission was rejected. '+(record.admin_note||'Please check your transaction reference and submit the correct details again.'));activationStatusEl.className='genz-activation-status rejected';activationForm.hidden=false;document.getElementById('genzActivationReference').value='';return;}
  lockActivationGate('Your account is not activated yet. Submit your mobile money transaction reference after making the required payment.');activationStatusEl.className='genz-activation-status';activationForm.hidden=false;
 }
