@@ -4283,7 +4283,9 @@ function renderWithdrawalQuote(){
  else if(mobile.length<9||mobile.length>16)message='Enter a valid MTN or Airtel number.';
  else if(valid)message='Eligible. Your request will be reviewed before payout.';
  if(status)status.textContent=message;
- if(button)button.disabled=!(currentDirectActiveReferrals>=3&&balance>=23000&&valid&&mobile.length>=9&&mobile.length<=16);
+ // Let signed-in members test the server-side checks. Referral and wallet eligibility
+ // are enforced securely by the Supabase RPC, not by disabling this button.
+ if(button)button.disabled=!(!!currentMember&&Number.isSafeInteger(amount)&&amount>=23000&&mobile.length>=9&&mobile.length<=16);
 }
 ['withdrawAmountInput','withdrawNetworkInput','withdrawMobileNumber'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderWithdrawalQuote));
 document.getElementById('withdrawNetworkInput')?.addEventListener('change',renderWithdrawalQuote);
@@ -4300,7 +4302,9 @@ document.getElementById('withdrawRequestButton')?.addEventListener('click',async
  const network=document.getElementById('withdrawNetworkInput')?.value||'';
  const mobile=String(document.getElementById('withdrawMobileNumber')?.value||'').trim();
  if(!currentMember){msg.textContent='Sign in to request a withdrawal.';return;}
- renderWithdrawalQuote();if(button.disabled)return;
+ renderWithdrawalQuote();
+ if(!Number.isSafeInteger(amount)||amount<23000){msg.textContent='Enter a whole amount of at least UGX 23,000.';return;}
+ if(!['mtn','airtel'].includes(network)||mobile.replace(/[^0-9]/g,'').length<9||mobile.replace(/[^0-9]/g,'').length>12){msg.textContent='Enter a valid MTN or Airtel mobile money number.';return;}
  const fee=Math.round(amount*.005),net=amount-fee;
  if(!confirm('Submit UGX '+amount.toLocaleString()+' withdrawal to '+network.toUpperCase()+' '+mobile+'? You will receive UGX '+net.toLocaleString()+'. The requested amount will be reserved while reviewed.'))return;
  button.disabled=true;button.textContent='Submitting…';msg.textContent='Securing your request…';
