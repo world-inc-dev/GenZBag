@@ -2797,7 +2797,7 @@ async function loadAdminMembers(){
  const [pr,ar,lr]=await Promise.all([
   adminFetchAllPages(()=>supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at,referred_by').order('created_at',{ascending:false})),
   adminFetchAllPages(()=>supabaseClient.from('activation_payment_submissions').select('user_id,status,created_at').order('created_at',{ascending:false})),
-  adminFetchAllPages(()=>supabaseClient.from('reward_ledger').select('user_id,entry_type,direction,amount,currency').eq('currency','UGX'))
+  adminFetchAllPages(()=>supabaseClient.from('reward_ledger').select('user_id,entry_type,direction,amount,currency').eq('currency','UGX').order('created_at',{ascending:true}))
  ]);
  if(pr.error){host.textContent='Member directory unavailable: '+pr.error.message;return;}
  if(ar.error){host.textContent='Activation status could not be loaded: '+ar.error.message;return;}
