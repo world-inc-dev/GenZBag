@@ -733,6 +733,52 @@ footer {
   .main {margin-left:260px;max-width:900px}
 }
 .exchange-rate{display:flex;flex-direction:column;gap:3px;justify-content:center;min-width:115px;padding:7px 10px;border:1px solid #DCE7FF;border-radius:12px;background:#F5F8FF}.exchange-rate .rate-label{font-size:8px;font-weight:900;letter-spacing:.7px;color:#64748B}.exchange-rate strong{font-size:11px;color:#0A2A6B;white-space:nowrap}.exchange-rate small{font-size:8px;color:#15803D;white-space:nowrap}.rate-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#16A34A;margin-right:4px}.network-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}.rank-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:25px;background:#ffffff30;border:1px solid #ffffff85;color:#fff;font-size:11px;font-weight:950;box-shadow:0 3px 10px #7a3c001c}.rank-symbol{width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:#ffffffea;color:#7c3a00;font-size:16px;line-height:1;box-shadow:0 1px 4px #0002}.rank-badge strong{font-size:11px;letter-spacing:.35px}.network-stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.network-stat{font-size:10px;color:#fff;background:#ffffff25;padding:6px 9px;border-radius:18px}.network-stat strong{font-size:11px}.network-card .progress-circle{border-color:#ffffffb0}.auth-gate{position:fixed;inset:0;z-index:500;background:linear-gradient(145deg,#061638f5,#0A2A6Bfa);display:flex;align-items:center;justify-content:center;padding:18px;overflow-y:auto}.auth-gate.hidden{display:none}.auth-panel{width:100%;max-width:430px;background:#fff;border-radius:22px;padding:25px;box-shadow:0 24px 70px #0005}.auth-brand{display:flex;align-items:center;gap:10px;color:#0A2A6B;font-size:23px;font-weight:950;margin-bottom:8px}.auth-brand-mark{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#0A2A6B;color:#fff}.auth-intro{font-size:12px;line-height:1.55;color:#718096;margin-bottom:18px}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:4px;background:#EEF3FF;border-radius:12px;margin-bottom:17px}.auth-tab{border:0;padding:10px;border-radius:9px;background:transparent;color:#53627C;font-size:12px;font-weight:850}.auth-tab.active{background:#0A2A6B;color:#fff;box-shadow:0 3px 9px #0A2A6B25}.auth-form{display:grid;gap:11px}.auth-form label{display:grid;gap:6px;color:#526079;font-size:10px;font-weight:850}.auth-form input,.auth-form select{width:100%;padding:12px;border:1px solid #DCE4F1;border-radius:10px;background:#FAFCFF;color:#18243B;font-size:13px;outline:none}.auth-form input:focus,.auth-form select:focus{border-color:#1769E0;box-shadow:0 0 0 3px #1769E01A}.auth-fields-two{display:grid;grid-template-columns:1fr 1fr;gap:9px}.auth-submit{border:0;border-radius:11px;padding:13px;background:#0A2A6B;color:#fff;font-size:13px;font-weight:900;margin-top:4px}.auth-submit:disabled{opacity:.6;cursor:wait}.auth-message{min-height:18px;margin-top:12px;font-size:11px;line-height:1.5;color:#1769E0}.auth-message.error{color:#DC2626}.auth-message.success{color:#15803D}.auth-foot{font-size:10px;color:#8590A3;line-height:1.5;margin-top:12px}.auth-link{border:0;background:transparent;color:#1769E0;font-size:11px;font-weight:800;padding:5px}.auth-hidden-field{display:none!important}@media(max-width:420px){.topbar{padding:0 8px}.header-left,.header-right{gap:6px}.exchange-rate{min-width:105px;padding:6px 7px}.exchange-rate strong{font-size:9px}.exchange-rate .rate-label,.exchange-rate small{font-size:7px}.brand-button{padding:7px 8px;font-size:11px}.auth-panel{padding:21px 17px}.network-card{padding:16px}}
+
+/* ACTIVITY HUB + GLOBAL CHAT */
+.activity-toolbar{display:flex;gap:7px;overflow-x:auto;padding:13px 15px;border-bottom:1px solid #edf0f6}
+.activity-filter{border:1px solid #dce4f1;background:#f7f9fd;color:#53627c;padding:8px 12px;border-radius:20px;font-size:10px;font-weight:850;white-space:nowrap}
+.activity-filter.active{background:#0a2a6b;color:#fff;border-color:#0a2a6b}
+.activity-list{padding:14px;display:grid;gap:11px}
+.activity-card{border:1px solid #e8edf5;border-radius:14px;padding:14px;background:#fff}
+.activity-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.activity-card h3{font-size:14px;color:#18243b;line-height:1.35}
+.activity-card p{font-size:11px;color:#718096;line-height:1.55;margin-top:7px;white-space:pre-wrap}
+.activity-tag{display:inline-flex;padding:5px 8px;border-radius:20px;background:#edf4ff;color:#1769e0;font-size:9px;font-weight:900;text-transform:uppercase}
+.activity-reward{font-size:11px;color:#15803d;font-weight:900;white-space:nowrap}
+.activity-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.activity-btn{border:0;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:900;background:#0a2a6b;color:#fff}
+.activity-btn.secondary{background:#edf3ff;color:#1769e0}
+.activity-proof{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #edf0f6}
+.activity-proof.open{display:grid;gap:8px}
+.activity-proof input,.activity-proof textarea,.admin-task-form input,.admin-task-form textarea,.admin-task-form select{width:100%;border:1px solid #dce4f1;border-radius:9px;padding:10px;font:inherit;font-size:11px;background:#fbfcff;color:#18243b}
+.activity-proof textarea,.admin-task-form textarea{min-height:75px;resize:vertical}
+.activity-note{font-size:10px;color:#78849a;line-height:1.5}
+.activity-state{font-size:10px;font-weight:850;padding:5px 8px;border-radius:15px;background:#fff7e6;color:#a16207}
+.activity-state.approved{background:#e9fbeF;color:#15803d}.activity-state.rejected{background:#fff0f1;color:#be123c}
+.activity-empty{padding:25px 16px;text-align:center;color:#718096;font-size:12px;line-height:1.6}
+.chat-header{padding:16px 18px;background:linear-gradient(110deg,#0a2a6b,#1769e0);color:#fff}
+.chat-header h2{font-size:16px}.chat-header p{font-size:10px;line-height:1.5;color:#dce9ff;margin-top:5px}
+.chat-safety{padding:10px 14px;background:#fff8e8;color:#8a5a00;font-size:10px;line-height:1.5;border-bottom:1px solid #f5e5bd}
+.chat-messages{height:330px;overflow-y:auto;padding:13px;background:#f7f9fd;display:flex;flex-direction:column;gap:9px}
+.chat-message{max-width:88%;align-self:flex-start;background:#fff;border:1px solid #e6ebf3;border-radius:13px 13px 13px 4px;padding:9px 11px;box-shadow:0 2px 6px #0a2a6b08}
+.chat-message.mine{align-self:flex-end;background:#eaf2ff;border-color:#d7e6ff;border-radius:13px 13px 4px 13px}
+.chat-message-head{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font-size:9px;color:#64748b;font-weight:850}
+.chat-country{padding:3px 6px;background:#eef2f7;border-radius:10px}
+.chat-message-text{font-size:12px;line-height:1.5;color:#243047;margin-top:5px;overflow-wrap:anywhere;white-space:pre-wrap}
+.chat-message-foot{display:flex;justify-content:space-between;gap:12px;margin-top:6px;font-size:8px;color:#94a3b8}
+.chat-report{border:0;background:transparent;color:#be123c;font-size:9px;font-weight:800}
+.chat-compose{padding:12px;display:flex;gap:8px;border-top:1px solid #edf0f6}
+.chat-compose textarea{flex:1;min-width:0;resize:none;min-height:43px;max-height:100px;border:1px solid #dce4f1;border-radius:10px;padding:10px;font:inherit;font-size:12px}
+.chat-send{border:0;border-radius:10px;background:#16a34a;color:#fff;padding:0 15px;font-size:11px;font-weight:900}
+.chat-presence{padding:8px 13px;color:#64748b;font-size:9px;border-top:1px solid #edf0f6}
+.admin-panel{display:none;padding:15px}.admin-panel.visible{display:block}
+.admin-task-form{display:grid;gap:9px}.admin-task-form label{display:grid;gap:5px;font-size:10px;font-weight:850;color:#64748b}
+.admin-task-form .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.admin-submission{padding:11px;border:1px solid #e5eaf2;border-radius:11px;margin-top:9px}
+.admin-submission p{font-size:10px;color:#64748b;line-height:1.5;margin-top:5px;overflow-wrap:anywhere}
+.admin-submission-actions{display:flex;gap:7px;margin-top:8px}
+@media(max-width:420px){.chat-messages{height:300px}.admin-task-form .two{grid-template-columns:1fr 1fr}}
+
 </style>
 </head>
 
@@ -798,21 +844,21 @@ footer {
   <a class="nav-link" href="#dashboard"><span class="nav-icon">⌂</span>Home</a>
 
   <div class="nav-label">GENERAL</div>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎡</span>Spins</a>
-  <a class="nav-link" href="#tasks"><span class="nav-icon">🎵</span>Earn with Spotify</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">🛍️</span>Marketplace</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">👆</span>Fix Tap</a>
-  <a class="nav-link" href="#tasks"><span class="nav-icon">💬</span>Chat foreigners</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎨</span>Colour Challenge</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">📊</span>Free Forex Classes</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">▶️</span>Youtube Videos</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎬</span>Tiktok Videos</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">📢</span>Click Ads</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">📚</span>Business Ebooks</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">➗</span>Math for fun</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">💻</span>New Tech Classes</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">📈</span>Deriv Tips</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">💸</span>Quick Loans</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="game"><span class="nav-icon">🎡</span>Spins</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="music"><span class="nav-icon">🎵</span>Earn with Spotify</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="sponsored"><span class="nav-icon">🛍️</span>Marketplace</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="challenge"><span class="nav-icon">👆</span>Fix Tap</a>
+  <a class="nav-link" href="#globalChat"><span class="nav-icon">💬</span>Chat foreigners</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="challenge"><span class="nav-icon">🎨</span>Colour Challenge</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">📊</span>Free Forex Classes</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="video"><span class="nav-icon">▶️</span>Youtube Videos</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="video"><span class="nav-icon">🎬</span>Tiktok Videos</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="sponsored"><span class="nav-icon">📢</span>Sponsored Tasks</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">📚</span>Business Ebooks</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="game"><span class="nav-icon">➗</span>Math for fun</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">💻</span>New Tech Classes</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">📈</span>Deriv Education</a>
+  <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">💸</span>Financial Education</a>
 
   <div class="nav-label">SETTING</div>
   <a class="nav-link" href="#dashboard"><span class="nav-icon">📨</span>Text Upline</a>
@@ -961,6 +1007,59 @@ footer {
         <strong class="task-amount">UGX 0</strong>
       </div>
 
+    </div>
+  </section>
+
+
+  <!-- LIVE ACTIVITY HUB -->
+  <section class="card" id="activityHub">
+    <div class="section-heading"><h2>Activity Hub</h2><small id="activityCount">Loading activities…</small></div>
+    <div class="activity-toolbar" id="activityFilters">
+      <button class="activity-filter active" type="button" data-filter="all">All</button>
+      <button class="activity-filter" type="button" data-filter="music">Music</button>
+      <button class="activity-filter" type="button" data-filter="video">Videos</button>
+      <button class="activity-filter" type="button" data-filter="game">Games</button>
+      <button class="activity-filter" type="button" data-filter="challenge">Challenges</button>
+      <button class="activity-filter" type="button" data-filter="learning">Learning</button>
+      <button class="activity-filter" type="button" data-filter="sponsored">Sponsored</button>
+    </div>
+    <div class="activity-list" id="activityList"><div class="activity-empty">Sign in to load activities published by GenZBag.</div></div>
+    <div class="activity-note" style="padding:0 15px 14px">Rewards are credited only after an administrator reviews and approves valid proof. No activity can generate automatic or guaranteed income.</div>
+  </section>
+
+  <!-- GLOBAL CHAT WITH FOREIGN MEMBERS -->
+  <section class="card" id="globalChat">
+    <div class="chat-header"><h2>🌍 Chat with Foreigners</h2><p>Meet GenZBag members from other countries in the global community lounge.</p></div>
+    <div class="chat-safety">Stay safe: never share passwords, verification codes, bank details, home addresses or send money to people you meet here. Report suspicious messages.</div>
+    <div class="chat-messages" id="globalChatMessages"><div class="activity-empty">Sign in with an activated account to join the global lounge.</div></div>
+    <div class="chat-compose"><textarea id="globalChatInput" maxlength="600" rows="2" placeholder="Write a friendly message…" aria-label="Chat message"></textarea><button class="chat-send" id="globalChatSend" type="button">Send</button></div>
+    <div class="chat-presence" id="globalChatStatus">Messages are shared with activated GenZBag members. International members appear as they join.</div>
+  </section>
+
+  <!-- ADMIN ACTIVITY MANAGEMENT -->
+  <section class="card admin-panel" id="adminActivityPanel">
+    <div class="section-heading"><h2>Admin · Activities</h2><small>Manage and review</small></div>
+    <div style="padding:15px">
+      <h3 style="font-size:13px;margin-bottom:10px">Publish a new activity</h3>
+      <form class="admin-task-form" id="adminTaskForm">
+        <label>Activity title<input id="adminTaskTitle" required minlength="3" maxlength="140" placeholder="e.g. Complete a digital skills lesson"></label>
+        <div class="two">
+          <label>Category<select id="adminTaskCategory"><option value="music">Music</option><option value="video">Video</option><option value="game">Game</option><option value="challenge">Challenge</option><option value="learning">Learning</option><option value="sponsored">Sponsored task</option><option value="general">General</option></select></label>
+          <label>Reward<input id="adminTaskReward" type="number" min="0" step="1" value="0" required></label>
+        </div>
+        <div class="two">
+          <label>Currency<select id="adminTaskCurrency"><option>UGX</option><option>NGN</option><option>KES</option><option>TZS</option><option>RWF</option><option>GHS</option><option>USD</option></select></label>
+          <label>Maximum submissions<input id="adminTaskLimit" type="number" min="1" step="1" placeholder="Unlimited"></label>
+        </div>
+        <label>Description<textarea id="adminTaskDescription" maxlength="2000" placeholder="What should members do?"></textarea></label>
+        <label>Instructions<textarea id="adminTaskInstructions" maxlength="4000" placeholder="Explain the exact steps and what proof is required."></textarea></label>
+        <label>Optional activity link<input id="adminTaskUrl" type="url" placeholder="https://…"></label>
+        <label>Publish status<select id="adminTaskStatus"><option value="draft">Save as draft</option><option value="published">Publish now</option></select></label>
+        <button class="activity-btn" type="submit" id="adminTaskSave">Save activity</button>
+        <p class="activity-note">Only publish activities you are authorized to offer. Set rewards only when a real sponsor budget or approved funding exists.</p>
+      </form>
+      <h3 style="font-size:13px;margin:20px 0 8px">Pending submissions</h3>
+      <div id="adminSubmissionList"><div class="activity-empty">Loading review queue…</div></div>
     </div>
   </section>
 
@@ -1172,17 +1271,180 @@ document.getElementById('forgotPassword').addEventListener('click',async()=>{if(
 document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)console.error(error);}renderNetwork(0,0);document.getElementById('networkMessage').textContent='Dashboard preview mode. Sign-in will be enabled after the dashboard is completed.';});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
 loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
+
+/* GENZBAG ACTIVITIES + GLOBAL CHAT */
+const activityListEl=document.getElementById('activityList');
+const activityFiltersEl=document.getElementById('activityFilters');
+const activityCountEl=document.getElementById('activityCount');
+const chatMessagesEl=document.getElementById('globalChatMessages');
+const chatInputEl=document.getElementById('globalChatInput');
+const chatStatusEl=document.getElementById('globalChatStatus');
+const adminPanelEl=document.getElementById('adminActivityPanel');
+let currentActivityFilter='all',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
+const activityCategoryNames={music:'Music',video:'Video',game:'Game',challenge:'Challenge',learning:'Learning',sponsored:'Sponsored',general:'General'};
+function currentUser(){return currentMember;}
+function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function categoryName(v){return activityCategoryNames[v]||String(v||'General').replace(/_/g,' ');}
+function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
+function renderActivities(){
+ const rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
+ activityCountEl.textContent=rows.length+' available';
+ if(!rows.length){setActivityMessage(activityRows.length?'No activities in this category yet.':'No activities have been published yet. Check again later.');return;}
+ activityListEl.innerHTML=rows.map(t=>{
+  const sub=activitySubmissionMap[t.id],status=sub?.status;
+  const reward=Number(t.reward_amount||0).toLocaleString()+' '+(t.currency||'UGX');
+  const disabled=status==='pending'||status==='approved';
+  return '<article class="activity-card" data-activity-id="'+escapeText(t.id)+'"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(categoryName(t.category))+'</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">'+escapeText(reward)+'</span></div><p>'+escapeText(t.description||'Open this activity to read the instructions.')+'</p>'+(t.instructions?'<p><strong>Instructions:</strong><br>'+escapeText(t.instructions)+'</p>':'')+'<div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">Open activity ↗</a>':'')+'<button class="activity-btn" type="button" data-open-proof="'+escapeText(t.id)+'" '+(disabled?'disabled':'')+'>'+(status==='pending'?'Under review':status==='approved'?'Completed':'Submit proof')+'</button></div>'+(status?'<p><span class="activity-state '+escapeText(status)+'">'+escapeText(status.toUpperCase())+'</span>'+(sub.review_note?' · '+escapeText(sub.review_note):'')+'</p>':'')+'<form class="activity-proof" data-proof-form="'+escapeText(t.id)+'"><textarea name="proof_text" maxlength="2000" required placeholder="Describe what you completed and include the requested proof details…"></textarea><input name="proof_url" type="url" maxlength="1000" placeholder="Optional proof link (https://…)"><button class="activity-btn" type="submit">Send for review</button><span class="activity-note">Your submission will remain pending until reviewed. Do not submit passwords or private account details.</span></form></article>';
+ }).join('');
+}
+async function loadActivities(){
+ if(!supabaseClient||!currentMember){setActivityMessage('Sign in with an activated account to view available activities.');return;}
+ activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
+ const [tasksRes,subsRes]=await Promise.all([
+  supabaseClient.from('tasks').select('id,title,description,category,instructions,reward_amount,currency,content_url,status,starts_at,ends_at,created_at').eq('status','published').order('created_at',{ascending:false}),
+  supabaseClient.from('task_submissions').select('id,task_id,status,review_note,submitted_at').eq('user_id',currentMember.id).order('submitted_at',{ascending:false})
+ ]);
+ if(tasksRes.error){console.error('Activity load:',tasksRes.error);setActivityMessage(tasksRes.error.message.includes('activated')?'Your account must be activated before accessing activities.':'Activities could not load. Check your account activation and try again.');return;}
+ if(subsRes.error){console.warn('Submission history:',subsRes.error);}
+ activityRows=(tasksRes.data||[]).filter(t=>(!t.starts_at||new Date(t.starts_at)<=new Date())&&(!t.ends_at||new Date(t.ends_at)>new Date()));
+ activitySubmissionMap={};
+ (subsRes.data||[]).forEach(s=>{if(!activitySubmissionMap[s.task_id]||new Date(s.submitted_at)>new Date(activitySubmissionMap[s.task_id].submitted_at))activitySubmissionMap[s.task_id]=s;});
+ renderActivities();
+}
+activityFiltersEl.addEventListener('click',e=>{
+ const b=e.target.closest('[data-filter]');if(!b)return;
+ currentActivityFilter=b.dataset.filter;
+ activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x===b));
+ renderActivities();
+});
+document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListener('click',()=>{
+ const f=a.dataset.activityCategory||'all';currentActivityFilter=f;
+ activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));
+ renderActivities();
+}));
+activityListEl.addEventListener('click',e=>{
+ const b=e.target.closest('[data-open-proof]');if(!b)return;
+ const form=activityListEl.querySelector('[data-proof-form="'+b.dataset.openProof+'"]');
+ if(form)form.classList.toggle('open');
+});
+activityListEl.addEventListener('submit',async e=>{
+ const form=e.target.closest('[data-proof-form]');if(!form)return;e.preventDefault();
+ if(!currentMember){alert('Please sign in first.');return;}
+ const taskId=form.dataset.proofForm,fd=new FormData(form),proofText=String(fd.get('proof_text')||'').trim(),proofUrl=String(fd.get('proof_url')||'').trim(),button=form.querySelector('button[type=submit]');
+ if(!proofText){alert('Please describe the work you completed.');return;}
+ if(proofUrl&&!/^https:\/\//i.test(proofUrl)){alert('Proof links must start with https://');return;}
+ button.disabled=true;button.textContent='Submitting…';
+ const {error}=await supabaseClient.from('task_submissions').insert({task_id:taskId,user_id:currentMember.id,proof_text:proofText,proof_url:proofUrl||null});
+ button.disabled=false;button.textContent='Send for review';
+ if(error){alert(error.code==='23505'?'You already have a pending or approved submission for this activity.':error.message);return;}
+ form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
+});
+async function loadMemberWallet(){
+ if(!supabaseClient||!currentMember)return;
+ const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
+ if(error){console.warn('Wallet ledger:',error);return;}
+ const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX'),balance=ugx.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
+ const earned=ugx.filter(x=>x.direction==='credit').reduce((n,x)=>n+Number(x.amount),0);
+ const money=n=>'UGX '+Math.max(0,n).toLocaleString(undefined,{maximumFractionDigits:2});
+ const strong=document.querySelectorAll('.balance-grid .balance-card strong');
+ if(strong[0])strong[0].textContent=money(balance);
+ if(strong[3])strong[3].textContent=money(rows.filter(x=>x.entry_type==='referral_commission'&&x.direction==='credit'&&x.currency==='UGX').reduce((n,x)=>n+Number(x.amount),0));
+ const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
+ const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
+ if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
+ const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
+}
+function chatTime(v){return new Date(v).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+async function renderGlobalChat(){
+ if(!supabaseClient||!currentMember){chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';return;}
+ const {data:messages,error}=await supabaseClient.from('global_chat_messages').select('id,user_id,message,created_at').order('created_at',{ascending:true}).limit(80);
+ if(error){chatMessagesEl.innerHTML='<div class="activity-empty">Chat is unavailable. Your account may need activation.</div>';chatStatusEl.textContent=error.message;return;}
+ const rows=messages||[],ids=[...new Set(rows.map(m=>m.user_id))];
+ let members=[];
+ if(ids.length){const r=await supabaseClient.from('global_chat_members').select('user_id,display_name,country').in('user_id',ids);if(!r.error)members=r.data||[];}
+ const byId=Object.fromEntries(members.map(m=>[m.user_id,m]));
+ if(!rows.length){chatMessagesEl.innerHTML='<div class="activity-empty">Welcome to the global lounge. Say hello! International members will appear here when they join GenZBag.</div>';return;}
+ chatMessagesEl.innerHTML=rows.map(m=>{
+  const p=byId[m.user_id]||{},mine=m.user_id===currentMember.id;
+  return '<article class="chat-message '+(mine?'mine':'')+'"><div class="chat-message-head"><strong>'+escapeText(p.display_name||'GenZBag member')+'</strong><span class="chat-country">'+escapeText(p.country||'Unknown')+'</span></div><div class="chat-message-text">'+escapeText(m.message)+'</div><div class="chat-message-foot"><span>'+escapeText(chatTime(m.created_at))+'</span>'+(mine?'':'<button class="chat-report" type="button" data-report-message="'+escapeText(m.id)+'">Report</button>')+'</div></article>';
+ }).join('');
+ chatMessagesEl.scrollTop=chatMessagesEl.scrollHeight;
+ chatStatusEl.textContent=rows.length+' recent messages · Be respectful and keep personal information private.';
+}
+async function loadGlobalChat(){
+ if(!supabaseClient||!currentMember){await renderGlobalChat();return;}
+ const {data:profile}=await supabaseClient.from('profiles').select('username,country').eq('id',currentMember.id).maybeSingle();
+ const display=(profile?.username||currentMember.email?.split('@')[0]||'Member').slice(0,40);
+ const country=(profile?.country||'Unknown').slice(0,40);
+ const {error:memberError}=await supabaseClient.from('global_chat_members').upsert({user_id:currentMember.id,display_name:display,country},{onConflict:'user_id'});
+ if(memberError){chatStatusEl.textContent='Chat profile unavailable: '+memberError.message;return;}
+ await renderGlobalChat();
+ if(globalChatChannel)supabaseClient.removeChannel(globalChatChannel);
+ globalChatChannel=supabaseClient.channel('genzbag-global-chat')
+  .on('postgres_changes',{event:'INSERT',schema:'public',table:'global_chat_messages'},()=>renderGlobalChat())
+  .subscribe(status=>{if(status==='SUBSCRIBED')chatStatusEl.textContent='Connected to the global lounge · '+country;});
+}
+document.getElementById('globalChatSend').addEventListener('click',async()=>{
+ if(!currentMember){alert('Please sign in first.');return;}
+ const message=chatInputEl.value.trim();if(!message)return;
+ const b=document.getElementById('globalChatSend');b.disabled=true;b.textContent='Sending…';
+ const {error}=await supabaseClient.from('global_chat_messages').insert({user_id:currentMember.id,message});
+ b.disabled=false;b.textContent='Send';
+ if(error){chatStatusEl.textContent=error.message;return;}
+ chatInputEl.value='';await renderGlobalChat();
+});
+chatInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('globalChatSend').click();}});
+chatMessagesEl.addEventListener('click',async e=>{
+ const b=e.target.closest('[data-report-message]');if(!b)return;
+ const reason=prompt('Why are you reporting this message?');if(!reason||reason.trim().length<5)return;
+ const {error}=await supabaseClient.from('global_chat_reports').insert({message_id:b.dataset.reportMessage,reporter_id:currentMember.id,reason:reason.trim().slice(0,500)});
+ alert(error?(error.code==='23505'?'You have already reported this message.':error.message):'Report sent to the GenZBag moderation team.');
+});
+async function loadAdminActivityTools(){
+ if(!currentMember||currentMember.app_metadata?.role!=='admin')return;
+ adminPanelEl.classList.add('visible');
+ const {data,error}=await supabaseClient.from('task_submissions').select('id,user_id,task_id,proof_text,proof_url,submitted_at,status,tasks(title,reward_amount,currency)').eq('status','pending').order('submitted_at',{ascending:true}).limit(60);
+ const list=document.getElementById('adminSubmissionList');
+ if(error){list.textContent='Could not load submissions: '+error.message;return;}
+ if(!data?.length){list.innerHTML='<div class="activity-empty">No pending submissions.</div>';return;}
+ list.innerHTML=data.map(s=>'<article class="admin-submission" data-admin-submission="'+escapeText(s.id)+'"><strong style="font-size:11px">'+escapeText(s.tasks?.title||'Activity submission')+'</strong><p>Member: '+escapeText(s.user_id)+'<br>Submitted: '+escapeText(new Date(s.submitted_at).toLocaleString())+'<br>Proof: '+escapeText(s.proof_text||'No text provided')+(s.proof_url?'<br>Link: <a href="'+escapeText(s.proof_url)+'" target="_blank" rel="noopener noreferrer">Open proof</a>':'')+'<br>Reward on approval: '+escapeText(Number(s.tasks?.reward_amount||0)+' '+(s.tasks?.currency||'UGX'))+'</p><div class="admin-submission-actions"><button class="activity-btn" type="button" data-review="approved">Approve</button><button class="activity-btn secondary" type="button" data-review="rejected">Reject</button></div></article>').join('');
+}
+document.getElementById('adminTaskForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(currentMember?.app_metadata?.role!=='admin')return;
+ const b=document.getElementById('adminTaskSave');b.disabled=true;b.textContent='Saving…';
+ const limit=document.getElementById('adminTaskLimit').value;
+ const payload={title:document.getElementById('adminTaskTitle').value.trim(),category:document.getElementById('adminTaskCategory').value,description:document.getElementById('adminTaskDescription').value.trim(),instructions:document.getElementById('adminTaskInstructions').value.trim(),reward_amount:Number(document.getElementById('adminTaskReward').value||0),currency:document.getElementById('adminTaskCurrency').value,status:document.getElementById('adminTaskStatus').value,content_url:document.getElementById('adminTaskUrl').value.trim()||null,max_submissions:limit?Number(limit):null,created_by:currentMember.id};
+ const {error}=await supabaseClient.from('tasks').insert(payload);
+ b.disabled=false;b.textContent='Save activity';
+ if(error){alert('Could not save activity: '+error.message);return;}
+ e.target.reset();document.getElementById('adminTaskReward').value='0';await loadActivities();alert('Activity saved successfully.');
+});
+document.getElementById('adminSubmissionList').addEventListener('click',async e=>{
+ const b=e.target.closest('[data-review]');if(!b)return;
+ const row=b.closest('[data-admin-submission]'),id=row?.dataset.adminSubmission;if(!id)return;
+ const note=prompt('Optional review note:')||'';
+ b.disabled=true;
+ const {data,error}=await supabaseClient.rpc('admin_review_task_submission',{p_submission_id:id,p_decision:b.dataset.review,p_review_note:note});
+ if(error){alert('Review failed: '+error.message);b.disabled=false;return;}
+ await loadAdminActivityTools();await loadActivities();await loadMemberWallet();
+});
+async function initialiseMemberFeatures(session){
+ currentMember=session?.user||null;
+ if(!currentMember){activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');return;}
+ await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools()]);
+}
+
 /* DASHBOARD-FIRST MODE: keep dashboard accessible while its features are completed. */
 showDashboard();
 renderNetwork(0,0);
 if(supabaseClient){
   supabaseClient.auth.getSession().then(({data,error})=>{
     if(error)console.warn('Supabase session check:',error);
-    if(data?.session)loadMemberNetwork();
+    if(data?.session){loadMemberNetwork();initialiseMemberFeatures(data.session);}
   });
   supabaseClient.auth.onAuthStateChange((event,session)=>{
-    if(event==='SIGNED_IN'&&session)setTimeout(loadMemberNetwork,0);
-    if(event==='SIGNED_OUT')renderNetwork(0,0);
+    if(event==='SIGNED_IN'&&session)setTimeout(()=>{loadMemberNetwork();initialiseMemberFeatures(session);},0);
+    if(event==='SIGNED_OUT'){renderNetwork(0,0);initialiseMemberFeatures(null);}
   });
 }
 })();
