@@ -1093,7 +1093,7 @@ footer {
 .auth-art-spark{position:absolute;color:#ffe78a;font-size:20px;animation:authSparkle 2s ease-in-out infinite}.spark-one{left:22%;top:18%}.spark-two{right:23%;bottom:12%;animation-delay:-1s}
 @keyframes authSparkle{50%{opacity:.35;transform:scale(.7) rotate(45deg)}}
 .auth-form-live{gap:12px}.auth-form-live .auth-field,.auth-form-live .auth-field-label{color:#34435e;font-size:11px;font-weight:850}
-.auth-form-live input,.auth-form-live select{border:1px solid #d8e2f1;background:#ffffffd9;border-radius:12px;padding:13px 14px;min-height:46px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.auth-form-live input:not([type="checkbox"]),.auth-form-live select{border:1px solid #d8e2f1;background:#ffffffd9;border-radius:12px;padding:13px 14px;min-height:46px;transition:border-color .2s,box-shadow .2s,transform .2s}
 .auth-form-live input:focus,.auth-form-live select:focus{border-color:#3989f5;box-shadow:0 0 0 4px #3989f51c,0 8px 18px #1769e010;transform:translateY(-1px)}
 .auth-phone-row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px}
 .auth-submit-live{background:linear-gradient(105deg,#0a2a6b,#1769e0 58%,#7038bb);border:1px solid #ffffff30;border-radius:13px;min-height:49px;box-shadow:0 10px 22px #0a2a6b35;transition:transform .2s,box-shadow .2s}
@@ -1130,8 +1130,8 @@ footer {
     <select id="authCountry"><option value="Uganda" selected>Uganda</option><option value="Nigeria">Nigeria</option><option value="Kenya">Kenya</option><option value="Tanzania">Tanzania</option><option value="Rwanda">Rwanda</option><option value="Ghana">Ghana</option><option value="Other">Other</option></select>
    </div>
    <label class="auth-field">Email address<input id="authLoginEmail" type="text" autocomplete="username" placeholder="Email address or username"></label>
-   <label class="auth-field">Password<input id="authPassword" type="password" required minlength="4" autocomplete="current-password" placeholder="Create password"><button class="auth-password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button></label>
-   <label id="confirmWrap" class="auth-field auth-hidden-field">Confirm password<input id="authConfirm" type="password" minlength="4" autocomplete="new-password" placeholder="Repeat password"></label>
+   <label class="auth-field">Password<input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="Create password"><button class="auth-password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button></label>
+   <label id="confirmWrap" class="auth-field auth-hidden-field">Confirm password<input id="authConfirm" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat password"></label>
    <div id="signupProgress" class="signup-progress auth-hidden-field"><div class="signup-progress-head"><strong>Let's get you set up</strong><span id="signupProgressCount">0 / 6</span></div><div class="signup-progress-track"><span id="signupProgressBar"></span></div><div class="signup-checks" id="signupChecks"><span data-check="username">Username</span><span data-check="email">Email</span><span data-check="phone">Mobile</span><span data-check="country">Country</span><span data-check="password">Password</span><span data-check="confirm">Confirm</span></div></div>
    <button class="auth-submit auth-submit-live" id="authSubmit" type="submit">Sign In <span>→</span></button>
    <label id="termsWrap" class="auth-terms auth-hidden-field"><input id="authTerms" type="checkbox" required><span>By creating an account you agree to our <button type="button" id="termsLink" class="auth-inline-link">Terms &amp; Conditions</button>.</span></label>
