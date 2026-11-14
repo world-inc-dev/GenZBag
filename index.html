@@ -780,6 +780,13 @@ footer {
 @media(max-width:420px){.chat-messages{height:300px}.admin-task-form .two{grid-template-columns:1fr 1fr}}
 
 
+.nav-badge{margin-left:auto;padding:2px 5px;border-radius:5px;background:#dff5ff;color:#087b9a;font-size:7px;font-weight:900}.nav-badge.hot{background:#fff0d9;color:#b45309}
+.feature-detail-panel{margin-top:16px;padding:16px;border:1px solid #e4ebf5;border-radius:14px;background:#fff}.feature-detail-panel h3{font-size:14px;color:#152b50;margin:4px 0 10px}.feature-detail-panel p,.feature-bullet-list{font-size:11px;line-height:1.7;color:#64748b}
+.feature-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:18px}.feature-stat-grid>div{padding:12px;border-radius:11px;background:#f1f6fd;display:flex;flex-direction:column;gap:6px}.feature-stat-grid small{font-size:8px;font-weight:900;color:#64748b}.feature-stat-grid strong{font-size:14px;color:#12336d}
+.feature-field{display:flex;flex-direction:column;gap:6px;margin-top:13px;font-size:11px;font-weight:800;color:#334155}.feature-field input{width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:9px;background:#f8fbff;color:#172554;font:inherit;font-weight:500;outline:none}.feature-field input:focus{border-color:#0c8d9e;box-shadow:0 0 0 3px #0c8d9e18}
+.feature-bullet-list{margin:12px 0 15px 18px}.feature-calculated{padding:10px;margin:10px 0;background:#eef8ff;border-radius:8px;color:#12336d!important;font-weight:800}.table-responsive{overflow-x:auto;margin-top:12px}.feature-table{width:100%;border-collapse:collapse;font-size:10px;min-width:360px}.feature-table th,.feature-table td{padding:10px;border-bottom:1px solid #e8eef5;text-align:left}.feature-table th{color:#64748b;background:#f7faff}
+.withdraw-summary{margin-top:15px;padding:14px;border-radius:12px;background:#f5f8fd}.withdraw-summary div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:11px;color:#64748b}.withdraw-summary strong{color:#14284f}.withdraw-summary .grand{border-top:1px solid #dce5f1;margin-top:6px;padding-top:12px;font-weight:900}.team-search-field{margin:16px 0}
+@media(max-width:460px){.feature-stat-grid{grid-template-columns:1fr 1fr}.feature-stat-grid>div:last-child{grid-column:1/-1}}
 /* Dedicated feature pages and three-level team */
 .page-view{display:block;scroll-margin-top:84px}
 .page-view[hidden]{display:none!important}
@@ -877,43 +884,32 @@ footer {
 
   <div class="nav-label">MAIN MENU</div>
   <a class="nav-link active" href="#dashboard"><span class="nav-icon">🏠</span>Dashboard</a>
-  <a class="nav-link" href="#dashboard"><span class="nav-icon">⌂</span>Home</a>
-
-  <div class="nav-label">GENERAL</div>
-  <a class="nav-link" href="#activityPage" data-activity-category="game"><span class="nav-icon">🎡</span>Spins</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="music"><span class="nav-icon">🎵</span>Earn with Spotify</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="sponsored"><span class="nav-icon">🛍️</span>Marketplace</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="challenge"><span class="nav-icon">👆</span>Fix Tap</a>
-  <button class="nav-dropdown-toggle" id="chatMenuToggle" type="button" aria-expanded="false" aria-controls="chatSubmenu"><span class="nav-icon">💬</span>Chat foreigners <span class="nav-chevron" aria-hidden="true">▾</span></button>
-  <div class="nav-submenu" id="chatSubmenu">
-    <a class="nav-link" href="#chatPage">💬 Chat Now</a>
-    <a class="nav-link" href="#featureWorkspace" data-feature="chat-claim-bonus">🎁 Claim Bonus</a>
+  <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>Accounts</a>
+  <button class="nav-dropdown-toggle" id="voucherMenuToggle" type="button" aria-expanded="false" aria-controls="voucherSubmenu"><span class="nav-icon">🎟️</span>Vouchers <span class="nav-chevron" aria-hidden="true">▾</span></button>
+  <div class="nav-submenu" id="voucherSubmenu">
+    <a class="nav-link" href="#featureWorkspace" data-feature="voucher-buy">Buy Voucher</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="voucher-activate">Activate User</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="voucher-history">History</a>
   </div>
-  <a class="nav-link" href="#activityPage" data-activity-category="challenge"><span class="nav-icon">🎨</span>Colour Challenge</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">📊</span>Free Forex Classes</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="video"><span class="nav-icon">▶️</span>Youtube Videos</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="video"><span class="nav-icon">🎬</span>Tiktok Videos</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="sponsored"><span class="nav-icon">📢</span>Sponsored Tasks</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">📚</span>Business Ebooks</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="game"><span class="nav-icon">➗</span>Math for fun</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">💻</span>New Tech Classes</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">📈</span>Deriv Education</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="learning"><span class="nav-icon">💸</span>Financial Education</a>
-
-  <div class="nav-label">ACCOUNT & REWARDS</div>
-  <a class="nav-link" href="#featureWorkspace" data-feature="leaderboard"><span class="nav-icon">🏆</span>Leaderboard</a>
-  <a class="nav-link" href="#featureWorkspace" data-feature="voucher"><span class="nav-icon">🎟️</span>Voucher</a>
-  <a class="nav-link" href="#featureWorkspace" data-feature="pay-client"><span class="nav-icon">🤝</span>Pay for client</a>
   <a class="nav-link" href="#featureWorkspace" data-feature="deposit"><span class="nav-icon">➕</span>Deposit</a>
+  <a class="nav-link" href="#featureWorkspace" data-feature="welcome-bonus"><span class="nav-icon">🎁</span>Claim Bonus</a>
+  <a class="nav-link" href="#featureWorkspace" data-feature="leaderboard"><span class="nav-icon">🏆</span>Leaderboard</a>
+  <a class="nav-link" href="#featureWorkspace" data-feature="pay-client"><span class="nav-icon">🤝</span>Pay for Client</a>
   <button class="nav-dropdown-toggle" id="withdrawMenuToggle" type="button" aria-expanded="false" aria-controls="withdrawSubmenu"><span class="nav-icon">↗️</span>Withdraw <span class="nav-chevron" aria-hidden="true">▾</span></button>
   <div class="nav-submenu" id="withdrawSubmenu">
-    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-balance">💰 Withdraw balance</a>
-    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-chat">💬 Withdraw chat with foreigners</a>
-    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-tiktok">🎬 Withdraw TikTok videos</a>
-    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-youtube">▶️ Withdraw YouTube Videos</a>
-    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-spotify">🎵 Withdraw Spotify</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-balance">Withdraw Balance</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-history">Withdrawal History</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-youtube">Withdraw YouTube</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-tiktok">Withdraw TikTok</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-trivia">Withdraw Trivia</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-chat">Withdraw Foreign Chat</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-fix">Withdraw Fix Tap</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-math">Withdraw Math</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-spotify">Withdraw Spotify</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-colour">Withdraw Colour Challenge</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-spins">Withdraw Spins</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-ads">Withdraw Ads</a>
   </div>
-  <a class="nav-link" href="#featureWorkspace" data-feature="welcome-bonus"><span class="nav-icon">🎁</span>Welcome Bonus</a>
   <button class="nav-dropdown-toggle" id="teamMenuToggle" type="button" aria-expanded="false" aria-controls="teamSubmenu"><span class="nav-icon">👥</span>Team <span class="nav-chevron" aria-hidden="true">▾</span></button>
   <div class="nav-submenu" id="teamSubmenu">
     <button class="nav-dropdown-toggle team-level-toggle" id="teamLevel1Toggle" type="button" aria-expanded="false" aria-controls="teamLevel1Submenu">Level 1 <span class="nav-chevron" aria-hidden="true">▾</span></button>
@@ -935,6 +931,27 @@ footer {
       <a class="nav-link" href="#teamWorkspace" data-team-level="3" data-team-view="overview">Overview</a>
     </div>
   </div>
+  <a class="nav-link" href="#featureWorkspace" data-feature="products"><span class="nav-icon">🛒</span>Products</a>
+  <div class="nav-label">EARN & ACTIVITIES</div>
+  <a class="nav-link" href="#activityPage" data-activity-category="game" data-activity-search="spin" data-activity-title="Spins"><span class="nav-icon">🎡</span>Spins</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="music" data-activity-search="spotify" data-activity-title="Earn with Spotify"><span class="nav-icon">🎵</span>Earn with Spotify <b class="nav-badge">NEW</b></a>
+  <a class="nav-link" href="#activityPage" data-activity-category="sponsored" data-activity-search="marketplace" data-activity-title="Marketplace"><span class="nav-icon">🛍️</span>Marketplace <b class="nav-badge hot">HOT</b></a>
+  <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="fix tap" data-activity-title="Fix Tap"><span class="nav-icon">👆</span>Fix Tap <b class="nav-badge">NEW</b></a>
+  <button class="nav-dropdown-toggle" id="chatMenuToggle" type="button" aria-expanded="false" aria-controls="chatSubmenu"><span class="nav-icon">💬</span>Chat foreigners <b class="nav-badge">NEW</b><span class="nav-chevron" aria-hidden="true">▾</span></button>
+  <div class="nav-submenu" id="chatSubmenu">
+    <a class="nav-link" href="#chatPage">Chat Now</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="chat-claim-bonus">Claim Bonus</a>
+  </div>
+  <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="colour" data-activity-title="Colour Challenge"><span class="nav-icon">🎨</span>Colour Challenge <b class="nav-badge hot">HOT</b></a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="forex" data-activity-title="Free Forex Classes"><span class="nav-icon">📊</span>Free Forex Classes</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="video" data-activity-search="youtube" data-activity-title="YouTube Videos"><span class="nav-icon">▶️</span>YouTube Videos</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="video" data-activity-search="tiktok" data-activity-title="TikTok Videos"><span class="nav-icon">🎬</span>TikTok Videos</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="sponsored" data-activity-search="" data-activity-title="Sponsored Tasks"><span class="nav-icon">📢</span>Click Ads / Sponsored Tasks</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="trivia" data-activity-title="Trivia Challenge"><span class="nav-icon">🧠</span>Trivia Challenge</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="ebook" data-activity-title="Business Ebooks"><span class="nav-icon">📚</span>Business Ebooks</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="game" data-activity-search="math" data-activity-title="Math for Fun"><span class="nav-icon">➗</span>Math for Fun</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="tech" data-activity-title="New Tech Classes"><span class="nav-icon">💻</span>New Tech Classes</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="learning" data-activity-search="deriv" data-activity-title="Deriv Tips"><span class="nav-icon">📈</span>Deriv Tips</a>
 
   <div class="nav-label">SETTING</div>
   <a class="nav-link" href="#referrals"><span class="nav-icon">📨</span>Text Upline</a>
@@ -1093,8 +1110,8 @@ footer {
   <section class="page-view" id="activityPage" hidden>
   <!-- LIVE ACTIVITY HUB -->
   <section class="card" id="activityHub">
-    <div class="section-heading"><h2>Activity Hub</h2><small id="activityCount">Loading activities…</small></div>
-    <div class="activity-toolbar" id="activityFilters">
+    <div class="section-heading"><h2 id="activityPageTitle">Activities</h2><small id="activityCount">Loading activities…</small></div><p id="activityPageDescription" style="padding:0 15px 12px;color:#64748b;font-size:11px">Choose an activity from the sidebar to view its available tasks.</p>
+    <div class="activity-toolbar" id="activityFilters" hidden aria-hidden="true">
       <button class="activity-filter active" type="button" data-filter="all">All</button>
       <button class="activity-filter" type="button" data-filter="music">Music</button>
       <button class="activity-filter" type="button" data-filter="video">Videos</button>
@@ -1320,12 +1337,48 @@ footer {
       </ul>
       <div class="feature-notice" style="background:#fff8e8;color:#8a5a00">Only referral commissions count toward Available Balance. Welcome bonuses and approved activity rewards are recorded separately as Net Profit and do not count toward the withdrawal minimum. Payouts remain disabled until secure payout processing is configured.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
     </div>
+    <div id="payClientPanel" class="feature-detail-panel" hidden>
+      <div class="feature-stat-grid">
+        <div><small>ACCOUNT BALANCE</small><strong id="clientAccountBalance">UGX 0</strong></div>
+        <div><small>ACTIVATION COUNTRY</small><strong>Uganda</strong></div>
+        <div><small>REFERENCE ACTIVATION FEE</small><strong>UGX 19,000</strong></div>
+      </div>
+      <h3>Pay for a Downline Client</h3><p>Pay toward activation for a direct downline member. Installment support can be configured after payment processing is connected.</p>
+      <ul class="feature-bullet-list"><li>Client must be your direct downline member.</li><li>Client country must be Uganda.</li><li>Reference fee shown: UGX 19,000. Final fee must be confirmed before live use.</li><li>Any payment must be deducted through a verified, secure transaction.</li></ul>
+      <label class="feature-field">Client Username<input id="payClientUsername" type="text" maxlength="60" placeholder="Enter direct downline username"></label>
+      <label class="feature-field">Amount to Pay (UGX)<input id="payClientAmount" type="number" min="1" step="1" placeholder="Minimum: UGX 1.00"></label>
+      <button class="activity-btn" type="button" disabled>Pay for Client · Not enabled</button><p class="activity-note">Payments are not processed from this preview. No balance will be deducted.</p>
+      <h3 style="margin-top:20px">Recently Activated by You</h3>
+      <div class="table-responsive"><table class="feature-table"><thead><tr><th>#</th><th>Username</th><th>Status</th></tr></thead><tbody><tr><td colspan="3">No users activated by you recently.</td></tr></tbody></table></div>
+    </div>
+    <div id="voucherBuyPanel" class="feature-detail-panel" hidden>
+      <div class="feature-stat-grid"><div><small>ACCOUNT BALANCE</small><strong id="voucherAccountBalance">UGX 0</strong></div><div><small>VOUCHER BALANCE</small><strong>0 vouchers</strong></div><div><small>COST PER VOUCHER</small><strong>UGX 19,000</strong></div></div>
+      <h3>Purchase Vouchers</h3><p>Activation Country: Uganda</p>
+      <label class="feature-field">Number of Vouchers<input id="voucherQuantity" type="number" min="1" step="1" value="1"></label>
+      <p id="voucherPurchaseTotal" class="feature-calculated">Estimated total: UGX 19,000</p>
+      <button class="activity-btn" type="button" disabled>Purchase Vouchers · Not enabled</button><p class="activity-note">Voucher purchases and balance deductions are disabled until a verified payment and voucher issuance workflow is configured.</p>
+    </div>
+    <div id="voucherActivatePanel" class="feature-detail-panel" hidden>
+      <div class="feature-stat-grid"><div><small>YOUR VOUCHER BALANCE</small><strong>0 vouchers</strong></div><div><small>ACTIVATIONS TODAY</small><strong>0 / 2</strong></div><div><small>ACTIVATION COUNTRY</small><strong>Uganda</strong></div></div>
+      <h3>Activate an Account</h3><p>Use a voucher to activate a downline account. Daily limit: 2 activations.</p>
+      <label class="feature-field">Username to Activate<input id="voucherActivateUsername" type="text" maxlength="60" placeholder="Enter downline username"></label>
+      <button class="activity-btn" type="button" disabled>Activate User · Not enabled</button><p class="activity-note">Activation cannot be completed until voucher ownership, direct-downline relationship and daily limits are verified on the server.</p>
+    </div>
+    <div id="voucherHistoryPanel" class="feature-detail-panel" hidden>
+      <h3>Voucher History</h3><p>Users you have activated using vouchers.</p>
+      <div class="feature-stat-grid"><div><small>TOTAL ACTIVATED</small><strong>0 users</strong></div></div>
+      <div class="table-responsive"><table class="feature-table"><thead><tr><th>S/No</th><th>Activated User</th><th>Activation Date</th></tr></thead><tbody><tr><td colspan="3">No activation records available.</td></tr></tbody></table></div>
+    </div>
+    <div id="withdrawHistoryPanel" class="feature-detail-panel" hidden>
+      <h3>Withdrawal History</h3><p>Review withdrawal requests and their current status.</p><div id="withdrawHistoryList" class="activity-empty">Sign in to view withdrawal history.</div>
+    </div>
   </section>
 
   <section class="feature-workspace page-view" id="teamWorkspace" aria-live="polite" hidden>
     <div class="feature-icon">👥</div>
     <div class="feature-workspace-head"><h2 id="teamPageTitle">My Team · Overview</h2><span class="feature-status">LIVE TEAM DATA</span></div>
     <p id="teamPageDescription">Your referral network across three generations.</p>
+    <label class="feature-field team-search-field">Search team by username or phone number<input id="teamSearchInput" type="search" maxlength="80" placeholder="Type a username or phone number"></label>
     <div class="team-level-cards">
       <div><small>LEVEL 1 · DIRECT</small><strong id="teamLevel1Count">0</strong><span>UGX 10,500 per qualified activation</span></div>
       <div><small>LEVEL 2</small><strong id="teamLevel2Count">0</strong><span>UGX 5,000 per qualified activation</span></div>
@@ -1374,7 +1427,7 @@ menuButton.addEventListener('click',()=>sidebar.classList.contains('open')?close
 const featureContent={
  leaderboard:{icon:'🏆',title:'Leaderboard',description:'A future ranking board for GenZBag members, based on verified platform activity and eligible rewards.',notice:'The leaderboard is not connected to a verified ranking data source yet. Rankings and prizes will not be displayed until the rules and data are configured.'},
  voucher:{icon:'🎟️',title:'Voucher',description:'A place to view and redeem official GenZBag vouchers when voucher campaigns are available.',notice:'Voucher issuance and redemption are not enabled yet. Do not pay anyone for a voucher code or share your account password.'},
- 'pay-client':{icon:'🤝',title:'Pay for client',description:'A planned payment area for making an authorised payment on behalf of a client.',notice:'Client payments are not enabled. No payment will be collected or sent here until a secure payment provider, recipient verification and transaction records are integrated.'},
+ 'pay-client':{icon:'🤝',title:'Pay for Client',description:'Activate a direct downline member by paying toward their registration fee.',notice:'This screen is a layout preview. No payment is collected, no balance is deducted and no client is activated.'},
  deposit:{icon:'➕',title:'Deposit',description:'A planned area for adding funds to your GenZBag account and viewing deposit instructions.',notice:'Deposits are not enabled from this screen. No mobile-money or bank payment should be sent to an unofficial number. Official payment instructions will be shown only after verification and payment integration.'},
  'withdraw-balance':{icon:'💰',title:'Withdraw balance',description:'Referral commissions are withdrawable only after you have at least three successfully activated direct (Level 1) referrals and UGX 23,000 in Available Balance.',notice:'Withdrawal requests are not enabled yet. This page shows the eligibility rules only; it does not submit a payout or transfer money. A secure, funded payout integration and server-side verification are still required.'},
  'withdraw-chat':{icon:'💬',title:'Withdraw chat with foreigners',description:'View eligible rewards associated with approved Chat with Foreigners activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Only approved and funded rewards can become withdrawable.'},
@@ -1382,11 +1435,23 @@ const featureContent={
  'withdraw-youtube':{icon:'▶️',title:'Withdraw YouTube Videos',description:'View eligible rewards associated with approved YouTube video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
  'withdraw-spotify':{icon:'🎵',title:'Withdraw Spotify',description:'View eligible rewards associated with approved Spotify activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on artificial streams.'},
  'welcome-bonus':{icon:'🎁',title:'Welcome Bonus',description:'A planned welcome reward area where new members can check whether an official welcome offer is available to their account.',notice:'No welcome-bonus amount, eligibility rules or funding have been configured yet. No bonus has been credited or promised. The offer will appear here only after it is officially funded and approved.'},
- 'chat-claim-bonus':{icon:'🎁',title:'Chat Bonus',description:'Check official bonus campaigns related to Chat with Foreigners.',notice:'No chat bonus campaign is currently active. This page does not award or credit money. Only verified, funded campaigns approved by GenZBag will appear here.'}
+ 'chat-claim-bonus':{icon:'🎁',title:'Chat Bonus',description:'Check official bonus campaigns related to Chat with Foreigners.',notice:'No chat bonus campaign is currently active. This page does not award or credit money. Only verified, funded campaigns approved by GenZBag will appear here.'},
+ 'voucher-buy':{icon:'🎟️',title:'Buy Voucher',description:'Purchase activation vouchers for eligible downline members.',notice:'Voucher purchasing is a visual preview only. No money is charged and no vouchers are issued.'},
+ 'voucher-activate':{icon:'🔑',title:'Activate User',description:'Use a voucher to activate a downline account.',notice:'Voucher activation is not connected to a verified voucher inventory or activation workflow yet.'},
+ 'voucher-history':{icon:'📜',title:'Voucher History',description:'View accounts activated using your vouchers.',notice:'This history panel is awaiting verified voucher transaction records.'},
+ 'withdraw-history':{icon:'📜',title:'Withdrawal History',description:'Review your submitted withdrawal requests.',notice:'Withdrawal history will populate after a secure request workflow is enabled.'},
+ 'withdraw-trivia':{icon:'🧠',title:'Withdraw Trivia',description:'View eligible approved trivia rewards.',notice:'Trivia withdrawals are not configured as a separate payout channel.'},
+ 'withdraw-fix':{icon:'👆',title:'Withdraw Fix Tap',description:'View eligible approved Fix Tap rewards.',notice:'Fix Tap withdrawals are not configured as a separate payout channel.'},
+ 'withdraw-math':{icon:'➗',title:'Withdraw Math',description:'View eligible approved Math rewards.',notice:'Math withdrawals are not configured as a separate payout channel.'},
+ 'withdraw-colour':{icon:'🎨',title:'Withdraw Colour Challenge',description:'View eligible approved Colour Challenge rewards.',notice:'Colour Challenge withdrawals are not configured as a separate payout channel.'},
+ 'withdraw-spins':{icon:'🎡',title:'Withdraw Spins',description:'View eligible approved Spins rewards.',notice:'Spins withdrawals are not configured as a separate payout channel.'},
+ 'withdraw-ads':{icon:'📢',title:'Withdraw Ads',description:'View eligible approved advertising rewards.',notice:'Ads withdrawals are not configured as a separate payout channel.'},
+ products:{icon:'🛒',title:'Products',description:'Browse products and offers made available through GenZBag.',notice:'No products have been published to the marketplace yet.'}
 };
 document.getElementById('withdrawMenuToggle').addEventListener('click',()=>{const b=document.getElementById('withdrawMenuToggle'),menu=document.getElementById('withdrawSubmenu'),open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));menu.classList.toggle('open',!open);});
 function bindDropdown(toggleId,submenuId){const b=document.getElementById(toggleId),m=document.getElementById(submenuId);if(!b||!m)return;b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));m.classList.toggle('open',!open);});}
 bindDropdown('chatMenuToggle','chatSubmenu');
+bindDropdown('voucherMenuToggle','voucherSubmenu');
 bindDropdown('teamMenuToggle','teamSubmenu');
 [1,2,3].forEach(n=>bindDropdown('teamLevel'+n+'Toggle','teamLevel'+n+'Submenu'));
 document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>{
