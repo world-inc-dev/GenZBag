@@ -2292,7 +2292,7 @@ if(supabaseClient){
     if(event==='SIGNED_OUT'){renderNetwork(0,0);initialiseMemberFeatures(null);if(intentionalSignOut){intentionalSignOut=false;lastAuthenticatedAt=0;removeSessionNotice();setAuthMode('signup');requireAuth();}else if(!beginAuthGrace()){setAuthMode('login');requireAuth();}}
   });
   window.addEventListener('online',async()=>{try{const {data,error}=await supabaseClient.auth.refreshSession();if(!error&&data?.session){markSessionAlive(data.session);showDashboard();loadMemberNetwork();}}catch(e){console.warn('Online session recovery:',e);}});
-  window.addEventListener('offline',()=>{if(lastAuthenticatedAt){const left=Math.max(0,AUTH_GRACE_MS-(Date.now()-lastAuthenticatedAt));if(left>0)showSessionNotice('You are offline. Your dashboard stays open for '+Math.ceil(left/60000)+' minute(s) while we wait for your connection.');}});
+  window.addEventListener('offline',()=>{if(lastAuthenticatedAt&&!beginAuthGrace()){showSessionNotice('You are offline. Reconnect and sign in again to restore your secure session.');}});
 
 }
 })();
