@@ -1164,6 +1164,43 @@ img,svg,video,canvas{max-width:100%}
   .sidebar{transform:translateX(0)}
 }
 
+
+/* GENZBAG ADMIN CONTROL CENTRE */
+.admin-console{padding:18px!important;background:#07152b!important;color:#eaf2ff!important;border:1px solid #18365c!important;border-radius:18px}
+.admin-console h1,.admin-console h2,.admin-console h3{color:#f3f8ff}
+.admin-console .admin-muted{color:#9bb0cc;font-size:11px;line-height:1.6}
+.admin-console-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.admin-console-kicker{font-size:9px;font-weight:900;letter-spacing:1.8px;color:#39d6c5;text-transform:uppercase}
+.admin-console-head h1{font-size:22px;margin:5px 0}
+.admin-console-badge{padding:7px 10px;border-radius:20px;background:#103d43;color:#67f2d8;font-size:10px;font-weight:900}
+.admin-metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.admin-metric{background:linear-gradient(145deg,#102746,#0b1b33);border:1px solid #1c3b60;border-radius:13px;padding:14px;min-width:0}
+.admin-metric small{display:block;color:#9bb0cc;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.admin-metric strong{display:block;color:#fff;font-size:22px;margin-top:7px;overflow-wrap:anywhere}
+.admin-console-tabs{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;margin:10px 0;scrollbar-width:thin}
+.admin-console-tabs button{white-space:nowrap;border:1px solid #254669;background:#0d223d;color:#c8d8ee;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:850}
+.admin-console-tabs button.active{background:#0e766f;border-color:#28c8b4;color:white}
+.admin-console-panel{display:none;background:#0b1d35;border:1px solid #1c3b60;border-radius:14px;padding:14px;margin-top:10px;min-width:0}
+.admin-console-panel.active{display:block}
+.admin-console-panel h2{font-size:15px;margin-bottom:8px}
+.admin-console-panel input,.admin-console-panel select{background:#102844!important;color:#edf6ff!important;border:1px solid #2a496b!important;border-radius:9px;padding:10px;min-width:0}
+.admin-console-table-wrap{overflow-x:auto;width:100%;margin-top:12px}
+.admin-console table{width:100%;border-collapse:collapse;min-width:520px;font-size:10px}
+.admin-console th,.admin-console td{text-align:left;padding:10px 8px;border-bottom:1px solid #203c5d;vertical-align:top;color:#d9e7f8}
+.admin-console th{color:#80a5c8;font-size:9px;text-transform:uppercase}
+.admin-console .admin-row-actions{display:flex;gap:6px;flex-wrap:wrap}
+.admin-console .admin-action{border:0;border-radius:8px;padding:7px 9px;background:#087e75;color:white;font-size:9px;font-weight:850}
+.admin-console .admin-action.secondary{background:#28415e;color:#e1edfa}
+.admin-console .admin-action.danger{background:#8e3446}
+.admin-console .activity-empty{background:#102844;border-radius:10px;color:#9bb0cc}
+.admin-console .admin-note{padding:10px 12px;border:1px solid #785d2b;background:#302817;color:#f7d995;border-radius:10px;font-size:10px;line-height:1.55;margin:10px 0}
+.admin-console .admin-status{display:inline-block;padding:4px 7px;border-radius:20px;background:#1e3c5a;color:#bcd5f2;font-size:9px;font-weight:800}
+.admin-console .admin-status.pending{background:#59431d;color:#ffd88b}
+.admin-console .admin-status.approved,.admin-console .admin-status.verified,.admin-console .admin-status.resolved{background:#164a3d;color:#8cf0c3}
+.admin-console .admin-status.rejected,.admin-console .admin-status.closed{background:#592c3b;color:#ffb3c3}
+.admin-console #adminConsoleMessage{font-size:10px;color:#8ce7d7;min-height:16px;margin:8px 0}
+@media(max-width:600px){.admin-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-console{padding:12px!important}.admin-console-head h1{font-size:19px}.admin-metric strong{font-size:19px}}
+
 </style>
 </head>
 
@@ -1332,6 +1369,7 @@ img,svg,video,canvas{max-width:100%}
   <a class="nav-link" href="#activityPage" data-activity-category="game" data-activity-search="math" data-activity-title="Math Challenge"><span class="nav-icon">➗</span>Math Challenge</a>
   <a class="nav-link" href="#activityPage" data-activity-category="sponsored" data-activity-search="ad tasks ads" data-activity-title="Ad Tasks"><span class="nav-icon">📢</span>Ad Tasks</a>
 
+  <a class="nav-link" href="#adminPage" id="adminConsoleNav" hidden><span class="nav-icon">🛡️</span>Admin Control Centre</a>
   <div class="nav-label">SETTING</div>
   <a class="nav-link" href="#referrals"><span class="nav-icon">📨</span>Text Upline</a>
   <a class="nav-link" href="#chatPage"><span class="nav-icon">✉️</span>Read Messages</a>
@@ -1506,6 +1544,75 @@ img,svg,video,canvas{max-width:100%}
     <div class="app-icon">📱</div><h2>GenZBag App Available!</h2><p>Get faster access to your dashboard, activities and team right from your phone.</p>
     <button class="download-btn" type="button" id="dashboardAppButton">Get the App</button>
   </section>
+  </section>
+
+
+  <section class="page-view card admin-console" id="adminPage" hidden>
+    <div class="admin-console-head">
+      <div><div class="admin-console-kicker">GenZBag · Secure administration</div><h1>Admin Control Centre</h1><p class="admin-muted">Manage members, activity reviews, withdrawals, support and platform oversight.</p></div>
+      <span class="admin-console-badge">🛡 ADMIN ACCESS</span>
+    </div>
+    <div id="adminConsoleMessage" aria-live="polite">Checking administrator access…</div>
+    <div class="admin-metric-grid">
+      <div class="admin-metric"><small>Total members</small><strong id="admMetricMembers">—</strong></div>
+      <div class="admin-metric"><small>Published tasks</small><strong id="admMetricTasks">—</strong></div>
+      <div class="admin-metric"><small>Pending reviews</small><strong id="admMetricReviews">—</strong></div>
+      <div class="admin-metric"><small>Pending withdrawals</small><strong id="admMetricWithdrawals">—</strong></div>
+      <div class="admin-metric"><small>Activation requests</small><strong id="admMetricActivations">—</strong></div>
+      <div class="admin-metric"><small>Referrals recorded</small><strong id="admMetricReferrals">—</strong></div>
+    </div>
+    <div class="admin-console-tabs" role="tablist" aria-label="Administrator sections">
+      <button class="active" data-admin-tab="adminOverviewPanel">Overview</button>
+      <button data-admin-tab="adminMembersPanel">Members</button>
+      <button data-admin-tab="adminActivitiesPanel">Activities &amp; reviews</button>
+      <button data-admin-tab="adminWithdrawalsPanel">Withdrawals</button>
+      <button data-admin-tab="adminActivationPanel">Activation</button>
+      <button data-admin-tab="adminReferralsPanel">Referrals &amp; ledger</button>
+      <button data-admin-tab="adminSupportPanel">Support</button>
+      <button data-admin-tab="adminModerationPanel">Chat reports</button>
+      <button data-admin-tab="adminAuditPanel">Audit &amp; settings</button>
+    </div>
+    <section class="admin-console-panel active" id="adminOverviewPanel">
+      <h2>Platform overview</h2><p class="admin-muted">Live counts are read from the protected GenZBag database. Detailed sections load when opened.</p>
+      <div class="admin-note">Financial safety: GenZBag remains in test/review mode. Review requests here, but do not mark a withdrawal as paid unless an actual payout has been independently completed and verified.</div>
+      <div id="adminOverviewRecent" class="admin-muted">Loading latest activity…</div>
+    </section>
+    <section class="admin-console-panel" id="adminMembersPanel">
+      <h2>Member directory</h2><p class="admin-muted">Search member profiles and review their registration details. Role assignment and account suspension remain protected server-side operations.</p>
+      <input id="adminMembersSearch" type="search" placeholder="Search username, email, phone or country" style="width:100%">
+      <div id="adminMembersMount"></div>
+    </section>
+    <section class="admin-console-panel" id="adminActivitiesPanel">
+      <h2>Activities and submission reviews</h2><p class="admin-muted">Create tasks, set reward terms, and review proof before approving eligible submissions.</p>
+      <div id="adminActivityMount"></div>
+    </section>
+    <section class="admin-console-panel" id="adminWithdrawalsPanel">
+      <h2>Withdrawal requests</h2><p class="admin-muted">Inspect requests and record review decisions. This does not transfer funds.</p>
+      <div class="admin-note">Do not use “paid” in this dashboard: live payout processing is not connected. Use Under review, Approved or Rejected only.</div>
+      <div id="adminWithdrawalsList" class="admin-muted">Open this tab to load requests.</div>
+    </section>
+    <section class="admin-console-panel" id="adminActivationPanel">
+      <h2>Activation payment submissions</h2><p class="admin-muted">Compare the submitted reference against the actual payment record before verifying.</p>
+      <div id="adminActivationList" class="admin-muted">Open this tab to load requests.</div>
+    </section>
+    <section class="admin-console-panel" id="adminReferralsPanel">
+      <h2>Referral and reward ledger oversight</h2><p class="admin-muted">Read-only monitoring. Never edit balances directly from the browser.</p>
+      <h3 style="margin-top:14px">Recent referrals</h3><div id="adminReferralsList" class="admin-muted">Open this tab to load records.</div>
+      <h3 style="margin-top:18px">Recent reward ledger entries</h3><div id="adminLedgerList" class="admin-muted">Open this tab to load records.</div>
+    </section>
+    <section class="admin-console-panel" id="adminSupportPanel">
+      <h2>Support tickets</h2><p class="admin-muted">Track requests and update their support status.</p>
+      <div id="adminSupportList" class="admin-muted">Open this tab to load tickets.</div>
+    </section>
+    <section class="admin-console-panel" id="adminModerationPanel">
+      <h2>Chat reports</h2><p class="admin-muted">Review member-submitted reports. Message removal and account sanctions require a separate protected moderation action.</p>
+      <div id="adminReportsList" class="admin-muted">Open this tab to load reports.</div>
+    </section>
+    <section class="admin-console-panel" id="adminAuditPanel">
+      <h2>Administrator audit trail</h2><p class="admin-muted">Review recorded administrator actions and current platform configuration.</p>
+      <div id="adminAuditList" class="admin-muted">Open this tab to load records.</div>
+      <h3 style="margin-top:18px">Platform settings</h3><div id="adminSettingsList" class="admin-muted">Open this tab to load settings.</div>
+    </section>
   </section>
 
   <section class="page-view" id="activityPage" hidden>
