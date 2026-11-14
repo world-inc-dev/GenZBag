@@ -737,7 +737,7 @@ footer {
 </head>
 
 <body>
-<div class="auth-gate" id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle"><div class="auth-panel">
+<div class="auth-gate hidden" id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle"><div class="auth-panel">
 <div class="auth-brand"><span class="auth-brand-mark">G</span> GenZBag</div>
 <h1 id="authTitle" style="font-size:19px;color:#18243B;margin-bottom:6px">Welcome back</h1>
 <p class="auth-intro" id="authIntro">Sign in to access your member dashboard, referral network and account.</p>
@@ -1169,10 +1169,22 @@ async function loadExchangeRate(){const v=document.getElementById('exchangeRateV
 async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('Supabase did not load. Refresh and try again.','error');return;}const email=document.getElementById('authEmail').value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.textContent=authMode==='signup'?'Creating account…':'Signing in…';showAuthMessage('Please wait…');try{if(authMode==='signup'){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value;if(!/^[a-z0-9_]{3,30}$/.test(username))throw Error('Username must be 3–30 characters using letters, numbers or underscores.');if(password.length<8)throw Error('Use a password with at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:document.getElementById('authPhone').value.trim(),country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(data.session){showDashboard();await loadMemberNetwork();showAuthMessage('Account created successfully.','success');}else{setAuthMode('login');showAuthMessage('Account created. Check your email for the Supabase confirmation link, then return here and sign in.','success');}}else{const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;if(!data.session)throw Error('No session returned. Please try again.');showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.textContent=authMode==='signup'?'Create Account':'Sign In';}}
 authForm.addEventListener('submit',submitAuth);loginTab.addEventListener('click',()=>setAuthMode('login'));signupTab.addEventListener('click',()=>setAuthMode('signup'));document.getElementById('switchAuthMode').addEventListener('click',()=>setAuthMode(authMode==='login'?'signup':'login'));
 document.getElementById('forgotPassword').addEventListener('click',async()=>{if(!supabaseClient)return showAuthMessage('Authentication is unavailable.','error');const email=document.getElementById('authEmail').value.trim();if(!email)return showAuthMessage('Enter your email address first.','error');try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;showAuthMessage('If this email is registered, a password-reset link will be sent. Check your inbox.','success');}catch(e){showAuthMessage(e.message||'Could not request a password reset.','error');}});
-document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)console.error(error);}requireAuth();setAuthMode('login');showAuthMessage('You have signed out.','success');});
+document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)console.error(error);}renderNetwork(0,0);document.getElementById('networkMessage').textContent='Dashboard preview mode. Sign-in will be enabled after the dashboard is completed.';});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
 loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
-if(supabaseClient){supabaseClient.auth.getSession().then(({data,error})=>{if(error)console.error(error);if(data?.session){showDashboard();loadMemberNetwork();}else{requireAuth();setAuthMode('login');}});supabaseClient.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session){showDashboard();setTimeout(loadMemberNetwork,0);}if(event==='SIGNED_OUT'){requireAuth();setAuthMode('login');renderNetwork(0,0);}});}else{requireAuth();showAuthMessage('Supabase failed to initialize. Check your connection and refresh.','error');}
+/* DASHBOARD-FIRST MODE: keep dashboard accessible while its features are completed. */
+showDashboard();
+renderNetwork(0,0);
+if(supabaseClient){
+  supabaseClient.auth.getSession().then(({data,error})=>{
+    if(error)console.warn('Supabase session check:',error);
+    if(data?.session)loadMemberNetwork();
+  });
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(event==='SIGNED_IN'&&session)setTimeout(loadMemberNetwork,0);
+    if(event==='SIGNED_OUT')renderNetwork(0,0);
+  });
+}
 })();
 </script>
 
