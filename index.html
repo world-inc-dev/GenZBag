@@ -2234,6 +2234,45 @@ html:has(#genzActivationGate.visible),body:has(#genzActivationGate.visible){over
 }
 </style>
 
+
+<style id="genzbag-activation-white-text-theme">
+/* Activation page: high-contrast white typography on a polished dark navy/teal theme. */
+#genzActivationGate.visible{
+  color:#fff!important;
+  background:
+    radial-gradient(ellipse at 12% 8%,rgba(20,184,166,.24),transparent 38%),
+    radial-gradient(ellipse at 92% 88%,rgba(37,99,235,.20),transparent 42%),
+    linear-gradient(145deg,#050d1c 0%,#08172b 52%,#0b2540 100%)!important;
+}
+#genzActivationGate.visible .genz-activation-card{
+  background:linear-gradient(155deg,rgba(10,27,48,.98),rgba(7,20,38,.98))!important;
+  border-color:rgba(94,234,212,.34)!important;
+  box-shadow:0 26px 90px rgba(0,0,0,.52),0 0 35px rgba(20,184,166,.08)!important;
+}
+#genzActivationGate.visible,
+#genzActivationGate.visible *{
+  color:#fff!important;
+}
+#genzActivationGate.visible input::placeholder,
+#genzActivationGate.visible textarea::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  opacity:1!important;
+}
+#genzActivationGate.visible .genz-activation-icon,
+#genzActivationGate.visible .genz-fast-instruction>b,
+#genzActivationGate.visible .genz-fast-progress b,
+#genzActivationGate.visible .genz-activation-progress b,
+#genzActivationGate.visible .genz-activation-step b{
+  color:#fff!important;
+}
+#genzActivationGate.visible .genz-activation-form input,
+#genzActivationGate.visible .genz-fast-confirm input{
+  color:#fff!important;
+  background:#061426!important;
+  border-color:rgba(148,190,210,.42)!important;
+}
+</style>
+
 </head>
 
 <body>
