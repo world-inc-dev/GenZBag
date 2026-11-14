@@ -70,19 +70,115 @@ footer{border-color:#b5f2cb18}
 @media(max-width:800px){.hero{padding:55px 0;gap:28px}.dashhead{padding:18px}.admin-grid{grid-template-columns:1fr 1fr}.admin-two{grid-template-columns:1fr}}
 @media(max-width:540px){.wrap{width:93%}.hero h1{font-size:2.8rem;letter-spacing:-1.8px}.dash{padding-top:18px}.dashhead h1{font-size:1.55rem}.stat{padding:14px}.stat strong{font-size:1.18rem}.tabs{display:grid;grid-template-columns:1fr 1fr}.tab{font-size:.78rem;padding:10px 8px}.panel{padding:15px}.admin-grid{gap:8px}.admin-kpi{padding:13px}.admin-kpi b{font-size:1.2rem}}
 
+
+/* GenZBag public brand experience */
+:root{--bg:#07110c;--panel:#101e16;--panel2:#15291d;--line:#294936;--green:#63ed9c;--gold:#eacb78;--text:#f5fbf6;--muted:#a4b9aa}
+.landing{overflow:hidden}
+.top{position:relative;z-index:5;padding:19px 0}
+.brand{display:inline-flex;align-items:center;gap:9px;font-size:1.65rem;letter-spacing:-1.3px}
+.brand:before{content:"G";display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:linear-gradient(145deg,#75f5aa,#20ad69);color:#062313;font-size:1.15rem;font-weight:950;box-shadow:0 6px 22px #39d98035}
+.brand span{color:var(--green)}
+.topnav{gap:28px;font-size:.91rem;font-weight:650}
+.topnav a{transition:color .2s}
+#topActions{display:flex;gap:9px}
+.hero-pro{position:relative;min-height:620px;padding:82px 0 76px;grid-template-columns:1.02fr .98fr;gap:35px}
+.hero-copy{position:relative;z-index:2}
+.eyebrow{display:flex;align-items:center;gap:9px;font-size:.7rem;letter-spacing:.16em;color:#78eaa6}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#65ee9c;box-shadow:0 0 0 5px #65ee9c1b,0 0 16px #65ee9c}
+.hero-pro h1{font-size:clamp(3.5rem,6.3vw,5.8rem);line-height:.99;letter-spacing:-.075em;margin:24px 0 20px;font-weight:900}
+.hero-pro h1 em,.section-head h2 em,.how-intro h2 em,.final-cta h2 em{color:var(--green);font-style:normal}
+.hero-pro .lead{max-width:560px;font-size:1.06rem;line-height:1.8;color:#b0c2b5}
+.hero-cta{padding:14px 20px;min-height:51px}
+.hero-cta span{font-size:1.1rem}
+.hero-login{border-color:#41614b;background:#0b1911}
+.hero-proof{display:flex;gap:17px;flex-wrap:wrap;margin:23px 0 0;color:#c0d2c5;font-size:.78rem}
+.hero-proof span: first-letter{color:var(--green)}
+.hero-disclaimer{max-width:540px;line-height:1.6;margin-top:22px;font-size:.73rem}
+.hero-visual{min-height:445px;position:relative;display:grid;place-items:center}
+.visual-glow{position:absolute;width:390px;height:390px;border-radius:50%;background:radial-gradient(circle,#2bd77b27 0,transparent 68%);filter:blur(8px)}
+.dash-preview{position:relative;width:min(100%,485px);padding:22px;border:1px solid #5a9c704a;border-radius:25px;background:linear-gradient(145deg,#14271cfa,#0b1710fa);box-shadow:0 35px 100px #0008,0 0 65px #2fcb7020;transform:rotate(1.3deg);backdrop-filter:blur(20px)}
+.mock-top,.mock-brand,.mock-welcome,.mock-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mock-brand{justify-content:flex-start;font-size:1rem;letter-spacing:-.5px}.mock-brand> b span{color:var(--green)}
+.mini-mark{display:grid;place-items:center;width:27px;height:27px;border-radius:8px;background:var(--green);color:#062313;font-weight:950}
+.mock-status{font-size:.55rem;letter-spacing:.12em;color:#9db6a5;border:1px solid #ffffff18;padding:6px 9px;border-radius:99px}
+.mock-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px}
+.mock-welcome{margin:29px 0 17px}.mock-welcome small,.mock-balance small{font-size:.58rem;letter-spacing:.14em;color:#8da997}.mock-welcome h3{font-size:1.2rem;margin:4px 0 0;letter-spacing:-.5px}
+.mock-avatar{width:37px;height:37px;display:grid;place-items:center;border-radius:13px;background:#1c5033;color:#8af5b2;font-weight:900}
+.mock-balance{display:flex;justify-content:space-between;align-items:center;padding:21px;border:1px solid #4a8e6045;border-radius:17px;background:linear-gradient(110deg,#173d29,#10291c)}
+.mock-balance b{display:block;font-size:1.27rem;margin:5px 0}.mock-balance p{font-size:.7rem;color:#a9c2b2;margin:0}
+.mock-orbit{width:57px;height:57px;border-radius:50%;display:grid;place-items:center;border:1px solid #65ed9c55;color:#78f0a9;font-size:1.7rem;box-shadow:0 0 30px #48dc8525}
+.mock-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0}
+.mock-cards>div{padding:13px 11px;border:1px solid #ffffff16;border-radius:13px;background:#ffffff06}
+.mock-icon{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#4cdb8721;color:var(--green);margin-bottom:9px}
+.mock-cards small{display:block;font-size:.62rem;color:#94ac9b}.mock-cards b{font-size:.82rem}
+.mock-bottom{padding:14px 2px 1px;border-top:1px solid #ffffff13;font-size:.55rem;letter-spacing:.1em;color:#8ea797}
+.mock-bars{display:flex;align-items:end;height:22px;gap:3px}.mock-bars i{display:block;width:5px;border-radius:4px;background:#4de18d}.mock-bars i:nth-child(1){height:35%}.mock-bars i:nth-child(2){height:58%}.mock-bars i:nth-child(3){height:42%}.mock-bars i:nth-child(4){height:80%}.mock-bars i:nth-child(5){height:55%}.mock-bars i:nth-child(6){height:100%}.mock-bars i:nth-child(7){height:72%}
+.float-chip{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid #5c9a704c;border-radius:14px;background:#102219ed;box-shadow:0 15px 40px #0006;backdrop-filter:blur(12px)}
+.float-chip b,.float-chip small{display:block}.float-chip b{font-size:.77rem}.float-chip small{font-size:.65rem;color:#9eb5a5;margin-top:2px}
+.chip-top{top:27px;right:-5px}.chip-bottom{bottom:23px;left:-15px}
+.chip-icon,.chip-check{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#45db8722;color:var(--green);font-size:1.1rem}
+.trust-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #ffffff16;border-bottom:1px solid #ffffff16;background:#ffffff03}
+.trust-strip>div{display:flex;align-items:center;justify-content:center;gap:12px;padding:19px 8px;border-right:1px solid #ffffff12;font-size:.79rem;color:#bdcfc2}
+.trust-strip>div:last-child{border:0}.trust-strip b{color:var(--green);font-size:.68rem;letter-spacing:.08em}
+.feature-section{padding:90px 0 82px}
+.section-head{margin-bottom:38px}.section-head h2{font-size:clamp(2.2rem,4.2vw,3.3rem);line-height:1.06;letter-spacing:-.06em;margin:14px 0}
+.section-head p{font-size:.96rem;line-height:1.7;max-width:590px;margin:0 auto}
+.feature-grid{gap:17px}.feature-card{position:relative;min-height:245px;padding:25px;overflow:hidden}
+.feature-no{display:block;font-size:.62rem;letter-spacing:.13em;color:#83b897;margin:0 0 11px}
+.feature-card h3{font-size:1.18rem;margin:0 0 9px}.feature-card p{font-size:.87rem;line-height:1.75}
+.feature-arrow{position:absolute;right:23px;bottom:20px;color:var(--green);font-size:1.25rem}
+.how-section{padding:82px 0;background:linear-gradient(110deg,#0d2015,#0a1710);border-top:1px solid #ffffff12;border-bottom:1px solid #ffffff12}
+.how-inner{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:center}
+.how-intro h2,.final-cta h2{font-size:clamp(2.7rem,5vw,4rem);line-height:1.02;letter-spacing:-.07em;margin:15px 0}
+.how-intro .lead{font-size:.93rem;line-height:1.8;margin-bottom:24px}
+.steps article{display:grid;grid-template-columns:43px 1fr 20px;gap:17px;align-items:start;padding:22px 0;border-bottom:1px solid #ffffff17}
+.steps article:first-child{border-top:1px solid #ffffff17}
+.steps article>b{font-size:.76rem;color:var(--green);padding-top:3px}
+.steps h3{font-size:1rem;margin:0 0 5px}.steps p{font-size:.83rem;color:var(--muted);margin:0;line-height:1.7}.steps article>span{color:#75eaa2}
+.safety-section{padding:68px 0}
+.safety-card{display:grid;grid-template-columns:56px 1fr auto;gap:22px;align-items:center;padding:29px;border:1px solid #477c574c;border-radius:20px;background:linear-gradient(110deg,#14291c,#0d1b13)}
+.safety-symbol{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#50df8c20;color:var(--green);font-size:1.8rem}
+.safety-card h2{font-size:1.3rem;margin:7px 0}.safety-card p{max-width:750px;color:#a8bdae;font-size:.84rem;line-height:1.75;margin:0}
+.safety-tag{font-size:.62rem;letter-spacing:.12em;color:#9fe9b9;border:1px solid #4a9a6655;border-radius:99px;padding:8px 11px;white-space:nowrap}
+.final-cta{padding:22px 0 88px}
+.final-cta-inner{text-align:center;padding:62px 20px;border:1px solid #4c8d624d;border-radius:25px;background:radial-gradient(ellipse at 50% 0%,#1c593628,transparent 58%),linear-gradient(145deg,#12251a,#0b1710)}
+.final-cta h2{font-size:clamp(2.8rem,5vw,4.2rem);margin:15px 0}.final-cta p{color:#aec1b3;margin:0 0 22px}.final-cta .small{margin-top:15px;font-size:.7rem}
+@media(max-width:850px){.hero-pro{grid-template-columns:1fr;padding:62px 0 58px}.hero-visual{min-height:405px}.dash-preview{width:min(100%,520px)}.chip-top{right:0}.chip-bottom{left:0}.how-inner{grid-template-columns:1fr;gap:30px}.trust-strip{grid-template-columns:1fr 1fr}.trust-strip>div:nth-child(2){border-right:0}.trust-strip>div:nth-child(-n+2){border-bottom:1px solid #ffffff12}}
+@media(max-width:560px){.top{padding:13px 0}.brand{font-size:1.4rem}.brand:before{width:30px;height:30px}.topnav{display:none}#topActions .btn{padding:9px 11px;font-size:.77rem}.hero-pro{padding:49px 0 43px;gap:8px}.hero-pro h1{font-size:3.35rem;letter-spacing:-.075em}.hero-pro .lead{font-size:.94rem;line-height:1.7}.hero-proof{gap:9px 13px;font-size:.7rem}.hero-visual{min-height:340px;margin:0 -3px}.dash-preview{padding:15px;border-radius:19px;transform:none}.mock-welcome{margin:20px 0 13px}.mock-balance{padding:15px}.mock-orbit{width:44px;height:44px}.mock-cards{gap:6px}.mock-cards>div{padding:10px 8px}.mock-cards b{font-size:.72rem}.mock-cards small{font-size:.57rem}.chip-top{top:0;right:-3px;padding:8px 10px}.chip-bottom{bottom:0;left:-3px;padding:8px 10px}.float-chip b{font-size:.68rem}.float-chip small{font-size:.57rem}.trust-strip>div{justify-content:flex-start;padding:15px 10px;font-size:.69rem;gap:8px}.feature-section{padding:66px 0}.section-head h2{font-size:2.3rem}.feature-grid{grid-template-columns:1fr}.feature-card{min-height:205px}.how-section{padding:60px 0}.how-intro h2{font-size:3rem}.safety-card{grid-template-columns:42px 1fr;gap:13px;padding:20px}.safety-symbol{width:40px;height:40px;font-size:1.4rem}.safety-card h2{font-size:1.08rem}.safety-tag{grid-column:2;justify-self:start}.final-cta{padding-bottom:60px}.final-cta-inner{padding:48px 17px}.final-cta h2{font-size:2.8rem}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top"><a class="brand" href="#" onclick="location.hash='';return false">GenZ<span>Bag</span></a><nav class="topnav"><a href="#activities">Activities</a><a href="#how">How it works</a></nav><div id="topActions"><button class="btn ghost" onclick="go('login')">Sign in</button><button class="btn primary" onclick="go('register')">Join GenZBag</button></div></header>
-<main id="publicView">
-<section class="hero">
-<div><div class="eyebrow">Discover opportunities</div><h1>Make your time <em>count.</em></h1><p class="lead">Explore online activities, complete tasks and keep track of verified rewards — with transparent records and account controls.</p><div class="actions"><button class="btn primary" onclick="go('register')">Create free account →</button><button class="btn ghost" onclick="go('login')">Sign in</button></div><p class="small">GenZBag is launching in test mode. Rewards are not guaranteed. Never pay anyone to unlock a task or share your password, OTP or mobile-money PIN.</p></div>
-<div class="preview"><div class="preview-head"><b>GENZBAG ACTIVITY HUB</b><span class="pill">TEST MODE</span></div><h2>Your opportunities, clearly organised.</h2><p>One secure place to manage activities and review your account records.</p><div class="preview-line"><span>Available activities</span><b>Explore</b></div><div class="preview-line"><span>Task submissions</span><b>Track</b></div><div class="preview-line"><span>Reward records</span><b>Verify</b></div><div class="preview-line"><span>Account support</span><b>Connect</b></div></div>
+<main id="publicView" class="landing">
+<section class="hero hero-pro">
+ <div class="hero-copy">
+  <div class="eyebrow"><span class="live-dot"></span> THE EVERYDAY OPPORTUNITY PLATFORM</div>
+  <h1>Your time has<br><em>more potential.</em></h1>
+  <p class="lead">A smarter space to discover digital activities, take part in opportunities and keep every submission organised — all from one simple dashboard.</p>
+  <div class="actions"><button class="btn primary hero-cta" onclick="go('register')">Create your free account <span>↗</span></button><button class="btn ghost hero-login" onclick="go('login')">I already have an account</button></div>
+  <div class="hero-proof"><span>✓ Free to join</span><span>✓ Clear activity requirements</span><span>✓ Personal activity records</span></div>
+  <p class="small hero-disclaimer">Currently operating in test mode. Displayed rewards are simulated and do not represent guaranteed income or available cash payouts.</p>
+ </div>
+ <div class="hero-visual" aria-label="Preview of the GenZBag member dashboard">
+  <div class="visual-glow"></div>
+  <div class="float-chip chip-top"><span class="chip-icon">✦</span><span><b>Discover</b><small>New opportunities</small></span></div>
+  <div class="dash-preview">
+   <div class="mock-top"><div class="mock-brand"><span class="mini-mark">G</span><b>GenZ<span>Bag</span></b></div><span class="mock-status"><i></i> MEMBER SPACE</span></div>
+   <div class="mock-welcome"><div><small>YOUR PERSONAL SPACE</small><h3>Good things start here.</h3></div><div class="mock-avatar">G</div></div>
+   <div class="mock-balance"><div><small>ACTIVITY OVERVIEW</small><b>Stay in control.</b><p>Track progress and review your records.</p></div><div class="mock-orbit">✦</div></div>
+   <div class="mock-cards"><div><span class="mock-icon">▤</span><small>Activities</small><b>Explore</b></div><div><span class="mock-icon">◷</span><small>Submissions</small><b>Track</b></div><div><span class="mock-icon">↗</span><small>Referrals</small><b>Connect</b></div></div>
+   <div class="mock-bottom"><span>YOUR PROGRESS, IN ONE PLACE</span><span class="mock-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+  </div>
+  <div class="float-chip chip-bottom"><span class="chip-check">✓</span><span><b>One clear dashboard</b><small>Activities · Wallet · Support</small></span></div>
+ </div>
 </section>
-<section id="activities"><div class="section-head"><div class="eyebrow">Explore GenZBag</div><h2>Opportunities with clear records</h2><p>Find activities, review requirements and understand the status of every submission.</p></div><div class="grid"><article class="card"><div class="ico">▶</div><h3>Video & ad activities</h3><p>Discover eligible viewing activities and follow the listed completion rules.</p></article><article class="card"><div class="ico">✎</div><h3>Surveys & reviews</h3><p>Participate in surveys, product feedback and online assignments when available.</p></article><article class="card"><div class="ico">↗</div><h3>Referral tracking</h3><p>Share your personal invite link. Any future commission must be tied to genuine qualifying revenue.</p></article></div></section>
-<section id="how"><div class="section-head"><div class="eyebrow">Simple and transparent</div><h2>How it works</h2></div><div class="grid"><article class="card"><div class="ico">01</div><h3>Create your account</h3><p>Register with your email and verify it if prompted.</p></article><article class="card"><div class="ico">02</div><h3>Complete an activity</h3><p>Read the requirements and submit the requested proof.</p></article><article class="card"><div class="ico">03</div><h3>Review your records</h3><p>Check task status and any reward that has been independently verified.</p></article></div></section>
-<section><div class="card" style="text-align:center;padding:38px"><div class="eyebrow">Start exploring</div><h2>Welcome to GenZBag</h2><p style="color:var(--muted)">Create an account to access your personal activity dashboard.</p><button class="btn primary" onclick="go('register')">Get started</button></div></section>
+<div class="trust-strip"><div><b>01</b><span>Discover activities</span></div><div><b>02</b><span>Follow clear instructions</span></div><div><b>03</b><span>Track your submissions</span></div><div><b>04</b><span>Review your records</span></div></div>
+<section id="activities" class="feature-section"><div class="section-head"><div class="eyebrow">WHAT YOU CAN DO</div><h2>Everything organised.<br><em>Nothing confusing.</em></h2><p>GenZBag brings useful online activities and your account tools together in one focused experience.</p></div><div class="grid feature-grid"><article class="card feature-card"><div class="ico">▶</div><span class="feature-no">01 / DISCOVER</span><h3>Explore activities</h3><p>Browse available surveys, video activities, reviews and digital tasks with requirements shown up front.</p><span class="feature-arrow">↗</span></article><article class="card feature-card"><div class="ico">✓</div><span class="feature-no">02 / PARTICIPATE</span><h3>Submit with clarity</h3><p>Understand what is expected, send your proof and follow the status of each submission.</p><span class="feature-arrow">↗</span></article><article class="card feature-card"><div class="ico">▥</div><span class="feature-no">03 / STAY INFORMED</span><h3>Keep track</h3><p>Review account activity, recorded rewards, referrals and support updates in your own space.</p><span class="feature-arrow">↗</span></article></div></section>
+<section id="how" class="how-section"><div class="how-inner"><div class="how-intro"><div class="eyebrow">A SIMPLE START</div><h2>Start in a few<br><em>clear steps.</em></h2><p class="lead">No complicated setup. Create your account, explore what is available and keep track as you go.</p><button class="btn primary" onclick="go('register')">Get started <span>↗</span></button></div><div class="steps"><article><b>01</b><div><h3>Create your account</h3><p>Register with your email and set up your profile securely.</p></div><span>↗</span></article><article><b>02</b><div><h3>Find an activity</h3><p>Read the task details and make sure you meet the requirements.</p></div><span>↗</span></article><article><b>03</b><div><h3>Submit and follow up</h3><p>Send the requested proof and check its review status from your dashboard.</p></div><span>↗</span></article></div></div></section>
+<section class="safety-section"><div class="safety-card"><div class="safety-symbol">⌑</div><div><div class="eyebrow">BUILT AROUND TRANSPARENCY</div><h2>Your account. Your information. Your control.</h2><p>GenZBag displays activity requirements and account records in one place. Never pay anyone to unlock an activity, and never share your password, verification code or mobile-money PIN.</p></div><span class="safety-tag">SAFETY FIRST</span></div></section>
+<section class="final-cta"><div class="final-cta-inner"><div class="eyebrow">YOUR NEXT STEP STARTS HERE</div><h2>Make room for<br><em>new opportunities.</em></h2><p>Create your free account and explore the GenZBag experience.</p><button class="btn primary hero-cta" onclick="go('register')">Join GenZBag <span>↗</span></button><div class="small">Free registration · Test environment · No guaranteed earnings</div></div></section>
 </main>
 <main id="authView" class="hidden"><div class="auth-wrap"><div class="authbox" id="authBox"></div></div></main>
 <main id="dashboardView" class="hidden"><div class="dash"><div class="dashhead"><div><div class="eyebrow">Your workspace</div><h1 id="welcome">Welcome to GenZBag</h1><div class="small" id="userEmail"></div></div><button class="btn ghost" id="signOut">Sign out</button></div><div class="dashgrid"><div class="stat"><small>Available balance</small><strong id="balance">UGX 0</strong></div><div class="stat"><small>Pending submissions</small><strong id="pendingCount">0</strong></div><div class="stat"><small>Approved rewards</small><strong id="earned">UGX 0</strong></div><div class="stat"><small>Referrals</small><strong id="referralCount">0</strong></div></div><nav class="tabs" id="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="tasks">Explore tasks</button><button class="tab" data-tab="wallet">Wallet & withdrawals</button><button class="tab" data-tab="referrals">Referrals</button><button class="tab" data-tab="support">Support</button><button class="tab" data-tab="settings">Settings</button><button class="tab hidden" id="adminTab" data-tab="admin">Admin Console</button></nav><div id="dashContent"></div></div></main>
