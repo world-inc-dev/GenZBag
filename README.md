@@ -55,4 +55,20 @@ registration.py and setup_genzbag.py are retained as early FastAPI/SQLite protot
 
 ## Status
 
-The Supabase database foundation and first member-portal interface are in place. The secure admin workflows, reward-approval service, real payout integration, comprehensive testing and production readiness work remain in development.
+The Supabase database foundation, responsive member portal and administrator console are in place. The administrator console is visible only to authenticated users whose trusted Supabase Auth `app_metadata.role` claim is `admin`.
+
+## Administrator console
+- Create and publish activities.
+- Review member submissions.
+- Approve or reject submissions through the `admin_review_task_submission` database function.
+- Approved tasks create an idempotent test-wallet ledger credit.
+- Review member accounts, withdrawal requests, support tickets and the audit trail.
+- Admin actions are protected by database RLS and recorded in `admin_audit_logs`.
+
+Do not assign administrator access through editable user metadata or from browser code. Grant the `app_metadata.role=admin` claim only through a trusted Supabase administrative process.
+
+## Test-mode controls
+- The member withdrawal form calls `create_test_withdrawal_request`, which checks the available ledger balance and prevents duplicate pending requests in the same currency.
+- Withdrawal requests are records only. No mobile-money or bank transfer is executed.
+- Task rewards are simulated wallet credits. Do not advertise them as cash or payable funds until genuine revenue funding, provider approval, reconciliation and legal/compliance readiness are complete.
+- The browser receives only the Supabase publishable key. Keep all secret/service-role keys outside the repository and browser.
