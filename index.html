@@ -1902,6 +1902,25 @@ body.activation-body-locked{
 #featureWorkspace.voucher-mode .table-responsive{padding:5px;border:1px solid #28516a;border-radius:13px;background:#0b1c31}
 #featureWorkspace.voucher-mode .feature-table{min-width:420px}
 @media(max-width:460px){.voucher-tabs{gap:5px;padding:5px}.voucher-tab{min-height:62px;padding:8px 2px}.voucher-tab b{font-size:9px}#featureWorkspace.voucher-mode .feature-stat-grid{grid-template-columns:1fr 1fr}#featureWorkspace.voucher-mode .feature-stat-grid>div:last-child{grid-column:1/-1}}
+
+/* Voucher activation success celebration */
+.voucher-celebration{position:fixed;inset:0;z-index:10050;display:flex;align-items:center;justify-content:center;padding:20px;background:#041326c9;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.voucher-celebration[hidden]{display:none!important}
+.voucher-celebration-card{position:relative;width:min(100%,390px);overflow:hidden;padding:30px 22px 24px;text-align:center;border:1px solid #3b8b91;border-radius:24px;background:radial-gradient(circle at 50% 0,#17616a 0,#102b45 42%,#0a1c31 100%);box-shadow:0 25px 80px #0009;animation:voucherPopIn .38s cubic-bezier(.2,.85,.25,1.2)}
+.voucher-celebration-card:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#fbbf24,#5eead4,#60a5fa,#f472b6)}
+.voucher-celebration-icon{width:76px;height:76px;margin:2px auto 15px;display:grid;place-items:center;border-radius:50%;font-size:37px;background:linear-gradient(145deg,#6ee7b7,#14b8a6);box-shadow:0 0 0 9px #2dd4bf20,0 10px 30px #14b8a655}
+.voucher-celebration-kicker{margin:0 0 7px;color:#76ead9;font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.voucher-celebration-card h2{margin:0;color:#f4fffe;font-size:25px;font-weight:950}
+.voucher-celebration-card p{color:#c5dce7;font-size:12px;line-height:1.7}
+.voucher-celebration-user{margin:16px 0 10px;padding:13px;border:1px solid #347487;border-radius:13px;background:#0a2036;color:#8ff2e3;font-size:19px;font-weight:900;overflow-wrap:anywhere}
+.voucher-celebration-amount{margin:12px 0 18px;padding:14px;border-radius:14px;background:linear-gradient(110deg,#174b52,#153d53);border:1px solid #388a83}
+.voucher-celebration-amount small{display:block;color:#b8d8d9;font-size:9px;font-weight:850;letter-spacing:1px}
+.voucher-celebration-amount strong{display:block;margin-top:5px;color:#7cf0d8;font-size:24px}
+.voucher-celebration-close{width:100%;min-height:46px;border:0;border-radius:12px;background:linear-gradient(100deg,#24c6b4,#0d9488);color:#042b30;font-size:13px;font-weight:950;cursor:pointer}
+@keyframes voucherPopIn{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+.voucher-confetti{position:absolute;top:-12px;width:8px;height:15px;border-radius:2px;opacity:.9;animation:voucherConfettiFall 1.8s ease-in forwards}
+@keyframes voucherConfettiFall{to{transform:translateY(430px) rotate(650deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.voucher-celebration-card,.voucher-confetti{animation:none}}
 </style>
 
 <style id="genzbag-iphone-typography">
@@ -3494,6 +3513,20 @@ body.activation-screen-open{overflow:hidden!important}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.0">
 </script>
+
+<div class="voucher-celebration" id="voucherCelebration" role="dialog" aria-modal="true" aria-labelledby="voucherCelebrationTitle" hidden>
+ <div class="voucher-celebration-card">
+  <div id="voucherConfetti" aria-hidden="true"></div>
+  <div class="voucher-celebration-icon" aria-hidden="true">🎉</div>
+  <p class="voucher-celebration-kicker">Activation successful</p>
+  <h2 id="voucherCelebrationTitle">Congratulations!</h2>
+  <p>You have successfully activated</p>
+  <div class="voucher-celebration-user" id="voucherCelebrationUsername">@username</div>
+  <div class="voucher-celebration-amount"><small>ACTIVATION AMOUNT</small><strong id="voucherCelebrationAmount">UGX 19,500</strong></div>
+  <p>Your voucher has been redeemed successfully.</p>
+  <button type="button" class="voucher-celebration-close" id="voucherCelebrationClose">Continue</button>
+ </div>
+</div>
 <script>
 (function(){
 'use strict';
@@ -3694,13 +3727,26 @@ document.getElementById('voucherPurchaseButton')?.addEventListener('click',async
  catch(err){msg.textContent=err.message||'Voucher purchase failed. No voucher was issued.';}
  finally{button.disabled=false;button.textContent='Purchase Vouchers';}
 });
+function showVoucherActivationCelebration(username,amount){
+ const modal=document.getElementById('voucherCelebration');if(!modal)return;
+ document.getElementById('voucherCelebrationUsername').textContent='@'+String(username||'member').replace(/^@/,'');
+ document.getElementById('voucherCelebrationAmount').textContent='UGX '+Number(amount||19500).toLocaleString();
+ const confetti=document.getElementById('voucherConfetti');confetti.innerHTML='';
+ const colors=['#5eead4','#fbbf24','#60a5fa','#f472b6','#a78bfa'];
+ for(let i=0;i<34;i++){const bit=document.createElement('i');bit.className='voucher-confetti';bit.style.left=(Math.random()*100)+'%';bit.style.background=colors[i%colors.length];bit.style.animationDelay=(Math.random()*.65)+'s';bit.style.transform='rotate('+(Math.random()*180)+'deg)';confetti.appendChild(bit);}
+ modal.hidden=false;document.getElementById('voucherCelebrationClose')?.focus();
+}
+function closeVoucherActivationCelebration(){const modal=document.getElementById('voucherCelebration');if(modal)modal.hidden=true;}
+document.getElementById('voucherCelebrationClose')?.addEventListener('click',closeVoucherActivationCelebration);
+document.getElementById('voucherCelebration')?.addEventListener('click',e=>{if(e.target.id==='voucherCelebration')closeVoucherActivationCelebration();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVoucherActivationCelebration();});
 document.getElementById('voucherActivateButton')?.addEventListener('click',async()=>{
  const button=document.getElementById('voucherActivateButton'),msg=document.getElementById('voucherActivateMessage'),username=document.getElementById('voucherActivateUsername')?.value.trim();
  if(!currentMember){msg.textContent='Please sign in to activate a member.';return;}
  if(!username){msg.textContent='Enter the username of your direct downline member.';return;}
  if(!confirm('Use one voucher to activate @'+username+'? This action cannot be reversed.'))return;
  button.disabled=true;button.textContent='Activating…';msg.textContent='Checking voucher ownership, downline relationship and daily limit…';
- try{const {data,error}=await supabaseClient.rpc('redeem_member_voucher',{p_username:username});if(error)throw error;msg.textContent='Success! @'+data.username+' has been activated. '+data.activations_today+' of 2 daily activations used.';document.getElementById('voucherActivateUsername').value='';await loadVoucherSummary();await loadMemberWallet();}
+ try{const {data,error}=await supabaseClient.rpc('redeem_member_voucher',{p_username:username});if(error)throw error;msg.textContent='Success! @'+data.username+' has been activated. '+data.activations_today+' of 2 daily activations used.';showVoucherActivationCelebration(data.username||username,19500);document.getElementById('voucherActivateUsername').value='';await loadVoucherSummary();await loadMemberWallet();}
  catch(err){msg.textContent=err.message||'Activation failed. Your voucher was not used.';}
  finally{button.disabled=false;button.textContent='Activate User';}
 });
