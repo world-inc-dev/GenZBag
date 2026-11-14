@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0A2A6B">
 <title>GenZBag | A Home of Digital Income</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GenZBag">
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<link rel="apple-touch-icon" href="./icon.svg">
+
 
 <style>
 :root {
@@ -315,6 +322,18 @@ a {text-decoration:none;color:inherit}
   border-radius:50%;
   background:#16A34A;
 }
+
+.active-badge.status-pending{background:#fff7df;color:#9a6200}
+.active-badge.status-pending:before{background:#f59e0b}
+.active-badge.status-inactive{background:#fff0f1;color:#be123c}
+.active-badge.status-inactive:before{background:#e11d48}
+.active-badge.status-error{background:#eef2f7;color:#526079}
+.active-badge.status-error:before{background:#94a3b8}
+.activation-access-note{display:none;padding:14px 16px;margin:0 0 15px;border:1px solid #f3d58b;border-radius:15px;background:linear-gradient(110deg,#fff9e9,#fff);box-shadow:0 4px 16px #8b5e0010}
+.activation-access-note.visible{display:block}
+.activation-access-note strong{display:block;color:#805500;font-size:12px;margin-bottom:5px}
+.activation-access-note p{color:#6f5a2a;font-size:11px;line-height:1.6}
+.activation-access-note .activation-status-detail{display:block;margin-top:6px;color:#8b6b31;font-size:10px}
 
 .profit-box {
   background:#fff;
@@ -1484,13 +1503,19 @@ img,svg,video,canvas{max-width:100%}
         <span class="rank-badge welcome-rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span>
       </div>
 
-      <span class="active-badge">Active</span>
+      <span class="active-badge status-error" id="accountActivationBadge">Checking status</span>
     </div>
 
     <div class="profit-box">
       <small>NET PROFIT EARNED</small>
       <strong>UGX 0</strong>
     </div>
+  </section>
+
+  <section class="activation-access-note" id="activationAccessNote" aria-live="polite">
+    <strong id="activationAccessTitle">Your account is ready to access</strong>
+    <p id="activationAccessMessage">You can sign in and explore your account before activation.</p>
+    <span class="activation-status-detail" id="activationAccessDetail"></span>
   </section>
 
   <!-- EXPENSES -->
@@ -2009,9 +2034,10 @@ img,svg,video,canvas{max-width:100%}
       Get faster access to your dashboard, orders & team - right from your phone.
     </p>
 
-    <button class="download-btn" type="button">
-      Download App
+    <button class="download-btn" id="installAppBtn" type="button">
+      Install GenZBag
     </button>
+    <p id="appInstallHelp" role="status" style="margin:10px auto 0;min-height:16px;font-size:10px;color:#D8E5FF">Install GenZBag on your phone for app-like access.</p>
   </section>
 
   <footer>
@@ -2194,6 +2220,36 @@ document.getElementById('dashboardShareButton').addEventListener('click',async()
 const RANKS=[{name:'STARTER',min:0,symbol:'🌱'},{name:'BRONZE',min:5,symbol:'🥉'},{name:'SILVER',min:15,symbol:'🥈'},{name:'GOLD',min:30,symbol:'🥇'},{name:'PLATINUM',min:50,symbol:'💠'},{name:'DIAMOND',min:100,symbol:'💎'}];
 function rankFor(n){let i=0;RANKS.forEach((r,k)=>{if(n>=r.min)i=k;});return {...RANKS[i],index:i};}
 function renderNetwork(total,qualified){const rank=rankFor(qualified),next=RANKS[rank.index+1],progress=next?Math.max(0,qualified-rank.min):qualified,target=next?next.min-rank.min:qualified;const setText=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};setText('rankProgressCount',next?progress:'✓');setText('rankProgressTarget',next?'of '+target:'MAX');setText('memberRank',rank.name);setText('rankSymbol',rank.symbol);const badge=document.getElementById('memberRankBadge');if(badge)badge.setAttribute('aria-label','Current member rank: '+rank.name.charAt(0)+rank.name.slice(1).toLowerCase());setText('rankNextLabel',next?'NEXT: '+next.name:'TOP RANK');setText('totalReferralCount',Number(total).toLocaleString());setText('qualifiedReferralCount',Number(qualified).toLocaleString());const left=next?Math.max(0,next.min-qualified):0;setText('networkMessage',next?(left?'You need '+left+' more qualified '+(left===1?'referral':'referrals')+' to reach '+next.name+'.':'You have reached '+rank.name+'. Keep growing your network!'):'Congratulations! You have reached the highest GenZBag member rank.');}
+function renderAccountActivationStatus(record,error){
+ const badge=document.getElementById('accountActivationBadge');
+ const note=document.getElementById('activationAccessNote');
+ const title=document.getElementById('activationAccessTitle');
+ const message=document.getElementById('activationAccessMessage');
+ const detail=document.getElementById('activationAccessDetail');
+ if(error){
+  if(badge){badge.textContent='Status unavailable';badge.className='active-badge status-error';}
+  if(note){note.classList.add('visible');title.textContent='Your account is accessible';message.textContent='Your dashboard and account details remain available. We could not retrieve your activation status right now.';detail.textContent='Reconnect and refresh to check your latest status.';}
+  return;
+ }
+ const status=String(record?.status||'not_submitted').toLowerCase();
+ if(status==='verified'){
+  if(badge){badge.textContent='Active';badge.className='active-badge';}
+  if(note)note.classList.remove('visible');
+  return;
+ }
+ if(status==='pending'){
+  if(badge){badge.textContent='Payment under review';badge.className='active-badge status-pending';}
+  if(note){note.classList.add('visible');title.textContent='Your account is open — activation is under review';message.textContent='You can access your dashboard, profile and referral information while the activation payment is being reviewed.';detail.textContent='You will get access to activation-restricted earning features after approval.';}
+  return;
+ }
+ if(status==='rejected'){
+  if(badge){badge.textContent='Activation needs attention';badge.className='active-badge status-inactive';}
+  if(note){note.classList.add('visible');title.textContent='Your account remains accessible';message.textContent='Your activation payment was not approved. You can still sign in and view your account details.';detail.textContent='Please review your payment information and contact GenZBag support for assistance.';}
+  return;
+ }
+ if(badge){badge.textContent='Not activated';badge.className='active-badge status-inactive';}
+ if(note){note.classList.add('visible');title.textContent='Your account is ready — activation is still pending';message.textContent='You can sign in, view your profile, check your referral link and explore your account before activating.';detail.textContent='Activation-restricted earning features will remain unavailable until your payment is confirmed.';}
+}
 function setMemberName(name){const first=(name||'Member').split(/[._\\s-]/)[0],initial=first.charAt(0).toUpperCase();const w=document.querySelector('.welcome-info h2'),p=document.querySelector('#profile .profile-header h2'),a=document.querySelector('.welcome-top .avatar'),b=document.querySelector('#profile .profile-header .avatar'),dn=document.getElementById('dashboardProfileName'),da=document.getElementById('dashboardProfileAvatar');if(w)w.textContent='Hi '+first;if(p)p.textContent=name||'Member';if(a)a.textContent=initial;if(b)b.textContent=initial;if(dn)dn.textContent=name||'Member';if(da)da.textContent=initial;}
 
 function getWeeklyTournamentBounds(){
@@ -2262,7 +2318,7 @@ function refreshMemberTenureCounters(){
  document.querySelectorAll('[data-member-joined]').forEach(el=>{el.textContent=formatMemberTenure(el.dataset.memberJoined);});
  if(!window.memberTenureTimer)window.memberTenureTimer=setInterval(()=>document.querySelectorAll('[data-member-joined]').forEach(el=>{el.textContent=formatMemberTenure(el.dataset.memberJoined);}),60000);
 }
-async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');const signInButton=document.getElementById('networkSignInButton');try{const user=await ensureMemberSession();if(!user){renderNetwork(0,0);const dashboardIsOpen=authGate?.classList.contains('hidden');if(currentMember?.id||dashboardIsOpen){msg.textContent='Your dashboard is open, but the secure Supabase session is reconnecting. Your network data will reload automatically.';signInButton?.classList.remove('visible');if(!networkSessionRetryTimer)networkSessionRetryTimer=setTimeout(()=>{networkSessionRetryTimer=null;loadMemberNetwork();},4000);}else{msg.textContent='Your member information is private. Sign in to view your network results.';signInButton?.classList.add('visible');}return;}signInButton?.classList.remove('visible');currentMember=user;const [p,t,q,uplineResult]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,contact_email,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified'),supabaseClient.rpc('get_my_upline_username')]);const profile=p.error?{}:(p.data||{}),total=t.error?0:(t.count||0),qualified=q.error?0:(q.count||0),joinedAt=user.created_at||profile.created_at;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};const joinedLabel=joinedAt?new Date(joinedAt).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';put('profileEmail',profile.contact_email||user.email||'—');put('profilePhone',profile.phone||user.user_metadata?.phone||'—');put('profileCountry',profile.country||'Country not set');put('profileUpline',uplineResult?.data||'null');put('profileWhatsAppDisplay',profile.phone||user.user_metadata?.phone||'Not set');put('profileJoiningDate',joinedLabel);const tenure=document.getElementById('profileMembershipDuration');if(tenure){tenure.dataset.memberJoined=joinedAt||'';tenure.textContent=formatMemberTenure(joinedAt);}put('profileTotalReferrals',total.toLocaleString());put('profileActiveReferrals',qualified.toLocaleString());put('profileInactiveReferrals',Math.max(0,total-qualified).toLocaleString());put('profileMemberName',profile.username||(user.email?user.email.split('@')[0]:'Member'));put('profileMemberAvatar',(profile.username||(user.email||'G')).charAt(0).toUpperCase());put('profileMemberRole','GenZBag Member · '+(profile.country||'Country not set'));const wa=document.getElementById('profileWhatsAppInput');if(wa)wa.value='+'+String(profile.phone||user.user_metadata?.phone||'').replace(/[^0-9]/g,'');const emailInput=document.getElementById('profileEmailInput');if(emailInput)emailInput.value=profile.contact_email||user.email||'';const de=document.getElementById('dashboardProfileEmail'),dp=document.getElementById('dashboardProfilePhone'),dc=document.getElementById('dashboardProfileCountry'),ds=document.getElementById('dashboardProfileSince'),dr=document.getElementById('dashboardProfileReferrals');if(de)de.textContent=user.email||'—';if(dp)dp.textContent=profile.phone||'—';if(dc)dc.textContent=profile.country||'Country not set';if(ds)ds.textContent=joinedAt?new Date(joinedAt).toLocaleDateString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';if(dr)dr.textContent=total.toLocaleString();if(profile.username||profile.referral_code){const u=new URL(location.origin+location.pathname);u.searchParams.set('ref',profile.username||profile.referral_code);syncReferralLinks(u.toString());}const issues=[];if(p.error)issues.push('profile: '+p.error.message);if(t.error)issues.push('referrals: '+t.error.message);if(q.error)issues.push('qualified referrals: '+q.error.message);msg.textContent=issues.length?'You are signed in, but some network data could not be loaded. '+issues.join(' · '):'Your network data is up to date.';if(user.app_metadata?.role==='admin')await loadAdminProfileDirectory();else{const adminDirectory=document.getElementById('adminProfileDirectory');if(adminDirectory)adminDirectory.hidden=true;}refreshMemberTenureCounters();if(issues.length)console.warn('Partial member network data:',issues);}catch(e){console.warn('Member network data is temporarily unavailable:',e);if(msg)msg.textContent='Your account is signed in, but some member details could not load. '+(e?.message||'Please retry shortly.');signInButton?.classList.remove('visible');}}
+async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');const signInButton=document.getElementById('networkSignInButton');try{const user=await ensureMemberSession();if(!user){renderNetwork(0,0);const dashboardIsOpen=authGate?.classList.contains('hidden');if(currentMember?.id||dashboardIsOpen){msg.textContent='Your dashboard is open, but the secure Supabase session is reconnecting. Your network data will reload automatically.';signInButton?.classList.remove('visible');if(!networkSessionRetryTimer)networkSessionRetryTimer=setTimeout(()=>{networkSessionRetryTimer=null;loadMemberNetwork();},4000);}else{msg.textContent='Your member information is private. Sign in to view your network results.';signInButton?.classList.add('visible');}return;}signInButton?.classList.remove('visible');currentMember=user;const [p,t,q,uplineResult,activationResult]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,contact_email,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified'),supabaseClient.rpc('get_my_upline_username'),supabaseClient.from('activation_payment_submissions').select('status,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1).maybeSingle()]);renderAccountActivationStatus(activationResult.data,activationResult.error);const profile=p.error?{}:(p.data||{}),total=t.error?0:(t.count||0),qualified=q.error?0:(q.count||0),joinedAt=user.created_at||profile.created_at;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};const joinedLabel=joinedAt?new Date(joinedAt).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';put('profileEmail',profile.contact_email||user.email||'—');put('profilePhone',profile.phone||user.user_metadata?.phone||'—');put('profileCountry',profile.country||'Country not set');put('profileUpline',uplineResult?.data||'null');put('profileWhatsAppDisplay',profile.phone||user.user_metadata?.phone||'Not set');put('profileJoiningDate',joinedLabel);const tenure=document.getElementById('profileMembershipDuration');if(tenure){tenure.dataset.memberJoined=joinedAt||'';tenure.textContent=formatMemberTenure(joinedAt);}put('profileTotalReferrals',total.toLocaleString());put('profileActiveReferrals',qualified.toLocaleString());put('profileInactiveReferrals',Math.max(0,total-qualified).toLocaleString());put('profileMemberName',profile.username||(user.email?user.email.split('@')[0]:'Member'));put('profileMemberAvatar',(profile.username||(user.email||'G')).charAt(0).toUpperCase());put('profileMemberRole','GenZBag Member · '+(profile.country||'Country not set'));const wa=document.getElementById('profileWhatsAppInput');if(wa)wa.value='+'+String(profile.phone||user.user_metadata?.phone||'').replace(/[^0-9]/g,'');const emailInput=document.getElementById('profileEmailInput');if(emailInput)emailInput.value=profile.contact_email||user.email||'';const de=document.getElementById('dashboardProfileEmail'),dp=document.getElementById('dashboardProfilePhone'),dc=document.getElementById('dashboardProfileCountry'),ds=document.getElementById('dashboardProfileSince'),dr=document.getElementById('dashboardProfileReferrals');if(de)de.textContent=user.email||'—';if(dp)dp.textContent=profile.phone||'—';if(dc)dc.textContent=profile.country||'Country not set';if(ds)ds.textContent=joinedAt?new Date(joinedAt).toLocaleDateString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';if(dr)dr.textContent=total.toLocaleString();if(profile.username||profile.referral_code){const u=new URL(location.origin+location.pathname);u.searchParams.set('ref',profile.username||profile.referral_code);syncReferralLinks(u.toString());}const issues=[];if(p.error)issues.push('profile: '+p.error.message);if(t.error)issues.push('referrals: '+t.error.message);if(q.error)issues.push('qualified referrals: '+q.error.message);msg.textContent=issues.length?'You are signed in, but some network data could not be loaded. '+issues.join(' · '):'Your network data is up to date.';if(user.app_metadata?.role==='admin')await loadAdminProfileDirectory();else{const adminDirectory=document.getElementById('adminProfileDirectory');if(adminDirectory)adminDirectory.hidden=true;}refreshMemberTenureCounters();if(issues.length)console.warn('Partial member network data:',issues);}catch(e){console.warn('Member network data is temporarily unavailable:',e);if(msg)msg.textContent='Your account is signed in, but some member details could not load. '+(e?.message||'Please retry shortly.');signInButton?.classList.remove('visible');}}
 
 let dashboardFxRates={UGX:1},dashboardFxUpdated=null,dashboardCurrencyRenderBusy=false;
 const dashboardCurrencySelect=document.getElementById('dashboardCurrency'),dashboardOriginalMoneyNodes=new WeakMap();
@@ -2961,6 +3017,46 @@ document.getElementById('adminMemberEditForm')?.addEventListener('submit',async 
 document.getElementById('adminSupportList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-ticket-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-ticket]');const {error}=await supabaseClient.from('support_tickets').update({status:b.dataset.ticketStatus,updated_at:new Date().toISOString()}).eq('id',row.dataset.adminTicket);if(error)alert('Could not update ticket: '+error.message);else await loadAdminSupport();});
 
 
+
+/* GENZBAG INSTALLABLE WEB APP */
+let deferredInstallPrompt=null;
+const installAppButton=document.getElementById('installAppBtn');
+const installAppHelp=document.getElementById('appInstallHelp');
+const isIOSDevice=/iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandaloneApp=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+if(isStandaloneApp&&installAppHelp)installAppHelp.textContent='GenZBag is installed on this device.';
+window.addEventListener('beforeinstallprompt',event=>{
+ event.preventDefault();
+ deferredInstallPrompt=event;
+ if(installAppButton){installAppButton.hidden=false;installAppButton.textContent='Install GenZBag';}
+ if(installAppHelp)installAppHelp.textContent='Add GenZBag to your home screen for app-like access.';
+});
+window.addEventListener('appinstalled',()=>{
+ deferredInstallPrompt=null;
+ if(installAppButton){installAppButton.textContent='App installed';installAppButton.disabled=true;}
+ if(installAppHelp)installAppHelp.textContent='GenZBag has been installed successfully.';
+});
+installAppButton?.addEventListener('click',async()=>{
+ if(deferredInstallPrompt){
+  deferredInstallPrompt.prompt();
+  const choice=await deferredInstallPrompt.userChoice.catch(()=>({outcome:'dismissed'}));
+  deferredInstallPrompt=null;
+  if(choice.outcome==='accepted'){
+   installAppButton.textContent='Installing…';
+   if(installAppHelp)installAppHelp.textContent='Follow your device prompts to finish installation.';
+  }else if(installAppHelp)installAppHelp.textContent='Installation was cancelled. You can try again anytime.';
+  return;
+ }
+ if(isStandaloneApp){if(installAppHelp)installAppHelp.textContent='GenZBag is already installed on this device.';return;}
+ if(isIOSDevice){
+  if(installAppHelp)installAppHelp.textContent='In Safari, tap Share, then choose “Add to Home Screen”.';
+ }else if(installAppHelp){
+  installAppHelp.textContent='Open your browser menu ⋮ and choose “Install app” or “Add to Home screen”.';
+ }
+});
+if('serviceWorker' in navigator&&location.protocol==='https:'){
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(error=>console.warn('GenZBag offline app setup:',error)));
+}
 
 })();
 </script>
