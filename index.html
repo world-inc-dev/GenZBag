@@ -463,6 +463,29 @@ a {text-decoration:none;color:inherit}
   opacity:.3;
 }
 
+.dashboard-insights-card{padding:0;overflow:hidden;margin-bottom:15px}
+.dashboard-insights-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px 12px}
+.dashboard-insights-head h2{margin:0;color:#14264a;font-size:16px;font-weight:900}
+.dashboard-insights-head p{margin:5px 0 0;color:#78849a;font-size:10px}
+.insights-period{padding:6px 9px;border-radius:20px;background:#eaf2ff;color:#2863bb;font-size:9px;font-weight:900;letter-spacing:.5px;white-space:nowrap}
+.dashboard-week-chart{min-height:104px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-items:end;gap:9px;padding:12px 18px 13px;border-bottom:1px solid #edf0f6}
+.dashboard-week-day{display:grid;grid-template-rows:65px auto;gap:6px;text-align:center;min-width:0}
+.dashboard-week-track{height:65px;display:flex;align-items:end;justify-content:center;border-radius:8px;background:#f2f6fc;overflow:hidden}
+.dashboard-week-bar{width:68%;min-height:3px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,#42d6c2,#1769e0);transition:height .35s ease}
+.dashboard-week-day small{font-size:9px;color:#75819a;font-weight:800}
+.dashboard-insights-empty{grid-column:1/-1;margin:auto;color:#8b96a9;font-size:10px;text-align:center;line-height:1.6}
+.dashboard-recent-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px 7px;color:#243657}
+.dashboard-recent-head strong{font-size:12px}.dashboard-recent-head span{font-size:9px;color:#8490a3}
+.dashboard-recent-list{padding:0 18px 10px}
+.dashboard-recent-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f2f7;min-width:0}
+.dashboard-recent-row:last-child{border-bottom:0}
+.dashboard-recent-icon{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:#eafaf2;color:#16834a;flex:0 0 31px;font-weight:900}
+.dashboard-recent-icon.debit{background:#fff0f1;color:#c13b50}
+.dashboard-recent-info{flex:1;min-width:0}.dashboard-recent-info strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#253653;font-size:10px}
+.dashboard-recent-info small{display:block;margin-top:3px;color:#8792a5;font-size:9px}
+.dashboard-recent-amount{font-size:10px;font-weight:900;white-space:nowrap;color:#16834a}.dashboard-recent-amount.debit{color:#c13b50}
+@media(max-width:380px){.dashboard-week-chart{gap:5px;padding-left:12px;padding-right:12px}.dashboard-insights-head{padding-left:13px;padding-right:13px}.dashboard-recent-list{padding-left:13px;padding-right:13px}}
+
 /* TASK EARNINGS */
 
 .section-heading {
@@ -2759,7 +2782,7 @@ body.activation-screen-open{overflow:hidden!important}
     </div>
 
     <div class="profit-box">
-      <small>NET PROFIT EARNED</small>
+      <small>TOTAL REWARDS EARNED</small>
       <strong>UGX 0</strong>
     </div>
   </section>
@@ -2768,13 +2791,6 @@ body.activation-screen-open{overflow:hidden!important}
     <strong id="activationAccessTitle">Your account is ready to access</strong>
     <p id="activationAccessMessage">You can sign in and explore your account before activation.</p>
     <span class="activation-status-detail" id="activationAccessDetail"></span>
-  </section>
-
-  <!-- EXPENSES -->
-
-  <section class="card expenses-card">
-    <span class="expenses-title">EXPENSES</span>
-    <strong class="expenses-value" title="Configured platform expense figure">UGX 19,500</strong>
   </section>
 
   <!-- BALANCE CARDS -->
@@ -2826,6 +2842,13 @@ body.activation-screen-open{overflow:hidden!important}
       </svg>
     </article>
 
+  </section>
+
+  <section class="card dashboard-insights-card" aria-labelledby="dashboardInsightsTitle">
+    <div class="dashboard-insights-head"><div><h2 id="dashboardInsightsTitle">Wallet activity</h2><p>Real ledger activity from your account</p></div><span class="insights-period">LAST 7 DAYS</span></div>
+    <div class="dashboard-week-chart" id="dashboardWeekChart" aria-label="Wallet credits over the last seven days"><p class="dashboard-insights-empty">Your weekly activity will appear here when wallet entries are recorded.</p></div>
+    <div class="dashboard-recent-head"><strong>Recent transactions</strong><span id="dashboardRecentCount">0 entries</span></div>
+    <div class="dashboard-recent-list" id="dashboardRecentList"><p class="dashboard-insights-empty">No wallet activity to display yet.</p></div>
   </section>
 
   <!-- TASK EARNINGS -->
@@ -4034,6 +4057,19 @@ async function loadAdminProfileDirectory(){
  if(search&&!search.dataset.bound){search.addEventListener('input',render);search.dataset.bound='1';}
 }
 document.getElementById('adminProfileRefresh')?.addEventListener('click',loadAdminProfileDirectory);
+function renderDashboardWalletInsights(ledgerRows){
+ const chart=document.getElementById('dashboardWeekChart'),list=document.getElementById('dashboardRecentList'),count=document.getElementById('dashboardRecentCount');
+ if(!chart||!list)return;
+ const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),days=[];
+ for(let i=6;i>=0;i--){const d=new Date(today);d.setDate(today.getDate()-i);days.push(d);}
+ const dayTotals=days.map(d=>(ledgerRows||[]).filter(x=>x.currency==='UGX'&&x.direction==='credit'&&x.created_at&&new Date(x.created_at)>=d&&new Date(x.created_at)<new Date(d.getFullYear(),d.getMonth(),d.getDate()+1)).reduce((n,x)=>n+Number(x.amount||0),0));
+ const max=Math.max(0,...dayTotals);
+ chart.innerHTML=days.map((d,i)=>'<div class="dashboard-week-day"><div class="dashboard-week-track" title="UGX '+dayTotals[i].toLocaleString()+' credited"><div class="dashboard-week-bar" style="height:'+ (max?Math.max(5,dayTotals[i]/max*100):4)+'%"></div></div><small>'+d.toLocaleDateString('en-GB',{weekday:'short',timeZone:'Africa/Kampala'}).slice(0,2)+'</small></div>').join('');
+ const recent=(ledgerRows||[]).filter(x=>x.created_at).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+ if(count)count.textContent=recent.length+' entr'+(recent.length===1?'y':'ies');
+ if(!recent.length){list.innerHTML='<p class="dashboard-insights-empty">No wallet activity to display yet. Your approved rewards and wallet entries will appear here.</p>';return;}
+ list.innerHTML=recent.map(x=>{const debit=x.direction==='debit',label=String(x.note||x.entry_type||'Wallet entry').replace(/[_-]+/g,' '),amount=Number(x.amount||0),when=new Date(x.created_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Africa/Kampala'});return '<div class="dashboard-recent-row"><span class="dashboard-recent-icon '+(debit?'debit':'')+'">'+(debit?'−':'+')+'</span><div class="dashboard-recent-info"><strong>'+escapeText(label)+'</strong><small>'+escapeText(when)+' · '+escapeText(String(x.entry_type||'').replace(/_/g,' '))+'</small></div><span class="dashboard-recent-amount '+(debit?'debit':'')+'">'+(debit?'−':'+')+' UGX '+amount.toLocaleString(undefined,{maximumFractionDigits:2})+'</span></div>';}).join('');
+}
 async function loadMemberWallet(){
  const member=await ensureMemberSession();
  if(!supabaseClient||!member)return;
@@ -4042,10 +4078,11 @@ async function loadMemberWallet(){
   const {data:profile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
   payoutEl.textContent=profile?.phone||currentMember.user_metadata?.phone||currentMember.phone||'No phone number saved in your profile';
  }
- const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
+ const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type,note,created_at').eq('user_id',currentMember.id);
  if(error){console.warn('Wallet ledger:',error);return;}
  const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
  updateTaskEarningsFromLedger(rows);
+ renderDashboardWalletInsights(rows);
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
  const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
