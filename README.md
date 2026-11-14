@@ -1,35 +1,58 @@
 # GenZBag
 
-**Discover Opportunities. Complete Tasks. Earn Real Money.**
+**Discover Opportunities. Complete Tasks. Track Verified Rewards.**
 
-GenZBag is a planned online rewards platform. This repository contains the application source code and project documentation.
+GenZBag is an online activities and rewards platform being built for Uganda, Nigeria and the wider African market.
 
-## Development principles
+## Current architecture
 
-- Build and test with simulated balances and payment records first.
-- Only record rewards after a genuine, independently verified qualifying event and available platform revenue.
-- Referral commissions must never be funded merely by recruitment or membership payments.
-- Keep payment integrations disabled until appropriate business, legal, consumer-protection, and adult oversight requirements are met.
-- Protect account credentials and personal data; never commit production databases, passwords, API keys, or private credentials.
+- **Frontend:** Static, mobile-responsive web application hosted with GitHub Pages.
+- **Backend:** Supabase Auth and PostgreSQL.
+- **Database security:** Row Level Security enabled across all application tables.
+- **Public browser credential:** Supabase publishable key only. Never place a Supabase secret/service-role key in browser code or GitHub.
+- **Payments:** Test mode only. Real payouts are disabled.
 
-## Planned modules
+## Current member features
 
-1. Account registration and secure authentication
-2. User profiles and unique referral links
-3. User dashboard
-4. Admin dashboard and audit records
-5. Tasks and verified reward records
-6. Activation and withdrawal records (test mode initially)
-7. Notifications and support
+- Email registration, sign-in and password reset.
+- User profile and preferred currency.
+- Published activity/task discovery and proof submission.
+- Submission status and activity history.
+- Wallet balance view based on the reward ledger.
+- Referral code and invitation link.
+- Test withdrawal request records.
+- Notifications and support tickets.
 
-## Local development
+## Database modules
 
-Use a Python virtual environment. Install dependencies from `requirements.txt` when that file is added, then follow the setup instructions documented for each module.
+The Supabase project includes profiles, tasks, task submissions, referrals, reward ledger, withdrawal requests, notifications, support tickets, platform settings and administrator audit logs. New accounts receive a profile and unique referral code through a database trigger.
 
-## Data safety
+Administrator access is based on trusted Supabase Auth app_metadata claims, not user-editable metadata. Admin claims must only be assigned through a trusted administrative process.
 
-Local SQLite databases (including `users.db` and backups), virtual environments, environment files, keys, and logs are excluded from Git. Back up local data separately and do not upload real user information to this repository.
+## Deployment
+
+- Repository: https://github.com/world-inc-dev/GenZBag
+- GitHub Pages site: https://world-inc-dev.github.io/GenZBag/
+
+In the Supabase Dashboard, configure Authentication → URL Configuration:
+- Site URL: https://world-inc-dev.github.io/GenZBag/
+- Add the same URL to the allowed redirect URLs.
+
+Email confirmation settings are controlled in Supabase Authentication. Test registration and confirmation after configuring the redirect URL.
+
+## Development and financial safety
+
+- Start with simulated balances and test withdrawal requests.
+- Users must never be able to credit their own reward balances.
+- Record a reward only after an independently verified qualifying activity and sufficient genuine platform revenue.
+- Referral commissions must not be funded merely by recruitment or membership payments.
+- Do not activate real money transfers until payment-provider approval, business/legal requirements, consumer-protection controls, fraud controls and operational reconciliation are ready.
+- Never request or commit passwords, OTPs, mobile-money PINs, production databases, Supabase secret keys or service-role keys.
+
+## Legacy prototype files
+
+registration.py and setup_genzbag.py are retained as early FastAPI/SQLite prototype material. GitHub Pages does not execute Python. The current browser application uses Supabase directly.
 
 ## Status
 
-Early development. Features and payment flows are not production-ready.
+The Supabase database foundation and first member-portal interface are in place. The secure admin workflows, reward-approval service, real payout integration, comprehensive testing and production readiness work remain in development.
