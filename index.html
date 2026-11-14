@@ -3458,7 +3458,7 @@ body.activation-screen-open{overflow:hidden!important}
         </div>
         <div class="withdraw-quote">
           <div><span>Withdrawal</span><strong id="withdrawRequestedAmount">—</strong></div>
-          <div><span>Service Fees (incl. 0.5% tax)</span><strong id="withdrawServiceFee">—</strong></div>
+          <div><span>Service Fees (incl. 0.80% tax)</span><strong id="withdrawServiceFee">—</strong></div>
           <div class="withdraw-net"><span>You receive</span><strong id="withdrawNetReceive">—</strong></div>
         </div>
         <p id="withdrawEligibilityStatus" class="withdraw-status-line">Sign in to check eligibility.</p>
@@ -4286,7 +4286,7 @@ activityListEl.addEventListener('submit',async e=>{
  form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
 });
 function renderWithdrawalQuote(){
- const amount=Number(document.getElementById('withdrawAmountInput')?.value||0),balance=Number(currentWithdrawableBalance||0),fee=amount>0?Math.round(amount*0.005):0,total=amount+fee,valid=Number.isSafeInteger(amount)&&amount>=23000&&total<=balance;
+ const amount=Number(document.getElementById('withdrawAmountInput')?.value||0),balance=Number(currentWithdrawableBalance||0),fee=amount>0?Math.round(amount*0.008):0,total=amount+fee,valid=Number.isSafeInteger(amount)&&amount>=23000&&total<=balance;
  const money=n=>'UGX '+Math.max(0,n).toLocaleString();
  const fields={withdrawRequestedAmount:amount>0?money(amount):'—',withdrawServiceFee:amount>0?money(fee):'—',withdrawNetReceive:amount>0?money(amount):'—'};
  Object.entries(fields).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
@@ -4321,9 +4321,9 @@ document.getElementById('withdrawRequestButton')?.addEventListener('click',async
  renderWithdrawalQuote();
  if(!Number.isSafeInteger(amount)||amount<23000){msg.textContent='Enter a whole amount of at least UGX 23,000.';return;}
  if(!['mtn','airtel'].includes(network)||mobile.replace(/[^0-9]/g,'').length<9||mobile.replace(/[^0-9]/g,'').length>12){msg.textContent='Enter a valid MTN or Airtel mobile money number.';return;}
- const fee=Math.round(amount*0.005),net=amount,total=amount+fee;
- if(total>Number(currentWithdrawableBalance||0)){msg.textContent='Your balance must cover the withdrawal amount plus the 0.5% service fee (UGX '+total.toLocaleString()+').';return;}
- if(!confirm('Submit UGX '+amount.toLocaleString()+' withdrawal to '+network.toUpperCase()+' '+mobile+'? Service fee (0.5%): UGX '+fee.toLocaleString()+'. You will receive UGX '+net.toLocaleString()+'. Total wallet deduction: UGX '+total.toLocaleString()+'.'))return;
+ const fee=Math.round(amount*0.008),net=amount,total=amount+fee;
+ if(total>Number(currentWithdrawableBalance||0)){msg.textContent='Your balance must cover the withdrawal amount plus the 0.80% service fee (UGX '+total.toLocaleString()+').';return;}
+ if(!confirm('Submit UGX '+amount.toLocaleString()+' withdrawal to '+network.toUpperCase()+' '+mobile+'? Service fee (0.80%): UGX '+fee.toLocaleString()+'. You will receive UGX '+net.toLocaleString()+'. Total wallet deduction: UGX '+total.toLocaleString()+'.'))return;
  button.disabled=true;button.textContent='Submitting…';msg.textContent='Securing your request…';
  try{
   const {data,error}=await supabaseClient.rpc('create_withdrawal_request',{p_amount:amount,p_network:network,p_mobile_number:mobile});
