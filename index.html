@@ -1075,14 +1075,14 @@ footer {
     </div>
 
     <div class="task-list" aria-label="Activity earnings">
-      <div class="task-row"><span class="task-icon green">💬</span><span class="task-name">Foreign Chat</span><strong class="task-amount">UGX 20,750</strong></div>
-      <div class="task-row"><span class="task-icon blue">🎧</span><span class="task-name">Earn With Spotify</span><strong class="task-amount">UGX 750</strong></div>
+      <div class="task-row"><span class="task-icon green">💬</span><span class="task-name">Foreign Chat</span><strong class="task-amount">UGX 0</strong></div>
+      <div class="task-row"><span class="task-icon blue">🎧</span><span class="task-name">Earn With Spotify</span><strong class="task-amount">UGX 0</strong></div>
       <div class="task-row"><span class="task-icon purple">👆</span><span class="task-name">Tap Earnings</span><strong class="task-amount">UGX 0</strong></div>
       <div class="task-row"><span class="task-icon pink">🎨</span><span class="task-name">Color Challenge</span><strong class="task-amount">UGX 0</strong></div>
-      <div class="task-row"><span class="task-icon orange">🧠</span><span class="task-name">Trivia</span><strong class="task-amount">UGX 1,250</strong></div>
-      <div class="task-row"><span class="task-icon red">▶️</span><span class="task-name">YouTube</span><strong class="task-amount">UGX 500</strong></div>
-      <div class="task-row"><span class="task-icon purple">🎬</span><span class="task-name">TikTok</span><strong class="task-amount">UGX 500</strong></div>
-      <div class="task-row"><span class="task-icon orange">🎰</span><span class="task-name">Casino &amp; Spin</span><strong class="task-amount">UGX 150</strong></div>
+      <div class="task-row"><span class="task-icon orange">🧠</span><span class="task-name">Trivia</span><strong class="task-amount">UGX 0</strong></div>
+      <div class="task-row"><span class="task-icon red">▶️</span><span class="task-name">YouTube</span><strong class="task-amount">UGX 0</strong></div>
+      <div class="task-row"><span class="task-icon purple">🎬</span><span class="task-name">TikTok</span><strong class="task-amount">UGX 0</strong></div>
+      <div class="task-row"><span class="task-icon orange">🎰</span><span class="task-name">Casino &amp; Spin</span><strong class="task-amount">UGX 0</strong></div>
       <div class="task-row"><span class="task-icon blue">➗</span><span class="task-name">Math Challenge</span><strong class="task-amount">UGX 0</strong></div>
       <div class="task-row"><span class="task-icon green">📢</span><span class="task-name">Ad Tasks</span><strong class="task-amount">UGX 0</strong></div>
     </div>
@@ -1688,7 +1688,32 @@ async function loadWithdrawalHistory(){
  if(!data?.length){box.textContent='No withdrawal requests found.';return;}
  box.innerHTML=data.map(x=>'<article class="team-member-row"><div><strong>UGX '+Number(x.amount).toLocaleString()+'</strong><small>'+new Date(x.created_at).toLocaleString()+(x.admin_note?' · '+escapeText(x.admin_note):'')+'</small></div><span class="team-member-state '+(x.status==='paid'?'active':'inactive')+'">'+escapeText(String(x.status||'pending').toUpperCase())+'</span></article>').join('');
 }
-async function loadMemberWallet(){
+async function updateTaskEarningsFromLedger(ledgerRows){
+ const definitions=[
+  {key:'foreign-chat',match:['foreign chat','chat with foreigners']},
+  {key:'spotify',match:['spotify']},
+  {key:'tap',match:['tap earnings','fix tap']},
+  {key:'color',match:['color challenge','colour challenge']},
+  {key:'trivia',match:['trivia']},
+  {key:'youtube',match:['youtube']},
+  {key:'tiktok',match:['tiktok']},
+  {key:'casino-spin',match:['casino','spin']},
+  {key:'math',match:['math challenge','math for fun']},
+  {key:'ads',match:['ad task','click ads','sponsored task']}
+ ];
+ const totals=Object.fromEntries(definitions.map(x=>[x.key,0]));
+ (ledgerRows||[]).filter(x=>x.entry_type==='task_reward'&&x.currency==='UGX').forEach(row=>{
+  const note=String(row.note||'').toLowerCase();
+  const signed=(row.direction==='debit'?-1:1)*Number(row.amount||0);
+  const definition=definitions.find(x=>x.match.some(term=>note.includes(term)));
+  if(definition)totals[definition.key]+=signed;
+ });
+ const keys=['foreign-chat','spotify','tap','color','trivia','youtube','tiktok','casino-spin','math','ads'];
+ document.querySelectorAll('#tasks .task-row .task-amount').forEach((el,index)=>{
+  el.textContent='UGX '+Math.max(0,totals[keys[index]]||0).toLocaleString(undefined,{maximumFractionDigits:2});
+ });
+}
+function loadMemberWallet(){
  if(!supabaseClient||!currentMember)return;
  const payoutEl=document.getElementById('withdrawPayoutNumber');
  if(payoutEl){
@@ -1698,6 +1723,7 @@ async function loadMemberWallet(){
  const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
  if(error){console.warn('Wallet ledger:',error);return;}
  const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
+ updateTaskEarningsFromLedger(rows);
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
  const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
