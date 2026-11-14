@@ -2336,6 +2336,115 @@ body:has(#genzActivationGate.visible) > main{
 }
 </style>
 
+
+<style id="genzbag-activation-layout-final-fix">
+/* A locked activation view replaces the dashboard entirely, including its footer. */
+body.activation-screen-open > .topbar,
+body.activation-screen-open > .overlay,
+body.activation-screen-open > .sidebar,
+body.activation-screen-open > main{display:none!important}
+body.activation-screen-open{overflow:hidden!important}
+/* Let the activation overlay itself scroll; never crop the payment page inside its card. */
+#genzActivationGate.visible{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  padding:12px 10px 28px!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#genzActivationGate.visible.genz-fast-detail-open{
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  padding:12px 10px 30px!important;
+}
+#genzActivationGate.visible .genz-activation-card,
+#genzActivationGate.visible.genz-fast-detail-open .genz-activation-card{
+  box-sizing:border-box!important;
+  width:min(100%,470px)!important;
+  max-width:470px!important;
+  max-height:none!important;
+  min-height:0!important;
+  height:auto!important;
+  overflow:visible!important;
+  flex:0 0 auto!important;
+  margin:0 auto 12px!important;
+  padding:16px 15px!important;
+}
+#genzActivationGate.visible.genz-fast-detail-open .genz-fast-topbar{
+  display:flex!important;
+  margin-bottom:12px!important;
+}
+#genzActivationGate.visible .genz-fast-payment-page{
+  display:block;
+  width:100%;
+  padding:0 0 12px!important;
+  overflow:visible!important;
+}
+#genzActivationGate.visible .genz-fast-detail-top{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  margin:0 0 12px!important;
+}
+#genzActivationGate.visible .genz-fast-payment-heading{
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+  margin:8px 0 12px!important;
+}
+#genzActivationGate.visible .genz-fast-amount{margin:10px 0!important}
+#genzActivationGate.visible .genz-fast-preview{margin:10px 0!important}
+#genzActivationGate.visible .genz-fast-payment-steps{
+  display:grid!important;
+  gap:9px!important;
+  margin:10px 0!important;
+}
+#genzActivationGate.visible .genz-fast-instruction{
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:10px!important;
+  padding:10px!important;
+  border-radius:12px!important;
+  background:rgba(255,255,255,.07)!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+}
+#genzActivationGate.visible .genz-fast-instruction>div{min-width:0!important}
+#genzActivationGate.visible .genz-fast-instruction p{
+  margin:4px 0 0!important;
+  font-size:13px!important;
+  line-height:1.45!important;
+}
+#genzActivationGate.visible .genz-fast-instruction>div>strong{font-size:15px!important}
+#genzActivationGate.visible .genz-fast-confirm{
+  display:grid!important;
+  gap:9px!important;
+  margin:12px 0!important;
+  padding:13px!important;
+}
+#genzActivationGate.visible .genz-fast-confirm[hidden],
+#genzActivationGate.visible [hidden]{display:none!important}
+#genzActivationGate.visible .genz-activation-small{display:block!important;margin:10px 0!important;line-height:1.5!important}
+#genzActivationGate.visible .genz-activation-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin:10px 0!important}
+#genzActivationGate.visible .genz-fast-help{
+  position:static!important;
+  display:flex!important;
+  width:max-content!important;
+  margin:8px auto 0!important;
+}
+#genzActivationGate.visible .genz-fast-footer{display:block!important;margin:14px 0 2px!important}
+@media(max-width:420px){
+ #genzActivationGate.visible,
+ #genzActivationGate.visible.genz-fast-detail-open{padding:9px 8px 24px!important}
+ #genzActivationGate.visible .genz-activation-card,
+ #genzActivationGate.visible.genz-fast-detail-open .genz-activation-card{padding:13px 11px!important}
+ #genzActivationGate.visible .genz-activation-actions{grid-template-columns:1fr!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -3110,7 +3219,7 @@ body:has(#genzActivationGate.visible) > main{
     <h2>You're almost in!</h2>
     <div class="genz-activation-progress genz-fast-progress">
      <div class="genz-fast-step-done"><b>✓</b><span><strong>Account created</strong><br><small id="genzActivationJoined">Your GenZBag account is registered.</small></span></div>
-     <div class="genz-fast-step-current"><b>▤</b><span><strong>Pay your registration fee</strong><br><small>Send UGX 19,500 using one of the options below. Merchant IDs are currently 0; do not send money until official details are provided.</small></span></div>
+     <div class="genz-fast-step-current"><b>▤</b><span><strong>Pay your registration fee</strong><br><small>Choose MTN Mobile Money or Airtel Money below to view the instructions for your network.</small></span></div>
      <div class="genz-fast-step-next"><b>🚀</b><span><strong>Start earning</strong><br><small>Confirm your payment and your account opens after verification.</small></span></div>
     </div>
    </section>
@@ -3190,8 +3299,8 @@ let activationCheckVersion=0,activationStatusTimer=null;
 let activationScrollY=0,activationBodyLocked=false;
 function unlockActivationBody(){if(!activationBodyLocked)return;document.body.classList.remove('activation-body-locked');document.body.style.top='';activationBodyLocked=false;window.scrollTo(0,activationScrollY);}
 function lockActivationBody(){if(activationBodyLocked)return;activationScrollY=window.scrollY||window.pageYOffset||0;document.body.classList.add('activation-body-locked');document.body.style.top='-'+activationScrollY+'px';activationBodyLocked=true;}
-function hideActivationGate(){activationGate?.classList.remove('visible');activationGate?.setAttribute('aria-hidden','true');unlockActivationBody();if(activationStatusTimer){clearInterval(activationStatusTimer);activationStatusTimer=null;}}
-function lockActivationGate(message){lockActivationBody();if(activationGate){activationGate.classList.add('visible');activationGate.setAttribute('aria-hidden','false');}if(activationStatusEl)activationStatusEl.textContent=message||'Activation required.';}
+function hideActivationGate(){document.body.classList.remove('activation-screen-open');activationGate?.classList.remove('visible');activationGate?.setAttribute('aria-hidden','true');unlockActivationBody();if(activationStatusTimer){clearInterval(activationStatusTimer);activationStatusTimer=null;}}
+function lockActivationGate(message){document.body.classList.add('activation-screen-open');lockActivationBody();if(activationGate){activationGate.classList.add('visible');activationGate.setAttribute('aria-hidden','false');}if(activationStatusEl)activationStatusEl.textContent=message||'Activation required.';}
 function renderActivationGate(record,error){
  if(error){lockActivationGate('We could not verify your activation status. Your dashboard remains locked for your security. Check again when your connection is stable.');activationForm.hidden=true;return;}
  const status=String(record?.status||'not_submitted').toLowerCase();
