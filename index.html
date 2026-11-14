@@ -2041,7 +2041,7 @@ function updateSignupProgress(){
 document.getElementById('authForm').addEventListener('input',updateSignupProgress,true);
 document.getElementById('authForm').addEventListener('change',updateSignupProgress,true);
 document.getElementById('authForm').addEventListener('reset',()=>setTimeout(updateSignupProgress,0));
-document.getElementById('authCountry').addEventListener('change',()=>{const codes={Uganda:'+256',Nigeria:'+234',Kenya:'+254',Tanzania:'+255',Rwanda:'+250',Ghana:'+233};const code=document.getElementById('authPhoneCode');if(code)code.value=codes[document.getElementById('authCountry').value]||'+256';updateSignupProgress();});
+document.getElementById('authCountry').addEventListener('change', function(){ const countrySelect=document.getElementById('authCountry'); const phoneCodeInput=document.getElementById('authPhoneCode'); const countryCallingCodes={Uganda:'+256',Nigeria:'+234',Kenya:'+254',Tanzania:'+255',Rwanda:'+250',Ghana:'+233'}; if(phoneCodeInput) phoneCodeInput.value=countryCallingCodes[countrySelect.value] || '+256'; updateSignupProgress(); });
 document.getElementById('authPhoneCode').addEventListener('change',updateSignupProgress);
 document.getElementById('togglePassword').addEventListener('click',()=>{const p=document.getElementById('authPassword'),show=p.type==='password';p.type=show?'text':'password';document.getElementById('togglePassword').textContent=show?'Hide':'Show';});
 const termsPreview=document.getElementById('termsPreview');
