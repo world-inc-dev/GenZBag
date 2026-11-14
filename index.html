@@ -4270,36 +4270,61 @@ activityListEl.addEventListener('submit',async e=>{
  form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
 });
 function renderWithdrawalQuote(){
- const amount=Number(document.getElementById('withdrawAmountInput')?.value||0),balance=Number(currentAvailableBalance||0),fee=amount>0?Math.round(amount*0.005):0,valid=amount>=23000&&amount<=balance;
+ const amount=Number(document.getElementById('withdrawAmountInput')?.value||0),balance=Number(currentWithdrawableBalance||0),fee=amount>0?Math.round(amount*0.005):0,valid=Number.isSafeInteger(amount)&&amount>=23000&&amount<=balance;
  const money=n=>'UGX '+Math.max(0,n).toLocaleString();
- const fields={withdrawCurrentBalance:money(balance),withdrawRequestedAmount:amount>0?money(amount):'—',withdrawServiceFee:amount>0?money(fee):'—',withdrawTotalDeducted:amount>0?money(amount):'—',withdrawNetReceive:amount>0?money(amount-fee):'—'};
+ const fields={withdrawRequestedAmount:amount>0?money(amount):'—',withdrawServiceFee:amount>0?money(fee):'—',withdrawNetReceive:amount>0?money(amount-fee):'—'};
  Object.entries(fields).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
- const status=document.getElementById('withdrawEligibilityStatus');
- if(status){
-  if(currentDirectActiveReferrals<3)status.textContent='You need '+(3-currentDirectActiveReferrals)+' more active direct referral(s) before withdrawing.';
-  else if(balance<23000)status.textContent='Your balance is below the minimum withdrawal of UGX 23,000.';
-  else if(amount>0&&!valid)status.textContent='Enter an amount between UGX 23,000 and your Available Balance.';
-  else if(valid)status.textContent='You meet the referral and balance requirements. Payout processing is not enabled yet.';
-  else status.textContent='You are eligible to withdraw once you enter an amount.';
- }
+ const status=document.getElementById('withdrawEligibilityStatus'),button=document.getElementById('withdrawRequestButton');
+ const mobile=String(document.getElementById('withdrawMobileNumber')?.value||'').replace(/[^0-9+]/g,'');
+ let message='Enter an amount to continue.';
+ if(currentDirectActiveReferrals<3)message='You need '+(3-currentDirectActiveReferrals)+' more active direct referral(s).';
+ else if(balance<23000)message='Your withdrawable balance is below UGX 23,000.';
+ else if(amount>0&&!valid)message='Enter UGX 23,000 up to UGX '+balance.toLocaleString()+'.';
+ else if(mobile.length<9||mobile.length>16)message='Enter a valid MTN or Airtel number.';
+ else if(valid)message='Eligible. Your request will be reviewed before payout.';
+ if(status)status.textContent=message;
+ if(button)button.disabled=!(currentDirectActiveReferrals>=3&&balance>=23000&&valid&&mobile.length>=9&&mobile.length<=16);
 }
-document.getElementById('withdrawAmountInput')?.addEventListener('input',renderWithdrawalQuote);
+['withdrawAmountInput','withdrawNetworkInput','withdrawMobileNumber'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderWithdrawalQuote));
+document.getElementById('withdrawNetworkInput')?.addEventListener('change',renderWithdrawalQuote);
 function renderWithdrawalEligibility(){
- const count=Number(currentDirectActiveReferrals||0),balance=Number(currentAvailableBalance||0);
+ const count=Number(currentDirectActiveReferrals||0),balance=Number(currentWithdrawableBalance||0);
  const countEl=document.getElementById('withdrawDirectActiveCount'),balanceEl=document.getElementById('withdrawAvailableBalance');
- if(countEl)countEl.textContent=count+' / 3 active';
- if(balanceEl)balanceEl.textContent='Available: UGX '+Math.max(0,balance).toLocaleString();
+ if(countEl)countEl.textContent=count+' / 3';
+ if(balanceEl)balanceEl.textContent='UGX '+Math.max(0,balance).toLocaleString();
  renderWithdrawalQuote();
 }
+document.getElementById('withdrawRequestButton')?.addEventListener('click',async()=>{
+ const button=document.getElementById('withdrawRequestButton'),msg=document.getElementById('withdrawRequestMessage');
+ const amount=Number(document.getElementById('withdrawAmountInput')?.value||0);
+ const network=document.getElementById('withdrawNetworkInput')?.value||'';
+ const mobile=String(document.getElementById('withdrawMobileNumber')?.value||'').trim();
+ if(!currentMember){msg.textContent='Sign in to request a withdrawal.';return;}
+ renderWithdrawalQuote();if(button.disabled)return;
+ const fee=Math.round(amount*.005),net=amount-fee;
+ if(!confirm('Submit UGX '+amount.toLocaleString()+' withdrawal to '+network.toUpperCase()+' '+mobile+'? You will receive UGX '+net.toLocaleString()+'. The requested amount will be reserved while reviewed.'))return;
+ button.disabled=true;button.textContent='Submitting…';msg.textContent='Securing your request…';
+ try{
+  const {data,error}=await supabaseClient.rpc('create_withdrawal_request',{p_amount:amount,p_network:network,p_mobile_number:mobile});
+  if(error)throw error;
+  msg.textContent='Request submitted. UGX '+amount.toLocaleString()+' is reserved. Net payout: UGX '+Number(data.net_receive||net).toLocaleString()+'.';
+  document.getElementById('withdrawAmountInput').value='';
+  await loadMemberWallet();await loadWithdrawalHistory();
+ }catch(err){msg.textContent=err.message||'Could not submit your withdrawal request.';}
+ finally{button.textContent='Submit request';renderWithdrawalQuote();}
+});
 async function loadWithdrawalHistory(){
  const box=document.getElementById('withdrawHistoryList');if(!box)return;
  const member=await ensureMemberSession();
- if(!member){box.textContent='Reconnect to restore your secure session and load withdrawal history.';return;}
- box.textContent='Loading withdrawal history…';
- const {data,error}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at,admin_note').eq('user_id',currentMember.id).order('created_at',{ascending:false}).limit(50);
- if(error){box.textContent='Withdrawal history is not available yet.';console.warn(error);return;}
- if(!data?.length){box.textContent='No withdrawal requests found.';return;}
- box.innerHTML=data.map(x=>'<article class="team-member-row"><div><strong>UGX '+Number(x.amount).toLocaleString()+'</strong><small>'+new Date(x.created_at).toLocaleString()+(x.admin_note?' · '+escapeText(x.admin_note):'')+'</small></div><span class="team-member-state '+(x.status==='paid'?'active':'inactive')+'">'+escapeText(String(x.status||'pending').toUpperCase())+'</span></article>').join('');
+ if(!member){box.textContent='Sign in to view your requests.';return;}
+ box.textContent='Loading…';
+ const {data,error}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at,admin_note,payout_details,provider_reference').eq('user_id',currentMember.id).order('created_at',{ascending:false}).limit(50);
+ if(error){box.textContent='History unavailable.';console.warn(error);return;}
+ if(!data?.length){box.textContent='No withdrawal requests yet.';return;}
+ box.innerHTML=data.map(x=>{
+  const d=x.payout_details||{},state=String(x.status||'pending'),fee=Number(d.service_fee||0),net=Number(d.net_receive||Number(x.amount)-fee);
+  return '<article class="withdraw-history-item"><div><strong>UGX '+Number(x.amount).toLocaleString()+' · '+escapeText(String(d.network||'mobile money').toUpperCase())+'</strong><small>'+escapeText(d.mobile_number||'')+' · Net UGX '+net.toLocaleString()+'<br>'+new Date(x.created_at).toLocaleString('en-GB')+(x.admin_note?' · '+escapeText(x.admin_note):'')+(x.provider_reference?' · Ref: '+escapeText(x.provider_reference):'')+'</small></div><span class="withdraw-state '+(state==='paid'?'paid':state==='rejected'?'rejected':'')+'">'+escapeText(state.replace(/_/g,' ').toUpperCase())+'</span></article>';
+ }).join('');
 }
 async function updateTaskEarningsFromLedger(ledgerRows){
  const definitions=[
@@ -4433,10 +4458,10 @@ async function loadMemberWallet(){
  const member=await ensureMemberSession();
  if(!supabaseClient||!member)return;
  const payoutEl=document.getElementById('withdrawPayoutNumber');
- if(payoutEl){
-  const {data:profile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
-  payoutEl.textContent=profile?.phone||currentMember.user_metadata?.phone||currentMember.phone||'No phone number saved in your profile';
- }
+ const {data:withdrawProfile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
+ const savedPhone=withdrawProfile?.phone||currentMember.user_metadata?.phone||currentMember.phone||'';
+ if(payoutEl)payoutEl.textContent=savedPhone||'No phone number saved';
+ const phoneInput=document.getElementById('withdrawMobileNumber');if(phoneInput&&!phoneInput.value&&savedPhone)phoneInput.value=savedPhone;
  const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type,note,created_at').eq('user_id',currentMember.id);
  if(error){console.warn('Wallet ledger:',error);return;}
  const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
@@ -4445,6 +4470,8 @@ async function loadMemberWallet(){
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
  const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal','voucher_purchase','client_activation_debit'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
+ const withdrawRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
+ currentWithdrawableBalance=Math.max(0,signed(withdrawRows));
  const profitRows=ugx.filter(x=>['task_reward','welcome_bonus','referral_commission'].includes(x.entry_type));
  const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
  const balance=signed(availableRows),teamEarnings=signed(referralRows),earned=signed(profitRows),welcomeBonus=signed(welcomeRows);
