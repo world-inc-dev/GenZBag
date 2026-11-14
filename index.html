@@ -2128,7 +2128,7 @@ input,select,textarea{font-size:14px}
     <h2>GenZBag App Available!</h2>
 
     <p>
-      Get faster access to your dashboard, orders & team - right from your phone.
+      Get faster access to your dashboard, activities, wallet and referrals - right from your phone.
     </p>
 
     <button class="download-btn" id="installAppBtn" type="button">
@@ -2223,7 +2223,7 @@ activationForm?.addEventListener('submit',async e=>{
  if(reference.length<5){activationStatusEl.textContent='Enter a valid mobile money transaction reference.';return;}
  activationSubmit.disabled=true;activationSubmit.textContent='Submitting…';
  try{
-  const {error}=await supabaseClient.from('activation_payment_submissions').insert({user_id:currentMember.id,amount:19500,currency:'UGX',payment_method:selectedActivationMethod==='airtel'?'airtel_money':'mtn_mobile_money',payment_reference:reference,status:'pending'});
+  const {error}=await supabaseClient.from('activation_payment_submissions').insert({user_id:currentMember.id,amount:19500,currency:'UGX',payment_method:selectedActivationMethod==='airtel'?'airtel_money':'mtn_mobile_money',payment_reference:reference});
   if(error)throw error;
   document.getElementById('genzActivationReference').value='';
   showActivationPage('genzActivationHome');activationForm.hidden=true;
