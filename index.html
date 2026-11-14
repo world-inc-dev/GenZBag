@@ -1678,6 +1678,33 @@ input,select,textarea{font-size:14px}
   .genz-activation-card{margin:0 auto!important}
 }
 
+
+/* Keep the locked dashboard completely behind activation; stop mobile rubber-band reveal */
+html:has(.genz-activation-gate.visible),
+body.activation-body-locked{
+  overscroll-behavior:none!important;
+  overflow:hidden!important;
+}
+body.activation-body-locked{
+  position:fixed!important;
+  left:0!important;right:0!important;
+  width:100%!important;
+}
+.genz-activation-gate.visible{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483000!important;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:none!important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  background:linear-gradient(112deg,#173A9A 0%,#3546C6 48%,#7138D8 100%)!important;
+}
+
 </style>
 </head>
 
@@ -2490,8 +2517,11 @@ document.querySelectorAll('[data-activation-back]').forEach(btn=>btn.addEventLis
 document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(btn.dataset.copy);const old=btn.textContent;btn.textContent='Copied';setTimeout(()=>btn.textContent=old,1300);}catch(e){activationStatusEl.textContent='Copy is unavailable. Please select and copy the displayed number.';}}));
 
 let activationCheckVersion=0,activationStatusTimer=null;
-function hideActivationGate(){activationGate?.classList.remove('visible');if(activationStatusTimer){clearInterval(activationStatusTimer);activationStatusTimer=null;}}
-function lockActivationGate(message){if(activationGate){activationGate.classList.add('visible');activationGate.setAttribute('aria-hidden','false');}if(activationStatusEl)activationStatusEl.textContent=message||'Activation required.';}
+let activationScrollY=0,activationBodyLocked=false;
+function unlockActivationBody(){if(!activationBodyLocked)return;document.body.classList.remove('activation-body-locked');document.body.style.top='';activationBodyLocked=false;window.scrollTo(0,activationScrollY);}
+function lockActivationBody(){if(activationBodyLocked)return;activationScrollY=window.scrollY||window.pageYOffset||0;document.body.classList.add('activation-body-locked');document.body.style.top='-'+activationScrollY+'px';activationBodyLocked=true;}
+function hideActivationGate(){activationGate?.classList.remove('visible');activationGate?.setAttribute('aria-hidden','true');unlockActivationBody();if(activationStatusTimer){clearInterval(activationStatusTimer);activationStatusTimer=null;}}
+function lockActivationGate(message){lockActivationBody();if(activationGate){activationGate.classList.add('visible');activationGate.setAttribute('aria-hidden','false');}if(activationStatusEl)activationStatusEl.textContent=message||'Activation required.';}
 function renderActivationGate(record,error){
  if(error){lockActivationGate('We could not verify your activation status. Your dashboard remains locked for your security. Check again when your connection is stable.');activationForm.hidden=true;return;}
  const status=String(record?.status||'not_submitted').toLowerCase();
