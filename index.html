@@ -2918,7 +2918,7 @@ document.getElementById('adminActivationList')?.addEventListener('click',async e
  if(!confirm('Confirm '+(decision==='verified'?'approval':'rejection')+' of this activation payment?'))return;
  const note=prompt('Enter the payment verification note (optional):');if(note===null)return;
  b.disabled=true;
- try{const result=await runAdminAction({action:'review_activation',id:row.dataset.adminActivation,status:decision,note});adminMessage(result.message||'Activation review saved.');await loadAdminActivations();await loadAdminConsoleOverview();}
+ try{const result=await runAdminAction({action:'review_activation',id:row.dataset.adminActivation,status:decision,note});const mail=result.referral_emails||{};let message=result.message||'Activation review saved.';if(decision==='verified'){if(mail.setupRequired)message+=' Email notices are queued; configure RESEND_API_KEY and GENZBAG_FROM_EMAIL in Supabase to deliver them.';else if(Number(mail.sent||0)>0)message+=' '+mail.sent+' referral email(s) sent.';else if(Number(mail.queued||0)>0)message+=' '+mail.queued+' referral email(s) remain queued.';}adminMessage(message);await loadAdminActivations();await loadAdminConsoleOverview();await loadAdminFinancials();}
  catch(err){alert('Could not update activation: '+err.message);b.disabled=false;}
 });
 function closeAdminMemberModal(){
