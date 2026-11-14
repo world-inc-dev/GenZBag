@@ -4771,6 +4771,44 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
   display:grid!important;
   gap:0!important;
 }
+
+/* Final activation-card text contrast: use the same dark readable text as the amount card. */
+#genzActivationGate .genz-fast-progress>div,
+#genzActivationGate .genz-fast-method,
+#genzActivationGate .genz-fast-instruction,
+#genzActivationGate .genz-fast-confirm,
+#genzActivationGate .genz-activation-status{
+  color:#1e3651!important;
+}
+#genzActivationGate .genz-fast-progress>div>span,
+#genzActivationGate .genz-fast-progress>div>span *,
+#genzActivationGate .genz-fast-method-copy,
+#genzActivationGate .genz-fast-method-copy strong,
+#genzActivationGate .genz-fast-method-copy small,
+#genzActivationGate .genz-fast-instruction small,
+#genzActivationGate .genz-fast-instruction>div>strong,
+#genzActivationGate .genz-fast-instruction>div>strong em,
+#genzActivationGate .genz-fast-instruction p,
+#genzActivationGate .genz-fast-instruction p strong,
+#genzActivationGate .genz-fast-confirm h2,
+#genzActivationGate .genz-fast-confirm>p,
+#genzActivationGate .genz-fast-confirm label,
+#genzActivationGate .genz-activation-status,
+#genzActivationGate .genz-activation-status *{
+  color:#1e3651!important;
+  text-shadow:none!important;
+}
+#genzActivationGate .genz-fast-progress>div>b,
+#genzActivationGate .genz-fast-instruction>b,
+#genzActivationGate .genz-fast-instruction button,
+#genzActivationGate .genz-fast-confirm .genz-activation-submit,
+#genzActivationGate .genz-fast-confirm .genz-activation-submit *,
+#genzActivationGate .genz-fast-method .genz-fast-network{
+  color:#fff!important;
+}
+#genzActivationGate .genz-fast-confirm .genz-fast-input-wrap input{
+  color:#1e3651!important;
+}
 </style>
 
 </body>
