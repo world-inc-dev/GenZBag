@@ -1644,6 +1644,10 @@ img,svg,video,canvas{max-width:100%}
     <section class="admin-console-panel active" id="adminOverviewPanel">
       <h2>Platform overview</h2><p class="admin-muted">Live counts are read from the protected GenZBag database. Detailed sections load when opened.</p>
       <div class="admin-note">Financial safety: GenZBag remains in test/review mode. Review requests here, but do not mark a withdrawal as paid unless an actual payout has been independently completed and verified.</div>
+      <div class="admin-card" style="margin:14px 0;padding:16px;border:1px solid rgba(45,212,191,.2);border-radius:16px;background:rgba(15,23,42,.55)">
+        <div style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><strong>Email delivery test</strong><p class="admin-muted" style="margin:5px 0 0">Send a test message to your administrator login email. This does not approve activations or change member balances.</p></div><button type="button" class="admin-action" id="adminTestEmailBtn">Send test email</button></div>
+        <div id="adminTestEmailStatus" class="admin-muted" role="status" aria-live="polite" style="margin-top:10px"></div>
+      </div>
       <div id="adminOverviewRecent" class="admin-muted">Loading latest activity…</div>
     </section>
     <section class="admin-console-panel" id="adminFinancePanel">
@@ -2900,6 +2904,21 @@ function setupAdminConsole(){
  if(adminConsoleNav&&!adminConsoleNav.dataset.bound){adminConsoleNav.dataset.bound='1';adminConsoleNav.addEventListener('click',()=>{if(adminIsAuthorized())loadAdminConsoleTab('adminOverviewPanel');});}
  loadAdminConsoleOverview();
 }
+document.getElementById('adminTestEmailBtn')?.addEventListener('click',async()=>{
+ if(!adminIsAuthorized())return;
+ const button=document.getElementById('adminTestEmailBtn'),status=document.getElementById('adminTestEmailStatus');
+ if(!confirm('Send a GenZBag email test to your administrator login email?'))return;
+ button.disabled=true;button.textContent='Sending…';status.textContent='Contacting Resend…';
+ try{
+  const result=await runAdminAction({action:'test_email'});
+  status.textContent=(result.message||'Test email accepted.')+' Recipient: '+(result.recipient||'administrator email')+'. Check your inbox and spam folder.';
+  status.style.color='#5eead4';
+  adminMessage('Test email successfully accepted by Resend.');
+ }catch(err){
+  status.textContent='Email test failed: '+err.message;
+  status.style.color='#fca5a5';
+ }finally{button.disabled=false;button.textContent='Send test email';}
+});
 async function runAdminAction(payload){
  const {data,error}=await supabaseClient.functions.invoke('admin-management',{body:payload});
  if(error)throw new Error(error.message||'Administrator request failed.');
