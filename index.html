@@ -11,6 +11,9 @@
 <meta name="apple-mobile-web-app-title" content="GenZBag">
 <link rel="icon" type="image/svg+xml" href="./icon.svg">
 <link rel="apple-touch-icon" href="./icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 
 <style>
@@ -1312,6 +1315,76 @@ img,svg,video,canvas{max-width:100%}
 @media(max-width:700px){.admin-member-grid{grid-template-columns:1fr}.admin-console{margin:10px auto!important}.admin-console-head{align-items:flex-start}.admin-console-tabs button{padding:10px 12px}.admin-console table{min-width:570px}}
 @media(max-width:380px){.admin-edit-dialog{padding:17px}.admin-member-card{padding:11px}.admin-console-tabs button{font-size:10px}}
 
+
+/* GENZBAG PREMIUM TYPOGRAPHY */
+:root{--font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+html{font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--font-ui);font-size:15px;line-height:1.5;letter-spacing:-.012em}
+button,input,select,textarea{font-family:var(--font-ui)}
+h1,h2,h3,h4{letter-spacing:-.025em}
+p{line-height:1.6}
+.brand-button{font-size:14px}.sidebar-brand{font-size:21px}
+.nav-label{font-size:11px}.nav-link{font-size:14px;line-height:1.4;padding:13px 12px}
+.sidebar-footer{font-size:12px;line-height:1.6}
+.main{padding-top:22px}.network-card h2{font-size:20px}
+.network-card .subtitle{font-size:13px}.network-message{font-size:14px;line-height:1.65}
+.welcome-info h2{font-size:21px}.welcome-info p{font-size:14px}
+.profit-box small{font-size:11px}.profit-box strong{font-size:23px}
+.expenses-title{font-size:13px}.expenses-value{font-size:19px}
+.balance-card small{font-size:11px}.balance-card strong{font-size:21px}
+input,select,textarea{font-size:14px}
+@media(max-width:480px){.main{padding:14px 12px 30px}.topbar{padding:0 12px}.nav-link{font-size:14px}.network-message{font-size:13px}.welcome-info h2{font-size:19px}}
+/* GLASS ACTIVATION */
+.genz-activation-gate{align-items:center;padding:clamp(14px,3.5vw,34px);background:radial-gradient(ellipse at 12% 12%,rgba(31,211,190,.22),transparent 35%),radial-gradient(ellipse at 88% 88%,rgba(59,130,246,.20),transparent 38%),linear-gradient(135deg,#050d1c,#0a1930 48%,#102744);isolation:isolate}
+.genz-activation-gate:before,.genz-activation-gate:after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(2px);pointer-events:none}
+.genz-activation-gate:before{width:240px;height:240px;top:8%;right:8%;background:radial-gradient(circle,#2dd4bf26,transparent 70%);animation:activationFloat 9s ease-in-out infinite}
+.genz-activation-gate:after{width:300px;height:300px;bottom:3%;left:3%;background:radial-gradient(circle,#60a5fa20,transparent 70%);animation:activationFloat 11s ease-in-out infinite reverse}
+@keyframes activationFloat{50%{transform:translate3d(14px,-16px,0) scale(1.06)}}
+.genz-activation-card{position:relative;width:min(100%,590px);padding:clamp(22px,5vw,38px);border:1px solid rgba(190,230,255,.22);border-radius:28px;background:linear-gradient(145deg,rgba(20,42,69,.82),rgba(8,22,42,.78));-webkit-backdrop-filter:blur(24px) saturate(145%);backdrop-filter:blur(24px) saturate(145%);box-shadow:0 32px 100px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.13);overflow:hidden}
+.genz-activation-card:before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(94,234,212,.75),rgba(147,197,253,.55),transparent)}
+.genz-activation-brand{position:relative;gap:12px;margin-bottom:28px;color:#f3fbff;font-size:13px;letter-spacing:2.4px}
+.genz-activation-icon{width:48px;height:48px;border:1px solid rgba(94,234,212,.32);border-radius:16px;background:linear-gradient(145deg,rgba(45,212,191,.24),rgba(59,130,246,.13));box-shadow:0 8px 24px rgba(20,184,166,.12);color:#7df4df}
+.genz-activation-live{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid rgba(94,234,212,.2);border-radius:30px;background:rgba(45,212,191,.08);color:#9af4e4;font-size:10px;font-weight:800;letter-spacing:.6px}
+.genz-activation-live i{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.12),0 0 12px #4ade80;animation:activationPulse 1.8s infinite}
+@keyframes activationPulse{50%{opacity:.45;box-shadow:0 0 0 7px rgba(74,222,128,0)}}
+.genz-activation-card h1{font-size:clamp(27px,6vw,36px);line-height:1.12;letter-spacing:-1.1px;margin:0 0 12px}
+.genz-activation-card p{font-size:14px;line-height:1.75;color:#bdcde0}
+.genz-activation-fee{margin:23px 0;padding:19px 20px;border:1px solid rgba(94,234,212,.24);border-radius:19px;background:linear-gradient(110deg,rgba(20,184,166,.14),rgba(59,130,246,.09));box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.genz-activation-fee span{font-size:12px;color:#c0d0e2;font-weight:650}
+.genz-activation-fee strong{font-size:clamp(24px,5vw,30px);color:#80f4df}
+.genz-activation-progress{gap:12px;margin:22px 0}
+.genz-activation-progress>div{gap:13px;padding:12px 13px;border:1px solid rgba(148,180,211,.12);border-radius:14px;background:rgba(255,255,255,.035);font-size:13px;color:#d8e6f5}
+.genz-activation-progress b{flex-basis:30px;height:30px;border:1px solid rgba(94,234,212,.2);font-size:13px}
+.genz-activation-progress strong{display:inline-block;margin-bottom:2px;color:#fff;font-size:14px}
+.genz-activation-progress small{font-size:12px;color:#9fb4ca}
+.genz-activation-status{margin:17px 0;padding:14px 16px;border:1px solid rgba(148,180,211,.16);border-radius:14px;background:rgba(148,163,184,.08);font-size:13px;line-height:1.65}
+.genz-activation-card h3{font-size:17px!important}
+.genz-activation-methods{gap:13px;margin:15px 0 19px}
+.genz-activation-method{min-height:94px;padding:18px 16px;border:1px solid rgba(160,190,220,.2);border-radius:17px;background:linear-gradient(145deg,rgba(31,57,86,.72),rgba(12,31,54,.78));box-shadow:inset 0 1px 0 rgba(255,255,255,.06);transition:transform .2s,border-color .2s,background .2s}
+.genz-activation-method:hover,.genz-activation-method:focus-visible{transform:translateY(-2px);border-color:rgba(94,234,212,.65);outline:none}
+.genz-activation-method strong{font-size:15px;margin-bottom:8px}
+.genz-activation-method span{font-size:12px;line-height:1.5;color:#b8cbe0}
+.genz-activation-detail{margin:17px 0;padding:17px;border:1px solid rgba(148,180,211,.16);border-radius:18px;background:rgba(3,15,30,.42)}
+.genz-activation-step{gap:13px;margin:14px 0;font-size:13px;line-height:1.7;color:#dbe8f6}
+.genz-activation-step b{flex-basis:29px;height:29px;font-size:12px}
+.genz-activation-step strong{color:#fff}
+.genz-activation-step small{display:inline-block;margin-top:3px;color:#a9bed4;font-size:12px;line-height:1.6}
+.genz-activation-copy{padding:9px 12px;border-radius:10px;font-size:12px}
+.genz-activation-back{font-size:13px;padding:8px 0}
+.genz-activation-form{gap:13px;margin-top:20px}
+.genz-activation-form label{font-size:13px;gap:8px;color:#e0ebf7}
+.genz-activation-form input{min-height:50px;padding:14px 15px;border-color:rgba(160,190,220,.28);border-radius:13px;background:rgba(3,15,30,.62);font-size:15px}
+.genz-activation-submit,.genz-activation-secondary{min-height:49px;border-radius:13px;font-size:14px;transition:transform .18s,filter .18s,border-color .18s}
+.genz-activation-submit{background:linear-gradient(105deg,#5eead4,#2dd4bf 55%,#38bdf8);box-shadow:0 10px 28px rgba(20,184,166,.18);color:#062326}
+.genz-activation-submit:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.genz-activation-secondary{border-color:rgba(160,190,220,.22);background:rgba(255,255,255,.045);color:#e1edf9}
+.genz-activation-small{font-size:12px!important;line-height:1.65!important;color:#9fb4ca!important}
+.genz-activation-actions{gap:10px;margin-top:15px}
+#genzActivationSignOut{font-size:12px!important;padding:8px 10px;border:1px solid rgba(160,190,220,.18)!important;border-radius:10px}
+@media(max-width:520px){.genz-activation-gate{align-items:flex-start;padding:12px 10px}.genz-activation-card{width:100%;padding:22px 18px;border-radius:22px}.genz-activation-brand{margin-bottom:22px}.genz-activation-live{font-size:9px;padding:5px 8px}.genz-activation-methods{grid-template-columns:1fr}.genz-activation-method{min-height:76px}.genz-activation-actions{grid-template-columns:1fr 1fr}}
+@media(max-width:360px){.genz-activation-actions{grid-template-columns:1fr}.genz-activation-card h1{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.genz-activation-gate:before,.genz-activation-gate:after,.genz-activation-live i{animation:none!important}.genz-activation-method,.genz-activation-submit,.genz-activation-secondary{transition:none!important}}
+
 </style>
 </head>
 
@@ -2072,31 +2145,31 @@ img,svg,video,canvas{max-width:100%}
 
 <div class="genz-activation-gate" id="genzActivationGate" role="dialog" aria-modal="true" aria-labelledby="genzActivationTitle">
  <section class="genz-activation-card">
-  <div class="genz-activation-brand"><span class="genz-activation-icon">✦</span><span>GENZBAG</span><button type="button" id="genzActivationSignOut" style="margin-left:auto;border:0;background:none;color:#a8bbcf;font-weight:700">Logout</button></div>
+  <div class="genz-activation-brand"><span class="genz-activation-icon">✦</span><span>GENZBAG</span><span class="genz-activation-live"><i></i> SECURE ACTIVATION</span><button type="button" id="genzActivationSignOut" style="margin-left:auto;border:0;background:none;color:#a8bbcf;font-weight:700">Logout</button></div>
   <div id="genzActivationHome" class="genz-activation-page">
-   <h1 id="genzActivationTitle">Activate your account</h1><p>Your account is ready. Complete the one-time activation payment and submit your payment details for administrator verification.</p>
+   <h1 id="genzActivationTitle">Activate your account</h1><p>Your account has been created. Once GenZBag publishes its verified merchant details, make the one-time activation payment and submit your reference for secure review.</p>
    <div class="genz-activation-fee"><span>Registration fee · Uganda</span><strong>UGX 19,500</strong></div>
-   <div class="genz-activation-progress"><div><b>✓</b><span><strong>Account created</strong><br><small id="genzActivationJoined">Your GenZBag account is registered.</small></span></div><div><b>2</b><span><strong>Pay your registration fee</strong><br>Send UGX 19,500 using one of the options below.</span></div><div><b>3</b><span><strong>Start earning</strong><br>Submit your payment reference. Your dashboard opens after verification.</span></div></div>
+   <div class="genz-activation-progress"><div><b>✓</b><span><strong>Account created</strong><br><small id="genzActivationJoined">Your GenZBag account is registered.</small></span></div><div><b>2</b><span><strong>Pay your registration fee</strong><br>Activation instructions will be enabled when the official merchant accounts are ready.</span></div><div><b>3</b><span><strong>Start earning</strong><br>Submit your payment reference. Your dashboard opens after verification.</span></div></div>
    <div class="genz-activation-status" id="genzActivationStatus" role="status" aria-live="polite">Checking your activation status…</div>
-   <h3 style="margin:18px 0 8px;color:#fff;font-size:16px">Choose how to pay</h3>
+   <h3 style="margin:18px 0 8px;color:#fff;font-size:16px">Select your mobile money network</h3>
    <div class="genz-activation-methods" id="genzActivationMethods"><button type="button" class="genz-activation-method" data-activation-method="mtn"><strong>🟡 MTN Mobile Money</strong><span>Pay with MTN</span></button><button type="button" class="genz-activation-method" data-activation-method="airtel"><strong>🔴 Airtel Money</strong><span>Pay with Airtel</span></button></div>
    <p class="genz-activation-small">Need help? Contact GenZBag support before making a payment if you are unsure about the payment details.</p>
   </div>
   <div id="genzActivationMtn" class="genz-activation-page" hidden><button type="button" class="genz-activation-back" data-activation-back>← Back</button><div style="margin-top:12px;color:#fbbf24;font-weight:900;font-size:12px;letter-spacing:1px">MTN</div><h1>Pay with<br>MTN Mobile Money</h1><div class="genz-activation-fee"><span>Amount</span><strong>UGX 19,500</strong></div><div class="genz-activation-detail">
-   <div class="genz-activation-step"><b>1</b><span><strong>Dial</strong><br><strong>*165*3#</strong> on your MTN line.</span></div>
-   <div class="genz-activation-step"><b>2</b><span><strong>Merchant ID</strong><br><strong>To be added</strong><br><small>Your MTN merchant details will appear here.</small></span></div>
+   <div class="genz-activation-step"><b>1</b><span><strong>Dial</strong><br><strong>*165*3#</strong> on your MTN line. Merchant details are still pending.</span></div>
+   <div class="genz-activation-step"><b>2</b><span><strong>Merchant ID</strong><br><strong>To be added</strong><br><small>GenZBag’s verified MTN merchant account is not available yet. Do not send money until these details are published.</small></span></div>
    <div class="genz-activation-step"><b>3</b><span><strong>Enter amount</strong><br><strong>19500</strong> (UGX)<br><button class="genz-activation-copy" type="button" data-copy="19500">Copy amount</button></span></div>
    <div class="genz-activation-step"><b>4</b><span><strong>Choose payment</strong><br>Select Pay using Mobile Money.</span></div>
-   <div class="genz-activation-step"><b>5</b><span><strong>Confirm recipient</strong><br>Check that the name shows <strong>DOREEN</strong>.</span></div>
+   <div class="genz-activation-step"><b>5</b><span><strong>Confirm recipient</strong><br>Only continue when the official GenZBag merchant name is displayed.</span></div>
    <div class="genz-activation-step"><b>6</b><span><strong>Finish</strong><br>Enter your MTN PIN and send.</span></div></div><h3 style="color:#fff;font-size:16px">Already paid? Confirm it</h3><p>Enter the transaction ID (TID) from your MTN confirmation SMS.</p></div>
   <div id="genzActivationAirtel" class="genz-activation-page" hidden><button type="button" class="genz-activation-back" data-activation-back>← Back</button><div style="margin-top:12px;color:#fb7185;font-weight:900;font-size:12px;letter-spacing:1px">AIRTEL</div><h1>Pay with<br>Airtel Money</h1><div class="genz-activation-fee"><span>Amount</span><strong>UGX 19,500</strong></div><div class="genz-activation-detail">
-   <div class="genz-activation-step"><b>1</b><span><strong>Dial</strong><br><strong>*185*9#</strong> on your Airtel line.</span></div>
-   <div class="genz-activation-step"><b>2</b><span><strong>Merchant ID</strong><br><strong>To be added</strong><br><small>Your Airtel merchant details will appear here.</small></span></div>
+   <div class="genz-activation-step"><b>1</b><span><strong>Dial</strong><br><strong>*185*9#</strong> on your Airtel line. Merchant details are still pending.</span></div>
+   <div class="genz-activation-step"><b>2</b><span><strong>Merchant ID</strong><br><strong>To be added</strong><br><small>GenZBag’s verified Airtel merchant account is not available yet. Do not send money until these details are published.</small></span></div>
    <div class="genz-activation-step"><b>3</b><span><strong>Enter amount</strong><br><strong>19500</strong> (UGX)<br><button class="genz-activation-copy" type="button" data-copy="19500">Copy amount</button></span></div>
-   <div class="genz-activation-step"><b>4</b><span><strong>Confirm recipient</strong><br>Check that the name shows <strong>PESAWAVE</strong>.</span></div>
+   <div class="genz-activation-step"><b>4</b><span><strong>Confirm recipient</strong><br>Only continue when the official GenZBag merchant name is displayed.</span></div>
    <div class="genz-activation-step"><b>5</b><span><strong>Finish</strong><br>Enter your Airtel PIN to send.</span></div></div><h3 style="color:#fff;font-size:16px">Already paid? Confirm it</h3><p>Enter the phone number you paid with or the transaction ID from your Airtel confirmation SMS.</p></div>
   <form class="genz-activation-form" id="genzActivationForm" hidden><label for="genzActivationReference">Payment transaction ID / phone number</label><input id="genzActivationReference" name="payment_reference" type="text" maxlength="100" autocomplete="off" placeholder="Enter transaction ID or phone number" required><button class="genz-activation-submit" id="genzActivationSubmit" type="submit">Submit payment for verification</button></form>
-  <p class="genz-activation-small" id="genzActivationInstructions">Submitting your payment details does not activate your account automatically. An administrator will verify your payment.</p>
+  <p class="genz-activation-small" id="genzActivationInstructions">For your security, never pay to a personal number or an unverified recipient. Account activation is completed only after an administrator verifies a valid payment.</p>
   <div class="genz-activation-actions"><button class="genz-activation-secondary" id="genzActivationRefresh" type="button">Check activation status</button><button class="genz-activation-secondary" id="genzActivationInstall" type="button">Install GenZBag</button></div>
  </section>
 </div>
