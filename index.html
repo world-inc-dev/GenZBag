@@ -389,15 +389,34 @@ footer{
   <div class="sidebar-brand">GenZ<span>Bag</span> 👜</div>
   <div class="nav-label">MAIN MENU</div>
   <a class="nav-link active" href="#dashboard"><span class="nav-icon">🏠</span>Dashboard</a>
-  <a class="nav-link" href="#network"><span class="nav-icon">🤝</span>Grow Your Network</a>
-  <a class="nav-link" href="#wallet"><span class="nav-icon">💰</span>My Wallet</a>
-  <a class="nav-link" href="#tasks"><span class="nav-icon">✅</span>Task Earnings</a>
-  <a class="nav-link" href="#referrals"><span class="nav-icon">🔗</span>Refer & Earn</a>
-  <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>My Profile</a>
-  <div class="nav-label">SHOP</div>
-  <a class="nav-link" href="#schedule"><span class="nav-icon">👜</span>Weekly Schedule</a>
-  <a class="nav-link" href="#app"><span class="nav-icon">📱</span>Get the App</a>
-  <div class="sidebar-footer">GenZBag · Shop Smart. Earn Fast.</div>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">⌂</span>Home</a>
+
+  <div class="nav-label">GENERAL</div>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎡</span>Spins</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎵</span>Earn with Spotify</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🛍️</span>Marketplace</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">👆</span>Fix Tap</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">💬</span>Chat foreigners</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎨</span>Colour Challenge</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📊</span>Free Forex Classes</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">▶️</span>Youtube Videos</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎬</span>Tiktok Videos</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📢</span>Click Ads</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📚</span>Business Ebooks</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">➗</span>Math for fun</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">💻</span>New Tech Classes</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📈</span>Deriv Tips</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">💸</span>Quick Loans</a>
+
+  <div class="nav-label">SETTING</div>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📨</span>Text Upline</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">✉️</span>Read Messages</a>
+  <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>Profile</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">☎️</span>Contact Us</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">👥</span>Join community</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">↪️</span>Logout</a>
+
+  <div class="sidebar-footer">GenZBag · A home of Digital Income.</div>
 </aside>
 
 <main class="main" id="dashboard">
@@ -422,7 +441,7 @@ footer{
       <div class="avatar">B</div>
       <div class="welcome-info">
         <h2>Hi Bridan</h2>
-        <p>Shop Smart. Earn Fast.</p>
+        <p>A home of Digital Income.</p>
       </div>
       <span class="active-badge">Active</span>
     </div>
@@ -575,7 +594,7 @@ footer{
 
   <section class="card" id="wallet">
     <div class="wallet-heading">
-      <h2>My Wallet</h2>
+      <h2>My Deposit / Wallet</h2>
       <p>Account & deposits</p>
     </div>
     <div class="wallet-body">
@@ -657,14 +676,14 @@ footer{
   document.getElementById('copyButton').addEventListener('click',copyReferralLink);
 
   document.getElementById('whatsappButton').addEventListener('click',function(){
-    const message='Join me on GenZBag! Shop smart and explore the latest bags. '+referralInput.value;
+    const message='Join me on GenZBag! A home of Digital Income. Join GenZBag today. '+referralInput.value;
     window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
   });
 
   document.getElementById('shareButton').addEventListener('click',async function(){
     const shareData={
       title:'GenZBag',
-      text:'Join me on GenZBag! Shop smart and explore the latest bags.',
+      text:'Join me on GenZBag! A home of Digital Income. Join GenZBag today.',
       url:referralInput.value
     };
     if(navigator.share){
