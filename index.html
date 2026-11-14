@@ -779,6 +779,23 @@ footer {
 .admin-submission-actions{display:flex;gap:7px;margin-top:8px}
 @media(max-width:420px){.chat-messages{height:300px}.admin-task-form .two{grid-template-columns:1fr 1fr}}
 
+
+/* Finance and rewards navigation */
+.nav-dropdown-toggle{width:100%;display:flex;align-items:center;gap:12px;padding:12px;border:0;border-radius:11px;margin:3px 0;background:transparent;color:#E5EDFF;font:650 13px inherit;text-align:left;cursor:pointer}
+.nav-dropdown-toggle:hover,.nav-dropdown-toggle[aria-expanded="true"]{background:#ffffff1c;color:#fff}
+.nav-dropdown-toggle .nav-icon{width:22px;text-align:center;font-size:17px}
+.nav-chevron{margin-left:auto;font-size:13px;transition:transform .2s ease}
+.nav-dropdown-toggle[aria-expanded="true"] .nav-chevron{transform:rotate(180deg)}
+.nav-submenu{display:none;padding:2px 0 5px 15px}
+.nav-submenu.open{display:block}
+.nav-submenu .nav-link{font-size:12px;padding:10px 10px;margin:2px 0;border-left:2px solid #ffffff30}
+.feature-workspace{padding:18px;margin:14px 0;border:1px solid #e5eaf2;border-radius:16px;background:#fff;box-shadow:0 6px 18px #0a2a6b0a;scroll-margin-top:84px}
+.feature-workspace-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.feature-workspace h2{font-size:18px;color:#14284f}
+.feature-workspace p{font-size:12px;line-height:1.65;color:#64748b;margin-top:9px}
+.feature-status{display:inline-flex;align-items:center;padding:6px 10px;border-radius:20px;background:#fff4db;color:#996000;font-size:9px;font-weight:900;letter-spacing:.4px}
+.feature-notice{margin-top:14px;padding:12px;border-radius:11px;background:#f3f7ff;color:#425778;font-size:11px;line-height:1.6}
+.feature-workspace .feature-icon{font-size:27px;margin-bottom:9px}
 </style>
 </head>
 
@@ -859,6 +876,21 @@ footer {
   <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">💻</span>New Tech Classes</a>
   <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">📈</span>Deriv Education</a>
   <a class="nav-link" href="#activityHub" data-activity-category="learning"><span class="nav-icon">💸</span>Financial Education</a>
+
+  <div class="nav-label">ACCOUNT & REWARDS</div>
+  <a class="nav-link" href="#featureWorkspace" data-feature="leaderboard"><span class="nav-icon">🏆</span>Leaderboard</a>
+  <a class="nav-link" href="#featureWorkspace" data-feature="voucher"><span class="nav-icon">🎟️</span>Voucher</a>
+  <a class="nav-link" href="#featureWorkspace" data-feature="pay-client"><span class="nav-icon">🤝</span>Pay for client</a>
+  <a class="nav-link" href="#featureWorkspace" data-feature="deposit"><span class="nav-icon">➕</span>Deposit</a>
+  <button class="nav-dropdown-toggle" id="withdrawMenuToggle" type="button" aria-expanded="false" aria-controls="withdrawSubmenu"><span class="nav-icon">↗️</span>Withdraw <span class="nav-chevron" aria-hidden="true">▾</span></button>
+  <div class="nav-submenu" id="withdrawSubmenu">
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-balance">💰 Withdraw balance</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-chat">💬 Withdraw chat with foreigners</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-tiktok">🎬 Withdraw TikTok videos</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-youtube">▶️ Withdraw YouTube Videos</a>
+    <a class="nav-link" href="#featureWorkspace" data-feature="withdraw-spotify">🎵 Withdraw Spotify</a>
+  </div>
+  <a class="nav-link" href="#featureWorkspace" data-feature="welcome-bonus"><span class="nav-icon">🎁</span>Welcome Bonus</a>
 
   <div class="nav-label">SETTING</div>
   <a class="nav-link" href="#referrals"><span class="nav-icon">📨</span>Text Upline</a>
@@ -1220,6 +1252,14 @@ footer {
     </div>
   </section>
 
+  <!-- LEADERBOARD, VOUCHER, PAYMENT AND WITHDRAWAL WORKSPACE -->
+  <section class="feature-workspace" id="featureWorkspace" aria-live="polite" hidden>
+    <div class="feature-icon" id="featureIcon">🏆</div>
+    <div class="feature-workspace-head"><h2 id="featureTitle">Leaderboard</h2><span class="feature-status" id="featureStatus">PREVIEW · SETUP REQUIRED</span></div>
+    <p id="featureDescription">See how members are progressing across GenZBag.</p>
+    <div class="feature-notice" id="featureNotice">This section is being prepared. No balance changes or payments are made from this preview.</div>
+  </section>
+
   <!-- APP DOWNLOAD -->
 
   <section class="app-promo" id="app">
@@ -1256,24 +1296,42 @@ const sidebar=document.getElementById('sidebar'),overlay=document.getElementById
 function closeMenu(){sidebar.classList.remove('open');overlay.classList.remove('show');menuButton.setAttribute('aria-expanded','false');}
 function openMenu(){sidebar.classList.add('open');overlay.classList.add('show');menuButton.setAttribute('aria-expanded','true');}
 menuButton.addEventListener('click',()=>sidebar.classList.contains('open')?closeMenu():openMenu());overlay.addEventListener('click',closeMenu);
+const featureContent={
+ leaderboard:{icon:'🏆',title:'Leaderboard',description:'A future ranking board for GenZBag members, based on verified platform activity and eligible rewards.',notice:'The leaderboard is not connected to a verified ranking data source yet. Rankings and prizes will not be displayed until the rules and data are configured.'},
+ voucher:{icon:'🎟️',title:'Voucher',description:'A place to view and redeem official GenZBag vouchers when voucher campaigns are available.',notice:'Voucher issuance and redemption are not enabled yet. Do not pay anyone for a voucher code or share your account password.'},
+ 'pay-client':{icon:'🤝',title:'Pay for client',description:'A planned payment area for making an authorised payment on behalf of a client.',notice:'Client payments are not enabled. No payment will be collected or sent here until a secure payment provider, recipient verification and transaction records are integrated.'},
+ deposit:{icon:'➕',title:'Deposit',description:'A planned area for adding funds to your GenZBag account and viewing deposit instructions.',notice:'Deposits are not enabled from this screen. No mobile-money or bank payment should be sent to an unofficial number. Official payment instructions will be shown only after verification and payment integration.'},
+ 'withdraw-balance':{icon:'💰',title:'Withdraw balance',description:'Request a withdrawal of an eligible, verified available balance.',notice:'Withdrawal requests are not enabled yet. Your displayed balance is not a promise of cash payout; withdrawals require verified ledger balances, identity and payout details, approval rules and a secure payment integration.'},
+ 'withdraw-chat':{icon:'💬',title:'Withdraw chat with foreigners',description:'View eligible rewards associated with approved Chat with Foreigners activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Only approved and funded rewards can become withdrawable.'},
+ 'withdraw-tiktok':{icon:'🎬',title:'Withdraw TikTok videos',description:'View eligible rewards associated with approved TikTok video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
+ 'withdraw-youtube':{icon:'▶️',title:'Withdraw YouTube Videos',description:'View eligible rewards associated with approved YouTube video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
+ 'withdraw-spotify':{icon:'🎵',title:'Withdraw Spotify',description:'View eligible rewards associated with approved Spotify activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on artificial streams.'},
+ 'welcome-bonus':{icon:'🎁',title:'Welcome Bonus',description:'A planned welcome reward area where new members can check whether an official welcome offer is available to their account.',notice:'No welcome-bonus amount, eligibility rules or funding have been configured yet. No bonus has been credited or promised. The offer will appear here only after it is officially funded and approved.'}
+};
+document.getElementById('withdrawMenuToggle').addEventListener('click',()=>{const b=document.getElementById('withdrawMenuToggle'),menu=document.getElementById('withdrawSubmenu'),open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));menu.classList.toggle('open',!open);});
 document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>{
  if(a.id==='logoutButton')return;
  e.preventDefault();
  document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
  a.classList.add('active');
+ const featureKey=a.dataset.feature;
+ const feature=featureKey?featureContent[featureKey]:null;
  const targetId=(a.getAttribute('href')||'').replace(/^#/,'');
  const target=document.getElementById(targetId);
  if(!target){closeMenu();return;}
- const category=a.dataset.activityCategory;
- if(category){
-  currentActivityFilter=category;
-  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===category));
-  renderActivities();
+ if(feature){
+  document.getElementById('featureWorkspace').hidden=false;
+  document.getElementById('featureIcon').textContent=feature.icon;
+  document.getElementById('featureTitle').textContent=feature.title;
+  document.getElementById('featureDescription').textContent=feature.description;
+  document.getElementById('featureNotice').textContent=feature.notice;
+  document.getElementById('featureStatus').textContent='PREVIEW · SETUP REQUIRED';
  }
- closeMenu();
- target.scrollIntoView({behavior:'smooth',block:'start'});
+ const category=a.dataset.activityCategory;
+ if(category){currentActivityFilter=category;activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===category));renderActivities();}
+ closeMenu();target.scrollIntoView({behavior:'smooth',block:'start'});
  if(targetId==='globalChat'&&!currentMember)showAuthMessage('Sign in to use the global chat.','error');
- if(['referrals','profile','wallet','schedule','app'].includes(targetId))history.replaceState(null,'','#'+targetId);
+ if(['referrals','profile','wallet','schedule','app','featureWorkspace'].includes(targetId))history.replaceState(null,'','#'+(featureKey||targetId));
 }));
 const referralInput=document.getElementById('refLink'),feedback=document.getElementById('copyFeedback');
 async function copyReferralLink(){const v=referralInput.value;try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(v);else{referralInput.focus();referralInput.select();referralInput.setSelectionRange(0,v.length);if(!document.execCommand('copy'))throw Error('Copy failed');}feedback.textContent='Referral link copied successfully!';}catch(e){referralInput.focus();referralInput.select();feedback.textContent='Select and copy your referral link.';}}
