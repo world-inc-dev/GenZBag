@@ -2652,7 +2652,6 @@ if(supabaseClient){
   window.addEventListener('offline',()=>{if(hasRecentAuthGrace())beginAuthGrace();else showSessionNotice('You are offline. Reconnect to load live Supabase data.');});
 
 }else{requireAuth();}
-})();
 /* ADMIN CONTROL CENTRE: all privileged reads/writes are also enforced by Supabase RLS. */
 const adminConsoleNav=document.getElementById('adminConsoleNav');
 let adminConsoleLoaded={};
@@ -2739,8 +2738,7 @@ function setupAdminConsole(){
 document.getElementById('adminWithdrawalsList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-withdraw-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-withdrawal]');const note=prompt('Add an administrator review note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('withdrawal_requests').update({status:b.dataset.withdrawStatus,admin_note:note,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminWithdrawal);if(error)alert('Could not update request: '+error.message);else{adminMessage('Withdrawal review decision saved. No money has been transferred.');await loadAdminWithdrawals();}});
 document.getElementById('adminActivationList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-activation-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-activation]');const note=prompt('Confirm payment reference verification and enter a note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('activation_payment_submissions').update({status:b.dataset.activationStatus,admin_note:note,reviewed_by:currentMember.id,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminActivation);if(error)alert('Could not update activation: '+error.message);else{adminMessage('Activation review saved.');await loadAdminActivations();}});
 document.getElementById('adminSupportList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-ticket-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-ticket]');const {error}=await supabaseClient.from('support_tickets').update({status:b.dataset.ticketStatus,updated_at:new Date().toISOString()}).eq('id',row.dataset.adminTicket);if(error)alert('Could not update ticket: '+error.message);else await loadAdminSupport();});
-
-
+})();
 </script>
 
 </body>
