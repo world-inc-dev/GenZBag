@@ -3338,8 +3338,8 @@ body.activation-screen-open{overflow:hidden!important}
     <div id="voucherBuyPanel" class="feature-detail-panel" hidden>
       <div class="feature-stat-grid"><div><small>ACCOUNT BALANCE</small><strong id="voucherAccountBalance">UGX 0</strong></div><div><small>VOUCHER BALANCE</small><strong id="voucherAvailableCount">0 vouchers</strong></div><div><small>REFERENCE COST PER VOUCHER</small><strong>UGX 19,500</strong></div></div>
       <h3>Purchase Vouchers</h3><p>Activation Country: Uganda. Each voucher costs UGX 19,500 and is deducted from your available wallet balance.</p>
-      <label class="feature-field">Number of Vouchers<input id="voucherQuantity" type="number" min="1" step="1" value="1"></label>
-      <p id="voucherPurchaseTotal" class="feature-calculated">Estimated total: UGX 19,500</p>
+      <label class="feature-field">Number of Vouchers<input id="voucherQuantity" type="number" min="1" max="20" step="1" value="1"></label>
+      <p id="voucherPurchaseTotal" class="feature-calculated">Total: UGX 19,500</p>
       <button class="activity-btn" id="voucherPurchaseButton" type="button">Purchase Vouchers</button><p id="voucherPurchaseMessage" class="activity-note" role="status">Vouchers are issued instantly after a successful wallet deduction. Maximum 20 per purchase.</p>
     </div>
     <div id="voucherActivatePanel" class="feature-detail-panel" hidden>
@@ -3677,7 +3677,7 @@ document.getElementById('voucherActivateButton')?.addEventListener('click',async
  finally{button.disabled=false;button.textContent='Activate User';}
 });
 
-document.getElementById('voucherQuantity')?.addEventListener('input',()=>{const n=Math.max(1,Math.floor(Number(document.getElementById('voucherQuantity').value||1)));document.getElementById('voucherPurchaseTotal').textContent='Total: UGX '+(n*19500).toLocaleString();});
+document.getElementById('voucherQuantity')?.addEventListener('input',()=>{const el=document.getElementById('voucherQuantity'),n=Math.max(1,Math.min(20,Math.floor(Number(el.value||1))));el.value=n;document.getElementById('voucherPurchaseTotal').textContent='Total: UGX '+(n*19500).toLocaleString();});
 function bindDropdown(toggleId,submenuId){const b=document.getElementById(toggleId),m=document.getElementById(submenuId);if(!b||!m)return;b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));m.classList.toggle('open',!open);});}
 bindDropdown('chatMenuToggle','chatSubmenu');
 bindDropdown('voucherMenuToggle','voucherSubmenu');
