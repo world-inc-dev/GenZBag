@@ -1109,6 +1109,61 @@ footer {
 @media(prefers-reduced-motion:reduce){.auth-panel-live,.auth-gate:before,.auth-gate:after,.auth-welcome-art:before,.auth-art-g,.auth-art-spark,.signup-success-emoji,.signup-confetti-piece{animation:none!important}}
 @media(max-width:420px){.auth-panel-live{border-radius:23px;padding:20px 16px}.auth-welcome-art{height:76px;margin-bottom:7px}.auth-phone-row{grid-template-columns:98px minmax(0,1fr)}}
 
+
+/* FULL-WIDTH MOBILE DASHBOARD REPAIR */
+html{width:100%;min-width:320px;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{width:100%;min-width:320px;max-width:100%;margin:0;overflow-x:hidden}
+#dashboard,.main{box-sizing:border-box;width:100%;max-width:none;min-width:0;margin-left:0;margin-right:0}
+#dashboard{display:block}
+#dashboardPage,.page-view{width:100%;max-width:none;min-width:0;box-sizing:border-box}
+.main{padding:clamp(10px,2.5vw,24px) clamp(10px,2.8vw,22px) 34px}
+.card,.balance-grid,.task-list,.profile-details,.wallet-body,.ref-body{min-width:0;max-width:100%;box-sizing:border-box}
+.balance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.balance-card{min-width:0}
+.balance-card strong,.profit-box strong,.expenses-value{overflow-wrap:anywhere;word-break:break-word}
+.network-top,.welcome-top,.profit-box,.expenses-card,.profile-row,.schedule-row{min-width:0}
+.network-top>div:first-child,.welcome-info,.task-name,.profile-row strong{min-width:0;overflow-wrap:anywhere}
+.task-row,.schedule-row{flex-wrap:wrap}
+.task-amount{overflow-wrap:anywhere}
+img,svg,video,canvas{max-width:100%}
+@media(max-width:600px){
+  .topbar{width:100%;height:60px;padding:0 9px;gap:6px}
+  .header-left,.header-right{min-width:0;gap:6px}
+  .brand-button{flex-shrink:0}
+  .sidebar{top:60px;max-width:min(290px,86vw);height:calc(100dvh - 60px)}
+  .overlay{inset:60px 0 0}
+  .main{width:100vw;max-width:100vw;margin:0;padding:12px 10px 30px}
+  .page-view{width:100%;max-width:100%;overflow:visible}
+  .card{width:100%;margin-left:0;margin-right:0}
+  .network-card,.welcome-top,.profit-box,.expenses-card{padding-left:14px;padding-right:14px}
+  .network-top{align-items:flex-start}
+  .network-card h2{font-size:clamp(16px,4.5vw,18px)}
+  .network-message{max-width:100%;overflow-wrap:anywhere}
+  .welcome-top{gap:9px;flex-wrap:wrap}
+  .welcome-info{flex:1 1 130px}
+  .active-badge{font-size:9px}
+  .balance-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .balance-card{padding:12px;min-height:112px}
+  .balance-card strong{font-size:clamp(13px,4vw,17px);line-height:1.25}
+  .balance-card small{font-size:9px;line-height:1.35;overflow-wrap:anywhere}
+  .section-heading{flex-wrap:wrap}
+  .ref-input-row{min-width:0}
+  .ref-input-row input{min-width:0;width:100%}
+  .profile-row{align-items:flex-start}
+  .profile-row strong{text-align:right;max-width:62%}
+}
+@media(max-width:350px){
+  .balance-grid{grid-template-columns:1fr}
+  .network-top{gap:7px}
+  .progress-circle{width:58px;height:58px;flex-basis:58px}
+  .header-right .icon-btn{width:34px;height:34px}
+  .brand-button{font-size:10px;padding:6px 7px}
+}
+@media(min-width:1100px){
+  .main,#dashboard{width:calc(100% - 260px);max-width:none;margin-left:260px;margin-right:0}
+  .sidebar{transform:translateX(0)}
+}
+
 </style>
 </head>
 
