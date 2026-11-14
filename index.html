@@ -2124,28 +2124,42 @@ async function saveProfileWhatsApp(event){
  const emailInput=document.getElementById('profileEmailInput'),phoneInput=document.getElementById('profileWhatsAppInput'),button=document.getElementById('profileWhatsAppSave'),message=document.getElementById('profileWhatsAppMessage');
  const email=String(emailInput?.value||'').trim().toLowerCase(),number=String(phoneInput?.value||'').replace(/[^0-9]/g,'');
  message.classList.remove('error','success');
- if(!currentMember){message.textContent='Please sign in again to update your contact details.';message.classList.add('error');return;}
- if(!/^\S+@\S+\.\S+$/.test(email)){message.textContent='Enter a valid email address.';message.classList.add('error');return;}
- if(!/^\d{10,15}$/.test(number)){message.textContent='Enter a valid phone number with country code (10–15 digits).';message.classList.add('error');return;}
+ if(!supabaseClient){message.textContent='The account service is unavailable. Refresh the page and try again.';message.classList.add('error');return;}
+ if(!/^\\S+@\\S+\\.\\S+$/.test(email)){message.textContent='Enter a valid email address.';message.classList.add('error');return;}
+ if(!/^\\d{10,15}$/.test(number)){message.textContent='Enter a valid phone number with country code (10–15 digits).';message.classList.add('error');return;}
  button.disabled=true;button.textContent='Saving…';
  try{
-  const oldEmail=String(currentMember.email||'').toLowerCase();
-  const {error:phoneError}=await supabaseClient.from('profiles').update({phone:'+'+number,contact_email:email}).eq('id',currentMember.id);
+  // Resolve the live Supabase session at save time. currentMember can briefly be
+  // unset while the auth-state callback is still initializing after page load.
+  let {data:sessionData,error:sessionError}=await supabaseClient.auth.getSession();
+  if(sessionError)throw sessionError;
+  let session=sessionData?.session;
+  if(!session){
+   const refreshed=await supabaseClient.auth.refreshSession();
+   if(refreshed.error)throw refreshed.error;
+   session=refreshed.data?.session;
+  }
+  if(!session?.user)throw Error('Your sign-in session has expired. Please sign in again.');
+  currentMember=session.user;
+  const userId=session.user.id,oldEmail=String(session.user.email||'').toLowerCase();
+  const {error:phoneError}=await supabaseClient.from('profiles').update({phone:'+'+number,contact_email:email}).eq('id',userId);
   if(phoneError)throw phoneError;
+  let emailNotice='';
   if(email!==oldEmail){
    const {error:emailError}=await supabaseClient.auth.updateUser({email},{emailRedirectTo:location.origin+location.pathname});
    if(emailError)throw emailError;
-   message.textContent='Phone saved. A confirmation link has been sent for your new email. Your login email changes after confirmation.';
-  }else{message.textContent='Your contact details have been updated successfully.';}
+   emailNotice=' A confirmation link has been sent; the sign-in email changes after you confirm it.';
+  }
+  message.textContent='Your phone number and contact details have been saved successfully.'+emailNotice;
   message.classList.add('success');
   const display=document.getElementById('profileWhatsAppDisplay'),phone=document.getElementById('profilePhone');
   if(display)display.textContent='+'+number;if(phone)phone.textContent='+'+number;
   const emailDisplay=document.getElementById('profileEmail');if(emailDisplay)emailDisplay.textContent=email;
-  const dashboardEmail=document.getElementById('dashboardProfileEmail');if(dashboardEmail)dashboardEmail.textContent=email;
+  const dashboardEmail=document.getElementById('dashboardProfileEmail');if(dashboardEmail)dashboardEmail.textContent=oldEmail===email?email:oldEmail;
   const dashboardPhone=document.getElementById('dashboardProfilePhone');if(dashboardPhone)dashboardPhone.textContent='+'+number;
   currentMember.user_metadata={...(currentMember.user_metadata||{}),phone:'+'+number};
   await loadAdminProfileDirectory();
- }catch(err){console.error('Profile contact update:',err);message.textContent='Could not fully save your contact details. '+(err.message||'Please try again.');message.classList.add('error');}
+ }catch(err){console.error('Profile contact update:',err);message.textContent=(err.message||'Could not save your contact details.')+' Please check your connection and try again.';message.classList.add('error');}
  finally{button.disabled=false;button.textContent='Save Contact Details';}
 }
 document.getElementById('profileWhatsAppForm')?.addEventListener('submit',saveProfileWhatsApp);
