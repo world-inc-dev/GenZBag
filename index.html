@@ -4470,7 +4470,7 @@ async function loadMemberWallet(){
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
  const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal','voucher_purchase','client_activation_debit'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
- const withdrawRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
+ const withdrawRows=availableRows;
  currentWithdrawableBalance=Math.max(0,signed(withdrawRows));
  const profitRows=ugx.filter(x=>['task_reward','welcome_bonus','referral_commission'].includes(x.entry_type));
  const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
