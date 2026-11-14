@@ -888,6 +888,39 @@ footer {
 #featureWorkspace.pay-client-mode #featureDescription,#featureWorkspace.pay-client-mode #featureNotice{display:none!important}
 @media(max-width:460px){#featureWorkspace.pay-client-mode>.feature-detail-panel{padding:8px}#featureWorkspace.pay-client-mode .feature-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#featureWorkspace.pay-client-mode .feature-stat-grid>div:last-child{grid-column:auto}#featureWorkspace.pay-client-mode .feature-stat-grid strong{font-size:10px}}
 
+
+/* Professional withdrawal workspace */
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel{margin-top:8px}
+#featureWorkspace.withdraw-mode #featureDescription,#featureWorkspace.withdraw-mode #featureNotice{display:none!important}
+#featureWorkspace.withdraw-mode .withdraw-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:10px}
+#featureWorkspace.withdraw-mode .withdraw-stat-card{padding:13px;border:1px solid #28556a;border-radius:13px;background:linear-gradient(145deg,#153b56,#0d263e);box-shadow:inset 0 1px #ffffff0c;display:flex;flex-direction:column;gap:5px}
+#featureWorkspace.withdraw-mode .withdraw-stat-card span,#featureWorkspace.withdraw-mode .withdraw-eyebrow{font-size:8px;font-weight:900;letter-spacing:.8px;color:#a8c7d6}
+#featureWorkspace.withdraw-mode .withdraw-stat-card strong{font-size:clamp(16px,4vw,21px);line-height:1.15;color:#78ead9;overflow-wrap:anywhere}
+#featureWorkspace.withdraw-mode .withdraw-stat-card small{font-size:9px;color:#a9c3d1}
+#featureWorkspace.withdraw-mode .withdraw-form-card{padding:13px;border:1px solid #2a5369;border-radius:15px;background:linear-gradient(150deg,#102b44,#0a1d32);box-shadow:0 12px 26px #02081730}
+#featureWorkspace.withdraw-mode .withdraw-section-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+#featureWorkspace.withdraw-mode .withdraw-section-title h3{margin:2px 0 0;font-size:15px;color:#f1fbff}
+#featureWorkspace.withdraw-mode .withdraw-live-pill{padding:5px 9px;border:1px solid #287a79;border-radius:20px;background:#0d4148;color:#8df2e4;font-size:9px;font-weight:900}
+#featureWorkspace.withdraw-mode .feature-field{margin-top:8px;gap:4px;color:#d6e9f1;font-size:9px}
+#featureWorkspace.withdraw-mode .feature-field input,#featureWorkspace.withdraw-mode .feature-field select{min-height:39px;padding:8px 10px;border:1px solid #31566c;border-radius:9px;background:#081b2f;color:#f5fbff;font-size:12px}
+#featureWorkspace.withdraw-mode .withdraw-input-row{display:grid;grid-template-columns:1fr 1.25fr;gap:8px}
+#featureWorkspace.withdraw-mode .withdraw-quote{margin-top:10px;padding:9px 11px;border:1px solid #284d63;border-radius:11px;background:#091c30}
+#featureWorkspace.withdraw-mode .withdraw-quote>div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:10px;color:#b8ceda}
+#featureWorkspace.withdraw-mode .withdraw-quote strong{color:#edfaff;font-size:11px}
+#featureWorkspace.withdraw-mode .withdraw-quote .withdraw-net{margin-top:4px;padding-top:9px;border-top:1px solid #315368;color:#8cf0df;font-weight:900}
+#featureWorkspace.withdraw-mode .withdraw-quote .withdraw-net strong{color:#8cf0df;font-size:15px}
+#featureWorkspace.withdraw-mode .withdraw-status-line{margin:8px 0 5px;font-size:9px;line-height:1.4;color:#9ee9dc}
+#featureWorkspace.withdraw-mode #withdrawRequestButton{width:100%;min-height:40px;margin-top:4px;border-radius:10px;font-size:11px;font-weight:900}
+#featureWorkspace.withdraw-mode .withdraw-small-note{margin:6px 0 0;font-size:8px;line-height:1.4;color:#9db7c5}
+#featureWorkspace.withdraw-mode #withdrawRequestButton:disabled{opacity:.45;cursor:not-allowed}
+#featureWorkspace.withdraw-mode .withdraw-history-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px;border:1px solid #294c61;border-radius:11px;background:#102940;margin:7px 0}
+#featureWorkspace.withdraw-mode .withdraw-history-item strong{display:block;color:#effaff;font-size:12px}
+#featureWorkspace.withdraw-mode .withdraw-history-item small{display:block;margin-top:3px;color:#a9c1cf;font-size:9px;line-height:1.4}
+#featureWorkspace.withdraw-mode .withdraw-state{white-space:nowrap;padding:5px 7px;border-radius:20px;background:#1d3b52;color:#b7d3e0;font-size:8px;font-weight:900}
+#featureWorkspace.withdraw-mode .withdraw-state.paid{background:#0e4b42;color:#8af0d7}
+#featureWorkspace.withdraw-mode .withdraw-state.rejected{background:#552b3a;color:#ffb4c2}
+@media(max-width:420px){#featureWorkspace.withdraw-mode .withdraw-stat-card{padding:10px}#featureWorkspace.withdraw-mode .withdraw-form-card{padding:10px}#featureWorkspace.withdraw-mode .withdraw-input-row{grid-template-columns:1fr 1.1fr}}
+
 /* Dedicated feature pages and three-level team */
 .page-view{display:block;scroll-margin-top:84px}
 .page-view[hidden]{display:none!important}
@@ -3403,24 +3436,27 @@ body.activation-screen-open{overflow:hidden!important}
       </div>
       <p class="leaderboard-footnote">Rankings count direct member registrations during the current Monday–Sunday tournament window (EAT). Usernames are partially hidden for privacy. This board displays referral activity only; it does not promise prizes or automatically credit money.</p>
     </div>
-    <div id="withdrawalRulesPanel" hidden style="margin-top:15px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="padding:14px;border-radius:12px;background:#edf4ff"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">MINIMUM WITHDRAWAL</small><strong style="display:block;margin-top:6px;font-size:19px;color:#0A2A6B">UGX 23,000</strong><small id="withdrawAvailableBalance" style="display:block;margin-top:5px;font-size:9px;color:#64748b">Available: UGX 0</small></div>
-        <div style="padding:14px;border-radius:12px;background:#e9fbef"><small style="display:block;font-size:9px;font-weight:900;color:#53627c">DIRECT REFERRALS REQUIRED</small><strong id="withdrawDirectActiveCount" style="display:block;margin-top:6px;font-size:19px;color:#087B3B">0 / 3 active</strong></div>
+    <div id="withdrawalRulesPanel" hidden>
+      <div class="withdraw-stat-grid">
+        <div class="withdraw-stat-card"><span>WITHDRAWABLE</span><strong id="withdrawAvailableBalance">UGX 0</strong><small>Minimum UGX 23,000</small></div>
+        <div class="withdraw-stat-card"><span>ACTIVE DIRECTS</span><strong id="withdrawDirectActiveCount">0 / 3</strong><small>Required to withdraw</small></div>
       </div>
-      <h3 style="margin-top:16px;font-size:13px;color:#14284f">Withdraw Funds</h3>
-      <p style="margin-top:6px">Enter the amount you want to withdraw. Minimum withdrawal is UGX 23,000 and you must have 3 active direct referrals.</p>
-      <label class="feature-field">Amount to Withdraw (UGX)<input id="withdrawAmountInput" type="number" min="23000" step="1" placeholder="Enter amount in UGX"></label>
-      <div class="withdraw-summary">
-        <div><span>Current Balance</span><strong id="withdrawCurrentBalance">UGX 0</strong></div>
-        <div><span>Requested Amount</span><strong id="withdrawRequestedAmount">—</strong></div>
-        <div><span>Service Fees (incl. 0.5% tax)</span><strong id="withdrawServiceFee">—</strong></div>
-        <div class="grand"><span>Total Deducted from Balance</span><strong id="withdrawTotalDeducted">—</strong></div>
-        <div class="grand"><span>You Will Receive</span><strong id="withdrawNetReceive">—</strong></div>
+      <div class="withdraw-form-card">
+        <div class="withdraw-section-title"><div><span class="withdraw-eyebrow">MOBILE MONEY</span><h3>Request withdrawal</h3></div><span class="withdraw-live-pill">UGX</span></div>
+        <label class="feature-field">Amount (UGX)<input id="withdrawAmountInput" type="number" min="23000" step="1" inputmode="numeric" placeholder="Minimum 23,000"></label>
+        <div class="withdraw-input-row">
+          <label class="feature-field">Network<select id="withdrawNetworkInput"><option value="mtn">MTN Mobile Money</option><option value="airtel">Airtel Money</option></select></label>
+          <label class="feature-field">Payout number<input id="withdrawMobileNumber" type="tel" maxlength="16" inputmode="tel" placeholder="07XXXXXXXX"></label>
+        </div>
+        <div class="withdraw-quote">
+          <div><span>Withdrawal</span><strong id="withdrawRequestedAmount">—</strong></div>
+          <div><span>Fee (0.5%)</span><strong id="withdrawServiceFee">—</strong></div>
+          <div class="withdraw-net"><span>You receive</span><strong id="withdrawNetReceive">—</strong></div>
+        </div>
+        <p id="withdrawEligibilityStatus" class="withdraw-status-line">Sign in to check eligibility.</p>
+        <button class="activity-btn" id="withdrawRequestButton" type="button" disabled>Submit request</button>
+        <p id="withdrawRequestMessage" class="withdraw-small-note" role="status">Your amount is reserved while the request is reviewed. Payout is sent manually after approval.</p>
       </div>
-      <div class="withdraw-meta" style="margin-top:14px"><span>Payout number: <strong id="withdrawPayoutNumber">Loading your registered phone…</strong></span><p id="withdrawEligibilityStatus" style="margin-top:8px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
-      <button class="activity-btn" type="button" disabled style="margin-top:14px;width:100%">Request Withdrawal · Coming Soon</button>
-      <p class="activity-note">The calculator is active, but cash payouts are not yet enabled. This page will not transfer money or create a withdrawal request.</p>
     </div>
     <div id="payClientPanel" class="feature-detail-panel" hidden>
       <div class="feature-stat-grid">
@@ -3740,7 +3776,7 @@ const featureContent={
  voucher:{icon:'🎟️',title:'Voucher',description:'A place to view and redeem official GenZBag vouchers when voucher campaigns are available.',notice:'Voucher issuance and redemption are not enabled yet. Do not pay anyone for a voucher code or share your account password.'},
  'pay-client':{icon:'🤝',title:'Pay for Client',description:'Pay any amount toward a direct downline member’s activation fee. Instalments are supported.',notice:'Secure wallet payments are processed server-side. A client is activated automatically after the full UGX 19,500 fee is paid.'},
  deposit:{icon:'➕',title:'Deposit',description:'A planned area for adding funds to your GenZBag account and viewing deposit instructions.',notice:'Deposits are not enabled from this screen. No mobile-money or bank payment should be sent to an unofficial number. Official payment instructions will be shown only after verification and payment integration.'},
- 'withdraw-balance':{icon:'💰',title:'Withdraw balance',description:'Referral commissions are withdrawable only after you have at least three successfully activated direct (Level 1) referrals and UGX 23,000 in Available Balance.',notice:'Withdrawal requests are not enabled yet. This page shows the eligibility rules only; it does not submit a payout or transfer money. A secure, funded payout integration and server-side verification are still required.'},
+ 'withdraw-balance':{icon:'💰',title:'Withdraw balance',description:'Request a mobile-money payout from your eligible referral balance.',notice:'Minimum UGX 23,000 and 3 active direct referrals. Requests are reviewed by the GenZBag team; approval is not an instant payout.'},
  'withdraw-chat':{icon:'💬',title:'Withdraw chat with foreigners',description:'View eligible rewards associated with approved Chat with Foreigners activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Only approved and funded rewards can become withdrawable.'},
  'withdraw-tiktok':{icon:'🎬',title:'Withdraw TikTok videos',description:'View eligible rewards associated with approved TikTok video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
  'withdraw-youtube':{icon:'▶️',title:'Withdraw YouTube Videos',description:'View eligible rewards associated with approved YouTube video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
@@ -3885,13 +3921,14 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   const featureNotice=document.getElementById('featureNotice');
   featureNotice.textContent=feature.notice;
   featureNotice.hidden=featureKey==='leaderboard';
-  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':(featureKey==='pay-client'?'LIVE CLIENT PAYMENTS':'PREVIEW · SETUP REQUIRED'));
+  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':(featureKey==='pay-client'?'LIVE CLIENT PAYMENTS':(featureKey==='withdraw-balance'?'LIVE WITHDRAWAL REQUESTS':'PREVIEW · SETUP REQUIRED')));
   document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
   const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel'};
   const isVoucherFeature=['voucher-buy','voucher-activate','voucher-history'].includes(featureKey);
   document.getElementById('voucherTabs').hidden=!isVoucherFeature;
   document.getElementById('featureWorkspace').classList.toggle('voucher-mode',isVoucherFeature);
   document.getElementById('featureWorkspace').classList.toggle('pay-client-mode',featureKey==='pay-client');
+  document.getElementById('featureWorkspace').classList.toggle('withdraw-mode',['withdraw-balance','withdraw-history'].includes(featureKey));
   ['leaderboardPanel','payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
   if(isVoucherFeature)setVoucherTab(featureKey);
   if(featureKey==='leaderboard')loadWeeklyLeaderboard();
@@ -4139,7 +4176,7 @@ const chatInputEl=document.getElementById('globalChatInput');
 const chatStatusEl=document.getElementById('globalChatStatus');
 const adminPanelEl=document.getElementById('adminActivityPanel');
 let currentActivityFilter='all',currentActivitySearch='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
-let currentAvailableBalance=0,currentDirectActiveReferrals=0;
+let currentAvailableBalance=0,currentWithdrawableBalance=0,currentDirectActiveReferrals=0;
 let teamRows=[],currentTeamLevel=1,currentTeamView='overview';
 function renderTeamMembers(){
  const list=document.getElementById('teamMembersList'),q=(document.getElementById('teamSearchInput')?.value||'').trim().toLowerCase();
