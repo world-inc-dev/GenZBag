@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0A2A6B">
 <title>GenZBag | A Home of Digital Income</title>
 <link rel="manifest" href="./manifest.webmanifest">
@@ -1756,6 +1756,70 @@ body.activation-body-locked{
  .genz-activation-methods,.genz-activation-actions{grid-template-columns:1fr!important}
 }
 
+</style>
+
+<style id="genzbag-iphone-typography">
+/* Native Apple-style typography and iPhone viewport fit.
+   Font sizes and the existing dashboard design are intentionally unchanged. */
+:root {
+  --genz-system-font: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+}
+html {
+  width: 100%;
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  scroll-padding-top: 76px;
+}
+body, button, input, select, textarea {
+  font-family: var(--genz-system-font) !important;
+  font-synthesis: none;
+}
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+}
+button, input, select, textarea {
+  letter-spacing: inherit;
+}
+input, select, textarea {
+  font-size: max(16px, 1em);
+}
+@supports (padding: max(0px)) {
+  .topbar {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+  .main {
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+    padding-bottom: max(35px, env(safe-area-inset-bottom));
+  }
+  .sidebar {
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 430px) {
+  html, body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .main {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+  .card, .balance-card, .topbar, .section-heading {
+    max-width: 100%;
+  }
+}
 </style>
 </head>
 
