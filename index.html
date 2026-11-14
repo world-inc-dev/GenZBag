@@ -1036,6 +1036,41 @@ footer {
 @media(max-width:480px){.auth-gate{padding:10px 9px;align-items:flex-start}.auth-panel-live{padding:19px 16px 16px;border-radius:20px;margin:auto 0}.auth-welcome-art{height:66px}.auth-art-g{font-size:47px}.auth-panel-live h1{font-size:21px}.auth-brand{font-size:19px}.auth-phone-row{grid-template-columns:105px 1fr}}
 @media(prefers-reduced-motion:reduce){.auth-panel-live,.auth-g-live,.auth-art-g,.auth-orbit,.auth-art-spark,.auth-live-pill i{animation:none!important;transition:none!important}}
 
+
+/* TERMS PREVIEW + SIGN-UP FINISH */
+.auth-panel-live{max-height:calc(100vh - 24px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#c6d5ef transparent}
+.auth-panel-live h1{animation:authWordReveal .65s cubic-bezier(.2,.8,.2,1) both}
+.auth-intro{animation:authWordReveal .75s .08s both}
+.auth-form-live>*{animation:authFieldReveal .45s both}
+.auth-form-live>*:nth-child(2){animation-delay:.04s}.auth-form-live>*:nth-child(3){animation-delay:.08s}.auth-form-live>*:nth-child(4){animation-delay:.12s}.auth-form-live>*:nth-child(5){animation-delay:.16s}.auth-form-live>*:nth-child(6){animation-delay:.20s}.auth-form-live>*:nth-child(7){animation-delay:.24s}
+@keyframes authWordReveal{from{opacity:0;transform:translateY(12px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes authFieldReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.auth-terms{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:9px;padding:11px 12px;border:1px solid #dce7f7;border-radius:12px;background:linear-gradient(110deg,#f7faff,#fff);color:#62718a!important;font-size:10px!important;line-height:1.55;animation:authWordReveal .45s both}
+.auth-terms input{width:16px!important;height:16px;flex:0 0 16px;margin-top:1px;accent-color:#1769e0}
+.auth-terms span{display:block}
+.auth-inline-link{border:0;background:none;padding:0;color:#1769e0;font-size:inherit;font-weight:900;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.terms-preview{position:fixed;inset:0;z-index:900;background:#061638b8;backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease}
+.terms-preview.open{opacity:1;visibility:visible}
+.terms-dialog{width:min(100%,560px);max-height:min(86vh,760px);display:flex;flex-direction:column;background:#fff;border:1px solid #dce7f7;border-radius:22px;box-shadow:0 28px 90px #06163870;overflow:hidden;transform:translateY(18px) scale(.985);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.terms-preview.open .terms-dialog{transform:translateY(0) scale(1)}
+.terms-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding:21px 22px 17px;background:linear-gradient(120deg,#071d4d,#0a2a6b 65%,#1769e0);color:#fff}
+.terms-eyebrow{font-size:9px;font-weight:900;letter-spacing:1.7px;color:#9fc4ff}
+.terms-dialog-head h2{font-size:21px;letter-spacing:-.5px;margin-top:6px}
+.terms-dialog-head p{font-size:11px;color:#d7e5ff;margin-top:5px;line-height:1.5}
+.terms-close{width:34px;height:34px;flex:0 0 34px;border:1px solid #ffffff45;border-radius:11px;background:#ffffff18;color:#fff;font-size:24px;line-height:1}
+.terms-dialog-body{padding:7px 22px 15px;overflow-y:auto}
+.terms-item{display:grid;grid-template-columns:35px 1fr;gap:11px;padding:14px 0;border-bottom:1px solid #edf1f7;animation:authWordReveal .4s both}
+.terms-item:nth-child(2){animation-delay:.04s}.terms-item:nth-child(3){animation-delay:.08s}.terms-item:nth-child(4){animation-delay:.12s}.terms-item:nth-child(5){animation-delay:.16s}.terms-item:nth-child(6){animation-delay:.2s}
+.terms-item>span{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:#edf4ff;color:#1769e0;font-size:10px;font-weight:950}
+.terms-item h3{font-size:12px;color:#102b61;margin:1px 0 5px}
+.terms-item p{font-size:11px;line-height:1.65;color:#65738a}
+.terms-dialog-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 22px;border-top:1px solid #e9eef6;background:#f8faff}
+.terms-dialog-foot span{font-size:10px;color:#748198;line-height:1.5}
+.terms-dialog-foot button{border:0;border-radius:11px;padding:11px 15px;background:#0a2a6b;color:#fff;font-size:10px;font-weight:900;white-space:nowrap;box-shadow:0 5px 13px #0a2a6b25;transition:transform .2s,background .2s}
+.terms-dialog-foot button:hover{background:#1769e0;transform:translateY(-1px)}
+@media(max-width:480px){.terms-preview{padding:9px}.terms-dialog{max-height:90vh;border-radius:18px}.terms-dialog-head{padding:18px 17px 14px}.terms-dialog-body{padding:5px 17px 12px}.terms-dialog-foot{padding:12px 17px}.terms-dialog-foot span{max-width:145px}}
+@media(prefers-reduced-motion:reduce){.auth-panel-live h1,.auth-intro,.auth-form-live>*,.auth-terms,.terms-item{animation:none!important}.terms-preview,.terms-dialog,.terms-dialog-foot button{transition:none!important}}
+
 </style>
 </head>
 
@@ -1061,14 +1096,29 @@ footer {
    <label class="auth-field">Password<input id="authPassword" type="password" required minlength="4" autocomplete="current-password" placeholder="Create password"><button class="auth-password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button></label>
    <label id="confirmWrap" class="auth-field auth-hidden-field">Confirm password<input id="authConfirm" type="password" minlength="4" autocomplete="new-password" placeholder="Repeat password"></label>
    <div id="signupProgress" class="signup-progress auth-hidden-field"><div class="signup-progress-head"><strong>Let's get you set up</strong><span id="signupProgressCount">0 / 6</span></div><div class="signup-progress-track"><span id="signupProgressBar"></span></div><div class="signup-checks" id="signupChecks"><span data-check="username">Username</span><span data-check="email">Email</span><span data-check="phone">Mobile</span><span data-check="country">Country</span><span data-check="password">Password</span><span data-check="confirm">Confirm</span></div></div>
-   <label id="termsWrap" class="auth-terms auth-hidden-field"><input id="authTerms" type="checkbox"><span>By creating an account you agree to our <button type="button" id="termsLink" class="auth-inline-link">Terms &amp; Conditions</button>.</span></label>
    <button class="auth-submit auth-submit-live" id="authSubmit" type="submit">Sign In <span>→</span></button>
+   <label id="termsWrap" class="auth-terms auth-hidden-field"><input id="authTerms" type="checkbox" required><span>By creating an account you agree to our <button type="button" id="termsLink" class="auth-inline-link">Terms &amp; Conditions</button>.</span></label>
   </form>
   <div class="auth-switchline" id="authSwitchLine"><span>New to GenZBag?</span> <button class="auth-link" id="switchAuthMode" type="button">Create your free account</button></div>
   <button class="auth-link auth-forgot" id="forgotPassword" type="button">Forgot password?</button>
   <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
   <p class="auth-foot">Secure account access · Your details stay protected</p>
  </div>
+</div>
+
+<div class="terms-preview" id="termsPreview" aria-hidden="true">
+ <section class="terms-dialog" role="dialog" aria-modal="true" aria-labelledby="termsPreviewTitle">
+  <header class="terms-dialog-head"><div><span class="terms-eyebrow">ACCOUNT AGREEMENT</span><h2 id="termsPreviewTitle">Terms &amp; Conditions</h2><p>Please review these terms before creating your account.</p></div><button class="terms-close" id="termsClose" type="button" aria-label="Close terms and conditions">×</button></header>
+  <div class="terms-dialog-body">
+   <article class="terms-item"><span>01</span><div><h3>Your account</h3><p>You must give accurate details when you register. One person may hold one account. You are responsible for keeping your password safe.</p></div></article>
+   <article class="terms-item"><span>02</span><div><h3>Registration fee</h3><p>To open your account you pay the one-time registration fee shown for your country. Your account opens as soon as the payment is confirmed. The fee is non-refundable once your account is open.</p></div></article>
+   <article class="terms-item"><span>03</span><div><h3>Inviting others</h3><p>You may invite others with your invite link. Creating fake or duplicate accounts to earn invite rewards is not allowed, and the accounts involved will be suspended.</p></div></article>
+   <article class="terms-item"><span>04</span><div><h3>Fair use</h3><p>Do not abuse, automate or try to manipulate any activity on the platform. We may suspend accounts that break these rules.</p></div></article>
+   <article class="terms-item"><span>05</span><div><h3>Privacy</h3><p>We use your email and phone number to manage your account and contact you about it. We do not sell your personal information.</p></div></article>
+   <article class="terms-item"><span>06</span><div><h3>Changes</h3><p>We may update these terms from time to time. Continuing to use GenZBag means you accept the latest version.</p></div></article>
+  </div>
+  <footer class="terms-dialog-foot"><span>Need help? Contact the GenZBag support team.</span><button id="termsDone" type="button">I’ve read the terms</button></footer>
+ </section>
 </div>
 
 <header class="topbar">
@@ -1810,7 +1860,14 @@ function updateSignupProgress(){const values={username:/^[a-z0-9]{4,20}$/i.test(
 ['authUsername','authEmail','authPhone','authCountry','authPassword','authConfirm'].forEach(id=>document.getElementById(id).addEventListener('input',updateSignupProgress));
 document.getElementById('authCountry').addEventListener('change',()=>{const codes={Uganda:'+256',Nigeria:'+234',Kenya:'+254',Tanzania:'+255',Rwanda:'+250',Ghana:'+233'};document.getElementById('authPhoneCode').value=codes[document.getElementById('authCountry').value]||'+256';updateSignupProgress();});
 document.getElementById('togglePassword').addEventListener('click',()=>{const p=document.getElementById('authPassword'),show=p.type==='password';p.type=show?'text':'password';document.getElementById('togglePassword').textContent=show?'Hide':'Show';});
-document.getElementById('termsLink').addEventListener('click',()=>showAuthMessage('Use GenZBag responsibly. Keep your login details private, provide accurate account information, follow platform rules, and understand that earnings depend on eligible activities and verified referrals. No earnings or payouts are guaranteed.',''));
+const termsPreview=document.getElementById('termsPreview');
+function openTermsPreview(){termsPreview.classList.add('open');termsPreview.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';document.getElementById('termsClose').focus();}
+function closeTermsPreview(){termsPreview.classList.remove('open');termsPreview.setAttribute('aria-hidden','true');document.body.style.overflow='';document.getElementById('termsLink').focus();}
+document.getElementById('termsLink').addEventListener('click',openTermsPreview);
+document.getElementById('termsClose').addEventListener('click',closeTermsPreview);
+document.getElementById('termsDone').addEventListener('click',closeTermsPreview);
+termsPreview.addEventListener('click',e=>{if(e.target===termsPreview)closeTermsPreview();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&termsPreview.classList.contains('open'))closeTermsPreview();});
 
 document.getElementById('forgotPassword').addEventListener('click',async()=>{if(!supabaseClient)return showAuthMessage('Authentication is unavailable.','error');const email=(document.getElementById('authLoginEmail').value||document.getElementById('authEmail').value).trim();if(!email)return showAuthMessage('Enter your email address first.','error');try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;showAuthMessage('If this email is registered, a password-reset link will be sent. Check your inbox.','success');}catch(e){showAuthMessage(e.message||'Could not request a password reset.','error');}});
 document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();const button=e.currentTarget;button.style.pointerEvents='none';try{if(!supabaseClient)throw new Error('Authentication service is unavailable. Please refresh and try again.');const {error}=await supabaseClient.auth.signOut();if(error)throw error;currentMember=null;currentAvailableBalance=0;currentDirectActiveReferrals=0;activityRows=[];activitySubmissionMap={};if(globalChatChannel){await supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}teamRows=[];document.getElementById('teamMembersList').innerHTML='<div class="activity-empty">Sign in to view your team.</div>';renderNetwork(0,0);document.getElementById('networkMessage').textContent='You are signed out. Sign in to view your account.';setAuthMode('login');requireAuth();showAuthMessage('You have been signed out successfully.','success');}catch(error){console.error('Logout failed:',error);showAuthMessage(error.message||'Could not sign out. Please try again.','error');}finally{button.style.pointerEvents='';}});
