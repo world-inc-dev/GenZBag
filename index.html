@@ -1705,6 +1705,57 @@ body.activation-body-locked{
   background:linear-gradient(112deg,#173A9A 0%,#3546C6 48%,#7138D8 100%)!important;
 }
 
+
+/* Compact activation layout: keep every payment instruction, reduce oversized spacing */
+.genz-activation-gate{padding:12px 10px!important}
+.genz-activation-card{
+  width:min(100%,470px)!important;
+  padding:17px 18px!important;
+  border-radius:19px!important;
+  margin:0 auto!important;
+}
+.genz-activation-brand{gap:8px!important;margin-bottom:11px!important;font-size:10px!important;letter-spacing:1.3px!important}
+.genz-activation-icon{width:36px!important;height:36px!important;border-radius:11px!important;font-size:18px!important}
+.genz-activation-card h1{font-size:23px!important;line-height:1.16!important;letter-spacing:-.45px!important;margin:0 0 6px!important}
+.genz-activation-card h2{font-size:16px!important}
+.genz-activation-card h3{font-size:14px!important}
+.genz-activation-card p{font-size:11.5px!important;line-height:1.48!important}
+.genz-activation-fee{margin:11px 0!important;padding:10px 12px!important;border-radius:12px!important}
+.genz-activation-fee span{font-size:10px!important}
+.genz-activation-fee strong{font-size:19px!important}
+.genz-activation-status{margin:9px 0!important;padding:9px 11px!important;font-size:10.5px!important;line-height:1.45!important}
+.genz-activation-progress{gap:7px!important;margin:10px 0!important}
+.genz-activation-progress>div{gap:8px!important;font-size:10.5px!important;line-height:1.4!important}
+.genz-activation-progress b,.genz-activation-step b{flex-basis:23px!important;height:23px!important;font-size:11px!important}
+.genz-activation-methods{gap:8px!important;margin:10px 0!important}
+.genz-activation-method{min-height:0!important;padding:10px!important;border-radius:11px!important}
+.genz-activation-method strong{font-size:12px!important;margin-bottom:3px!important}
+.genz-activation-method span{font-size:9px!important}
+.genz-activation-detail{margin:9px 0!important;padding:10px!important;border-radius:11px!important}
+.genz-activation-step{gap:8px!important;margin:8px 0!important;font-size:10.5px!important;line-height:1.42!important}
+.genz-activation-copy{margin:3px 0!important;padding:5px 8px!important;font-size:10px!important}
+.genz-activation-form{gap:8px!important;margin-top:10px!important}
+.genz-activation-form label{gap:5px!important;font-size:10px!important}
+.genz-activation-form input{padding:10px 11px!important;font-size:12px!important;border-radius:9px!important}
+.genz-activation-submit,.genz-activation-secondary{padding:10px 12px!important;border-radius:9px!important;font-size:11px!important}
+.genz-activation-secondary{margin-top:7px!important}
+.genz-activation-actions{gap:7px!important;margin-top:8px!important}
+.genz-activation-small{margin-top:9px!important;font-size:9px!important;line-height:1.4!important}
+.genz-activation-back{font-size:11px!important}
+@media(max-width:520px){
+ .genz-activation-gate{padding:9px 9px 16px!important}
+ .genz-activation-card{width:min(100%,450px)!important;padding:15px 14px!important;border-radius:17px!important}
+ .genz-activation-brand{margin-bottom:9px!important}
+ .genz-activation-card h1{font-size:21px!important}
+ .genz-activation-methods{grid-template-columns:1fr 1fr!important}
+ .genz-activation-method{padding:9px 8px!important}
+ .genz-activation-actions{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:350px){
+ .genz-activation-card{padding:13px 11px!important}
+ .genz-activation-methods,.genz-activation-actions{grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 
