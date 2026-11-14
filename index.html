@@ -265,18 +265,20 @@ window.submitTask=async id=>{const proof=prompt('Describe how you completed this
 
 async function loadAdminData(){
  if(!isAdmin())return;
- const [p,t,s,w,sup,l,a]=await Promise.all([
+ const [p,t,s,w,sup,l,a,ea,es]=await Promise.all([
   sb.from('profiles').select('*').order('created_at',{ascending:false}).limit(150),
   sb.from('tasks').select('*').order('created_at',{ascending:false}).limit(100),
   sb.from('task_submissions').select('*,tasks(title,reward_amount,currency)').order('submitted_at',{ascending:false}).limit(150),
   sb.from('withdrawal_requests').select('*').order('created_at',{ascending:false}).limit(100),
   sb.from('support_tickets').select('*').order('created_at',{ascending:false}).limit(100),
   sb.from('reward_ledger').select('*').order('created_at',{ascending:false}).limit(150),
-  sb.from('admin_audit_logs').select('*').order('created_at',{ascending:false}).limit(50)
+  sb.from('admin_audit_logs').select('*').order('created_at',{ascending:false}).limit(50),
+  sb.from('engagement_activities').select('*').order('created_at',{ascending:false}).limit(100),
+  sb.from('engagement_sessions').select('*,engagement_activities(title,kind,reward_amount,currency)').order('created_at',{ascending:false}).limit(100)
  ]);
  const errors=[p,t,s,w,sup,l,a].filter(x=>x.error);
  if(errors.length)console.warn('Admin data loading issue',errors);
- adminCache={profiles:p.data||[],tasks:t.data||[],submissions:s.data||[],withdrawals:w.data||[],support:sup.data||[],ledger:l.data||[],audit:a.data||[]};
+ adminCache={profiles:p.data||[],tasks:t.data||[],submissions:s.data||[],withdrawals:w.data||[],support:sup.data||[],ledger:l.data||[],audit:a.data||[],engagement:ea.data||[],engagementSessions:es.data||[]};
 }
 function renderAdmin(el){
  if(!isAdmin()){el.innerHTML='<div class="empty">Administrator access is required.</div>';return;}
@@ -285,6 +287,20 @@ function renderAdmin(el){
  const members=adminCache.profiles;
  el.innerHTML=`
  <div class="panel"><div class="row"><div><div class="admin-label">Platform administration</div><h2 style="font-size:1.55rem;margin:4px 0">GenZBag Control Centre</h2><p class="small">Restricted workspace · Actions are recorded in the audit log.</p></div><span class="pill">ADMIN VERIFIED</span></div></div>
+ <div class="panel"><div class="admin-label">Music, video & game catalogue</div><h2>Create an activity</h2>
+  <form id="adminEngagementForm">
+   <div class="formgrid"><div class="field"><label>Activity type</label><select name="kind"><option value="music">Music</option><option value="video">Video</option><option value="game">Game</option><option value="challenge">Challenge</option></select></div><div class="field"><label>Currency</label><select name="currency"><option>UGX</option><option>NGN</option><option>KES</option><option>TZS</option><option>RWF</option><option>GHS</option><option>USD</option></select></div></div>
+   <div class="field"><label>Title</label><input name="title" required minlength="3" maxlength="140"></div>
+   <div class="field"><label>Description</label><textarea name="description" maxlength="1500"></textarea></div>
+   <div class="field"><label>Instructions & proof required</label><textarea name="instructions" required maxlength="4000"></textarea></div>
+   <div class="field"><label>HTTPS media/game URL (optional)</label><input name="content_url" type="url" placeholder="https://..."></div>
+   <div class="formgrid"><div class="field"><label>Duration in seconds (optional)</label><input name="duration" type="number" min="1" step="1"></div><div class="field"><label>Test reward amount</label><input name="reward" type="number" min="0" step="0.01" value="0" required></div></div>
+   <div class="field"><label>Publish status</label><select name="status"><option value="draft">Save as draft</option><option value="published">Publish activity</option></select></div>
+   <div class="msg">Test environment only. Member completions are submitted for manual review. This form does not send real money.</div>
+   <button class="btn primary">Save activity</button><div id="adminEngagementMsg"></div>
+  </form>
+  <h2 style="margin-top:24px">Recent activity catalogue</h2><div class="list">${adminCache.engagement.slice(0,12).map(x=>'<div class="item"><div class="row"><b>'+esc(x.title)+'</b>'+statusBadge(x.status)+'</div><p>'+esc(x.kind)+' · '+money(x.reward_amount,x.currency)+'</p></div>').join('')||'<div class="empty">No music, video or game activities created.</div>'}</div>
+ </div>
  <div class="admin-grid">
   <div class="admin-kpi"><small>Total members</small><b>${members.length}</b></div>
   <div class="admin-kpi"><small>Published tasks</small><b>${adminCache.tasks.filter(x=>x.status==='published').length}</b></div>
@@ -317,6 +333,16 @@ function renderAdmin(el){
  </div>
  <div class="panel"><div class="admin-label">Support & governance</div><h2>Recent support tickets</h2><div class="list">${adminCache.support.slice(0,12).map(x=>'<div class="item"><div class="row"><b>'+esc(x.subject)+'</b>'+statusBadge(x.status)+'</div><p>'+esc(x.message)+'</p><small>Member '+esc(x.user_id.slice(0,8))+' · '+new Date(x.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">No support tickets.</div>'}</div></div>
  <div class="panel"><div class="admin-label">Audit trail</div><h2>Recent administrator actions</h2><div class="list">${adminCache.audit.slice(0,10).map(x=>'<div class="item row"><span>'+esc(x.action.replaceAll('_',' '))+'</span><small>'+new Date(x.created_at).toLocaleString()+'</small></div>').join('')||'<div class="empty">No administrative actions recorded yet.</div>'}</div></div>`;
+ const engagementForm=$('adminEngagementForm');
+ if(engagementForm)engagementForm.onsubmit=async e=>{
+  e.preventDefault();const f=new FormData(engagementForm);const reward=Number(f.get('reward'));const duration=f.get('duration')?Number(f.get('duration')):null;const media=String(f.get('content_url')||'').trim();
+  if(!Number.isFinite(reward)||reward<0|| (duration!==null&&(!Number.isInteger(duration)||duration<1))){$('adminEngagementMsg').innerHTML=msg('Enter a valid reward and duration.','error');return;}
+  if(media&&!safeHttpsUrl(media)){$('adminEngagementMsg').innerHTML=msg('Media links must use HTTPS.','error');return;}
+  const payload={kind:f.get('kind'),title:String(f.get('title')).trim(),description:String(f.get('description')||'').trim(),instructions:String(f.get('instructions')).trim(),content_url:media||null,duration_seconds:duration,reward_amount:reward,currency:f.get('currency'),status:f.get('status'),created_by:user.id};
+  const {error}=await sb.from('engagement_activities').insert(payload);
+  $('adminEngagementMsg').innerHTML=error?msg(error.message,'error'):msg('Activity saved. Published activities are now visible to members.','ok');
+  if(!error){engagementForm.reset();await loadAdminData();renderAdmin(el);}
+ };
  const form=$('adminTaskForm');
  if(form)form.onsubmit=async e=>{
   e.preventDefault();const f=new FormData(form);const reward=Number(f.get('reward'));
