@@ -1200,6 +1200,20 @@ img,svg,video,canvas{max-width:100%}
 .admin-console .admin-status.pending{background:#59431d;color:#ffd88b}
 .admin-console .admin-status.approved,.admin-console .admin-status.verified,.admin-console .admin-status.resolved{background:#164a3d;color:#8cf0c3}
 .admin-console .admin-status.rejected,.admin-console .admin-status.closed{background:#592c3b;color:#ffb3c3}
+ .admin-finance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:16px 0}
+ .admin-finance-card{min-width:0;padding:16px;border:1px solid #244765;border-radius:15px;background:linear-gradient(145deg,#102b46,#0a1d34)}
+ .admin-finance-card small{display:block;color:#9bb4ce;font-size:9px;font-weight:850;letter-spacing:.7px;text-transform:uppercase;line-height:1.5}
+ .admin-finance-card strong{display:block;color:#f4fbff;font-size:clamp(17px,2.5vw,23px);font-weight:950;margin-top:9px;overflow-wrap:anywhere}
+ .admin-finance-card.owned{border-color:#176c59;background:linear-gradient(145deg,#103c3b,#0a2633)}
+ .admin-finance-card.owed{border-color:#76502b;background:linear-gradient(145deg,#3a2b1b,#172238)}
+ .admin-finance-card.income{border-color:#24558a}
+ .admin-finance-card .finance-caption{display:block;color:#9bb4ce;font-size:9px;line-height:1.5;margin-top:7px}
+ .admin-finance-note{padding:13px 15px;border:1px solid #23425f;border-radius:12px;background:#0b2038;color:#c5d8ec;font-size:10px;line-height:1.8}
+ .admin-finance-note strong{color:#eaf8ff}
+ .admin-finance-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:13px;color:#8fa9c4;font-size:9px}
+ @media(max-width:480px){.admin-finance-grid{grid-template-columns:1fr 1fr;gap:8px}.admin-finance-card{padding:12px}.admin-finance-card strong{font-size:16px}}
+ @media(max-width:350px){.admin-finance-grid{grid-template-columns:1fr}}
+
 .admin-console #adminConsoleMessage{font-size:10px;color:#8ce7d7;min-height:16px;margin:8px 0}
 @media(max-width:600px){.admin-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-console{padding:12px!important}.admin-console-head h1{font-size:19px}.admin-metric strong{font-size:19px}}
 
@@ -1617,6 +1631,7 @@ img,svg,video,canvas{max-width:100%}
     </div>
     <div class="admin-console-tabs" role="tablist" aria-label="Administrator sections">
       <button class="active" data-admin-tab="adminOverviewPanel">Overview</button>
+       <button data-admin-tab="adminFinancePanel">Financial position</button>
       <button data-admin-tab="adminMembersPanel">Members</button>
       <button data-admin-tab="adminActivitiesPanel">Activities &amp; reviews</button>
       <button data-admin-tab="adminWithdrawalsPanel">Withdrawals</button>
@@ -1630,6 +1645,13 @@ img,svg,video,canvas{max-width:100%}
       <h2>Platform overview</h2><p class="admin-muted">Live counts are read from the protected GenZBag database. Detailed sections load when opened.</p>
       <div class="admin-note">Financial safety: GenZBag remains in test/review mode. Review requests here, but do not mark a withdrawal as paid unless an actual payout has been independently completed and verified.</div>
       <div id="adminOverviewRecent" class="admin-muted">Loading latest activity…</div>
+    </section>
+    <section class="admin-console-panel" id="adminFinancePanel">
+      <div class="admin-section-title"><div><span class="admin-console-kicker">PLATFORM ACCOUNTS</span><h2>Financial position</h2><p class="admin-muted">See what GenZBag has received, what it owes members, and what remains after reward costs.</p></div><span class="admin-section-chip">Live database figures</span></div>
+      <div id="adminFinancialSummary" class="admin-finance-grid"><div class="activity-empty">Open this tab to load the financial summary.</div></div>
+      <div id="adminFinancialDetails" class="admin-finance-note"></div>
+      <div class="admin-note">Accounting rule: pending, under-review and approved withdrawal requests are shown as reserved amounts within member liabilities, not added a second time. The UGX 5,000 welcome bonus is excluded because it is non-withdrawable. These figures are before operating expenses and do not represent a bank balance.</div>
+      <div class="admin-finance-footer"><span id="adminFinancialUpdated">Not yet refreshed</span><button type="button" class="admin-action" id="adminFinancialRefresh">Refresh figures</button></div>
     </section>
     <section class="admin-console-panel" id="adminMembersPanel">
       <div class="admin-section-title"><div><span class="admin-console-kicker">USER MANAGEMENT</span><h2>Member directory</h2><p class="admin-muted">Manage member usernames, verified login emails and contact numbers.</p></div><span class="admin-section-chip">Secure controls</span></div>
@@ -2741,6 +2763,29 @@ async function loadAdminConsoleOverview(){
  if(recent){const a=(tasks.data||[]).map(x=>'• Task: '+adminSafe(x.title)+' — '+adminSafe(x.status));const b=(withdrawals.data||[]).map(x=>'• Withdrawal request: '+adminSafe(x.amount)+' '+adminSafe(x.currency)+' — '+adminSafe(x.status));recent.innerHTML='<strong style="color:#eaf2ff">Recent platform records</strong><p style="margin-top:8px;line-height:1.9">'+(a.concat(b).join('<br>')||'No recent records yet.')+'</p>';}
  adminMessage('Administrator access verified. Data is governed by Supabase row-level security.');
 }
+async function loadAdminFinancials(){
+ const host=document.getElementById('adminFinancialSummary'),details=document.getElementById('adminFinancialDetails');
+ if(!host||!adminIsAuthorized())return;
+ host.innerHTML='<div class="activity-empty">Calculating platform income and obligations…</div>';
+ if(details)details.textContent='';
+ const {data,error}=await supabaseClient.rpc('admin_financial_summary');
+ if(error){host.textContent='Financial summary unavailable: '+error.message;return;}
+ const d=data||{};
+ const money=v=>'UGX '+Number(v||0).toLocaleString('en-UG',{maximumFractionDigits:0});
+ const cards=[
+  ['Verified activation income',d.activation_income,'income','Money received from verified, paid mobile-money activations.'],
+  ['Referral commissions credited',d.referral_commissions_credited,'owed','Total referral commission credits ever issued.'],
+  ['Referral commissions still owed',d.referral_commissions_outstanding,'owed','Net referral balance remaining after recorded ledger debits.'],
+  ['Other rewards still owed',d.other_rewards_outstanding,'owed','Outstanding task rewards and ledger adjustments.'],
+  ['Withdrawals reserved',d.withdrawals_reserved,'owed','Pending, under-review and approved requests; included in member liabilities above.'],
+  ['Platform retained before expenses',d.platform_retained_before_expenses,'owned','Activation income less referral commissions and other reward credits.']
+ ];
+ host.innerHTML=cards.map(([label,value,kind,caption])=>'<article class="admin-finance-card '+kind+'"><small>'+adminSafe(label)+'</small><strong>'+adminSafe(money(value))+'</strong><span class="finance-caption">'+adminSafe(caption)+'</span></article>').join('');
+ const openCount=Number(d.open_withdrawal_count||0),paidCount=Number(d.paid_withdrawal_count||0);
+ if(details)details.innerHTML='<strong>Additional records</strong><br>Verified paid activations: '+adminSafe(Number(d.verified_paid_activations||0).toLocaleString())+'<br>Open withdrawal requests: '+adminSafe(openCount.toLocaleString())+' · Paid withdrawal records: '+adminSafe(paidCount.toLocaleString())+'<br>Withdrawals marked paid: '+adminSafe(money(d.withdrawals_paid))+'<br>Welcome bonus: excluded from withdrawable liabilities and platform retained calculations.';
+ const updated=document.getElementById('adminFinancialUpdated');if(updated)updated.textContent='Last refreshed: '+(d.updated_at?new Date(d.updated_at).toLocaleString('en-GB'):'just now');
+}
+document.getElementById('adminFinancialRefresh')?.addEventListener('click',loadAdminFinancials);
 async function loadAdminMembers(){
  const host=document.getElementById('adminMembersMount');if(!host||!adminIsAuthorized())return;
  host.innerHTML='<div class="activity-empty">Loading member profiles…</div>';
@@ -2817,7 +2862,7 @@ async function loadAdminAuditSettings(){
 async function loadAdminConsoleTab(id){
  if(!adminIsAuthorized()){adminMessage('Administrator authorization required.');return;}
  if(id==='adminOverviewPanel')return loadAdminConsoleOverview();
- const jobs={'adminMembersPanel':loadAdminMembers,'adminActivitiesPanel':async()=>{if(adminProfileDirectoryMount()){};await loadAdminActivityTools();},'adminWithdrawalsPanel':loadAdminWithdrawals,'adminActivationPanel':loadAdminActivations,'adminReferralsPanel':loadAdminReferralsLedger,'adminSupportPanel':loadAdminSupport,'adminModerationPanel':loadAdminReports,'adminAuditPanel':loadAdminAuditSettings};
+ const jobs={'adminFinancePanel':loadAdminFinancials,'adminMembersPanel':loadAdminMembers,'adminActivitiesPanel':async()=>{if(adminProfileDirectoryMount()){};await loadAdminActivityTools();},'adminWithdrawalsPanel':loadAdminWithdrawals,'adminActivationPanel':loadAdminActivations,'adminReferralsPanel':loadAdminReferralsLedger,'adminSupportPanel':loadAdminSupport,'adminModerationPanel':loadAdminReports,'adminAuditPanel':loadAdminAuditSettings};
  const job=jobs[id];if(job)await job();
 }
 function adminProfileDirectoryMount(){const panel=document.getElementById('adminProfileDirectory'),mount=document.getElementById('adminMembersMount');if(panel&&mount){panel.hidden=false;mount.appendChild(panel);}return true;}
