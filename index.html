@@ -2273,6 +2273,20 @@ html:has(#genzActivationGate.visible),body:has(#genzActivationGate.visible){over
 }
 </style>
 
+
+<style id="genzbag-restore-browser-refresh">
+/* Allow normal browser pull-to-refresh gestures while retaining the activation overlay lock. */
+html:has(.genz-activation-gate.visible),
+body.activation-body-locked,
+.genz-activation-gate.visible{
+  overscroll-behavior-y:auto!important;
+  touch-action:pan-y!important;
+}
+.genz-activation-gate.visible{
+  overscroll-behavior:auto!important;
+}
+</style>
+
 </head>
 
 <body>
