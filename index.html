@@ -929,6 +929,50 @@ footer {
 #featureWorkspace.withdraw-mode .withdraw-state.rejected{background:#552b3a;color:#ffb4c2}
 @media(max-width:420px){#featureWorkspace.withdraw-mode .withdraw-stat-card{padding:10px}#featureWorkspace.withdraw-mode .withdraw-form-card{padding:10px}#featureWorkspace.withdraw-mode .withdraw-input-row{grid-template-columns:1fr 1.1fr}}
 
+/* Match the complete withdrawal page surface to the GenZBag dashboard */
+#featureWorkspace.withdraw-mode{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(12px,2.4vw,22px);
+  border:1px solid #183b67;
+  border-radius:20px;
+  color:#edf5ff;
+  background:
+    radial-gradient(ellipse at 100% 0%,#164d78 0%,transparent 37%),
+    radial-gradient(ellipse at 0% 100%,#087b8340 0%,transparent 42%),
+    linear-gradient(145deg,#07172f 0%,#0b2344 55%,#0b3150 100%);
+  box-shadow:0 16px 38px #07172f35;
+}
+#featureWorkspace.withdraw-mode:before{
+  content:"";position:absolute;z-index:-1;right:-115px;top:290px;
+  width:260px;height:260px;border-radius:50%;background:#11b8bd16;
+  filter:blur(4px);pointer-events:none;
+}
+#featureWorkspace.withdraw-mode .feature-workspace-head h2,
+#featureWorkspace.withdraw-mode h2,
+#featureWorkspace.withdraw-mode h3{color:#f3f8ff}
+#featureWorkspace.withdraw-mode .feature-workspace-head p,
+#featureWorkspace.withdraw-mode #featureDescription,
+#featureWorkspace.withdraw-mode #featureNotice{color:#a9c1dc}
+#featureWorkspace.withdraw-mode .withdraw-eyebrow{color:#a8c2df}
+#featureWorkspace.withdraw-mode .withdraw-stat-card,
+#featureWorkspace.withdraw-mode .withdraw-form-card,
+#featureWorkspace.withdraw-mode .withdraw-history-item{
+  border-color:#ffffff20;
+  box-shadow:0 8px 22px #020b1c35;
+}
+#featureWorkspace.withdraw-mode .withdraw-form-card{
+  background:linear-gradient(150deg,#142f50,#0e2541);
+}
+#featureWorkspace.withdraw-mode .withdraw-quote{
+  border-color:#ffffff20;
+  background:linear-gradient(145deg,#0b2039,#102d49);
+}
+@media(max-width:600px){
+  #featureWorkspace.withdraw-mode{margin:10px 0;padding:12px;border-radius:16px}
+}
+ 
 /* Dedicated feature pages and three-level team */
 .page-view{display:block;scroll-margin-top:84px}
 .page-view[hidden]{display:none!important}
