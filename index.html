@@ -1385,6 +1385,74 @@ input,select,textarea{font-size:14px}
 @media(max-width:360px){.genz-activation-actions{grid-template-columns:1fr}.genz-activation-card h1{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.genz-activation-gate:before,.genz-activation-gate:after,.genz-activation-live i{animation:none!important}.genz-activation-method,.genz-activation-submit,.genz-activation-secondary{transition:none!important}}
 
+
+/* ACTIVATION PAGE — match the main GenZBag dashboard palette */
+.genz-activation-gate{
+ background:linear-gradient(145deg,rgba(6,22,56,.97),rgba(10,42,107,.98));
+ color:#26344d;
+}
+.genz-activation-card{
+ color:#26344d;
+ background:#fff;
+ border:1px solid rgba(220,228,241,.95);
+ border-radius:22px;
+ box-shadow:0 24px 70px rgba(0,0,0,.28);
+}
+.genz-activation-brand{color:#0A2A6B}
+.genz-activation-icon{
+ background:#0A2A6B;color:#fff;
+ box-shadow:0 8px 20px rgba(10,42,107,.18);
+}
+.genz-activation-live{color:#16A34A}
+.genz-activation-card h1,.genz-activation-card h3{color:#0A2A6B!important}
+.genz-activation-card p{color:#667085}
+.genz-activation-fee{
+ background:linear-gradient(110deg,#EAF2FF,#F5F8FF);
+ border:1px solid #DCE7FF;
+}
+.genz-activation-fee span{color:#64748b}
+.genz-activation-fee strong{color:#0A2A6B}
+.genz-activation-progress>div,.genz-activation-step{color:#34445e}
+.genz-activation-progress b,.genz-activation-step b{
+ background:#EAF2FF;color:#1769E0;
+}
+.genz-activation-status{
+ background:#F3F6FB;color:#475569;border:1px solid #E2E8F0;
+}
+.genz-activation-status.pending{background:#FFF8E8;border-color:#F3D58B;color:#805500}
+.genz-activation-status.rejected{background:#FFF0F1;border-color:#FECACA;color:#BE123C}
+.genz-activation-form label{color:#526079}
+.genz-activation-form input{
+ background:#F8FAFF;color:#26344d;border:1px solid #DCE4F1;
+}
+.genz-activation-form input:focus{border-color:#1769E0;box-shadow:0 0 0 3px rgba(23,105,224,.12)}
+.genz-activation-submit{
+ background:linear-gradient(110deg,#1769E0,#0A2A6B);color:#fff;
+ box-shadow:0 7px 18px rgba(23,105,224,.2);
+}
+.genz-activation-secondary{
+ border:1px solid #DCE4F1;background:#F5F8FF;color:#0A2A6B;
+}
+.genz-activation-secondary:hover{background:#EAF2FF;border-color:#B9CCF0}
+.genz-activation-method{
+ background:#F8FAFF;border:1px solid #DCE4F1;color:#0A2A6B;
+}
+.genz-activation-method:hover,.genz-activation-method:focus-visible{
+ border-color:#1769E0;background:#EAF2FF;outline:none;
+}
+.genz-activation-method span{color:#64748b}
+.genz-activation-detail{background:#F8FAFF;border:1px solid #DCE7FF}
+.genz-activation-copy{
+ background:#EAF2FF;border-color:#C9DAFF;color:#1769E0;
+}
+.genz-activation-back{color:#1769E0}
+.genz-activation-small{color:#78849A!important}
+.genz-activation-brand #genzActivationSignOut{color:#64748b!important}
+@media(max-width:420px){
+ .genz-activation-gate{background:linear-gradient(145deg,#061638,#0A2A6B)}
+ .genz-activation-card{box-shadow:0 16px 44px rgba(0,0,0,.24)}
+}
+
 </style>
 </head>
 
