@@ -1200,7 +1200,7 @@ img,svg,video,canvas{max-width:100%}
 .admin-console .admin-status.pending{background:#59431d;color:#ffd88b}
 .admin-console .admin-status.approved,.admin-console .admin-status.verified,.admin-console .admin-status.resolved{background:#164a3d;color:#8cf0c3}
 .admin-console .admin-status.rejected,.admin-console .admin-status.closed{background:#592c3b;color:#ffb3c3}
- .admin-finance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:16px 0}
+ .admin-network-block{margin:11px 0;padding:10px;border:1px solid #254764;border-radius:11px;background:#0b2037;color:#d9e9f7;font-size:10px;line-height:1.7}.admin-network-block>strong{display:block;color:#6ee7d0;margin-bottom:5px}.admin-network-block div{padding:4px 0;border-top:1px solid #1d3852}.admin-network-block small{display:block;color:#92abc4;overflow-wrap:anywhere}.admin-finance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:16px 0}
  .admin-finance-card{min-width:0;padding:16px;border:1px solid #244765;border-radius:15px;background:linear-gradient(145deg,#102b46,#0a1d34)}
  .admin-finance-card small{display:block;color:#9bb4ce;font-size:9px;font-weight:850;letter-spacing:.7px;text-transform:uppercase;line-height:1.5}
  .admin-finance-card strong{display:block;color:#f4fbff;font-size:clamp(17px,2.5vw,23px);font-weight:950;margin-top:9px;overflow-wrap:anywhere}
@@ -2779,7 +2779,8 @@ async function loadAdminFinancials(){
   ['Referral commissions still owed',d.referral_commissions_outstanding,'owed','Net referral balance remaining after recorded ledger debits.'],
   ['Other rewards still owed',d.other_rewards_outstanding,'owed','Outstanding task rewards and ledger adjustments.'],
   ['Withdrawals reserved',d.withdrawals_reserved,'owed','Pending, under-review and approved requests; included in member liabilities above.'],
-  ['Platform retained before expenses',d.platform_retained_before_expenses,'owned','Activation income less referral commissions and other reward credits.']
+  ['Platform unallocated referral income',d.platform_unallocated_referral_income,'owned','Level commissions with no eligible upline, retained by GenZBag.'],
+  ['Platform retained before expenses',d.platform_retained_before_expenses,'owned','Activation income less member rewards credited; before operating expenses.']
  ];
  host.innerHTML=cards.map(([label,value,kind,caption])=>'<article class="admin-finance-card '+kind+'"><small>'+adminSafe(label)+'</small><strong>'+adminSafe(money(value))+'</strong><span class="finance-caption">'+adminSafe(caption)+'</span></article>').join('');
  const openCount=Number(d.open_withdrawal_count||0),paidCount=Number(d.paid_withdrawal_count||0);
@@ -2789,20 +2790,39 @@ async function loadAdminFinancials(){
 document.getElementById('adminFinancialRefresh')?.addEventListener('click',loadAdminFinancials);
 async function loadAdminMembers(){
  const host=document.getElementById('adminMembersMount');if(!host||!adminIsAuthorized())return;
- host.innerHTML='<div class="activity-empty">Loading member profiles…</div>';
- const {data,error}=await supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(500);
- if(error){host.textContent='Member directory unavailable: '+error.message;return;}
+ host.innerHTML='<div class="activity-empty">Loading member profiles and referral hierarchy…</div>';
+ const [pr,ar,lr]=await Promise.all([
+  supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at,referred_by').order('created_at',{ascending:false}).limit(500),
+  supabaseClient.from('activation_payment_submissions').select('user_id,status,created_at').order('created_at',{ascending:false}).limit(2000),
+  supabaseClient.from('reward_ledger').select('user_id,entry_type,direction,amount,currency').eq('currency','UGX').limit(5000)
+ ]);
+ if(pr.error){host.textContent='Member directory unavailable: '+pr.error.message;return;}
+ if(ar.error){host.textContent='Activation status could not be loaded: '+ar.error.message;return;}
+ if(lr.error){host.textContent='Member earnings could not be loaded: '+lr.error.message;return;}
+ const members=pr.data||[],byId=new Map(members.map(x=>[x.id,x]));
+ const latestActivation=new Map();(ar.data||[]).forEach(x=>{if(!latestActivation.has(x.user_id))latestActivation.set(x.user_id,x.status);});
+ const activeDirects=new Map(),earned=new Map();
+ members.forEach(x=>{if(x.referred_by&&latestActivation.get(x.id)==='verified')activeDirects.set(x.referred_by,(activeDirects.get(x.referred_by)||0)+1);});
+ (lr.data||[]).forEach(x=>{if(x.entry_type==='referral_commission'){const n=(x.direction==='credit'?1:-1)*Number(x.amount||0);earned.set(x.user_id,(earned.get(x.user_id)||0)+n);}});
+ const username=id=>{const p=byId.get(id);return p?(p.username||'Member'):'No upline';};
+ const contact=id=>{const p=byId.get(id);return p?[p.contact_email||'Email not set',p.phone||'Phone not set'].join(' · '):'—';};
+ const cash=n=>'UGX '+Number(n||0).toLocaleString('en-UG',{maximumFractionDigits:0});
+ const searchable=x=>[x.username,x.contact_email,x.phone,x.country,username(x.referred_by),username(byId.get(x.referred_by)?.referred_by),username(byId.get(byId.get(x.referred_by)?.referred_by)?.referred_by)].join(' ').toLowerCase();
  const render=()=>{
   const term=(document.getElementById('adminMembersSearch')?.value||'').trim().toLowerCase();
-  const rows=(data||[]).filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(term)));
+  const rows=members.filter(x=>[x.username,x.contact_email,x.phone,x.country,searchable(x)].some(v=>String(v||'').toLowerCase().includes(term)));
   if(!rows.length){host.innerHTML='<div class="activity-empty">No matching members found.</div>';return;}
-  host.innerHTML='<div class="admin-member-grid">'+rows.map(x=>'<article class="admin-member-card"><div class="admin-member-avatar">'+adminSafe((x.username||'M').slice(0,1).toUpperCase())+'</div><div class="admin-member-main"><div class="admin-member-top"><strong>'+adminSafe(x.username||'Member')+'</strong><span class="admin-status">Member</span></div><div class="admin-member-contact">'+adminSafe(x.contact_email||'Email not set')+'<br>'+adminSafe(x.phone||'Phone not set')+'</div><div class="admin-member-meta">'+adminSafe(x.country||'Country not set')+' · Joined '+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString('en-GB'):'—')+'</div><button type="button" class="admin-action admin-edit-member" data-edit-member="'+adminSafe(x.id)+'">Edit member details</button></div></article>').join('')+'</div>';
+  host.innerHTML='<div class="admin-member-grid">'+rows.map(x=>{
+   const l1=byId.get(x.referred_by),l2=l1?byId.get(l1.referred_by):null,l3=l2?byId.get(l2.referred_by):null;
+   const status=latestActivation.get(x.id)||'not submitted';
+   return '<article class="admin-member-card"><div class="admin-member-avatar">'+adminSafe((x.username||'M').slice(0,1).toUpperCase())+'</div><div class="admin-member-main"><div class="admin-member-top"><strong>'+adminSafe(x.username||'Member')+'</strong>'+adminStatus(status==='verified'?'approved':status)+'</div><div class="admin-member-contact">'+adminSafe(x.contact_email||'Email not set')+'<br>'+adminSafe(x.phone||'Phone not set')+'<br>'+adminSafe(x.country||'Country not set')+'</div><div class="admin-network-block"><strong>Referral hierarchy</strong><div>Level 1: <b>'+adminSafe(username(l1?.id))+'</b><small>'+adminSafe(contact(l1?.id))+'</small></div><div>Level 2: <b>'+adminSafe(username(l2?.id))+'</b><small>'+adminSafe(contact(l2?.id))+'</small></div><div>Level 3: <b>'+adminSafe(username(l3?.id))+'</b><small>'+adminSafe(contact(l3?.id))+'</small></div></div><div class="admin-member-meta">Active direct referrals: <b>'+Number(activeDirects.get(x.id)||0)+'</b><br>Referral commissions credited (net ledger): <b>'+adminSafe(cash(earned.get(x.id)||0))+'</b><br>Joined: '+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString('en-GB'):'—')+'</div><button type="button" class="admin-action admin-edit-member" data-edit-member="'+adminSafe(x.id)+'">Edit member details</button></div></article>';
+  }).join('')+'</div>';
  };
  render();
  const input=document.getElementById('adminMembersSearch');if(input&&!input.dataset.adminBound){input.addEventListener('input',render);input.dataset.adminBound='1';}
  host.onclick=e=>{
   const button=e.target.closest('[data-edit-member]');if(!button)return;
-  const member=(data||[]).find(x=>x.id===button.dataset.editMember);if(!member)return;
+  const member=members.find(x=>x.id===button.dataset.editMember);if(!member)return;
   const modal=document.getElementById('adminMemberEditModal');if(!modal)return;
   document.getElementById('adminEditMemberId').value=member.id;
   document.getElementById('adminEditUsername').value=member.username||'';
@@ -2833,7 +2853,8 @@ async function loadAdminActivations(){
  const byId=new Map((profiles.data||[]).map(x=>[x.id,x]));
  host.innerHTML=adminTable(['Member / submission','Payment','Payment reference','Decision'],(data||[]).map(x=>{
   const p=byId.get(x.user_id)||{};
-  return '<tr data-admin-activation="'+adminSafe(x.id)+'"><td><strong>'+adminSafe(p.username||'GenZBag member')+'</strong><br><small>'+adminSafe(p.contact_email||'Email unavailable')+'<br>'+adminSafe(p.phone||x.user_id)+'<br>Submitted: '+adminSafe(x.created_at?new Date(x.created_at).toLocaleString('en-GB'):'')+'</small></td><td><strong>'+adminSafe(Number(x.amount).toLocaleString())+' '+adminSafe(x.currency)+'</strong><br><small>'+adminSafe(x.payment_method.replace(/_/g,' '))+'</small></td><td><strong>'+adminSafe(x.payment_reference||'Not supplied')+'</strong></td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No review note')+'</small><div class="admin-row-actions" style="margin-top:9px"><button class="admin-action" data-activation-status="verified">Approve activation</button><button class="admin-action danger" data-activation-status="rejected">Reject</button></div></td></tr>';
+  const displayStatus=x.status==='verified'?'approved':x.status;
+  return '<tr data-admin-activation="'+adminSafe(x.id)+'"><td><strong>'+adminSafe(p.username||'GenZBag member')+'</strong><br><small>'+adminSafe(p.contact_email||'Email unavailable')+'<br>'+adminSafe(p.phone||x.user_id)+'<br>Submitted: '+adminSafe(x.created_at?new Date(x.created_at).toLocaleString('en-GB'):'')+'</small></td><td><strong>'+adminSafe(Number(x.amount).toLocaleString())+' '+adminSafe(x.currency)+'</strong><br><small>'+adminSafe(x.payment_method.replace(/_/g,' '))+'</small></td><td><strong>'+adminSafe(x.payment_reference||'Not supplied')+'</strong></td><td>'+adminStatus(displayStatus)+'<br><small>'+adminSafe(x.admin_note||'No review note')+'</small><div class="admin-row-actions" style="margin-top:9px">'+(x.status==='pending'?'<button class="admin-action" data-activation-status="verified">Approve activation</button><button class="admin-action danger" data-activation-status="rejected">Reject</button>':'<span class="admin-muted">Decision recorded</span>')+'</div></td></tr>';
  }));
 }
 async function loadAdminReferralsLedger(){
