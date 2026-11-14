@@ -2168,8 +2168,9 @@ async function initialiseMemberFeatures(session){
  await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools()]);
 }
 
-/* DASHBOARD-FIRST MODE: keep dashboard accessible while its features are completed. */
-showDashboard();
+/* AUTH-GATED ENTRY: visitors must sign in or create an account before viewing the dashboard. */
+requireAuth();
+setAuthMode('signup');
 renderNetwork(0,0);
 if(supabaseClient){
   supabaseClient.auth.getSession().then(({data,error})=>{
@@ -2178,7 +2179,7 @@ if(supabaseClient){
   });
   supabaseClient.auth.onAuthStateChange((event,session)=>{
     if(event==='SIGNED_IN'&&session)setTimeout(()=>{loadMemberNetwork();initialiseMemberFeatures(session);},0);
-    if(event==='SIGNED_OUT'){renderNetwork(0,0);initialiseMemberFeatures(null);}
+    if(event==='SIGNED_OUT'){renderNetwork(0,0);initialiseMemberFeatures(null);setAuthMode('signup');requireAuth();}
   });
 }
 })();
