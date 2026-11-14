@@ -3169,8 +3169,8 @@ body.activation-screen-open{overflow:hidden!important}
       <div id="adminActivityMount"></div>
     </section>
     <section class="admin-console-panel" id="adminWithdrawalsPanel">
-      <h2>Withdrawal requests</h2><p class="admin-muted">Inspect requests and record review decisions. This does not transfer funds.</p>
-      <div class="admin-note">Do not use “paid” in this dashboard: live payout processing is not connected. Use Under review, Approved or Rejected only.</div>
+      <h2>Withdrawal requests</h2><p class="admin-muted">Review requests and track mobile-money payouts.</p>
+      <div class="admin-note">Approve only after checks. Send mobile money outside GenZBag, then record the transaction reference as Paid. Rejection automatically returns the reserved amount.</div>
       <div id="adminWithdrawalsList" class="admin-muted">Open this tab to load requests.</div>
     </section>
     <section class="admin-console-panel" id="adminActivationPanel">
@@ -4710,14 +4710,17 @@ async function loadAdminMembers(){
 }
 async function loadAdminWithdrawals(){
  const host=document.getElementById('adminWithdrawalsList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading withdrawal requests…</div>';
- const {data,error}=await supabaseClient.from('withdrawal_requests').select('id,user_id,amount,currency,payout_method,payout_details,status,admin_note,created_at').order('created_at',{ascending:false}).limit(150);
+ const {data,error}=await supabaseClient.from('withdrawal_requests').select('id,user_id,amount,currency,payout_method,payout_details,status,admin_note,provider_reference,created_at').order('created_at',{ascending:false}).limit(150);
  if(error){host.textContent='Withdrawal requests unavailable: '+error.message;return;}
  const ids=[...new Set((data||[]).map(x=>x.user_id))];
  const profiles=ids.length?await supabaseClient.from('profiles').select('id,username,contact_email,phone').in('id',ids):{data:[]};
  const byId=new Map((profiles.data||[]).map(x=>[x.id,x]));
  host.innerHTML=adminTable(['Member / request','Amount','Payout destination','Review decision'],(data||[]).map(x=>{
   const p=byId.get(x.user_id)||{};
-  return '<tr data-admin-withdrawal="'+adminSafe(x.id)+'"><td><strong>'+adminSafe(p.username||'GenZBag member')+'</strong><br><small>'+adminSafe(p.contact_email||'Email unavailable')+'<br>'+adminSafe(p.phone||x.user_id)+'<br>Request: '+adminSafe(x.created_at?new Date(x.created_at).toLocaleString('en-GB'):'')+'</small></td><td><strong>'+adminSafe(Number(x.amount).toLocaleString())+' '+adminSafe(x.currency)+'</strong></td><td>'+adminSafe(x.payout_method.replace(/_/g,' '))+'<br><small>'+adminSafe(JSON.stringify(x.payout_details||{}))+'</small></td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No review note')+'</small><div class="admin-row-actions" style="margin-top:9px"><button class="admin-action secondary" data-withdraw-status="under_review">Under review</button><button class="admin-action" data-withdraw-status="approved">Approve</button><button class="admin-action danger" data-withdraw-status="rejected">Reject</button></div></td></tr>';
+  const details=x.payout_details||{};
+  const destination=String(details.network||'mobile money').toUpperCase()+' · '+String(details.mobile_number||p.phone||'No number');
+  const net=Number(details.net_receive||Number(x.amount)-Number(details.service_fee||0));
+  return '<tr data-admin-withdrawal="'+adminSafe(x.id)+'"><td><strong>'+adminSafe(p.username||'GenZBag member')+'</strong><br><small>'+adminSafe(p.contact_email||'Email unavailable')+'<br>Request: '+adminSafe(x.created_at?new Date(x.created_at).toLocaleString('en-GB'):'')+'</small></td><td><strong>'+adminSafe(Number(x.amount).toLocaleString())+' '+adminSafe(x.currency)+'</strong><br><small>Net: UGX '+adminSafe(net.toLocaleString())+'</small></td><td>'+adminSafe(destination)+'<br><small>Fee: UGX '+adminSafe(Number(details.service_fee||0).toLocaleString())+'</small></td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No review note')+(x.provider_reference?'<br>Ref: '+adminSafe(x.provider_reference):'')+'</small><div class="admin-row-actions" style="margin-top:9px">'+(x.status==='pending'?'<button class="admin-action secondary" data-withdraw-status="under_review">Under review</button>':'')+(['pending','under_review'].includes(x.status)?'<button class="admin-action" data-withdraw-status="approved">Approve</button>':'')+(['pending','under_review','approved'].includes(x.status)?'<button class="admin-action danger" data-withdraw-status="rejected">Reject</button>':'')+(x.status==='approved'?'<button class="admin-action" data-withdraw-status="paid">Record paid</button>':'')+'</div></td></tr>';
  }));
 }
 async function loadAdminActivations(){
@@ -4798,9 +4801,11 @@ document.getElementById('adminWithdrawalsList')?.addEventListener('click',async 
  const b=e.target.closest('[data-withdraw-status]');if(!b||!adminIsAuthorized())return;
  const row=b.closest('[data-admin-withdrawal]');const decision=b.dataset.withdrawStatus;
  if(!confirm('Confirm '+decision.replace('_',' ')+' for this withdrawal request?'))return;
- const note=prompt('Add an administrator review note (optional):');if(note===null)return;
+ let provider_reference='';
+ if(decision==='paid'){provider_reference=String(prompt('Enter the actual MTN/Airtel transaction reference:')||'').trim();if(provider_reference.length<5){alert('A valid transaction reference is required.');return;}}
+ const note=prompt('Add an administrator note (optional):');if(note===null)return;
  b.disabled=true;
- try{const result=await runAdminAction({action:'review_withdrawal',id:row.dataset.adminWithdrawal,status:decision,note});adminMessage(result.message||'Withdrawal review saved.');await loadAdminWithdrawals();await loadAdminConsoleOverview();}
+ try{const result=await runAdminAction({action:'review_withdrawal',id:row.dataset.adminWithdrawal,status:decision,note,provider_reference});adminMessage(result.message||'Withdrawal review saved.');await loadAdminWithdrawals();await loadAdminConsoleOverview();}
  catch(err){alert('Could not update request: '+err.message);b.disabled=false;}
 });
 document.getElementById('adminActivationList')?.addEventListener('click',async e=>{
