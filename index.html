@@ -1739,7 +1739,7 @@ async function saveProfileWhatsApp(event){
  finally{button.disabled=false;button.textContent='Save WhatsApp Number';}
 }
 document.getElementById('profileWhatsAppForm')?.addEventListener('submit',saveProfileWhatsApp);
-function loadMemberWallet(){
+async function loadMemberWallet(){
  if(!supabaseClient||!currentMember)return;
  const payoutEl=document.getElementById('withdrawPayoutNumber');
  if(payoutEl){
