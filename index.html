@@ -372,7 +372,7 @@ async function loadAdminData(){
  ]);
  const errors=[p,t,s,w,sup,l,a,ea,es,act].filter(x=>x.error);
  if(errors.length)console.warn('Admin data loading issue',errors);
- adminCache={profiles:p.data||[],tasks:t.data||[],submissions:s.data||[],withdrawals:w.data||[],support:sup.data||[],ledger:l.data||[],audit:a.data||[],engagement:ea.data||[],engagementSessions:es.data||[]};
+ adminCache={profiles:p.data||[],tasks:t.data||[],submissions:s.data||[],withdrawals:w.data||[],support:sup.data||[],ledger:l.data||[],audit:a.data||[],engagement:ea.data||[],engagementSessions:es.data||[],activationPayments:act.data||[]};
 }
 function renderAdmin(el){
  if(!isAdmin()){el.innerHTML='<div class="empty">Administrator access is required.</div>';return;}
