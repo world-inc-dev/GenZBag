@@ -787,6 +787,7 @@ footer {
 .feature-bullet-list{margin:12px 0 15px 18px}.feature-calculated{padding:10px;margin:10px 0;background:#eef8ff;border-radius:8px;color:#12336d!important;font-weight:800}.table-responsive{overflow-x:auto;margin-top:12px}.feature-table{width:100%;border-collapse:collapse;font-size:10px;min-width:360px}.feature-table th,.feature-table td{padding:10px;border-bottom:1px solid #e8eef5;text-align:left}.feature-table th{color:#64748b;background:#f7faff}
 .withdraw-summary{margin-top:15px;padding:14px;border-radius:12px;background:#f5f8fd}.withdraw-summary div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:11px;color:#64748b}.withdraw-summary strong{color:#14284f}.withdraw-summary .grand{border-top:1px solid #dce5f1;margin-top:6px;padding-top:12px;font-weight:900}.team-search-field{margin:16px 0}
 @media(max-width:460px){.feature-stat-grid{grid-template-columns:1fr 1fr}.feature-stat-grid>div:last-child{grid-column:1/-1}}
+ .activity-toolbar[hidden]{display:none!important}
 /* Dedicated feature pages and three-level team */
 .page-view{display:block;scroll-margin-top:84px}
 .page-view[hidden]{display:none!important}
@@ -1339,7 +1340,7 @@ footer {
         <div class="grand"><span>Total Deducted from Balance</span><strong id="withdrawTotalDeducted">—</strong></div>
         <div class="grand"><span>You Will Receive</span><strong id="withdrawNetReceive">—</strong></div>
       </div>
-      <div class="feature-notice" style="margin-top:14px">Safety note: your payout number will be shown here after it is confirmed in your account profile. Verify it before requesting a payout.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
+      <div class="feature-notice" style="margin-top:14px">Safety Note · Funds will be sent to <strong id="withdrawPayoutNumber">Loading your registered phone…</strong>. Ensure this number is correct before any future payout request.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
       <button class="activity-btn" type="button" disabled style="margin-top:14px;width:100%">Request Withdrawal · Coming Soon</button>
       <p class="activity-note">The calculator is active, but cash payouts are not yet enabled. This page will not transfer money or create a withdrawal request.</p>
     </div>
@@ -1650,6 +1651,11 @@ async function loadWithdrawalHistory(){
 }
 async function loadMemberWallet(){
  if(!supabaseClient||!currentMember)return;
+ const payoutEl=document.getElementById('withdrawPayoutNumber');
+ if(payoutEl){
+  const {data:profile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
+  payoutEl.textContent=profile?.phone||currentMember.user_metadata?.phone||currentMember.phone||'No phone number saved in your profile';
+ }
  const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
  if(error){console.warn('Wallet ledger:',error);return;}
  const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
