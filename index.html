@@ -1654,6 +1654,30 @@ input,select,textarea{font-size:14px}
 }
 @keyframes activationCardIn{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 
+
+/* Restore reliable vertical scrolling on the activation overlay, especially on mobile */
+.genz-activation-gate{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  touch-action:pan-y;
+  align-items:flex-start!important;
+}
+.genz-activation-card{
+  flex:0 0 auto;
+  margin: max(0px, auto) auto;
+}
+@media(max-width:520px){
+  .genz-activation-gate{
+    min-height:100vh;
+    min-height:100dvh;
+    padding-top:16px!important;
+    padding-bottom:28px!important;
+  }
+  .genz-activation-card{margin:0 auto!important}
+}
+
 </style>
 </head>
 
