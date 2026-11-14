@@ -1605,7 +1605,7 @@ function categoryName(v){return activityCategoryNames[v]||String(v||'General').r
 function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
 function renderActivities(){
  let rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
- if(currentActivitySearch){const q=currentActivitySearch.toLowerCase();rows=rows.filter(x=>(x.title+' '+(x.description||'')+' '+(x.instructions||'')).toLowerCase().includes(q));}
+ if(currentActivitySearch){const terms=currentActivitySearch.toLowerCase().split(/\\s+/).filter(Boolean);rows=rows.filter(x=>{const hay=(x.title+' '+(x.description||'')+' '+(x.instructions||'')).toLowerCase();return terms.some(term=>hay.includes(term));});}
  activityCountEl.textContent=rows.length+' available';
  if(!rows.length){setActivityMessage(activityRows.length?'No activities in this category yet.':'No activities have been published yet. Check again later.');return;}
  activityListEl.innerHTML=rows.map(t=>{
