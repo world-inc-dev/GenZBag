@@ -952,6 +952,27 @@ footer {
 .feature-workspace .activity-btn:disabled{opacity:.55}
 @media(max-width:420px){.feature-workspace{padding:14px}.exchange-toggle{width:36px;height:36px;font-size:18px}}
 
+
+/* Keep the interface clean: remove global safety/info notice banners. */
+.chat-safety,.feature-notice,.auth-foot{display:none!important}
+.withdraw-meta{font-size:11px;line-height:1.55;color:#64748b}
+.withdraw-meta strong{color:#14284f}
+
+/* Compact network card; member rank now lives with the welcome greeting. */
+.network-card{padding:13px 15px}
+.network-card h2{font-size:15px}
+.network-card .subtitle{font-size:10px;margin-top:2px}
+.network-card .progress-circle{width:49px;height:49px;border-width:4px}
+.network-card .progress-circle strong{font-size:14px}
+.network-card .progress-circle small{font-size:8px;margin-top:2px}
+.network-card .network-message{font-size:11px;margin-top:8px;line-height:1.4}
+.network-card .network-stats{gap:6px;margin-top:7px}
+.network-card .network-stat{font-size:9px;padding:5px 8px}
+.network-card .network-stat strong{font-size:10px}
+.welcome-rank-badge{margin-top:7px;padding:4px 9px;background:#ffffff24;border-color:#ffffff55;font-size:9px}
+.welcome-rank-badge .rank-symbol{width:20px;height:20px;font-size:13px}
+.welcome-rank-badge strong{font-size:9px}
+
 </style>
 </head>
 
@@ -970,7 +991,7 @@ footer {
 <button class="auth-submit" id="authSubmit" type="submit">Sign In</button></form>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><button class="auth-link" id="forgotPassword" type="button">Forgot password?</button><button class="auth-link" id="switchAuthMode" type="button">Create an account</button></div>
 <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
-<p class="auth-foot">Your password is handled securely by Supabase Authentication. Never share your password or verification code with anyone.</p>
+
 </div></div>
 
 <header class="topbar">
@@ -1105,7 +1126,7 @@ footer {
 
       <div class="progress-circle" aria-label="Qualified referrals toward next member rank"><strong id="rankProgressCount">0</strong><small id="rankProgressTarget">of 5</small></div>
     </div>
-    <div class="network-meta"><span class="rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span><span class="target-label" id="rankNextLabel">NEXT: BRONZE</span></div>
+    
     <p class="network-message" id="networkMessage">Sign in to view your network results.</p>
     <div class="network-stats"><span class="network-stat">Total referrals: <strong id="totalReferralCount">0</strong></span><span class="network-stat">Qualified: <strong id="qualifiedReferralCount">0</strong></span></div>
   </section>
@@ -1119,6 +1140,7 @@ footer {
       <div class="welcome-info">
         <h2>Hi Bridan</h2>
         <p>A home of Digital Income.</p>
+        <span class="rank-badge welcome-rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span>
       </div>
 
       <span class="active-badge">Active</span>
@@ -1301,7 +1323,7 @@ footer {
   <!-- GLOBAL CHAT WITH FOREIGN MEMBERS -->
   <section class="card" id="globalChat">
     <div class="chat-header"><h2>🌍 Chat with Foreigners</h2><p>Meet GenZBag members from other countries in the global community lounge.</p></div>
-    <div class="chat-safety">Stay safe: never share passwords, verification codes, bank details, home addresses or send money to people you meet here. Report suspicious messages.</div>
+
     <div class="chat-messages" id="globalChatMessages"><div class="activity-empty">Sign in with an activated account to join the global lounge.</div></div>
     <div class="chat-compose"><textarea id="globalChatInput" maxlength="600" rows="2" placeholder="Write a friendly message…" aria-label="Chat message"></textarea><button class="chat-send" id="globalChatSend" type="button">Send</button></div>
     <div class="chat-presence" id="globalChatStatus">Messages are shared with activated GenZBag members. International members appear as they join.</div>
@@ -1476,7 +1498,7 @@ footer {
         <div class="grand"><span>Total Deducted from Balance</span><strong id="withdrawTotalDeducted">—</strong></div>
         <div class="grand"><span>You Will Receive</span><strong id="withdrawNetReceive">—</strong></div>
       </div>
-      <div class="feature-notice" style="margin-top:14px">Safety Note · Funds will be sent to <strong id="withdrawPayoutNumber">Loading your registered phone…</strong>. Ensure this number is correct before any future payout request.<p id="withdrawEligibilityStatus" style="margin-top:9px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
+      <div class="withdraw-meta" style="margin-top:14px"><span>Payout number: <strong id="withdrawPayoutNumber">Loading your registered phone…</strong></span><p id="withdrawEligibilityStatus" style="margin-top:8px;font-weight:800">Sign in to check your withdrawal eligibility.</p></div>
       <button class="activity-btn" type="button" disabled style="margin-top:14px;width:100%">Request Withdrawal · Coming Soon</button>
       <p class="activity-note">The calculator is active, but cash payouts are not yet enabled. This page will not transfer money or create a withdrawal request.</p>
     </div>
@@ -1527,7 +1549,7 @@ footer {
       <div><small>LEVEL 2</small><strong id="teamLevel2Count">0</strong><span>UGX 5,000 per qualified activation</span></div>
       <div><small>LEVEL 3</small><strong id="teamLevel3Count">0</strong><span>UGX 2,000 per qualified activation</span></div>
     </div>
-    <div class="feature-notice">Active means the member's activation payment has been verified. The amounts above are the planned commission schedule. The team list shows verified membership status; referral commission credits will be switched on only after the activation-fee and funding allocation is confirmed.</div>
+    <p class="activity-note">Referral commissions will be credited once activation and funding rules are finalized.</p>
     <div id="teamMembersList" class="team-members-list"><div class="activity-empty">Choose a team level to load your members.</div></div>
   </section>
 
