@@ -3122,6 +3122,84 @@ body.activation-screen-open{overflow:hidden!important}
 
 
 
+
+<style id="genzbag-withdrawal-final-no-cards-readable-v3">
+/* Final override: no text-covering cards or panels anywhere in withdrawal workspace. */
+#featureWorkspace.withdraw-mode,
+#featureWorkspace.withdraw-mode .feature-detail-panel,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel *,
+#featureWorkspace.withdraw-mode .withdraw-page-content,
+#featureWorkspace.withdraw-mode .withdraw-main-content,
+#featureWorkspace.withdraw-mode .withdraw-form-card,
+#featureWorkspace.withdraw-mode .withdraw-stat-card,
+#featureWorkspace.withdraw-mode .withdraw-info-card,
+#featureWorkspace.withdraw-mode .withdraw-safety-card,
+#featureWorkspace.withdraw-mode .withdraw-quote,
+#featureWorkspace.withdraw-mode .withdraw-qualification,
+#featureWorkspace.withdraw-mode .withdraw-history-item,
+#featureWorkspace.withdraw-mode .withdraw-success-card,
+#featureWorkspace.withdraw-mode .withdraw-warning,
+#featureWorkspace.withdraw-mode .withdraw-state,
+#featureWorkspace.withdraw-mode [class*="card"],
+#featureWorkspace.withdraw-mode [class*="panel"],
+#featureWorkspace.withdraw-mode [class*="tile"],
+#featureWorkspace.withdraw-mode [class*="box"]{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border-color:transparent!important;
+  border-width:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+}
+#featureWorkspace.withdraw-mode,
+#featureWorkspace.withdraw-mode :where(h1,h2,h3,h4,p,span,strong,b,em,small,label,li,dt,dd,legend,div){
+  color:#ffffff!important;
+  opacity:1!important;
+  visibility:visible!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.22)!important;
+}
+#featureWorkspace.withdraw-mode :where(.withdraw-eyebrow,.withdraw-page-kicker,.withdraw-page-heading p,.withdraw-small-note,.withdraw-status-line){
+  color:#f0fff4!important;
+}
+#featureWorkspace.withdraw-mode :where(input,select,textarea){
+  background:#ffffff!important;
+  background-color:#ffffff!important;
+  color:#123b25!important;
+  -webkit-text-fill-color:#123b25!important;
+  border:2px solid #e5ffe9!important;
+  border-radius:9px!important;
+  box-shadow:none!important;
+}
+#featureWorkspace.withdraw-mode :where(input,textarea)::placeholder{
+  color:#526b5a!important;
+  -webkit-text-fill-color:#526b5a!important;
+  opacity:1!important;
+}
+#featureWorkspace.withdraw-mode :where(button,.activity-btn,#withdrawRequestButton){
+  background:#ffffff!important;
+  background-image:none!important;
+  color:#14532d!important;
+  -webkit-text-fill-color:#14532d!important;
+  border:2px solid #ffffff!important;
+  border-radius:10px!important;
+  box-shadow:none!important;
+  opacity:1!important;
+}
+#featureWorkspace.withdraw-mode :where(button,button *){color:#14532d!important;-webkit-text-fill-color:#14532d!important}
+#featureWorkspace.withdraw-mode a{color:#ffffff!important;text-decoration:underline!important}
+#featureWorkspace.withdraw-mode :before,
+#featureWorkspace.withdraw-mode :after{
+  box-shadow:none!important;
+}
+#featureWorkspace.withdraw-mode [hidden]{display:none!important}
+@media(max-width:600px){
+ #featureWorkspace.withdraw-mode{overflow:visible!important;padding:10px!important}
+ #featureWorkspace.withdraw-mode :where(p,span,small,label,li){overflow-wrap:anywhere!important;word-break:normal!important}
+}
+</style>
 </head>
 
 <body>
