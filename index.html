@@ -4590,7 +4590,7 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 <script id="genzbag-activation-username">
 (function(){
  function activationDisplayName(){
-  const u=window.currentMember||null;
+  const u=(typeof currentMember!=='undefined'&&currentMember)||null;
   if(!u)return 'Your account';
   const meta=u.user_metadata||{};
   const value=meta.username||meta.user_name||meta.name||u.email?.split('@')[0]||'Your account';
