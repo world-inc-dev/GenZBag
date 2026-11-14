@@ -2864,6 +2864,53 @@ body.activation-screen-open{overflow:hidden!important}
 #featureWorkspace.withdraw-mode .withdraw-history-item small{color:#778399}
 #featureWorkspace.withdraw-mode .withdraw-state{background:#edf2fa;color:#586780}
 @media(max-width:420px){#featureWorkspace.withdraw-mode .withdraw-form-card{padding:14px}#featureWorkspace.withdraw-mode .withdraw-input-row{grid-template-columns:1fr 1.12fr}#featureWorkspace.withdraw-mode .withdraw-info-card{padding:13px}#featureWorkspace.withdraw-mode .withdraw-quote{padding:10px}}
+
+/* Final dashboard theme override: the dashboard uses a pale-blue canvas and white cards. */
+#featureWorkspace.withdraw-mode{
+  display:block!important;
+  width:100%;
+  padding:14px!important;
+  border:0!important;
+  border-radius:19px!important;
+  background:#E8F0FF!important;
+  color:#18243B!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+#featureWorkspace.withdraw-mode>.feature-detail-panel,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:#18243B!important;
+}
+#featureWorkspace.withdraw-mode .withdraw-page-heading h2{color:#0A2A6B!important}
+#featureWorkspace.withdraw-mode .withdraw-page-kicker,
+#featureWorkspace.withdraw-mode .withdraw-page-heading p{color:#78849A!important}
+#featureWorkspace.withdraw-mode .withdraw-form-card,
+#featureWorkspace.withdraw-mode .withdraw-info-card,
+#featureWorkspace.withdraw-mode .withdraw-safety-card{
+  background:#fff!important;
+  border:1px solid #e5ebf5!important;
+  color:#18243B!important;
+  box-shadow:0 5px 20px rgba(10,42,107,.07)!important;
+}
+#featureWorkspace.withdraw-mode .withdraw-section-title h3,
+#featureWorkspace.withdraw-mode .withdraw-info-card strong,
+#featureWorkspace.withdraw-mode .withdraw-safety-card h3{color:#0A2A6B!important}
+#featureWorkspace.withdraw-mode .withdraw-quote{
+  background:#fff!important;
+  border:2px dotted #9c7ce3!important;
+}
+#featureWorkspace.withdraw-mode .withdraw-quote strong{color:#18243B!important}
+#featureWorkspace.withdraw-mode .withdraw-history-item{background:#fff!important;border-color:#e4eaf3!important}
+#featureWorkspace.withdraw-mode .withdraw-history-item strong{color:#18243B!important}
+#featureWorkspace.withdraw-mode .withdraw-history-item small{color:#78849A!important}
+#featureWorkspace.withdraw-mode .withdraw-state{background:#edf2fa!important;color:#586780!important}
+#featureWorkspace.withdraw-mode .withdraw-warning{background:#fff7dc!important;border-color:#f4df9c!important;color:#70531c!important}
+@media(max-width:600px){
+  #featureWorkspace.withdraw-mode{padding:10px!important;border-radius:16px!important}
+}
 </style>
 
 </head>
