@@ -867,6 +867,27 @@ footer {
 .withdraw-summary{margin-top:15px;padding:14px;border-radius:12px;background:#f5f8fd}.withdraw-summary div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:11px;color:#64748b}.withdraw-summary strong{color:#14284f}.withdraw-summary .grand{border-top:1px solid #dce5f1;margin-top:6px;padding-top:12px;font-weight:900}.team-search-field{margin:16px 0}
 @media(max-width:460px){.feature-stat-grid{grid-template-columns:1fr 1fr}.feature-stat-grid>div:last-child{grid-column:1/-1}}
  .activity-toolbar[hidden]{display:none!important}
+
+/* Compact Pay for Client view: fit the form and key balances in a phone screenshot. */
+#featureWorkspace.pay-client-mode>.feature-detail-panel{margin-top:0;padding:10px;border-radius:13px}
+#featureWorkspace.pay-client-mode .feature-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-bottom:9px}
+#featureWorkspace.pay-client-mode .feature-stat-grid>div{min-height:0;padding:7px 5px;gap:3px;border-radius:8px}
+#featureWorkspace.pay-client-mode .feature-stat-grid small{font-size:7px;letter-spacing:0;line-height:1.2}
+#featureWorkspace.pay-client-mode .feature-stat-grid strong{font-size:clamp(10px,2.8vw,13px);line-height:1.2}
+#featureWorkspace.pay-client-mode .feature-detail-panel h3{font-size:13px;margin:3px 0 5px}
+#featureWorkspace.pay-client-mode .feature-detail-panel>p{font-size:9px;line-height:1.35;margin:4px 0 6px}
+#featureWorkspace.pay-client-mode .feature-field{gap:3px;margin-top:7px;font-size:9px}
+#featureWorkspace.pay-client-mode .feature-field input{min-height:36px;padding:8px 9px;border-radius:8px;font-size:12px}
+#featureWorkspace.pay-client-mode .feature-calculated{padding:6px 8px;margin:6px 0;font-size:9px;line-height:1.3}
+#featureWorkspace.pay-client-mode .activity-btn{min-height:37px;padding:8px 12px;font-size:11px;border-radius:9px}
+#featureWorkspace.pay-client-mode .activity-note{font-size:8px;line-height:1.3;margin:5px 0}
+#featureWorkspace.pay-client-mode .table-responsive{margin-top:5px;max-height:112px;overflow:auto}
+#featureWorkspace.pay-client-mode .feature-table{font-size:8px;min-width:310px}
+#featureWorkspace.pay-client-mode .feature-table th,#featureWorkspace.pay-client-mode .feature-table td{padding:5px 6px}
+#featureWorkspace.pay-client-mode #payClientPanel>h3[style]{margin-top:8px!important}
+#featureWorkspace.pay-client-mode #featureDescription,#featureWorkspace.pay-client-mode #featureNotice{display:none!important}
+@media(max-width:460px){#featureWorkspace.pay-client-mode>.feature-detail-panel{padding:8px}#featureWorkspace.pay-client-mode .feature-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#featureWorkspace.pay-client-mode .feature-stat-grid>div:last-child{grid-column:auto}#featureWorkspace.pay-client-mode .feature-stat-grid strong{font-size:10px}}
+
 /* Dedicated feature pages and three-level team */
 .page-view{display:block;scroll-margin-top:84px}
 .page-view[hidden]{display:none!important}
@@ -3870,6 +3891,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   const isVoucherFeature=['voucher-buy','voucher-activate','voucher-history'].includes(featureKey);
   document.getElementById('voucherTabs').hidden=!isVoucherFeature;
   document.getElementById('featureWorkspace').classList.toggle('voucher-mode',isVoucherFeature);
+  document.getElementById('featureWorkspace').classList.toggle('pay-client-mode',featureKey==='pay-client');
   ['leaderboardPanel','payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
   if(isVoucherFeature)setVoucherTab(featureKey);
   if(featureKey==='leaderboard')loadWeeklyLeaderboard();
