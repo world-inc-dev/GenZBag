@@ -12,6 +12,10 @@ GenZBag is an online activities and rewards platform being built for Uganda, Nig
 - **Public browser credential:** Supabase publishable key only. Never place a Supabase secret/service-role key in browser code or GitHub.
 - **Payments:** Test mode only. Real payouts are disabled.
 
+## Database hardening record
+
+The incremental Supabase hardening changes applied on 14 November 2026 are recorded in `database/patches/20261114_production_hardening.sql`. This patch assumes the existing GenZBag baseline schema and is not a standalone database bootstrap. The original Supabase migration history still needs to be exported and versioned before a full buyer handover or independent environment rebuild.
+
 ## Current member features
 
 - Email registration, sign-in and password reset.
