@@ -329,6 +329,29 @@ a {text-decoration:none;color:inherit}
 .active-badge.status-inactive:before{background:#e11d48}
 .active-badge.status-error{background:#eef2f7;color:#526079}
 .active-badge.status-error:before{background:#94a3b8}
+.genz-activation-gate{display:none;position:fixed;inset:0;z-index:99999;overflow-y:auto;align-items:center;justify-content:center;padding:22px 14px;background:radial-gradient(circle at 15% 0%,rgba(20,184,166,.16),transparent 34%),linear-gradient(145deg,#071326,#0b1830 55%,#10233c);color:#eaf3ff;font-family:inherit}
+.genz-activation-gate.visible{display:flex}
+.genz-activation-card{width:min(100%,520px);padding:clamp(22px,5vw,34px);border:1px solid rgba(94,234,212,.22);border-radius:24px;background:rgba(12,27,49,.94);box-shadow:0 24px 80px rgba(0,0,0,.4)}
+.genz-activation-brand{display:flex;align-items:center;gap:10px;margin-bottom:24px;color:#5eead4;font-size:12px;font-weight:900;letter-spacing:2px}
+.genz-activation-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:rgba(45,212,191,.13);font-size:23px}
+.genz-activation-card h1{margin:0 0 9px;color:#fff;font-size:clamp(24px,6vw,32px);line-height:1.15}
+.genz-activation-card p{color:#b8c9dc;font-size:13px;line-height:1.65}
+.genz-activation-fee{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0;padding:16px;border:1px solid rgba(94,234,212,.22);border-radius:16px;background:rgba(20,184,166,.08)}
+.genz-activation-fee span{color:#a8bbcf;font-size:11px}.genz-activation-fee strong{color:#5eead4;font-size:23px}
+.genz-activation-status{margin:15px 0;padding:13px 14px;border-radius:13px;background:rgba(148,163,184,.1);color:#dbeafe;font-size:12px;line-height:1.6}
+.genz-activation-status.pending{border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08);color:#fde68a}
+.genz-activation-status.rejected{border:1px solid rgba(248,113,113,.3);background:rgba(248,113,113,.08);color:#fecaca}
+.genz-activation-form{display:grid;gap:12px;margin-top:18px}
+.genz-activation-form label{display:grid;gap:7px;color:#cbd5e1;font-size:11px;font-weight:700}
+.genz-activation-form input{width:100%;box-sizing:border-box;padding:14px 13px;border:1px solid rgba(148,163,184,.28);border-radius:12px;background:#071326;color:#fff;font:inherit;font-size:14px;outline:none}
+.genz-activation-form input:focus{border-color:#2dd4bf;box-shadow:0 0 0 3px rgba(45,212,191,.12)}
+.genz-activation-submit,.genz-activation-secondary{width:100%;padding:14px;border:0;border-radius:12px;font-weight:850;cursor:pointer}
+.genz-activation-submit{background:linear-gradient(100deg,#14b8a6,#0d9488);color:#04201f}
+.genz-activation-submit:disabled{opacity:.55;cursor:wait}
+.genz-activation-secondary{margin-top:9px;border:1px solid rgba(148,163,184,.25);background:transparent;color:#dbeafe}
+.genz-activation-small{margin-top:14px;color:#8fa5bc!important;font-size:10px!important}
+.genz-activation-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+@media(max-width:420px){.genz-activation-gate{align-items:flex-start;padding-top:18px}.genz-activation-card{padding:21px}.genz-activation-actions{grid-template-columns:1fr}}
 .activation-access-note{display:none;padding:14px 16px;margin:0 0 15px;border:1px solid #f3d58b;border-radius:15px;background:linear-gradient(110deg,#fff9e9,#fff);box-shadow:0 4px 16px #8b5e0010}
 .activation-access-note.visible{display:block}
 .activation-access-note strong{display:block;color:#805500;font-size:12px;margin-bottom:5px}
@@ -2046,6 +2069,27 @@ img,svg,video,canvas{max-width:100%}
 
 </main>
 
+<div class="genz-activation-gate" id="genzActivationGate" role="dialog" aria-modal="true" aria-labelledby="genzActivationTitle">
+ <section class="genz-activation-card">
+  <div class="genz-activation-brand"><span class="genz-activation-icon">🔐</span><span>GENZBAG · ACCOUNT ACTIVATION</span></div>
+  <h1 id="genzActivationTitle">Activate your account</h1>
+  <p>Your account has been created successfully. Complete activation and wait for administrator verification before entering your dashboard.</p>
+  <div class="genz-activation-fee"><span>One-time activation fee</span><strong>UGX 19,500</strong></div>
+  <div class="genz-activation-status" id="genzActivationStatus" role="status" aria-live="polite">Checking your activation status…</div>
+  <form class="genz-activation-form" id="genzActivationForm" hidden>
+   <label for="genzActivationReference">Mobile Money transaction reference</label>
+   <input id="genzActivationReference" name="payment_reference" type="text" maxlength="100" autocomplete="off" placeholder="Enter the payment transaction ID" required>
+   <button class="genz-activation-submit" id="genzActivationSubmit" type="submit">Submit payment for verification</button>
+  </form>
+  <p class="genz-activation-small" id="genzActivationInstructions">Make payment only through the official GenZBag payment channel. If you do not have the confirmed payment number, contact support before sending money. Submitting a reference does not activate the account automatically.</p>
+  <div class="genz-activation-actions">
+   <button class="genz-activation-secondary" id="genzActivationRefresh" type="button">Check activation status</button>
+   <button class="genz-activation-secondary" id="genzActivationInstall" type="button">Install GenZBag</button>
+  </div>
+  <button class="genz-activation-secondary" id="genzActivationSignOut" type="button">Sign out</button>
+ </section>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.0">
 </script>
 <script>
@@ -2058,8 +2102,47 @@ let authMode='login';
 function showAuthMessage(m,t){authMessage.textContent=m||'';authMessage.className='auth-message'+(t?' '+t:'');}
 function launchSignupCelebration(){const modal=document.getElementById('signupSuccessModal');if(!modal)return;const layer=document.createElement('div');layer.className='signup-confetti-layer';layer.setAttribute('aria-hidden','true');const pieces=['🎉','🥳','🎊','✨','💫','🎈','🌟','💖'];for(let i=0;i<38;i++){const piece=document.createElement('span');piece.className='signup-confetti-piece';piece.textContent=pieces[i%pieces.length];piece.style.left=(Math.random()*100)+'%';piece.style.setProperty('--drift',((Math.random()-.5)*220)+'px');piece.style.setProperty('--duration',(2.1+Math.random()*2.3)+'s');piece.style.setProperty('--delay',(Math.random()*.65)+'s');piece.style.setProperty('--spin',(Math.random()*720-360)+'deg');layer.appendChild(piece);}modal.appendChild(layer);setTimeout(()=>layer.remove(),5200);}
 function setAuthMode(mode){authMode=mode;const s=mode==='signup';document.getElementById('authTitle').textContent=s?'Join GenZBag':'Welcome back';document.getElementById('authIntro').textContent=s?'Create your free account in less than a minute.':'Sign in to continue your digital income journey.';['usernameWrap','signupExtra','confirmWrap','signupProgress','termsWrap'].forEach(id=>document.getElementById(id).classList.toggle('auth-hidden-field',!s));document.getElementById('forgotPassword').classList.toggle('auth-hidden-field',s);document.getElementById('authUsername').required=s;document.getElementById('authPhone').required=s;document.getElementById('authConfirm').required=s;document.getElementById('authTerms').required=s;document.getElementById('authLoginEmail').parentElement.classList.toggle('auth-hidden-field',s);document.getElementById('authEmail').classList.toggle('auth-hidden-field',!s);document.getElementById('authPassword').autocomplete=s?'new-password':'current-password';document.getElementById('authPassword').placeholder=s?'Create password':'Enter your password';authSubmit.innerHTML=s?'Create my account <span>→</span>':'Sign in <span>→</span>';document.getElementById('switchAuthMode').textContent=s?'Sign in':'Create your free account';document.getElementById('authSwitchLine').firstElementChild.textContent=s?'Already have an account?':'New to GenZBag?';document.getElementById('togglePassword').textContent='Show';document.getElementById('authPassword').type='password';showAuthMessage('');updateSignupProgress();}
-function showDashboard(){authGate.classList.add('hidden');removeSessionNotice();}
-function requireAuth(){authGate.style.visibility='';authGate.classList.remove('hidden');}
+function showDashboard(){authGate.classList.add('hidden');removeSessionNotice();if(currentMember?.app_metadata?.role==='admin'){hideActivationGate();}else{lockActivationGate('Verifying your activation…');refreshActivationGate();}}
+function requireAuth(){hideActivationGate();authGate.style.visibility='';authGate.classList.remove('hidden');}
+const activationGate=document.getElementById('genzActivationGate'),activationStatusEl=document.getElementById('genzActivationStatus'),activationForm=document.getElementById('genzActivationForm'),activationSubmit=document.getElementById('genzActivationSubmit');
+let activationCheckVersion=0,activationStatusTimer=null;
+function hideActivationGate(){activationGate?.classList.remove('visible');if(activationStatusTimer){clearInterval(activationStatusTimer);activationStatusTimer=null;}}
+function lockActivationGate(message){if(activationGate){activationGate.classList.add('visible');activationGate.setAttribute('aria-hidden','false');}if(activationStatusEl)activationStatusEl.textContent=message||'Activation required.';}
+function renderActivationGate(record,error){
+ if(error){lockActivationGate('We could not verify your activation status. Your dashboard remains locked for your security. Check again when your connection is stable.');activationForm.hidden=true;return;}
+ const status=String(record?.status||'not_submitted').toLowerCase();
+ if(status==='verified'){hideActivationGate();return;}
+ if(status==='pending'){lockActivationGate('Payment submitted successfully. Your payment is awaiting administrator verification. This page will update automatically after approval.');activationStatusEl.className='genz-activation-status pending';activationForm.hidden=true;return;}
+ if(status==='rejected'){lockActivationGate('Your previous payment submission was rejected. '+(record.admin_note||'Please check your transaction reference and submit the correct details again.'));activationStatusEl.className='genz-activation-status rejected';activationForm.hidden=false;document.getElementById('genzActivationReference').value='';return;}
+ lockActivationGate('Your account is not activated yet. Submit your mobile money transaction reference after making the required payment.');activationStatusEl.className='genz-activation-status';activationForm.hidden=false;
+}
+async function refreshActivationGate(){
+ const version=++activationCheckVersion,member=currentMember;
+ if(!member)return;
+ if(member.app_metadata?.role==='admin'){hideActivationGate();return;}
+ lockActivationGate('Checking your activation status…');
+ const {data,error}=await supabaseClient.from('activation_payment_submissions').select('status,admin_note,created_at').eq('user_id',member.id).order('created_at',{ascending:false}).limit(1).maybeSingle();
+ if(version!==activationCheckVersion||currentMember?.id!==member.id)return;
+ renderActivationGate(data,error);
+}
+activationForm?.addEventListener('submit',async e=>{
+ e.preventDefault();
+ if(!currentMember||currentMember.app_metadata?.role==='admin')return;
+ const reference=document.getElementById('genzActivationReference').value.trim();
+ if(reference.length<5){activationStatusEl.textContent='Enter a valid mobile money transaction reference.';return;}
+ activationSubmit.disabled=true;activationSubmit.textContent='Submitting…';
+ try{
+  const {error}=await supabaseClient.from('activation_payment_submissions').insert({user_id:currentMember.id,amount:19500,currency:'UGX',payment_method:'mobile_money',payment_reference:reference,status:'pending'});
+  if(error)throw error;
+  document.getElementById('genzActivationReference').value='';
+  await refreshActivationGate();
+ }catch(err){activationStatusEl.textContent=err.message||'We could not submit your activation reference. Please try again.';}
+ finally{activationSubmit.disabled=false;activationSubmit.textContent='Submit payment for verification';}
+});
+document.getElementById('genzActivationRefresh')?.addEventListener('click',refreshActivationGate);
+document.getElementById('genzActivationInstall')?.addEventListener('click',()=>document.getElementById('installAppBtn')?.click());
+document.getElementById('genzActivationSignOut')?.addEventListener('click',async()=>{if(!supabaseClient)return;await supabaseClient.auth.signOut();});
+
 function removeSessionNotice(){document.getElementById('sessionNotice')?.remove();if(authGraceTimer)clearTimeout(authGraceTimer);if(authGraceInterval)clearInterval(authGraceInterval);authGraceTimer=null;authGraceInterval=null;}
 function showSessionNotice(message){let n=document.getElementById('sessionNotice');if(!n){n=document.createElement('div');n.id='sessionNotice';n.className='session-notice';n.setAttribute('role','status');document.body.appendChild(n);}n.textContent=message;}
 function markSessionAlive(session){if(!session)return;lastAuthenticatedAt=Date.now();try{sessionStorage.setItem(LAST_AUTH_KEY,String(lastAuthenticatedAt));}catch(e){}removeSessionNotice();}
@@ -2230,7 +2313,7 @@ function renderAccountActivationStatus(record,error){
  const detail=document.getElementById('activationAccessDetail');
  if(error){
   setStatus('Status unavailable','status-error');
-  if(note){note.classList.add('visible');title.textContent='Your account is accessible';message.textContent='Your dashboard and account details remain available. We could not retrieve your activation status right now.';detail.textContent='Reconnect and refresh to check your latest status.';}
+  if(note){note.classList.add('visible');title.textContent='Activation status could not be verified';message.textContent='Your dashboard remains locked until the activation status can be confirmed.';detail.textContent='Reconnect and refresh to check your latest status.';}
   return;
  }
  const status=String(record?.status||'not_submitted').toLowerCase();
@@ -2241,16 +2324,16 @@ function renderAccountActivationStatus(record,error){
  }
  if(status==='pending'){
   setStatus('Payment under review','status-pending');
-  if(note){note.classList.add('visible');title.textContent='Your account is open — activation is under review';message.textContent='You can access your dashboard, profile and referral information while the activation payment is being reviewed.';detail.textContent='You will get access to activation-restricted earning features after approval.';}
+  if(note){note.classList.add('visible');title.textContent='Activation payment is under review';message.textContent='Your dashboard will open automatically after an administrator approves your payment.';detail.textContent='You can return to this page to check the latest status.';}
   return;
  }
  if(status==='rejected'){
   setStatus('Activation needs attention','status-inactive');
-  if(note){note.classList.add('visible');title.textContent='Your account remains accessible';message.textContent='Your activation payment was not approved. You can still sign in and view your account details.';detail.textContent='Please review your payment information and contact GenZBag support for assistance.';}
+  if(note){note.classList.add('visible');title.textContent='Activation needs attention';message.textContent='Your activation payment was not approved. Your dashboard remains locked.';detail.textContent='Review the administrator note on the activation page and submit the correct reference.';}
   return;
  }
  setStatus('Not activated','status-inactive');
- if(note){note.classList.add('visible');title.textContent='Your account is ready — activation is still pending';message.textContent='You can sign in, view your profile, check your referral link and explore your account before activating.';detail.textContent='Activation-restricted earning features will remain unavailable until your payment is confirmed.';}
+ if(note){note.classList.add('visible');title.textContent='Account activation required';message.textContent='Your account is created, but the dashboard is locked until your activation payment is approved.';detail.textContent='Submit your mobile money transaction reference on the activation page.';}
 }
 function setMemberName(name){const first=(name||'Member').split(/[._\\s-]/)[0],initial=first.charAt(0).toUpperCase();const w=document.querySelector('.welcome-info h2'),p=document.querySelector('#profile .profile-header h2'),a=document.querySelector('.welcome-top .avatar'),b=document.querySelector('#profile .profile-header .avatar'),dn=document.getElementById('dashboardProfileName'),da=document.getElementById('dashboardProfileAvatar');if(w)w.textContent='Hi '+first;if(p)p.textContent=name||'Member';if(a)a.textContent=initial;if(b)b.textContent=initial;if(dn)dn.textContent=name||'Member';if(da)da.textContent=initial;}
 
