@@ -3263,6 +3263,7 @@ body.activation-screen-open{overflow:hidden!important}
  <section class="genz-activation-card">
   <header class="genz-fast-topbar">
    <div class="genz-fast-brand"><span class="genz-fast-logo">G</span><strong>GenZBag</strong></div>
+   <span class="genz-activation-live-pill" aria-label="Live activation status"><i></i> LIVE</span>
    <div class="genz-fast-account"><span class="genz-fast-user" id="genzActivationUsername" aria-live="polite"></span><button type="button" class="genz-fast-logout" id="genzActivationLogout">Logout</button></div>
   </header>
   <div id="genzActivationHome" class="genz-activation-page">
@@ -4555,6 +4556,120 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #genzActivationGate .genz-activation-small{display:none!important}
 @media(max-width:480px){#genzActivationGate{padding:8px 6px!important}#genzActivationGate .genz-activation-card{padding:12px!important}#genzActivationGate .genz-fast-methods{grid-template-columns:1fr 1fr!important}}
 @media(max-width:340px){#genzActivationGate .genz-fast-methods{grid-template-columns:1fr!important}}
+</style>
+
+
+<style id="genzbag-signup-matched-activation-ui">
+#genzActivationGate{isolation:isolate!important;align-items:flex-start!important;justify-content:center!important;padding:22px 14px!important;overflow-x:hidden!important;background:radial-gradient(ellipse at 14% 16%,#1c6caa88 0,transparent 35%),radial-gradient(ellipse at 88% 80%,#8a3bcb66 0,transparent 34%),linear-gradient(135deg,#030817 0%,#071b3c 48%,#10133b 100%)!important;color:#18243b!important;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important}
+#genzActivationGate:before,#genzActivationGate:after{content:"";position:fixed;z-index:-1;width:300px;height:300px;border-radius:50%;filter:blur(2px);opacity:.42;pointer-events:none;animation:genzActivationOrb 12s ease-in-out infinite alternate}
+#genzActivationGate:before{top:-95px;left:-85px;background:radial-gradient(circle,#27b9d7 0,transparent 68%)}
+#genzActivationGate:after{right:-100px;bottom:-100px;background:radial-gradient(circle,#9b5cff 0,transparent 68%);animation-delay:-5s}
+@keyframes genzActivationOrb{to{transform:translate(45px,35px) scale(1.15)}}
+#genzActivationGate .genz-activation-card{position:relative!important;isolation:isolate!important;width:min(100%,470px)!important;max-width:470px!important;margin:auto!important;padding:clamp(20px,5vw,30px)!important;overflow:hidden!important;border:1px solid #ffffff38!important;border-radius:27px!important;background:linear-gradient(145deg,#ffffffed,#eaf2ffed 55%,#f5efffed)!important;box-shadow:0 28px 90px #0009,0 0 0 1px #ffffff20 inset!important;color:#18243b!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;animation:genzActivationPanelEnter .7s cubic-bezier(.2,.8,.2,1) both}
+#genzActivationGate .genz-activation-card:before{content:"";position:absolute;z-index:0;inset:0 0 auto;height:5px;background:linear-gradient(90deg,#0a2a6b,#1769e0,#ff8a00,#16a34a);background-size:220% 100%;animation:genzActivationShimmer 5s linear infinite}
+@keyframes genzActivationPanelEnter{from{opacity:0;transform:translateY(18px) scale(.975)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes genzActivationShimmer{to{background-position:220% 0}}
+#genzActivationGate .genz-fast-topbar{position:relative;z-index:1;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:9px!important;margin:0 0 18px!important;padding:4px 0 14px!important;border:0!important;border-bottom:1px solid #dfe7f2!important;background:transparent!important;box-shadow:none!important}
+#genzActivationGate .genz-fast-brand{display:flex!important;align-items:center!important;gap:9px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#genzActivationGate .genz-fast-logo{width:39px!important;height:39px!important;border-radius:13px!important;display:grid!important;place-items:center!important;background:linear-gradient(145deg,#0a2a6b,#1769e0)!important;color:#fff!important;box-shadow:0 8px 24px #0a2a6b45!important;font-size:21px!important;font-weight:1000!important;animation:genzActivationLogoFloat 3s ease-in-out infinite}
+@keyframes genzActivationLogoFloat{50%{transform:translateY(-3px) rotate(-3deg)}}
+#genzActivationGate .genz-fast-brand strong{color:#0a1b3e!important;font-size:19px!important;font-weight:900!important;letter-spacing:-.7px!important}
+#genzActivationGate .genz-activation-live-pill{display:inline-flex!important;align-items:center!important;gap:6px!important;margin-left:auto!important;padding:6px 9px!important;border-radius:30px!important;background:#e8fff2!important;color:#087b42!important;font-size:8px!important;font-weight:950!important;letter-spacing:1px!important;white-space:nowrap!important}
+#genzActivationGate .genz-activation-live-pill i{width:7px;height:7px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 4px #16a34a20;animation:genzActivationPulse 1.5s infinite}
+@keyframes genzActivationPulse{50%{box-shadow:0 0 0 7px #16a34a08;opacity:.65}}
+#genzActivationGate .genz-fast-account{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:6px!important;min-width:0!important}
+#genzActivationGate .genz-fast-user{max-width:115px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;padding:6px 9px!important;border:1px solid #dce5f1!important;border-radius:9px!important;background:#f8faff!important;color:#526079!important;font-size:10px!important;font-weight:800!important}
+#genzActivationGate .genz-fast-logout{min-height:31px!important;padding:0 9px!important;border:1px solid #dce5f1!important;border-radius:9px!important;background:#fff!important;color:#526079!important;font-size:10px!important;font-weight:850!important}
+#genzActivationGate .genz-fast-logout:hover{border-color:#1769e0!important;color:#1769e0!important}
+#genzActivationGate .genz-fast-hero{position:relative!important;overflow:hidden!important;margin:0 0 17px!important;padding:22px 20px!important;border:1px solid #ffffff30!important;border-radius:20px!important;background:linear-gradient(110deg,#0a2a6b,#1769e0 58%,#7038bb)!important;box-shadow:0 12px 28px #0a2a6b25!important;color:#fff!important}
+#genzActivationGate .genz-fast-hero:after{content:"";position:absolute;inset:-70% -35%;pointer-events:none;background:conic-gradient(from 0deg,transparent,#ffffff26,transparent 32%);animation:genzActivationHeroGlow 10s linear infinite}
+@keyframes genzActivationHeroGlow{to{transform:rotate(360deg)}}
+#genzActivationGate .genz-fast-kicker{position:relative;z-index:1;display:inline-flex!important;align-items:center!important;padding:7px 11px!important;border:1px solid #ffffff45!important;border-radius:30px!important;background:#ffffff20!important;color:#fff!important;font-size:10px!important;font-weight:850!important}
+#genzActivationGate .genz-fast-fee-label{position:relative;z-index:1;margin:18px 0 5px!important;color:#dce8ff!important;font-size:11px!important;font-weight:700!important}
+#genzActivationGate #genzActivationTitle{position:relative;z-index:1;display:block!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;color:#fff!important;font-size:clamp(31px,8vw,42px)!important;line-height:1.1!important;font-weight:950!important;letter-spacing:-1.4px!important;text-align:left!important;text-shadow:0 7px 18px #0003!important;white-space:normal!important}
+#genzActivationGate .genz-fast-country{position:relative;z-index:1;margin-top:5px!important;color:#dce8ff!important;font-size:11px!important;font-weight:700!important}
+#genzActivationGate .genz-fast-progress-section,#genzActivationGate .genz-fast-pay-section{margin:19px 0 0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#genzActivationGate .genz-fast-progress-section h2,#genzActivationGate .genz-fast-pay-section h2{margin:0 0 10px!important;color:#0a1b3e!important;font-size:16px!important;font-weight:900!important;letter-spacing:-.4px!important}
+#genzActivationGate .genz-fast-progress{display:grid!important;gap:7px!important;margin:0!important;padding:0!important}
+#genzActivationGate .genz-fast-progress:before{display:none!important}
+#genzActivationGate .genz-fast-progress>div{display:flex!important;align-items:flex-start!important;gap:10px!important;margin:0!important;padding:10px 11px!important;border:1px solid #e2eaf5!important;border-radius:13px!important;background:#ffffffc9!important;box-shadow:0 4px 12px #0a2a6b08!important;color:#34435e!important}
+#genzActivationGate .genz-fast-progress>div>b{display:grid!important;place-items:center!important;flex:0 0 27px!important;width:27px!important;height:27px!important;border-radius:9px!important;background:#edf4ff!important;color:#1769e0!important;font-size:12px!important}
+#genzActivationGate .genz-fast-progress>.genz-fast-step-done>b{background:#e7f9ee!important;color:#15803d!important}
+#genzActivationGate .genz-fast-progress>.genz-fast-step-current>b{background:#eaf2ff!important;color:#1769e0!important}
+#genzActivationGate .genz-fast-progress>div>span{padding-top:1px!important;color:#526079!important;font-size:11px!important;line-height:1.45!important}
+#genzActivationGate .genz-fast-progress strong{display:inline-block!important;margin:0 0 2px!important;color:#172b55!important;font-size:11px!important;font-weight:900!important}
+#genzActivationGate .genz-fast-progress small{color:#78849a!important;font-size:10px!important;line-height:1.45!important}
+#genzActivationGate .genz-activation-status{margin:12px 0 0!important;padding:11px 12px!important;border:1px solid #dce7f7!important;border-radius:12px!important;background:linear-gradient(110deg,#f7faff,#fff)!important;color:#526079!important;font-size:10px!important;line-height:1.5!important;box-shadow:none!important}
+#genzActivationGate .genz-activation-status.pending{border-color:#f5d58a!important;background:#fff8e7!important;color:#805500!important}
+#genzActivationGate .genz-activation-status.rejected{border-color:#fecaca!important;background:#fff1f2!important;color:#be123c!important}
+#genzActivationGate .genz-fast-methods{display:grid!important;grid-template-columns:1fr 1fr!important;gap:9px!important;margin:0!important}
+#genzActivationGate .genz-fast-method{display:flex!important;align-items:center!important;gap:9px!important;min-width:0!important;min-height:66px!important;margin:0!important;padding:10px!important;border:1px solid #e0e8f4!important;border-radius:14px!important;background:linear-gradient(145deg,#fff,#f7faff)!important;color:#18243b!important;box-shadow:0 6px 18px #0a2a6b0d!important;text-align:left!important;transition:transform .2s,border-color .2s,box-shadow .2s!important}
+#genzActivationGate .genz-fast-method:hover,#genzActivationGate .genz-fast-method:focus-visible{transform:translateY(-2px)!important;border-color:#9bbcf5!important;box-shadow:0 10px 22px #1769e01c!important;outline:none!important}
+#genzActivationGate .genz-fast-network{display:grid!important;place-items:center!important;flex:0 0 38px!important;width:38px!important;height:38px!important;border-radius:11px!important;font-size:10px!important;font-weight:950!important}
+#genzActivationGate .genz-fast-mtn{background:#ffcc00!important;color:#111!important}
+#genzActivationGate .genz-fast-airtel{background:#e52335!important;color:#fff!important}
+#genzActivationGate .genz-fast-method-copy{display:flex!important;flex:1!important;min-width:0!important;flex-direction:column!important;gap:3px!important}
+#genzActivationGate .genz-fast-method-copy strong{color:#172b55!important;font-size:10px!important;font-weight:900!important}
+#genzActivationGate .genz-fast-method-copy small{color:#78849a!important;font-size:9px!important;line-height:1.35!important}
+#genzActivationGate .genz-fast-arrow{color:#1769e0!important;font-size:22px!important}
+#genzActivationGate .genz-fast-help{display:flex!important;justify-content:center!important;position:static!important;margin:13px auto 0!important;padding:0!important;background:transparent!important;box-shadow:none!important;color:#1769e0!important;font-size:10px!important}
+#genzActivationGate .genz-fast-help a{color:#1769e0!important;font-size:10px!important;font-weight:900!important}
+#genzActivationGate .genz-fast-footer{margin:10px 0 0!important;color:#8994a8!important;font-size:9px!important;text-align:center!important}
+#genzActivationGate .genz-fast-detail-top{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;margin:0 0 16px!important;padding:0 0 12px!important;border-bottom:1px solid #dfe7f2!important}
+#genzActivationGate .genz-fast-back,#genzActivationGate .genz-activation-back{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:36px!important;padding:0 12px!important;border:1px solid #dce5f1!important;border-radius:10px!important;background:#fff!important;color:#1769e0!important;font-size:10px!important;font-weight:900!important;box-shadow:0 4px 12px #0a2a6b0b!important}
+#genzActivationGate .genz-fast-profile{display:flex!important;align-items:center!important;gap:8px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#genzActivationGate .genz-fast-profile span{display:grid!important;place-items:center!important;width:29px!important;height:29px!important;border-radius:10px!important;background:linear-gradient(145deg,#0a2a6b,#1769e0)!important;color:#fff!important;font-size:14px!important;font-weight:950!important}
+#genzActivationGate .genz-fast-profile strong{color:#172b55!important;font-size:11px!important;font-weight:900!important}
+#genzActivationGate .genz-fast-payment-heading{display:flex!important;align-items:center!important;gap:12px!important;margin:0 0 13px!important}
+#genzActivationGate .genz-fast-payment-heading .genz-fast-network{flex-basis:44px!important;width:44px!important;height:44px!important;border-radius:13px!important;font-size:11px!important}
+#genzActivationGate .genz-fast-payment-heading>div>small{display:block!important;margin-bottom:3px!important;color:#78849a!important;font-size:10px!important}
+#genzActivationGate .genz-fast-payment-heading h1{margin:0!important;color:#0a1b3e!important;font-size:19px!important;line-height:1.2!important;font-weight:900!important;letter-spacing:-.5px!important}
+#genzActivationGate .genz-fast-amount{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;min-height:63px!important;margin:0 0 13px!important;padding:12px 14px!important;border:1px solid #dce7f7!important;border-radius:13px!important;background:linear-gradient(110deg,#edf4ff,#fff)!important;box-shadow:none!important}
+#genzActivationGate .genz-fast-amount span{color:#78849a!important;font-size:11px!important;font-weight:750!important}
+#genzActivationGate .genz-fast-amount strong{color:#1769e0!important;font-size:23px!important;font-weight:950!important;letter-spacing:-.6px!important}
+#genzActivationGate .genz-fast-payment-steps{display:block!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#genzActivationGate .genz-fast-instruction{display:grid!important;grid-template-columns:25px minmax(0,1fr)!important;gap:9px!important;margin:0 0 7px!important;padding:10px!important;border:1px solid #e3ebf5!important;border-radius:12px!important;background:#ffffffd9!important;box-shadow:0 4px 12px #0a2a6b08!important}
+#genzActivationGate .genz-fast-instruction>b{display:grid!important;place-items:center!important;width:24px!important;height:24px!important;border-radius:8px!important;background:#edf4ff!important;color:#1769e0!important;font-size:10px!important}
+#genzActivationGate .genz-fast-instruction small{display:block!important;margin:0 0 3px!important;color:#8994a8!important;font-size:8px!important;font-weight:900!important;letter-spacing:.8px!important}
+#genzActivationGate .genz-fast-instruction>div>strong{display:block!important;color:#172b55!important;font-size:12px!important;font-weight:900!important}
+#genzActivationGate .genz-fast-instruction p{margin:3px 0 0!important;color:#65738a!important;font-size:10px!important;line-height:1.45!important}
+#genzActivationGate .genz-fast-instruction button[data-copy]{display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-top:6px!important;padding:6px 10px!important;border:1px solid #cbdcf7!important;border-radius:8px!important;background:#edf4ff!important;color:#1769e0!important;font-size:9px!important;font-weight:900!important}
+#genzActivationGate .genz-fast-confirm{margin:14px 0 0!important;padding:15px!important;border:1px solid #dce7f7!important;border-radius:15px!important;background:linear-gradient(145deg,#f8faff,#fff)!important;box-shadow:0 6px 18px #0a2a6b0a!important}
+#genzActivationGate .genz-fast-confirm h2{margin:0 0 6px!important;color:#0a1b3e!important;font-size:14px!important;font-weight:900!important}
+#genzActivationGate .genz-fast-confirm>p{color:#78849a!important;font-size:10px!important;line-height:1.5!important}
+#genzActivationGate .genz-fast-confirm label{display:block!important;margin:11px 0 6px!important;color:#526079!important;font-size:10px!important;font-weight:850!important}
+#genzActivationGate .genz-fast-input-wrap{display:flex!important;align-items:center!important;gap:8px!important}
+#genzActivationGate .genz-fast-input-wrap input{width:100%!important;min-width:0!important;min-height:45px!important;padding:11px 13px!important;border:1px solid #d8e2f1!important;border-radius:12px!important;background:#ffffffed!important;color:#18243b!important;font:inherit!important;font-size:12px!important;outline:none!important;transition:border-color .2s,box-shadow .2s!important}
+#genzActivationGate .genz-fast-input-wrap input:focus{border-color:#3989f5!important;box-shadow:0 0 0 4px #3989f51c,0 8px 18px #1769e010!important}
+#genzActivationGate .genz-activation-submit{width:100%!important;min-height:47px!important;margin-top:11px!important;padding:12px!important;border:1px solid #ffffff30!important;border-radius:13px!important;background:linear-gradient(105deg,#0a2a6b,#1769e0 58%,#7038bb)!important;color:#fff!important;font-size:11px!important;font-weight:950!important;box-shadow:0 10px 22px #0a2a6b35!important;transition:transform .2s,box-shadow .2s!important}
+#genzActivationGate .genz-activation-submit:hover:not(:disabled){transform:translateY(-2px)!important;box-shadow:0 14px 28px #0a2a6b42!important}
+#genzActivationGate .genz-activation-submit:disabled{opacity:.65!important;cursor:wait!important}
+#genzActivationGate .genz-fast-choose-another{display:block!important;margin:10px auto 0!important;border:0!important;background:transparent!important;color:#1769e0!important;font-size:10px!important;font-weight:900!important}
+#genzActivationGate .genz-activation-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin:12px 0 0!important}
+#genzActivationGate .genz-activation-secondary{min-height:38px!important;padding:8px!important;border:1px solid #dce5f1!important;border-radius:10px!important;background:#fff!important;color:#1769e0!important;font-size:9px!important;font-weight:900!important}
+#genzActivationGate .genz-activation-page:not([hidden]){animation:genzActivationPageEnter .32s ease both}
+@keyframes genzActivationPageEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+#genzActivationGate .genz-activation-small{display:none!important}
+@media(max-width:480px){
+ #genzActivationGate{padding:10px 9px!important}
+ #genzActivationGate .genz-activation-card{padding:19px 15px!important;border-radius:22px!important}
+ #genzActivationGate .genz-fast-topbar{gap:6px!important;margin-bottom:13px!important;padding-bottom:11px!important}
+ #genzActivationGate .genz-fast-logo{width:34px!important;height:34px!important}
+ #genzActivationGate .genz-fast-brand strong{font-size:16px!important}
+ #genzActivationGate .genz-fast-user{max-width:83px!important;padding:5px 6px!important;font-size:9px!important}
+ #genzActivationGate .genz-fast-logout{min-height:29px!important;padding:0 7px!important;font-size:9px!important}
+ #genzActivationGate .genz-activation-live-pill{padding:5px 7px!important;font-size:7px!important}
+ #genzActivationGate .genz-fast-hero{padding:17px 15px!important;border-radius:16px!important}
+ #genzActivationGate .genz-fast-progress-section,#genzActivationGate .genz-fast-pay-section{margin-top:15px!important}
+ #genzActivationGate .genz-fast-methods{grid-template-columns:1fr 1fr!important;gap:7px!important}
+ #genzActivationGate .genz-fast-method{min-height:60px!important;padding:8px!important;gap:7px!important}
+ #genzActivationGate .genz-fast-network{flex-basis:32px!important;width:32px!important;height:32px!important}
+ #genzActivationGate .genz-fast-method-copy strong{font-size:9px!important}
+ #genzActivationGate .genz-fast-method-copy small{font-size:8px!important}
+ #genzActivationGate .genz-activation-actions{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:350px){#genzActivationGate .genz-activation-card{padding:16px 12px!important}#genzActivationGate .genz-activation-live-pill{display:none!important}#genzActivationGate .genz-fast-methods{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){#genzActivationGate:before,#genzActivationGate:after,#genzActivationGate .genz-activation-card:before,#genzActivationGate .genz-fast-logo,#genzActivationGate .genz-activation-live-pill i,#genzActivationGate .genz-activation-page:not([hidden]){animation:none!important}#genzActivationGate .genz-fast-method,#genzActivationGate .genz-activation-submit{transition:none!important}}
 </style>
 
 </body>
