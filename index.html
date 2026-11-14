@@ -1770,14 +1770,14 @@ footer {
 (function(){
 'use strict';
 const supabaseClient=window.supabase?.createClient('https://pihesnxftmrzmsoikvfz.supabase.co','sb_publishable_r14npkqDg7b8nthhvljX3A_HugjXL1S',{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce'}})||null;
-const AUTH_GRACE_MS=300000,LAST_AUTH_KEY='genzbag:last-authenticated-at';let lastAuthenticatedAt=Number(sessionStorage.getItem(LAST_AUTH_KEY)||0),authGraceTimer=null,authGraceInterval=null,intentionalSignOut=false,authRecoveryInProgress=false;
+const AUTH_GRACE_MS=300000,LAST_AUTH_KEY='genzbag:last-authenticated-at';let lastAuthenticatedAt=(()=>{try{return Number(sessionStorage.getItem(LAST_AUTH_KEY)||0);}catch(e){return 0;}})(),authGraceTimer=null,authGraceInterval=null,intentionalSignOut=false,authRecoveryInProgress=false;
 const authGate=document.getElementById('authGate'),authForm=document.getElementById('authForm'),authMessage=document.getElementById('authMessage'),authSubmit=document.getElementById('authSubmit');
 let authMode='login';
 function showAuthMessage(m,t){authMessage.textContent=m||'';authMessage.className='auth-message'+(t?' '+t:'');}
 function launchSignupCelebration(){const modal=document.getElementById('signupSuccessModal');if(!modal)return;const layer=document.createElement('div');layer.className='signup-confetti-layer';layer.setAttribute('aria-hidden','true');const pieces=['🎉','🥳','🎊','✨','💫','🎈','🌟','💖'];for(let i=0;i<38;i++){const piece=document.createElement('span');piece.className='signup-confetti-piece';piece.textContent=pieces[i%pieces.length];piece.style.left=(Math.random()*100)+'%';piece.style.setProperty('--drift',((Math.random()-.5)*220)+'px');piece.style.setProperty('--duration',(2.1+Math.random()*2.3)+'s');piece.style.setProperty('--delay',(Math.random()*.65)+'s');piece.style.setProperty('--spin',(Math.random()*720-360)+'deg');layer.appendChild(piece);}modal.appendChild(layer);setTimeout(()=>layer.remove(),5200);}
 function setAuthMode(mode){authMode=mode;const s=mode==='signup';document.getElementById('authTitle').textContent=s?'Join GenZBag':'Welcome back';document.getElementById('authIntro').textContent=s?'Create your free account in less than a minute.':'Sign in to continue your digital income journey.';['usernameWrap','signupExtra','confirmWrap','signupProgress','termsWrap'].forEach(id=>document.getElementById(id).classList.toggle('auth-hidden-field',!s));document.getElementById('forgotPassword').classList.toggle('auth-hidden-field',s);document.getElementById('authUsername').required=s;document.getElementById('authPhone').required=s;document.getElementById('authConfirm').required=s;document.getElementById('authTerms').required=s;document.getElementById('authLoginEmail').parentElement.classList.toggle('auth-hidden-field',s);document.getElementById('authEmail').classList.toggle('auth-hidden-field',!s);document.getElementById('authPassword').autocomplete=s?'new-password':'current-password';document.getElementById('authPassword').placeholder=s?'Create password':'Enter your password';authSubmit.innerHTML=s?'Create my account <span>→</span>':'Sign in <span>→</span>';document.getElementById('switchAuthMode').textContent=s?'Sign in':'Create your free account';document.getElementById('authSwitchLine').firstElementChild.textContent=s?'Already have an account?':'New to GenZBag?';document.getElementById('togglePassword').textContent='Show';document.getElementById('authPassword').type='password';showAuthMessage('');updateSignupProgress();}
 function showDashboard(){authGate.classList.add('hidden');removeSessionNotice();}
-function requireAuth(){authGate.classList.remove('hidden');}
+function requireAuth(){authGate.style.visibility='';authGate.classList.remove('hidden');}
 function removeSessionNotice(){document.getElementById('sessionNotice')?.remove();if(authGraceTimer)clearTimeout(authGraceTimer);if(authGraceInterval)clearInterval(authGraceInterval);authGraceTimer=null;authGraceInterval=null;}
 function showSessionNotice(message){let n=document.getElementById('sessionNotice');if(!n){n=document.createElement('div');n.id='sessionNotice';n.className='session-notice';n.setAttribute('role','status');document.body.appendChild(n);}n.textContent=message;}
 function markSessionAlive(session){if(!session)return;lastAuthenticatedAt=Date.now();try{sessionStorage.setItem(LAST_AUTH_KEY,String(lastAuthenticatedAt));}catch(e){}removeSessionNotice();}
@@ -2356,8 +2356,8 @@ async function initialiseMemberFeatures(session){
  await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools()]);
 }
 
-/* AUTH-GATED ENTRY: visitors must sign in or create an account before viewing the dashboard. */
-requireAuth();
+/* AUTH-GATED ENTRY: restore a persisted session before exposing the sign-in screen. */
+authGate.style.visibility='hidden';
 setAuthMode('signup');
 renderNetwork(0,0);
 if(supabaseClient){
@@ -2366,7 +2366,7 @@ if(supabaseClient){
     if(data?.session){currentMember=data.session.user;markSessionAlive(data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(data.session);}
     else if(hasRecentAuthGrace()){showDashboard();showSessionNotice('Reconnecting to your secure session. Your dashboard will remain open briefly.');beginAuthGrace();}
     else{requireAuth();}
-  });
+  }).catch(error=>{console.warn('Supabase startup session recovery:',error);requireAuth();});
   supabaseClient.auth.onAuthStateChange((event,session)=>{
     if((event==='SIGNED_IN'||event==='INITIAL_SESSION')&&session){currentMember=session.user;markSessionAlive(session);setTimeout(()=>{showDashboard();loadMemberNetwork();initialiseMemberFeatures(session);},0);}
     if(event==='TOKEN_REFRESHED'&&session){currentMember=session.user;markSessionAlive(session);}
@@ -2398,7 +2398,7 @@ if(supabaseClient){
   });
   window.addEventListener('offline',()=>{if(hasRecentAuthGrace())beginAuthGrace();else showSessionNotice('You are offline. Reconnect to load live Supabase data.');});
 
-}
+}else{requireAuth();}
 })();
 </script>
 
