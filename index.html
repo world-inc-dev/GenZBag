@@ -1203,6 +1203,58 @@ img,svg,video,canvas{max-width:100%}
 .admin-console #adminConsoleMessage{font-size:10px;color:#8ce7d7;min-height:16px;margin:8px 0}
 @media(max-width:600px){.admin-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-console{padding:12px!important}.admin-console-head h1{font-size:19px}.admin-metric strong{font-size:19px}}
 
+
+/* ADMIN CONSOLE - refined desktop and mobile workspace */
+.admin-console{max-width:1180px!important;margin:18px auto!important;padding:clamp(14px,2.4vw,26px)!important;border-radius:22px!important;background:radial-gradient(ellipse at 95% 0%,#123a57 0,transparent 38%),linear-gradient(145deg,#071629,#081c32 65%,#071426)!important;box-shadow:0 22px 60px #03102030!important}
+.admin-console-head{align-items:center;padding:6px 2px 18px;border-bottom:1px solid #24415e}
+.admin-console-head h1{font-size:clamp(21px,3vw,29px);letter-spacing:-.6px}
+.admin-console-head .admin-muted{max-width:650px}
+.admin-console-tabs{padding:10px 0 14px;gap:8px;scroll-snap-type:x proximity}
+.admin-console-tabs button{padding:10px 14px;border-radius:11px;font-size:11px;transition:background .18s,border-color .18s,transform .18s;scroll-snap-align:start}
+.admin-console-tabs button:hover{transform:translateY(-1px);border-color:#36bdb1}
+.admin-console-panel{padding:clamp(14px,2vw,22px);border-radius:17px;box-shadow:0 10px 26px #020c1b30}
+.admin-console-panel>h2{font-size:18px;letter-spacing:-.2px}
+.admin-console-panel>p.admin-muted{margin:0 0 14px;max-width:760px}
+.admin-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.admin-section-title h2{font-size:19px;margin:5px 0}
+.admin-section-chip{border:1px solid #286b68;background:#0d393d;color:#80f0df;border-radius:30px;padding:7px 11px;font-size:9px;font-weight:900}
+.admin-member-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.admin-member-card{display:flex;gap:11px;min-width:0;padding:14px;border:1px solid #254562;border-radius:14px;background:linear-gradient(145deg,#102a45,#0b2038);transition:border-color .2s,transform .2s}
+.admin-member-card:hover{border-color:#35b9ad;transform:translateY(-1px)}
+.admin-member-avatar{width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#13a99b,#2369ad);color:#fff;font-size:16px;font-weight:950}
+.admin-member-main{min-width:0;flex:1}
+.admin-member-top{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.admin-member-top strong{color:#f4f8ff;font-size:12px;overflow-wrap:anywhere}
+.admin-member-contact{font-size:10px;line-height:1.7;color:#c2d4e8;overflow-wrap:anywhere;margin-top:7px}
+.admin-member-meta{font-size:9px;color:#8fa9c4;margin:7px 0 10px}
+.admin-edit-member{font-size:10px!important;padding:8px 11px!important}
+.admin-edit-modal{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;padding:16px;background:#020b19c9;backdrop-filter:blur(8px)}
+.admin-edit-modal.open{display:flex}
+.admin-edit-dialog{width:min(100%,440px);max-height:calc(100dvh - 32px);overflow:auto;padding:22px;border:1px solid #31516f;border-radius:20px;background:linear-gradient(145deg,#102944,#081a30);box-shadow:0 24px 80px #0009;color:#eef6ff}
+.admin-edit-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px}
+.admin-edit-head h3{font-size:19px;margin:5px 0}
+.admin-edit-head p,.admin-edit-help{font-size:10px;line-height:1.55;color:#9fb5ce}
+.admin-modal-close{width:34px;height:34px;border:1px solid #34516e;border-radius:10px;background:#183653;color:#fff;font-size:22px}
+.admin-edit-dialog label{display:grid;gap:7px;margin:12px 0;color:#b9cde2;font-size:10px;font-weight:850}
+.admin-edit-dialog input{width:100%;padding:12px;border:1px solid #34516e;border-radius:10px;background:#081b30;color:#f6fbff;outline:none}
+.admin-edit-dialog input:focus{border-color:#32c5b4;box-shadow:0 0 0 3px #32c5b41c}
+.admin-edit-help{margin-top:10px}
+.admin-edit-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.admin-edit-actions button{padding:10px 14px!important;font-size:10px!important}
+.admin-edit-message{min-height:17px;margin-top:10px;color:#b7cde2;font-size:10px}
+.admin-edit-message.success{color:#72e7bd}.admin-edit-message.error{color:#ff9eae}
+.admin-console-panel input[type=search]{min-height:42px;padding:11px 13px!important;background:#091d33!important}
+.admin-console table{min-width:620px;font-size:11px}
+.admin-console th{padding:12px 10px;background:#102943}
+.admin-console td{padding:13px 10px;line-height:1.55}
+.admin-console .admin-action{padding:8px 11px;font-size:10px;transition:filter .18s,transform .18s}
+.admin-console .admin-action:hover{filter:brightness(1.13);transform:translateY(-1px)}
+.admin-console .admin-action:disabled{opacity:.55;cursor:wait;transform:none}
+.admin-console .admin-status{letter-spacing:.15px}
+.admin-console .admin-note{font-size:11px;padding:12px 14px}
+@media(max-width:700px){.admin-member-grid{grid-template-columns:1fr}.admin-console{margin:10px auto!important}.admin-console-head{align-items:flex-start}.admin-console-tabs button{padding:10px 12px}.admin-console table{min-width:570px}}
+@media(max-width:380px){.admin-edit-dialog{padding:17px}.admin-member-card{padding:11px}.admin-console-tabs button{font-size:10px}}
+
 </style>
 </head>
 
@@ -1580,9 +1632,21 @@ img,svg,video,canvas{max-width:100%}
       <div id="adminOverviewRecent" class="admin-muted">Loading latest activity…</div>
     </section>
     <section class="admin-console-panel" id="adminMembersPanel">
-      <h2>Member directory</h2><p class="admin-muted">Search member profiles and review their registration details. Role assignment and account suspension remain protected server-side operations.</p>
-      <input id="adminMembersSearch" type="search" placeholder="Search username, email, phone or country" style="width:100%">
-      <div id="adminMembersMount"></div>
+      <div class="admin-section-title"><div><span class="admin-console-kicker">USER MANAGEMENT</span><h2>Member directory</h2><p class="admin-muted">Manage member usernames, verified login emails and contact numbers.</p></div><span class="admin-section-chip">Secure controls</span></div>
+      <input id="adminMembersSearch" type="search" placeholder="Search username, email, phone or country" style="width:100%;margin:10px 0 14px">
+      <div id="adminMembersMount"><div class="activity-empty">Open this section to load members.</div></div>
+      <div class="admin-edit-modal" id="adminMemberEditModal" aria-hidden="true">
+      <form class="admin-edit-dialog" id="adminMemberEditForm">
+        <div class="admin-edit-head"><div><span class="admin-console-kicker">MEMBER PROFILE</span><h3>Edit member details</h3><p>Changes apply to the member's account and contact profile.</p></div><button type="button" id="adminMemberEditClose" class="admin-modal-close" aria-label="Close">×</button></div>
+        <input type="hidden" id="adminEditMemberId">
+        <label>Username<input id="adminEditUsername" minlength="3" maxlength="30" pattern="[a-zA-Z0-9_]{3,30}" required autocomplete="off"></label>
+        <label>Email address<input id="adminEditEmail" type="email" maxlength="254" required autocomplete="off"></label>
+        <label>Phone number<input id="adminEditPhone" type="tel" maxlength="32" placeholder="+256…"></label>
+        <p class="admin-edit-help">Updating the email also updates the member's Supabase sign-in email.</p>
+        <div class="admin-edit-actions"><button type="button" class="admin-action secondary" id="adminMemberEditCancel">Cancel</button><button type="submit" class="admin-action" id="adminMemberEditSave">Save changes</button></div>
+        <p id="adminMemberEditMessage" class="admin-edit-message" role="status"></p>
+      </form>
+    </div>
     </section>
     <section class="admin-console-panel" id="adminActivitiesPanel">
       <h2>Activities and submission reviews</h2><p class="admin-muted">Create tasks, set reward terms, and review proof before approving eligible submissions.</p>
@@ -2682,8 +2746,25 @@ async function loadAdminMembers(){
  host.innerHTML='<div class="activity-empty">Loading member profiles…</div>';
  const {data,error}=await supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(500);
  if(error){host.textContent='Member directory unavailable: '+error.message;return;}
- const render=()=>{const term=(document.getElementById('adminMembersSearch')?.value||'').trim().toLowerCase();const rows=(data||[]).filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(term)));host.innerHTML=adminTable(['Member','Contact','Country','Joined'],rows.map(x=>'<tr><td><strong>'+adminSafe(x.username||'Member')+'</strong><br><small>'+adminSafe(x.id)+'</small></td><td>'+adminSafe(x.contact_email||'Not provided')+'<br>'+adminSafe(x.phone||'Not provided')+'</td><td>'+adminSafe(x.country||'—')+'</td><td>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString():'—')+'</td></tr>'));};
- render();const input=document.getElementById('adminMembersSearch');if(input&&!input.dataset.adminBound){input.addEventListener('input',render);input.dataset.adminBound='1';}
+ const render=()=>{
+  const term=(document.getElementById('adminMembersSearch')?.value||'').trim().toLowerCase();
+  const rows=(data||[]).filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(term)));
+  if(!rows.length){host.innerHTML='<div class="activity-empty">No matching members found.</div>';return;}
+  host.innerHTML='<div class="admin-member-grid">'+rows.map(x=>'<article class="admin-member-card"><div class="admin-member-avatar">'+adminSafe((x.username||'M').slice(0,1).toUpperCase())+'</div><div class="admin-member-main"><div class="admin-member-top"><strong>'+adminSafe(x.username||'Member')+'</strong><span class="admin-status">Member</span></div><div class="admin-member-contact">'+adminSafe(x.contact_email||'Email not set')+'<br>'+adminSafe(x.phone||'Phone not set')+'</div><div class="admin-member-meta">'+adminSafe(x.country||'Country not set')+' · Joined '+adminSafe(x.created_at?new Date(x.created_at).toLocaleDateString('en-GB'):'—')+'</div><button type="button" class="admin-action admin-edit-member" data-edit-member="'+adminSafe(x.id)+'">Edit member details</button></div></article>').join('')+'</div>';
+ };
+ render();
+ const input=document.getElementById('adminMembersSearch');if(input&&!input.dataset.adminBound){input.addEventListener('input',render);input.dataset.adminBound='1';}
+ host.onclick=e=>{
+  const button=e.target.closest('[data-edit-member]');if(!button)return;
+  const member=(data||[]).find(x=>x.id===button.dataset.editMember);if(!member)return;
+  const modal=document.getElementById('adminMemberEditModal');if(!modal)return;
+  document.getElementById('adminEditMemberId').value=member.id;
+  document.getElementById('adminEditUsername').value=member.username||'';
+  document.getElementById('adminEditEmail').value=member.contact_email||'';
+  document.getElementById('adminEditPhone').value=member.phone||'';
+  document.getElementById('adminMemberEditMessage').textContent='';
+  modal.classList.add('open');modal.setAttribute('aria-hidden','false');
+ };
 }
 async function loadAdminWithdrawals(){
  const host=document.getElementById('adminWithdrawalsList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading withdrawal requests…</div>';
@@ -2695,7 +2776,7 @@ async function loadAdminActivations(){
  const host=document.getElementById('adminActivationList');if(!host||!adminIsAuthorized())return;host.innerHTML='<div class="activity-empty">Loading activation submissions…</div>';
  const {data,error}=await supabaseClient.from('activation_payment_submissions').select('id,user_id,amount,currency,payment_method,payment_reference,status,admin_note,created_at').order('created_at',{ascending:false}).limit(150);
  if(error){host.textContent='Activation submissions unavailable: '+error.message;return;}
- host.innerHTML=adminTable(['Submission','Payment','Reference','Status / decision'],(data||[]).map(x=>'<tr data-admin-activation="'+adminSafe(x.id)+'"><td>'+adminSafe(x.id)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'<br>'+adminSafe(x.payment_method)+'</td><td>'+adminSafe(x.payment_reference||'Not supplied')+'</td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No note')+'</small><div class="admin-row-actions" style="margin-top:7px"><button class="admin-action" data-activation-status="verified">Verify</button><button class="admin-action danger" data-activation-status="rejected">Reject</button></div></td></tr>'));
+ host.innerHTML=adminTable(['Submission','Payment','Reference','Status / decision'],(data||[]).map(x=>'<tr data-admin-activation="'+adminSafe(x.id)+'"><td>'+adminSafe(x.id)+'<br><small>'+adminSafe(x.user_id)+'<br>'+adminSafe(x.created_at?new Date(x.created_at).toLocaleString():'')+'</small></td><td>'+adminSafe(x.amount)+' '+adminSafe(x.currency)+'<br>'+adminSafe(x.payment_method)+'</td><td>'+adminSafe(x.payment_reference||'Not supplied')+'</td><td>'+adminStatus(x.status)+'<br><small>'+adminSafe(x.admin_note||'No note')+'</small><div class="admin-row-actions" style="margin-top:7px"><button class="admin-action" data-activation-status="verified">Approve activation</button><button class="admin-action danger" data-activation-status="rejected">Reject</button></div></td></tr>'));
 }
 async function loadAdminReferralsLedger(){
  const a=document.getElementById('adminReferralsList'),b=document.getElementById('adminLedgerList');if(!adminIsAuthorized())return;
@@ -2737,8 +2818,45 @@ function setupAdminConsole(){
  if(adminConsoleNav&&!adminConsoleNav.dataset.bound){adminConsoleNav.dataset.bound='1';adminConsoleNav.addEventListener('click',()=>{if(adminIsAuthorized())loadAdminConsoleTab('adminOverviewPanel');});}
  loadAdminConsoleOverview();
 }
-document.getElementById('adminWithdrawalsList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-withdraw-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-withdrawal]');const note=prompt('Add an administrator review note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('withdrawal_requests').update({status:b.dataset.withdrawStatus,admin_note:note,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminWithdrawal);if(error)alert('Could not update request: '+error.message);else{adminMessage('Withdrawal review decision saved. No money has been transferred.');await loadAdminWithdrawals();}});
-document.getElementById('adminActivationList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-activation-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-activation]');const note=prompt('Confirm payment reference verification and enter a note:');if(note===null)return;b.disabled=true;const {error}=await supabaseClient.from('activation_payment_submissions').update({status:b.dataset.activationStatus,admin_note:note,reviewed_by:currentMember.id,reviewed_at:new Date().toISOString()}).eq('id',row.dataset.adminActivation);if(error)alert('Could not update activation: '+error.message);else{adminMessage('Activation review saved.');await loadAdminActivations();}});
+async function runAdminAction(payload){
+ const {data,error}=await supabaseClient.functions.invoke('admin-management',{body:payload});
+ if(error)throw new Error(error.message||'Administrator request failed.');
+ if(data?.error)throw new Error(data.error);
+ return data;
+}
+document.getElementById('adminWithdrawalsList')?.addEventListener('click',async e=>{
+ const b=e.target.closest('[data-withdraw-status]');if(!b||!adminIsAuthorized())return;
+ const row=b.closest('[data-admin-withdrawal]');const decision=b.dataset.withdrawStatus;
+ if(!confirm('Confirm '+decision.replace('_',' ')+' for this withdrawal request?'))return;
+ const note=prompt('Add an administrator review note (optional):');if(note===null)return;
+ b.disabled=true;
+ try{const result=await runAdminAction({action:'review_withdrawal',id:row.dataset.adminWithdrawal,status:decision,note});adminMessage(result.message||'Withdrawal review saved.');await loadAdminWithdrawals();await loadAdminConsoleOverview();}
+ catch(err){alert('Could not update request: '+err.message);b.disabled=false;}
+});
+document.getElementById('adminActivationList')?.addEventListener('click',async e=>{
+ const b=e.target.closest('[data-activation-status]');if(!b||!adminIsAuthorized())return;
+ const row=b.closest('[data-admin-activation]');const decision=b.dataset.activationStatus;
+ if(!confirm('Confirm '+(decision==='verified'?'approval':'rejection')+' of this activation payment?'))return;
+ const note=prompt('Enter the payment verification note (optional):');if(note===null)return;
+ b.disabled=true;
+ try{const result=await runAdminAction({action:'review_activation',id:row.dataset.adminActivation,status:decision,note});adminMessage(result.message||'Activation review saved.');await loadAdminActivations();await loadAdminConsoleOverview();}
+ catch(err){alert('Could not update activation: '+err.message);b.disabled=false;}
+});
+function closeAdminMemberModal(){
+ const modal=document.getElementById('adminMemberEditModal');if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
+}
+document.getElementById('adminMemberEditClose')?.addEventListener('click',closeAdminMemberModal);
+document.getElementById('adminMemberEditCancel')?.addEventListener('click',closeAdminMemberModal);
+document.getElementById('adminMemberEditModal')?.addEventListener('click',e=>{if(e.target.id==='adminMemberEditModal')closeAdminMemberModal();});
+document.getElementById('adminMemberEditForm')?.addEventListener('submit',async e=>{
+ e.preventDefault();if(!adminIsAuthorized())return;
+ const save=document.getElementById('adminMemberEditSave'),message=document.getElementById('adminMemberEditMessage');
+ const payload={action:'update_member',user_id:document.getElementById('adminEditMemberId').value,username:document.getElementById('adminEditUsername').value.trim(),email:document.getElementById('adminEditEmail').value.trim(),phone:document.getElementById('adminEditPhone').value.trim()};
+ save.disabled=true;save.textContent='Saving…';message.textContent='Updating member account…';message.className='admin-edit-message';
+ try{const result=await runAdminAction(payload);message.textContent=result.message||'Member details updated.';message.classList.add('success');await loadAdminMembers();await loadAdminProfileDirectory();adminMessage('Member account details updated securely.');setTimeout(closeAdminMemberModal,850);}
+ catch(err){message.textContent=err.message;message.classList.add('error');}
+ finally{save.disabled=false;save.textContent='Save changes';}
+});
 document.getElementById('adminSupportList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-ticket-status]');if(!b||!adminIsAuthorized())return;const row=b.closest('[data-admin-ticket]');const {error}=await supabaseClient.from('support_tickets').update({status:b.dataset.ticketStatus,updated_at:new Date().toISOString()}).eq('id',row.dataset.adminTicket);if(error)alert('Could not update ticket: '+error.message);else await loadAdminSupport();});
 
 
