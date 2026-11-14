@@ -2287,6 +2287,55 @@ body.activation-body-locked,
 }
 </style>
 
+
+<style id="genzbag-activation-contrast-and-single-footer">
+/* The activation gate is a standalone screen: hide the locked dashboard behind it. */
+body:has(#genzActivationGate.visible) > .topbar,
+body:has(#genzActivationGate.visible) > .overlay,
+body:has(#genzActivationGate.visible) > .sidebar,
+body:has(#genzActivationGate.visible) > main{
+  display:none!important;
+}
+/* Keep all activation copy legible in white on the dark navy surface. */
+#genzActivationGate.visible .genz-fast-brand strong,
+#genzActivationGate.visible .genz-fast-logout,
+#genzActivationGate.visible .genz-fast-hero *,
+#genzActivationGate.visible .genz-fast-progress-section *,
+#genzActivationGate.visible .genz-fast-pay-section *,
+#genzActivationGate.visible .genz-fast-footer,
+#genzActivationGate.visible .genz-fast-payment-heading *,
+#genzActivationGate.visible .genz-fast-amount *,
+#genzActivationGate.visible .genz-fast-preview *,
+#genzActivationGate.visible .genz-fast-instruction *,
+#genzActivationGate.visible .genz-fast-confirm *,
+#genzActivationGate.visible .genz-activation-small,
+#genzActivationGate.visible .genz-activation-status{
+  color:#fff!important;
+}
+#genzActivationGate.visible .genz-fast-logo,
+#genzActivationGate.visible .genz-fast-network{
+  color:#fff!important;
+}
+#genzActivationGate.visible .genz-fast-method,
+#genzActivationGate.visible .genz-fast-confirm{
+  background:rgba(255,255,255,.07)!important;
+  border-color:rgba(255,255,255,.2)!important;
+}
+#genzActivationGate.visible .genz-fast-confirm input{
+  color:#fff!important;
+  background:#061426!important;
+  border-color:rgba(255,255,255,.38)!important;
+}
+#genzActivationGate.visible .genz-fast-confirm input::placeholder{
+  color:rgba(255,255,255,.7)!important;
+}
+#genzActivationGate.visible .genz-fast-footer{
+  margin-top:14px!important;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.13);
+}
+</style>
+
 </head>
 
 <body>
