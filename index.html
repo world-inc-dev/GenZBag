@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0A2A6B">
-<title>GenZBag | Member Dashboard</title>
+<title>GenZBag | A Home of Digital Income</title>
+
 <style>
-:root{
+:root {
   --blue:#0A2A6B;
   --light-blue:#E8F0FF;
   --pink:#FF2E8A;
@@ -20,18 +21,25 @@
   --radius:19px;
   --shadow:0 5px 20px rgba(10,42,107,.07);
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{
+
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body {
   background:var(--light-blue);
   color:var(--text);
   font-family:Inter,"Segoe UI",Arial,sans-serif;
   min-height:100vh;
 }
-button,input{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-.app{min-height:100vh}
-.topbar{
+
+button,input {font:inherit}
+button {cursor:pointer}
+a {text-decoration:none;color:inherit}
+
+.topbar {
   height:68px;
   position:sticky;
   top:0;
@@ -43,314 +51,691 @@ a{text-decoration:none;color:inherit}
   padding:0 16px;
   box-shadow:0 2px 12px rgba(10,42,107,.07);
 }
-.header-left,.header-right{display:flex;align-items:center;gap:12px}
-.icon-btn{
-  width:39px;height:39px;border:0;border-radius:12px;
-  background:#F1F5FF;color:var(--blue);
-  display:grid;place-items:center;position:relative;
+
+.header-left,.header-right {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.icon-btn {
+  width:39px;
+  height:39px;
+  border:0;
+  border-radius:12px;
+  background:#F1F5FF;
+  color:var(--blue);
+  display:grid;
+  place-items:center;
+  position:relative;
   font-size:21px;
 }
-.icon-btn svg{width:21px;height:21px}
-.count{
-  position:absolute;top:-4px;right:-4px;
-  min-width:16px;height:16px;border-radius:20px;
-  background:var(--red);color:#fff;font-size:10px;
-  display:grid;place-items:center;border:2px solid white;
+
+.icon-btn svg {width:21px;height:21px}
+
+.count {
+  position:absolute;
+  top:-4px;
+  right:-4px;
+  min-width:16px;
+  height:16px;
+  border-radius:20px;
+  background:var(--red);
+  color:#fff;
+  font-size:10px;
+  display:grid;
+  place-items:center;
+  border:2px solid white;
 }
-.brand-button{
-  display:flex;align-items:center;gap:8px;
-  border:0;border-radius:30px;padding:8px 14px;
-  background:var(--blue);color:#fff;font-weight:800;
+
+.brand-button {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:0;
+  border-radius:30px;
+  padding:8px 14px;
+  background:var(--blue);
+  color:#fff;
+  font-weight:800;
   font-size:13px;
 }
-.brand-logo{
-  width:27px;height:27px;border-radius:50%;
-  background:#fff;color:var(--blue);
-  display:grid;place-items:center;font-weight:900;
+
+.brand-logo {
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  background:#fff;
+  color:var(--blue);
+  display:grid;
+  place-items:center;
+  font-weight:900;
 }
-.layout{display:flex;min-height:calc(100vh - 68px)}
-.sidebar{
-  width:260px;flex-shrink:0;background:var(--blue);
-  color:#fff;padding:22px 15px;
-  position:fixed;top:68px;bottom:0;left:0;
-  overflow-y:auto;z-index:90;
-  transform:translateX(-105%);transition:transform .25s ease;
+
+.sidebar {
+  width:260px;
+  background:var(--blue);
+  color:#fff;
+  padding:22px 15px;
+  position:fixed;
+  top:68px;
+  bottom:0;
+  left:0;
+  overflow-y:auto;
+  z-index:90;
+  transform:translateX(-105%);
+  transition:transform .25s ease;
 }
-.sidebar.open{transform:translateX(0)}
-.sidebar-brand{font-size:20px;font-weight:900;padding:8px 12px 22px}
-.sidebar-brand span{color:#FF8A00}
-.nav-label{
-  color:#AFC5F7;font-size:10px;font-weight:800;
-  letter-spacing:1.5px;padding:15px 12px 8px;
+
+.sidebar.open {transform:translateX(0)}
+
+.sidebar-brand {
+  font-size:20px;
+  font-weight:900;
+  padding:8px 12px 22px;
 }
-.nav-link{
-  display:flex;align-items:center;gap:12px;
-  color:#E5EDFF;padding:12px;border-radius:11px;
-  font-size:13px;font-weight:650;margin:3px 0;
+
+.sidebar-brand span {color:#FF8A00}
+
+.nav-label {
+  color:#AFC5F7;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  padding:15px 12px 8px;
+}
+
+.nav-link {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#E5EDFF;
+  padding:12px;
+  border-radius:11px;
+  font-size:13px;
+  font-weight:650;
+  margin:3px 0;
   transition:.2s;
 }
-.nav-link:hover,.nav-link.active{background:#ffffff1c;color:#fff}
-.nav-link.active{border-left:3px solid var(--pink)}
-.nav-link .nav-icon{width:22px;text-align:center;font-size:17px}
-.sidebar-footer{
-  margin-top:25px;padding:15px 12px;
+
+.nav-link:hover,.nav-link.active {
+  background:#ffffff1c;
+  color:#fff;
+}
+
+.nav-link.active {border-left:3px solid var(--pink)}
+
+.nav-link .nav-icon {
+  width:22px;
+  text-align:center;
+  font-size:17px;
+}
+
+.sidebar-footer {
+  margin-top:25px;
+  padding:15px 12px;
   border-top:1px solid #ffffff25;
-  color:#B9CCF6;font-size:11px;
+  color:#B9CCF6;
+  font-size:11px;
 }
-.overlay{
-  position:fixed;inset:68px 0 0;background:#06163880;
-  z-index:80;display:none;
+
+.overlay {
+  position:fixed;
+  inset:68px 0 0;
+  background:#06163880;
+  z-index:80;
+  display:none;
 }
-.overlay.show{display:block}
-.main{
-  width:100%;max-width:760px;
-  margin:0 auto;padding:18px 14px 35px;
+
+.overlay.show {display:block}
+
+.main {
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 14px 35px;
 }
-.card{
-  background:#fff;border-radius:var(--radius);
-  box-shadow:var(--shadow);overflow:hidden;margin-bottom:15px;
+
+.card {
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  margin-bottom:15px;
 }
-.network-card{
+
+/* NETWORK CARD */
+
+.network-card {
   background:linear-gradient(120deg,#FF8A00,#FFB12E);
-  color:#fff;padding:19px;position:relative;
+  color:#fff;
+  padding:19px;
 }
-.network-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.network-card h2{font-size:18px;font-weight:850}
-.network-card .subtitle{font-size:11px;opacity:.9;margin-top:4px}
-.progress-circle{
-  width:67px;height:67px;border-radius:50%;
-  border:5px solid #ffffff75;background:#ffffff25;
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;flex-shrink:0;
+
+.network-top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
-.progress-circle strong{font-size:17px;line-height:1}
-.progress-circle small{font-size:9px;margin-top:3px}
-.network-message{font-size:12px;line-height:1.55;margin-top:14px;max-width:440px}
-.target-label{
-  display:inline-block;margin-top:13px;
-  padding:5px 10px;border-radius:20px;
-  background:#ffffff30;font-size:10px;font-weight:800;
+
+.network-card h2 {
+  font-size:18px;
+  font-weight:850;
 }
-.welcome-card{background:var(--blue);color:#fff}
-.welcome-top{padding:19px;display:flex;align-items:center;gap:13px}
-.avatar{
-  width:48px;height:48px;border-radius:50%;
+
+.network-card .subtitle {
+  font-size:11px;
+  opacity:.9;
+  margin-top:4px;
+}
+
+.progress-circle {
+  width:67px;
+  height:67px;
+  border-radius:50%;
+  border:5px solid #ffffff75;
+  background:#ffffff25;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.progress-circle strong {font-size:17px;line-height:1}
+.progress-circle small {font-size:9px;margin-top:3px}
+
+.network-message {
+  font-size:12px;
+  line-height:1.55;
+  margin-top:14px;
+  max-width:440px;
+}
+
+.target-label {
+  display:inline-block;
+  margin-top:13px;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#ffffff30;
+  font-size:10px;
+  font-weight:800;
+}
+
+/* WELCOME CARD */
+
+.welcome-card {
+  background:var(--blue);
+  color:#fff;
+}
+
+.welcome-top {
+  padding:19px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.avatar {
+  width:48px;
+  height:48px;
+  border-radius:50%;
   background:linear-gradient(135deg,#FF2E8A,#7C3AED);
-  display:grid;place-items:center;color:#fff;
-  font-size:20px;font-weight:900;flex-shrink:0;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:20px;
+  font-weight:900;
+  flex-shrink:0;
   border:2px solid #ffffff55;
 }
-.welcome-info{flex:1;min-width:0}
-.welcome-info h2{font-size:19px;font-weight:850}
-.welcome-info p{font-size:12px;color:#D5E2FF;margin-top:4px}
-.active-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:5px 9px;border-radius:20px;
-  background:#DCFCE7;color:#15803D;
-  font-size:10px;font-weight:850;white-space:nowrap;
+
+.welcome-info {flex:1;min-width:0}
+.welcome-info h2 {font-size:19px;font-weight:850}
+.welcome-info p {font-size:12px;color:#D5E2FF;margin-top:4px}
+
+.active-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#DCFCE7;
+  color:#15803D;
+  font-size:10px;
+  font-weight:850;
+  white-space:nowrap;
 }
-.active-badge:before{
-  content:"";width:6px;height:6px;border-radius:50%;background:#16A34A;
+
+.active-badge:before {
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#16A34A;
 }
-.profit-box{
-  background:#fff;color:var(--blue);
-  padding:15px 19px;display:flex;
-  align-items:center;justify-content:space-between;gap:12px;
+
+.profit-box {
+  background:#fff;
+  color:var(--blue);
+  padding:15px 19px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
-.profit-box small{font-size:10px;font-weight:850;letter-spacing:1px;color:#75819A}
-.profit-box strong{font-size:21px;font-weight:900}
-.expenses-card{
-  display:flex;align-items:center;justify-content:space-between;
+
+.profit-box small {
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:1px;
+  color:#75819A;
+}
+
+.profit-box strong {font-size:21px;font-weight:900}
+
+/* EXPENSES */
+
+.expenses-card {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   padding:17px 19px;
 }
-.expenses-title{font-size:12px;color:#68748A;font-weight:850;letter-spacing:.5px}
-.expenses-value{font-size:17px;font-weight:900;color:var(--blue)}
-.balance-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}
-.balance-card{
-  position:relative;overflow:hidden;min-height:125px;
-  border-radius:17px;padding:15px;color:#fff;
+
+.expenses-title {
+  font-size:12px;
+  color:#68748A;
+  font-weight:850;
+  letter-spacing:.5px;
+}
+
+.expenses-value {
+  font-size:17px;
+  font-weight:900;
+  color:var(--blue);
+}
+
+/* BALANCE CARDS */
+
+.balance-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.balance-card {
+  position:relative;
+  overflow:hidden;
+  min-height:125px;
+  border-radius:17px;
+  padding:15px;
+  color:#fff;
   box-shadow:0 5px 14px #0a2a6b12;
 }
-.balance-card.blue{background:linear-gradient(135deg,#1769E0,#0A2A6B)}
-.balance-card.purple{background:linear-gradient(135deg,#9B5CFA,#6426CA)}
-.balance-card.red{background:linear-gradient(135deg,#F04467,#BE123C)}
-.balance-card.green{background:linear-gradient(135deg,#25C66A,#087B3B)}
-.balance-card.orange{background:linear-gradient(135deg,#FFAD32,#E66B00)}
-.balance-card .balance-icon{
-  position:absolute;right:14px;top:12px;
-  font-size:23px;opacity:.9;
+
+.balance-card.blue {background:linear-gradient(135deg,#1769E0,#0A2A6B)}
+.balance-card.purple {background:linear-gradient(135deg,#9B5CFA,#6426CA)}
+.balance-card.red {background:linear-gradient(135deg,#F04467,#BE123C)}
+.balance-card.green {background:linear-gradient(135deg,#25C66A,#087B3B)}
+.balance-card.orange {background:linear-gradient(135deg,#FFAD32,#E66B00)}
+
+.balance-icon {
+  position:absolute;
+  right:14px;
+  top:12px;
+  font-size:23px;
+  opacity:.9;
 }
-.balance-card small{
-  display:block;font-size:10px;font-weight:800;
-  letter-spacing:.5px;opacity:.88;padding-right:30px;
+
+.balance-card small {
+  display:block;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.5px;
+  opacity:.88;
+  padding-right:30px;
 }
-.balance-card strong{
-  display:block;font-size:19px;font-weight:900;
-  margin-top:12px;position:relative;z-index:2;
+
+.balance-card strong {
+  display:block;
+  font-size:19px;
+  font-weight:900;
+  margin-top:12px;
+  position:relative;
+  z-index:2;
 }
-.wave{
-  position:absolute;bottom:-2px;left:0;width:100%;
-  height:37px;opacity:.3;
+
+.wave {
+  position:absolute;
+  bottom:-2px;
+  left:0;
+  width:100%;
+  height:37px;
+  opacity:.3;
 }
-.section-heading{
-  background:var(--blue);color:#fff;
-  padding:15px 18px;display:flex;
-  align-items:center;justify-content:space-between;gap:10px;
+
+/* TASK EARNINGS */
+
+.section-heading {
+  background:var(--blue);
+  color:#fff;
+  padding:15px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
-.section-heading h2{font-size:16px;font-weight:850}
-.section-heading small{font-size:10px;color:#D5E2FF}
-.task-list{padding:4px 17px 9px}
-.task-row{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 0;border-bottom:1px solid #EDF0F6;
+
+.section-heading h2 {font-size:16px;font-weight:850}
+.section-heading small {font-size:10px;color:#D5E2FF}
+
+.task-list {padding:4px 17px 9px}
+
+.task-row {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid #EDF0F6;
 }
-.task-row:last-child{border-bottom:0}
-.task-icon{
-  width:37px;height:37px;border-radius:12px;
-  display:grid;place-items:center;font-size:17px;flex-shrink:0;
+
+.task-row:last-child {border-bottom:0}
+
+.task-icon {
+  width:37px;
+  height:37px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-size:17px;
+  flex-shrink:0;
 }
-.task-icon.pink{background:#FFF0F6}
-.task-icon.purple{background:#F3ECFF}
-.task-icon.red{background:#FFF0F1}
-.task-icon.green{background:#E9FBEF}
-.task-icon.blue{background:#EAF2FF}
-.task-icon.orange{background:#FFF3E5}
-.task-name{flex:1;font-size:12px;font-weight:750}
-.task-amount{font-size:12px;font-weight:850;color:var(--green)}
-.ref-header{
-  padding:17px 18px;color:#fff;
+
+.task-icon.pink {background:#FFF0F6}
+.task-icon.purple {background:#F3ECFF}
+.task-icon.red {background:#FFF0F1}
+.task-icon.green {background:#E9FBEF}
+.task-icon.blue {background:#EAF2FF}
+
+.task-name {flex:1;font-size:12px;font-weight:750}
+.task-amount {font-size:12px;font-weight:850;color:var(--green)}
+
+/* REFER AND EARN */
+
+.ref-header {
+  padding:17px 18px;
+  color:#fff;
   background:linear-gradient(110deg,#16A34A,#07834C);
 }
-.ref-header h2{font-size:17px;font-weight:850}
-.ref-header p{font-size:11px;opacity:.92;margin-top:5px;line-height:1.5}
-.ref-body{padding:17px}
-.ref-body label{
-  display:block;color:#78849A;font-size:10px;
-  font-weight:850;letter-spacing:.8px;margin-bottom:8px;
+
+.ref-header h2 {font-size:17px;font-weight:850}
+.ref-header p {font-size:11px;opacity:.92;margin-top:5px;line-height:1.5}
+
+.ref-body {padding:17px}
+
+.ref-body label {
+  display:block;
+  color:#78849A;
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.8px;
+  margin-bottom:8px;
 }
-.ref-input-row{display:flex;gap:7px}
-.ref-input-row input{
-  width:100%;min-width:0;border:1px solid #DCE4F1;
-  border-radius:10px;padding:11px 10px;
-  color:#65718A;background:#F8FAFF;font-size:11px;
+
+.ref-input-row {display:flex;gap:7px}
+
+.ref-input-row input {
+  width:100%;
+  min-width:0;
+  border:1px solid #DCE4F1;
+  border-radius:10px;
+  padding:11px 10px;
+  color:#65718A;
+  background:#F8FAFF;
+  font-size:11px;
 }
-.copy-btn{
-  border:0;background:#1769E0;color:#fff;
-  border-radius:10px;padding:0 15px;font-size:11px;font-weight:850;
+
+.copy-btn {
+  border:0;
+  background:#1769E0;
+  color:#fff;
+  border-radius:10px;
+  padding:0 15px;
+  font-size:11px;
+  font-weight:850;
 }
-.share-buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
-.share-btn{
-  border:0;border-radius:10px;padding:11px 8px;
-  color:#fff;font-size:11px;font-weight:850;
+
+.share-buttons {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:12px;
 }
-.whatsapp{background:#16A34A}
-.share-link{background:#1769E0}
-.copy-feedback{font-size:11px;color:var(--green);margin-top:9px;min-height:14px}
-.profile-header{
-  background:var(--blue);color:#fff;padding:17px;
-  display:flex;align-items:center;gap:12px;
+
+.share-btn {
+  border:0;
+  border-radius:10px;
+  padding:11px 8px;
+  color:#fff;
+  font-size:11px;
+  font-weight:850;
 }
-.profile-header h2{font-size:16px}
-.profile-header p{font-size:11px;color:#C9D9FF;margin-top:3px}
-.profile-details{padding:7px 17px 12px}
-.profile-row{
-  display:flex;justify-content:space-between;gap:12px;
-  padding:12px 0;border-bottom:1px solid #EDF0F6;font-size:12px;
+
+.whatsapp {background:#16A34A}
+.share-link {background:#1769E0}
+
+.copy-feedback {
+  font-size:11px;
+  color:var(--green);
+  margin-top:9px;
+  min-height:14px;
 }
-.profile-row:last-child{border:0}
-.profile-row span:first-child{color:#78849A}
-.profile-row strong{text-align:right;overflow-wrap:anywhere}
-.schedule-header{
+
+/* PROFILE */
+
+.profile-header {
+  background:var(--blue);
+  color:#fff;
+  padding:17px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.profile-header h2 {font-size:16px}
+.profile-header p {font-size:11px;color:#C9D9FF;margin-top:3px}
+
+.profile-details {padding:7px 17px 12px}
+
+.profile-row {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid #EDF0F6;
+  font-size:12px;
+}
+
+.profile-row:last-child {border:0}
+.profile-row span:first-child {color:#78849A}
+.profile-row strong {text-align:right;overflow-wrap:anywhere}
+
+/* WEEKLY SCHEDULE */
+
+.schedule-header {
   background:linear-gradient(110deg,#FF8A00,#FFB12E);
-  color:#fff;padding:16px 18px;
+  color:#fff;
+  padding:16px 18px;
 }
-.schedule-header h2{font-size:15px;font-weight:850}
-.schedule-header p{font-size:10px;opacity:.9;margin-top:4px}
-.schedule-list{padding:6px 16px 10px}
-.schedule-row{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:10px;padding:10px 0;border-bottom:1px solid #EDF0F6;
+
+.schedule-header h2 {font-size:15px;font-weight:850}
+.schedule-header p {font-size:10px;opacity:.9;margin-top:4px}
+
+.schedule-list {padding:6px 16px 10px}
+
+.schedule-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #EDF0F6;
 }
-.schedule-row:last-child{border:0}
-.day{font-size:12px;font-weight:850;width:38px}
-.schedule-pill{
-  flex:1;text-align:center;padding:7px 8px;
-  border-radius:8px;font-size:10px;font-weight:800;
+
+.schedule-row:last-child {border:0}
+.day {font-size:12px;font-weight:850;width:38px}
+
+.schedule-pill {
+  flex:1;
+  text-align:center;
+  padding:7px 8px;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:800;
 }
-.pill-blue{background:#EAF2FF;color:#1769E0}
-.pill-pink{background:#FFF0F6;color:#DB2777}
-.pill-purple{background:#F3ECFF;color:#7C3AED}
-.pill-green{background:#E9FBEF;color:#15803D}
-.pill-orange{background:#FFF3E5;color:#D97706}
-.pill-red{background:#FFF0F1;color:#BE123C}
-.wallet-heading{
-  background:#1769E0;color:#fff;padding:16px 18px;
+
+.pill-blue {background:#EAF2FF;color:#1769E0}
+.pill-pink {background:#FFF0F6;color:#DB2777}
+.pill-purple {background:#F3ECFF;color:#7C3AED}
+.pill-green {background:#E9FBEF;color:#15803D}
+.pill-orange {background:#FFF3E5;color:#D97706}
+.pill-red {background:#FFF0F1;color:#BE123C}
+
+/* WALLET */
+
+.wallet-heading {
+  background:#1769E0;
+  color:#fff;
+  padding:16px 18px;
 }
-.wallet-heading h2{font-size:16px}
-.wallet-heading p{font-size:10px;color:#DCE9FF;margin-top:4px}
-.wallet-body{padding:17px}
-.deposit-box{
-  background:#F0F5FF;border:1px solid #DCE7FF;
-  border-radius:12px;padding:16px;
+
+.wallet-heading h2 {font-size:16px}
+.wallet-heading p {font-size:10px;color:#DCE9FF;margin-top:4px}
+.wallet-body {padding:17px}
+
+.deposit-box {
+  background:#F0F5FF;
+  border:1px solid #DCE7FF;
+  border-radius:12px;
+  padding:16px;
 }
-.deposit-box small{font-size:10px;color:#78849A;font-weight:850;letter-spacing:.8px}
-.deposit-box strong{display:block;color:var(--blue);font-size:21px;margin-top:7px}
-.wallet-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}
-.wallet-btn{
-  padding:12px;border:0;border-radius:10px;
-  color:#fff;font-size:12px;font-weight:850;
+
+.deposit-box small {
+  font-size:10px;
+  color:#78849A;
+  font-weight:850;
+  letter-spacing:.8px;
 }
-.add-funds{background:var(--green)}
-.withdraw{background:#1769E0}
-.app-promo{
-  background:var(--blue);color:#fff;
-  border:2px solid #FFCA28;border-radius:18px;
-  padding:21px 18px;text-align:center;
-  box-shadow:var(--shadow);margin-bottom:16px;
+
+.deposit-box strong {
+  display:block;
+  color:var(--blue);
+  font-size:21px;
+  margin-top:7px;
 }
-.app-icon{
-  width:48px;height:48px;border-radius:14px;
-  display:grid;place-items:center;margin:0 auto 10px;
-  background:#ffffff18;font-size:25px;
+
+.wallet-buttons {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:13px;
 }
-.app-promo h2{font-size:17px;color:#FFDA57}
-.app-promo p{
-  color:#D8E5FF;font-size:11px;line-height:1.6;
-  max-width:370px;margin:8px auto 14px;
+
+.wallet-btn {
+  padding:12px;
+  border:0;
+  border-radius:10px;
+  color:#fff;
+  font-size:12px;
+  font-weight:850;
 }
-.download-btn{
-  border:0;border-radius:10px;background:#FFCA28;
-  color:#172B55;padding:11px 21px;font-size:12px;font-weight:900;
+
+.add-funds {background:var(--green)}
+.withdraw {background:#1769E0}
+
+/* APP PROMO */
+
+.app-promo {
+  background:var(--blue);
+  color:#fff;
+  border:2px solid #FFCA28;
+  border-radius:18px;
+  padding:21px 18px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
 }
-footer{
-  text-align:center;color:#78849A;
-  font-size:10px;padding:12px 8px 20px;
+
+.app-icon {
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 10px;
+  background:#ffffff18;
+  font-size:25px;
 }
-@media(min-width:850px){
-  .main{padding:24px 20px 40px}
+
+.app-promo h2 {font-size:17px;color:#FFDA57}
+
+.app-promo p {
+  color:#D8E5FF;
+  font-size:11px;
+  line-height:1.6;
+  max-width:370px;
+  margin:8px auto 14px;
 }
-@media(max-width:420px){
-  .topbar{padding:0 11px}
-  .header-left,.header-right{gap:8px}
-  .brand-button{padding:7px 10px;font-size:12px}
-  .main{padding:13px 10px 28px}
-  .network-card{padding:16px}
-  .balance-card{padding:13px;min-height:118px}
-  .balance-card strong{font-size:16px}
-  .balance-card small{font-size:9px}
-  .profile-row{font-size:11px}
-  .ref-input-row input{font-size:10px}
-  .copy-btn{padding:0 11px}
+
+.download-btn {
+  border:0;
+  border-radius:10px;
+  background:#FFCA28;
+  color:#172B55;
+  padding:11px 21px;
+  font-size:12px;
+  font-weight:900;
 }
-@media(min-width:1100px){
-  .sidebar{transform:translateX(0)}
-  .overlay{display:none!important}
-  .main{margin-left:260px;max-width:900px}
+
+footer {
+  text-align:center;
+  color:#78849A;
+  font-size:10px;
+  padding:12px 8px 20px;
+}
+
+/* RESPONSIVE */
+
+@media(min-width:850px) {
+  .main {padding:24px 20px 40px}
+}
+
+@media(max-width:420px) {
+  .topbar {padding:0 11px}
+  .header-left,.header-right {gap:8px}
+  .brand-button {padding:7px 10px;font-size:12px}
+  .main {padding:13px 10px 28px}
+  .network-card {padding:16px}
+  .balance-card {padding:13px;min-height:118px}
+  .balance-card strong {font-size:16px}
+  .balance-card small {font-size:9px}
+  .profile-row {font-size:11px}
+  .ref-input-row input {font-size:10px}
+  .copy-btn {padding:0 11px}
+}
+
+@media(min-width:1100px) {
+  .sidebar {transform:translateX(0)}
+  .overlay {display:none!important}
+  .main {margin-left:260px;max-width:900px}
 }
 </style>
 </head>
+
 <body>
-<div class="app">
 
 <header class="topbar">
   <div class="header-left">
@@ -369,6 +754,7 @@ footer{
       </svg>
       <span class="count">0</span>
     </button>
+
     <button class="icon-btn" aria-label="Messages">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.3A8.5 8.5 0 1 1 21 11.5Z"/>
@@ -376,7 +762,8 @@ footer{
       </svg>
       <span class="count">0</span>
     </button>
-    <button class="brand-button" aria-label="GenZBag home">
+
+    <button class="brand-button">
       <span class="brand-logo">G</span>
       GenZBag
     </button>
@@ -387,57 +774,94 @@ footer{
 
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">GenZ<span>Bag</span> 👜</div>
+
   <div class="nav-label">MAIN MENU</div>
   <a class="nav-link active" href="#dashboard"><span class="nav-icon">🏠</span>Dashboard</a>
-  <a class="nav-link" href="#network"><span class="nav-icon">🤝</span>Grow Your Network</a>
-  <a class="nav-link" href="#wallet"><span class="nav-icon">💰</span>My Wallet</a>
-  <a class="nav-link" href="#tasks"><span class="nav-icon">✅</span>Task Earnings</a>
-  <a class="nav-link" href="#referrals"><span class="nav-icon">🔗</span>Refer & Earn</a>
-  <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>My Profile</a>
-  <div class="nav-label">SHOP</div>
-  <a class="nav-link" href="#schedule"><span class="nav-icon">👜</span>Weekly Schedule</a>
-  <a class="nav-link" href="#app"><span class="nav-icon">📱</span>Get the App</a>
-  <div class="sidebar-footer">GenZBag · Shop Smart. Earn Fast.</div>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">⌂</span>Home</a>
+
+  <div class="nav-label">GENERAL</div>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎡</span>Spins</a>
+  <a class="nav-link" href="#tasks"><span class="nav-icon">🎵</span>Earn with Spotify</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🛍️</span>Marketplace</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">👆</span>Fix Tap</a>
+  <a class="nav-link" href="#tasks"><span class="nav-icon">💬</span>Chat foreigners</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎨</span>Colour Challenge</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📊</span>Free Forex Classes</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">▶️</span>Youtube Videos</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">🎬</span>Tiktok Videos</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📢</span>Click Ads</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📚</span>Business Ebooks</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">➗</span>Math for fun</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">💻</span>New Tech Classes</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📈</span>Deriv Tips</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">💸</span>Quick Loans</a>
+
+  <div class="nav-label">SETTING</div>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">📨</span>Text Upline</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">✉️</span>Read Messages</a>
+  <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>Profile</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">☎️</span>Contact Us</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">👥</span>Join community</a>
+  <a class="nav-link" href="#dashboard"><span class="nav-icon">↪️</span>Logout</a>
+
+  <div class="sidebar-footer">GenZBag · A home of Digital Income.</div>
 </aside>
 
 <main class="main" id="dashboard">
 
-  <section class="card network-card" id="network">
+  <!-- GROW YOUR NETWORK -->
+
+  <section class="card network-card">
     <div class="network-top">
       <div>
         <h2>Grow Your Network</h2>
         <p class="subtitle">Build your community</p>
       </div>
+
       <div class="progress-circle">
         <strong>0</strong>
         <small>of 5</small>
       </div>
     </div>
-    <p class="network-message">No new members yet today. Share your referral link and start building your team now!</p>
+
+    <p class="network-message">
+      No new members yet today. Share your referral link and start building your team now!
+    </p>
+
     <span class="target-label">TODAY'S TARGET</span>
   </section>
+
+  <!-- WELCOME AND PROFIT -->
 
   <section class="card welcome-card">
     <div class="welcome-top">
       <div class="avatar">B</div>
+
       <div class="welcome-info">
         <h2>Hi Bridan</h2>
-        <p>Shop Smart. Earn Fast.</p>
+        <p>A home of Digital Income.</p>
       </div>
+
       <span class="active-badge">Active</span>
     </div>
+
     <div class="profit-box">
-      <div><small>NET PROFIT EARNED</small></div>
+      <small>NET PROFIT EARNED</small>
       <strong>UGX 0</strong>
     </div>
   </section>
+
+  <!-- EXPENSES -->
 
   <section class="card expenses-card">
     <span class="expenses-title">EXPENSES</span>
     <strong class="expenses-value">UGX 0</strong>
   </section>
 
-  <section class="balance-grid" aria-label="Account balances">
+  <!-- BALANCE CARDS -->
+
+  <section class="balance-grid">
+
     <article class="balance-card blue">
       <span class="balance-icon">💳</span>
       <small>AVAILABLE BALANCE</small>
@@ -446,22 +870,25 @@ footer{
         <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
       </svg>
     </article>
+
     <article class="balance-card purple">
-      <span class="balance-icon">📈</span>
-      <small>TOTAL SALES</small>
+      <span class="balance-icon">💸</span>
+      <small>TOTAL WITHDRAWALS</small>
       <strong>UGX 0</strong>
       <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
         <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
       </svg>
     </article>
+
     <article class="balance-card red">
-      <span class="balance-icon">📦</span>
-      <small>PENDING ORDERS</small>
+      <span class="balance-icon">⏳</span>
+      <small>PENDING WITHDRAWALS</small>
       <strong>UGX 0</strong>
       <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
         <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
       </svg>
     </article>
+
     <article class="balance-card green">
       <span class="balance-icon">👥</span>
       <small>TEAM EARNINGS</small>
@@ -470,6 +897,7 @@ footer{
         <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
       </svg>
     </article>
+
     <article class="balance-card orange">
       <span class="balance-icon">🎁</span>
       <small>WELCOME BONUS</small>
@@ -478,140 +906,240 @@ footer{
         <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
       </svg>
     </article>
+
   </section>
+
+  <!-- TASK EARNINGS -->
 
   <section class="card" id="tasks">
     <div class="section-heading">
       <h2>Task Earnings</h2>
       <small>All activity income</small>
     </div>
+
     <div class="task-list">
+
       <div class="task-row">
         <span class="task-icon pink">🤝</span>
         <span class="task-name">Referrals</span>
         <strong class="task-amount">UGX 0</strong>
       </div>
+
       <div class="task-row">
         <span class="task-icon purple">🎵</span>
         <span class="task-name">TikTok Promo</span>
         <strong class="task-amount">UGX 0</strong>
       </div>
+
       <div class="task-row">
         <span class="task-icon red">▶️</span>
         <span class="task-name">YouTube Promo</span>
         <strong class="task-amount">UGX 0</strong>
       </div>
+
       <div class="task-row">
-        <span class="task-icon green">📅</span>
-        <span class="task-name">Daily Check-in</span>
+        <span class="task-icon green">💬</span>
+        <span class="task-name">Chat with Foreigners</span>
         <strong class="task-amount">UGX 0</strong>
       </div>
+
       <div class="task-row">
-        <span class="task-icon blue">🔗</span>
-        <span class="task-name">Share Product</span>
+        <span class="task-icon blue">🎧</span>
+        <span class="task-name">Earn with Spotify</span>
         <strong class="task-amount">UGX 0</strong>
       </div>
-      <div class="task-row">
-        <span class="task-icon orange">👥</span>
-        <span class="task-name">Invite Friends</span>
-        <strong class="task-amount">UGX 0</strong>
-      </div>
+
     </div>
   </section>
+
+  <!-- REFER AND EARN -->
 
   <section class="card" id="referrals">
     <div class="ref-header">
       <h2>Refer & Earn 💰</h2>
       <p>Earn commission for every friend who buys through your link</p>
     </div>
+
     <div class="ref-body">
       <label for="refLink">YOUR UNIQUE REFERRAL LINK</label>
+
       <div class="ref-input-row">
-        <input id="refLink" type="text" value="https://genzbag.com/register?ref=YOURNAME" readonly>
+        <input
+          id="refLink"
+          type="text"
+          value="https://genzbag.com/register?ref=YOURNAME"
+          readonly
+        >
         <button class="copy-btn" id="copyButton" type="button">Copy</button>
       </div>
+
       <div class="share-buttons">
-        <button class="share-btn whatsapp" id="whatsappButton" type="button">WhatsApp</button>
-        <button class="share-btn share-link" id="shareButton" type="button">Share Link</button>
+        <button class="share-btn whatsapp" id="whatsappButton" type="button">
+          WhatsApp
+        </button>
+
+        <button class="share-btn share-link" id="shareButton" type="button">
+          Share Link
+        </button>
       </div>
+
       <p class="copy-feedback" id="copyFeedback" aria-live="polite"></p>
     </div>
   </section>
 
+  <!-- MEMBER PROFILE -->
+
   <section class="card" id="profile">
     <div class="profile-header">
       <div class="avatar">B</div>
+
       <div style="flex:1">
         <h2>Bridan</h2>
         <p>Member Profile</p>
       </div>
+
       <span class="active-badge">Active</span>
     </div>
+
     <div class="profile-details">
-      <div class="profile-row"><span>Email</span><strong>you@example.com</strong></div>
-      <div class="profile-row"><span>Phone</span><strong>+256 000 000000</strong></div>
-      <div class="profile-row"><span>Country</span><strong>Uganda</strong></div>
-      <div class="profile-row"><span>Active Since</span><strong>2026</strong></div>
-      <div class="profile-row"><span>Total Referrals</span><strong>0</strong></div>
+      <div class="profile-row">
+        <span>Email</span>
+        <strong>you@example.com</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Phone</span>
+        <strong>+256 000 000000</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Country</span>
+        <strong>Uganda</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Active Since</span>
+        <strong>2026</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Total Referrals</span>
+        <strong>0</strong>
+      </div>
     </div>
   </section>
+
+  <!-- WEEKLY SCHEDULE -->
 
   <section class="card" id="schedule">
     <div class="schedule-header">
       <h2>Weekly Schedule</h2>
       <p>GenZBag Task Timetable</p>
     </div>
+
     <div class="schedule-list">
-      <div class="schedule-row"><span class="day">Mon</span><span class="schedule-pill pill-blue">New Drop + TikTok</span></div>
-      <div class="schedule-row"><span class="day">Tue</span><span class="schedule-pill pill-purple">Share + Trivia</span></div>
-      <div class="schedule-row"><span class="day">Wed</span><span class="schedule-pill pill-green">Promo + YouTube</span></div>
-      <div class="schedule-row"><span class="day">Thu</span><span class="schedule-pill pill-pink">TikTok Challenge</span></div>
-      <div class="schedule-row"><span class="day">Fri</span><span class="schedule-pill pill-orange">Flash Sale</span></div>
-      <div class="schedule-row"><span class="day">Sat</span><span class="schedule-pill pill-red">New Arrivals</span></div>
-      <div class="schedule-row"><span class="day">Sun</span><span class="schedule-pill pill-blue">Restock</span></div>
-      <div class="schedule-row"><span class="day">Daily</span><span class="schedule-pill pill-green">Referrals</span></div>
+      <div class="schedule-row">
+        <span class="day">Mon</span>
+        <span class="schedule-pill pill-blue">New Drop + TikTok</span>
+      </div>
+
+      <div class="schedule-row">
+        <span class="day">Tue</span>
+        <span class="schedule-pill pill-purple">Share + Trivia</span>
+      </div>
+
+      <div class="schedule-row">
+        <span class="day">Wed</span>
+        <span class="schedule-pill pill-green">Promo + YouTube</span>
+      </div>
+
+      <div class="schedule-row">
+        <span class="day">Thu</span>
+        <span class="schedule-pill pill-pink">TikTok Challenge</span>
+      </div>
+
+      <div class="schedule-row">
+        <span class="day">Fri</span>
+        <span class="schedule-pill pill-orange">Flash Sale</span>
+      </div>
+
+      <div class="schedule-row">
+        <span class="day">Sat</span>
+        <span class="schedule-pill pill-red">New Arrivals</span>
+      </div>
+
+      <div class="schedule-row">
+        <span class="day">Sun</span>
+        <span class="schedule-pill pill-blue">Restock</span>
+      </div>
+
+      <div class="schedule-row">
+        <span class="day">Daily</span>
+        <span class="schedule-pill pill-green">Referrals</span>
+      </div>
     </div>
   </section>
 
+  <!-- MY DEPOSIT / WALLET -->
+
   <section class="card" id="wallet">
     <div class="wallet-heading">
-      <h2>My Wallet</h2>
+      <h2>My Deposit / Wallet</h2>
       <p>Account & deposits</p>
     </div>
+
     <div class="wallet-body">
       <div class="deposit-box">
         <small>TOTAL DEPOSIT</small>
         <strong>UGX 0</strong>
       </div>
+
       <div class="wallet-buttons">
-        <button class="wallet-btn add-funds" type="button">＋ Add Funds</button>
-        <button class="wallet-btn withdraw" type="button">↗ Withdraw</button>
+        <button class="wallet-btn add-funds" type="button">
+          ＋ Add Funds
+        </button>
+
+        <button class="wallet-btn withdraw" type="button">
+          ↗ Withdraw
+        </button>
       </div>
     </div>
   </section>
 
+  <!-- APP DOWNLOAD -->
+
   <section class="app-promo" id="app">
     <div class="app-icon">📱</div>
     <h2>GenZBag App Available!</h2>
-    <p>Get faster access to your dashboard, orders & team - right from your phone.</p>
-    <button class="download-btn" type="button">Download App</button>
+
+    <p>
+      Get faster access to your dashboard, orders & team - right from your phone.
+    </p>
+
+    <button class="download-btn" type="button">
+      Download App
+    </button>
   </section>
 
-  <footer>Copyright © 2026 GenZBag. All rights reserved.</footer>
+  <footer>
+    Copyright © 2026 GenZBag. All rights reserved.
+  </footer>
+
 </main>
-</div>
 
 <script>
 (function(){
-  const sidebar=document.getElementById('sidebar');
-  const overlay=document.getElementById('overlay');
-  const menuButton=document.getElementById('menuButton');
+
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuButton = document.getElementById('menuButton');
 
   function openMenu(){
     sidebar.classList.add('open');
     overlay.classList.add('show');
     menuButton.setAttribute('aria-expanded','true');
   }
+
   function closeMenu(){
     sidebar.classList.remove('open');
     overlay.classList.remove('show');
@@ -619,66 +1147,106 @@ footer{
   }
 
   menuButton.addEventListener('click',function(){
-    sidebar.classList.contains('open')?closeMenu():openMenu();
+    sidebar.classList.contains('open') ? closeMenu() : openMenu();
   });
+
   overlay.addEventListener('click',closeMenu);
 
   document.querySelectorAll('.nav-link').forEach(function(link){
     link.addEventListener('click',function(){
-      document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(function(a){
+        a.classList.remove('active');
+      });
+
       link.classList.add('active');
       closeMenu();
     });
   });
 
-  const referralInput=document.getElementById('refLink');
-  const feedback=document.getElementById('copyFeedback');
+  const referralInput = document.getElementById('refLink');
+  const feedback = document.getElementById('copyFeedback');
 
   async function copyReferralLink(){
-    const value=referralInput.value;
+
+    const value = referralInput.value;
+
     try{
       if(navigator.clipboard && window.isSecureContext){
         await navigator.clipboard.writeText(value);
-      }else{
+      } else {
         referralInput.focus();
         referralInput.select();
         referralInput.setSelectionRange(0,value.length);
-        const successful=document.execCommand('copy');
-        if(!successful) throw new Error('Copy command failed');
+
+        const successful = document.execCommand('copy');
+
+        if(!successful){
+          throw new Error('Copy command failed');
+        }
       }
-      feedback.textContent='Referral link copied successfully!';
-    }catch(error){
+
+      feedback.textContent = 'Referral link copied successfully!';
+
+    } catch(error){
       referralInput.focus();
       referralInput.select();
-      feedback.textContent='Select and copy your referral link.';
+      feedback.textContent = 'Select and copy your referral link.';
     }
   }
 
-  document.getElementById('copyButton').addEventListener('click',copyReferralLink);
+  document.getElementById('copyButton').addEventListener(
+    'click',
+    copyReferralLink
+  );
 
-  document.getElementById('whatsappButton').addEventListener('click',function(){
-    const message='Join me on GenZBag! Shop smart and explore the latest bags. '+referralInput.value;
-    window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
-  });
+  document.getElementById('whatsappButton').addEventListener(
+    'click',
+    function(){
 
-  document.getElementById('shareButton').addEventListener('click',async function(){
-    const shareData={
-      title:'GenZBag',
-      text:'Join me on GenZBag! Shop smart and explore the latest bags.',
-      url:referralInput.value
-    };
-    if(navigator.share){
-      try{await navigator.share(shareData);}
-      catch(error){if(error.name!=='AbortError') feedback.textContent='Sharing was not completed.';}
-    }else{
-      await copyReferralLink();
+      const message =
+        'Join me on GenZBag! A home of Digital Income. '
+        + referralInput.value;
+
+      window.open(
+        'https://wa.me/?text=' + encodeURIComponent(message),
+        '_blank',
+        'noopener,noreferrer'
+      );
+    }
+  );
+
+  document.getElementById('shareButton').addEventListener(
+    'click',
+    async function(){
+
+      const shareData = {
+        title:'GenZBag',
+        text:'Join me on GenZBag! A home of Digital Income.',
+        url:referralInput.value
+      };
+
+      if(navigator.share){
+        try{
+          await navigator.share(shareData);
+        } catch(error){
+          if(error.name !== 'AbortError'){
+            feedback.textContent = 'Sharing was not completed.';
+          }
+        }
+      } else {
+        await copyReferralLink();
+      }
+    }
+  );
+
+  document.addEventListener('keydown',function(event){
+    if(event.key === 'Escape'){
+      closeMenu();
     }
   });
 
-  document.addEventListener('keydown',function(event){
-    if(event.key==='Escape') closeMenu();
-  });
 })();
 </script>
+
 </body>
 </html>
