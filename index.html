@@ -1225,13 +1225,13 @@ footer {
     <div class="schedule-header"><h2>Weekly Schedule</h2><p>Live timetable · East Africa Time (EAT)</p></div>
     <div class="schedule-live"><span class="schedule-live-dot"></span><div><strong id="scheduleTodayLabelDash">Checking today's date…</strong><span id="scheduleTodayActivityDash">Loading today's activity…</span></div><time id="scheduleClockDash">--:--:-- EAT</time></div>
     <div class="schedule-list" id="dashboardScheduleList">
-      <div class="schedule-row" data-day-index="0"><span class="day">Mon</span><span class="schedule-pill pill-blue">New Drop + TikTok</span></div>
-      <div class="schedule-row" data-day-index="1"><span class="day">Tue</span><span class="schedule-pill pill-purple">Share + Trivia</span></div>
-      <div class="schedule-row" data-day-index="2"><span class="day">Wed</span><span class="schedule-pill pill-green">Promo + YouTube</span></div>
-      <div class="schedule-row" data-day-index="3"><span class="day">Thu</span><span class="schedule-pill pill-pink">TikTok Challenge</span></div>
-      <div class="schedule-row" data-day-index="4"><span class="day">Fri</span><span class="schedule-pill pill-orange">Flash Sale</span></div>
-      <div class="schedule-row" data-day-index="5"><span class="day">Sat</span><span class="schedule-pill pill-red">New Arrivals</span></div>
-      <div class="schedule-row" data-day-index="6"><span class="day">Sun</span><span class="schedule-pill pill-blue">Restock</span></div>
+      <div class="schedule-row" data-day-index="0"><span class="day">Mon</span><span class="schedule-pill pill-blue">Foreign Chat + Earn With Spotify</span></div>
+      <div class="schedule-row" data-day-index="1"><span class="day">Tue</span><span class="schedule-pill pill-purple">Tap Earnings + Color Challenge</span></div>
+      <div class="schedule-row" data-day-index="2"><span class="day">Wed</span><span class="schedule-pill pill-green">Trivia + YouTube</span></div>
+      <div class="schedule-row" data-day-index="3"><span class="day">Thu</span><span class="schedule-pill pill-pink">TikTok</span></div>
+      <div class="schedule-row" data-day-index="4"><span class="day">Fri</span><span class="schedule-pill pill-orange">Casino &amp; Spin</span></div>
+      <div class="schedule-row" data-day-index="5"><span class="day">Sat</span><span class="schedule-pill pill-red">Math Challenge</span></div>
+      <div class="schedule-row" data-day-index="6"><span class="day">Sun</span><span class="schedule-pill pill-blue">Ad Tasks</span></div>
       <div class="schedule-row"><span class="day">Daily</span><span class="schedule-pill pill-green">Referrals</span></div>
     </div>
   </section>
@@ -1391,45 +1391,14 @@ footer {
 
     <div class="schedule-live"><span class="schedule-live-dot"></span><div><strong id="scheduleTodayLabel">Checking today's date…</strong><span id="scheduleTodayActivity">Loading today's activity…</span></div><time id="scheduleClock">--:--:-- EAT</time></div>
     <div class="schedule-list">
-      <div class="schedule-row" data-day-index="0">
-        <span class="day">Mon</span>
-        <span class="schedule-pill pill-blue">New Drop + TikTok</span>
-      </div>
-
-      <div class="schedule-row" data-day-index="1">
-        <span class="day">Tue</span>
-        <span class="schedule-pill pill-purple">Share + Trivia</span>
-      </div>
-
-      <div class="schedule-row" data-day-index="2">
-        <span class="day">Wed</span>
-        <span class="schedule-pill pill-green">Promo + YouTube</span>
-      </div>
-
-      <div class="schedule-row" data-day-index="3">
-        <span class="day">Thu</span>
-        <span class="schedule-pill pill-pink">TikTok Challenge</span>
-      </div>
-
-      <div class="schedule-row" data-day-index="4">
-        <span class="day">Fri</span>
-        <span class="schedule-pill pill-orange">Flash Sale</span>
-      </div>
-
-      <div class="schedule-row" data-day-index="5">
-        <span class="day">Sat</span>
-        <span class="schedule-pill pill-red">New Arrivals</span>
-      </div>
-
-      <div class="schedule-row" data-day-index="6">
-        <span class="day">Sun</span>
-        <span class="schedule-pill pill-blue">Restock</span>
-      </div>
-
-      <div class="schedule-row">
-        <span class="day">Daily</span>
-        <span class="schedule-pill pill-green">Referrals</span>
-      </div>
+      <div class="schedule-row" data-day-index="0"><span class="day">Mon</span><span class="schedule-pill pill-blue">Foreign Chat + Earn With Spotify</span></div>
+      <div class="schedule-row" data-day-index="1"><span class="day">Tue</span><span class="schedule-pill pill-purple">Tap Earnings + Color Challenge</span></div>
+      <div class="schedule-row" data-day-index="2"><span class="day">Wed</span><span class="schedule-pill pill-green">Trivia + YouTube</span></div>
+      <div class="schedule-row" data-day-index="3"><span class="day">Thu</span><span class="schedule-pill pill-pink">TikTok</span></div>
+      <div class="schedule-row" data-day-index="4"><span class="day">Fri</span><span class="schedule-pill pill-orange">Casino &amp; Spin</span></div>
+      <div class="schedule-row" data-day-index="5"><span class="day">Sat</span><span class="schedule-pill pill-red">Math Challenge</span></div>
+      <div class="schedule-row" data-day-index="6"><span class="day">Sun</span><span class="schedule-pill pill-blue">Ad Tasks</span></div>
+      <div class="schedule-row"><span class="day">Daily</span><span class="schedule-pill pill-green">Referrals</span></div>
     </div>
   </section>
 
@@ -1743,7 +1712,7 @@ function updateWeeklyScheduleLive(){
  const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Kampala',weekday:'short',day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date()).map(p=>[p.type,p.value]));
  const idx=({Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6})[parts.weekday]??0;
  const dateLabel=parts.weekday+', '+parts.day+' '+parts.month+' '+parts.year,clock=parts.hour+':'+parts.minute+':'+parts.second+' EAT';
- const activities=['New Drop + TikTok','Share + Trivia','Promo + YouTube','TikTok Challenge','Flash Sale','New Arrivals','Restock'];
+ const activities=['Foreign Chat + Earn With Spotify','Tap Earnings + Color Challenge','Trivia + YouTube','TikTok','Casino & Spin','Math Challenge','Ad Tasks'];
  document.querySelectorAll('#schedule .schedule-row[data-day-index],#dashboardScheduleList .schedule-row[data-day-index]').forEach(row=>row.classList.toggle('today',Number(row.dataset.dayIndex)===idx));
  [['scheduleTodayLabel','scheduleTodayActivity','scheduleClock'],['scheduleTodayLabelDash','scheduleTodayActivityDash','scheduleClockDash']].forEach(([di,ai,ci])=>{const d=document.getElementById(di),a=document.getElementById(ai),c=document.getElementById(ci);if(d)d.textContent='Today · '+dateLabel;if(a)a.textContent='Today’s activity: '+activities[idx]+' · Referrals are available daily.';if(c)c.textContent=clock;});
 }
