@@ -181,3 +181,7 @@ revoke insert, update, delete on table public.engagement_sessions from authentic
 grant insert (activity_id, user_id, evidence, submitted_at) on table public.engagement_sessions to authenticated;
 
 revoke insert, update, delete on table public.platform_settings from authenticated;
+
+-- Signup availability is intentionally public before authentication; signed-in callers do not need this RPC.
+revoke execute on function public.check_signup_availability(text,text,text) from authenticated;
+grant execute on function public.check_signup_availability(text,text,text) to anon;
