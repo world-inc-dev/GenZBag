@@ -2065,6 +2065,94 @@ html,body{max-width:100%!important;overflow-x:hidden!important}
  .genz-fast-confirm{margin-top:2px!important}
 }
 </style>
+
+<style id="genzbag-balanced-compact-scroll">
+/* Compact activation layout while retaining natural vertical scrolling on short screens. */
+#genzActivationGate.visible{
+ display:flex!important;position:fixed!important;inset:0!important;
+ width:100%!important;height:100vh!important;height:100dvh!important;
+ box-sizing:border-box!important;overflow-x:hidden!important;overflow-y:auto!important;
+ -webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important;
+ align-items:flex-start!important;justify-content:center!important;
+ padding:8px 9px 18px!important;
+}
+#genzActivationGate.visible .genz-activation-card{
+ box-sizing:border-box!important;width:min(100%,440px)!important;max-width:440px!important;
+ max-height:none!important;min-height:0!important;flex:0 0 auto!important;
+ overflow:visible!important;padding:13px 14px!important;border-radius:17px!important;
+ margin:0 auto!important;
+}
+#genzActivationGate.visible.genz-fast-detail-open{padding-top:6px!important}
+#genzActivationGate.visible.genz-fast-detail-open .genz-activation-card{padding:10px 12px!important}
+.genz-fast-topbar{margin-bottom:9px!important}
+.genz-fast-hero{padding:13px 14px!important;margin-bottom:8px!important}
+.genz-fast-hero h1{font-size:25px!important;margin:4px 0!important}
+.genz-fast-progress-section,.genz-fast-pay-section{margin-top:10px!important}
+.genz-fast-progress-section h2,.genz-fast-pay-section h2{font-size:14px!important;margin:0 0 6px!important}
+.genz-fast-progress{gap:6px!important;margin:7px 0!important}
+.genz-fast-progress>div{gap:8px!important;font-size:10px!important;line-height:1.35!important}
+.genz-fast-progress b{flex-basis:22px!important;width:22px!important;height:22px!important}
+.genz-fast-progress small{font-size:9px!important;line-height:1.35!important}
+.genz-activation-status{margin:7px 0!important;padding:6px 8px!important;font-size:10px!important}
+.genz-fast-methods{gap:8px!important;margin:8px 0!important}
+.genz-fast-method{min-height:0!important;padding:10px!important}
+.genz-fast-method strong{font-size:11px!important}
+.genz-fast-method small{font-size:9px!important}
+.genz-fast-footer{margin:7px 0 0!important;font-size:9px!important}
+.genz-fast-detail-top{margin:0 0 7px!important}
+.genz-fast-payment-heading{gap:8px!important;margin:4px 0 8px!important}
+.genz-fast-payment-heading h1{font-size:18px!important;line-height:1.2!important}
+.genz-fast-amount{margin:5px 0 7px!important;padding:8px 10px!important}
+.genz-fast-preview{margin:0 0 8px!important;padding:7px 9px!important}
+.genz-fast-payment-steps{padding:0 0 3px!important}
+.genz-fast-instruction{padding:6px 0!important;gap:8px!important}
+.genz-fast-instruction>b{width:23px!important;height:23px!important}
+.genz-fast-instruction small{font-size:8px!important;margin-bottom:2px!important}
+.genz-fast-instruction>div>strong{font-size:12px!important;line-height:1.25!important}
+.genz-fast-instruction p{font-size:10px!important;line-height:1.35!important;margin-top:2px!important}
+.genz-fast-instruction button{margin-top:4px!important;padding:4px 8px!important;font-size:9px!important}
+.genz-fast-confirm{margin:8px 0 5px!important;padding:10px 11px!important}
+.genz-fast-confirm h2{font-size:15px!important;margin-bottom:3px!important}
+.genz-fast-confirm>p{font-size:10px!important;line-height:1.35!important;margin-bottom:7px!important}
+.genz-fast-confirm label{font-size:10px!important;margin-bottom:4px!important}
+.genz-fast-confirm input{min-height:34px!important;height:34px!important;font-size:12px!important}
+.genz-fast-confirm .genz-activation-submit{margin-top:7px!important;padding:9px!important;font-size:11px!important}
+#genzActivationGate.genz-fast-detail-open .genz-fast-help{
+ position:fixed!important;right:10px!important;bottom:8px!important;margin:0!important;
+ padding:7px 10px!important;font-size:10px!important;
+}
+html:has(#genzActivationGate.visible),body:has(#genzActivationGate.visible){overflow:hidden!important}
+@media(max-width:420px){
+ #genzActivationGate.visible{padding:6px 7px 14px!important}
+ #genzActivationGate.visible .genz-activation-card{padding:11px 11px!important;border-radius:15px!important}
+ #genzActivationGate.visible.genz-fast-detail-open .genz-activation-card{padding:9px 10px!important}
+ .genz-fast-hero{padding:11px!important}
+ .genz-fast-payment-heading h1{font-size:16px!important}
+ .genz-fast-instruction{padding:5px 0!important}
+ .genz-fast-instruction p{font-size:9.5px!important}
+ .genz-fast-confirm{padding:9px!important}
+}
+@media(max-height:620px){
+ #genzActivationGate.visible{padding-top:5px!important;padding-bottom:12px!important}
+ #genzActivationGate.visible .genz-activation-card{padding:9px 11px!important}
+ .genz-fast-topbar{margin-bottom:5px!important}
+ .genz-fast-hero{padding:8px 10px!important;margin-bottom:5px!important}
+ .genz-fast-hero h1{font-size:21px!important}
+ .genz-fast-progress-section,.genz-fast-pay-section{margin-top:6px!important}
+ .genz-fast-progress{gap:4px!important;margin:4px 0!important}
+ .genz-fast-progress>div{font-size:9px!important}
+ .genz-fast-progress small{font-size:8px!important}
+ .genz-fast-methods{margin:5px 0!important;gap:6px!important}
+ .genz-fast-method{padding:7px!important}
+ .genz-fast-payment-heading{margin:1px 0 4px!important}
+ .genz-fast-amount{margin:3px 0 4px!important;padding:6px 8px!important}
+ .genz-fast-preview{margin-bottom:4px!important;padding:5px 7px!important}
+ .genz-fast-instruction{padding:3px 0!important}
+ .genz-fast-instruction p{font-size:9px!important;line-height:1.25!important}
+ .genz-fast-confirm{margin-top:5px!important;padding:7px 9px!important}
+}
+</style>
+
 </head>
 
 <body>
