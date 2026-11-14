@@ -6183,5 +6183,82 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #featureWorkspace.withdraw-mode .withdraw-state{background:#fff1f2!important;border-color:#f1b7b7!important;color:#a31624!important;-webkit-text-fill-color:#a31624!important}
 </style>
 
+
+<style id="genzbag-withdrawal-visible-white-red-cards-v9">
+/* Visible, clearly separated white cards throughout the withdrawal workspace. */
+#featureWorkspace.withdraw-mode{
+  background:#fffafa!important;
+  background-image:none!important;
+  color:#9f1d2b!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel,
+#featureWorkspace.withdraw-mode>.feature-detail-panel{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-history-item,
+#featureWorkspace.withdraw-mode #withdrawHistoryPanel,
+#featureWorkspace.withdraw-mode #withdrawHistoryList .withdraw-history-item{
+  display:block;
+  box-sizing:border-box!important;
+  background:#fff!important;
+  background-image:none!important;
+  border:2px solid #e9a3aa!important;
+  border-radius:15px!important;
+  box-shadow:0 5px 16px rgba(159,29,43,.12)!important;
+  color:#9f1d2b!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card{
+  padding:16px!important;margin:0 0 13px!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card{
+  padding:14px!important;margin:0 0 10px!important;min-width:0;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification{
+  padding:13px!important;margin:0 0 11px!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote{
+  padding:12px 14px!important;margin:12px 0!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
+  background:transparent!important;border:0!important;box-shadow:none!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,.withdraw-qualification,.withdraw-warning,.withdraw-success-card,.withdraw-history-item) :where(h1,h2,h3,h4,p,span,strong,b,small,label,li){
+  color:#a31624!important;-webkit-text-fill-color:#a31624!important;text-shadow:none!important;opacity:1!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-section-title h3,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card strong,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification strong{
+  color:#8f1725!important;-webkit-text-fill-color:#8f1725!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(input,select,textarea){
+  background:#fff!important;color:#8f1725!important;-webkit-text-fill-color:#8f1725!important;
+  border:1px solid #df9ba3!important;border-radius:10px!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(button,.activity-btn,#withdrawRequestButton){
+  background:#a31624!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+  border:1px solid #861321!important;border-radius:10px!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card[hidden],
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel [hidden]{display:none!important}
+@media(max-width:460px){
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{grid-template-columns:1fr 1fr!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,.withdraw-qualification,.withdraw-warning){padding:11px!important}
+}
+</style>
+
 </body>
 </html>
