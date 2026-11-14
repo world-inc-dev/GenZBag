@@ -1893,7 +1893,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   renderActivities();
  }
  closeMenu();target.scrollIntoView({behavior:'smooth',block:'start'});
- if(targetId==='globalChat'&&!currentMember)showAuthMessage('Sign in to use the global chat.','error');
+
  if(['referrals','profile','wallet','schedule','app','featureWorkspace'].includes(targetId))history.replaceState(null,'','#'+(featureKey||targetId));
 }));
 const referralInput=document.getElementById('refLink'),feedback=document.getElementById('copyFeedback');
@@ -2307,10 +2307,11 @@ async function loadGlobalChat(){
   .subscribe(status=>{if(status==='SUBSCRIBED')chatStatusEl.textContent='Connected to the global lounge · '+country;});
 }
 document.getElementById('globalChatSend').addEventListener('click',async()=>{
- if(!currentMember){alert('Please sign in first.');return;}
+ const member=await ensureMemberSession();
+ if(!member){chatStatusEl.textContent='Reconnect or sign in to send a message.';return;}
  const message=chatInputEl.value.trim();if(!message)return;
  const b=document.getElementById('globalChatSend');b.disabled=true;b.textContent='Sending…';
- const {error}=await supabaseClient.from('global_chat_messages').insert({user_id:currentMember.id,message});
+ const {error}=await supabaseClient.from('global_chat_messages').insert({user_id:member.id,message});
  b.disabled=false;b.textContent='Send';
  if(error){chatStatusEl.textContent=error.message;return;}
  chatInputEl.value='';await renderGlobalChat();
