@@ -293,7 +293,7 @@ a {text-decoration:none;color:inherit}
 
 .welcome-info {flex:1;min-width:0}
 .welcome-info h2 {font-size:19px;font-weight:850}
-.welcome-info p {font-size:12px;color:#D5E2FF;margin-top:4px}
+.welcome-info p {font-size:12px;color:#D5E2FF;margin-top:4px}.welcome-info .welcome-tagline{font-size:10px;color:#B9CCF6;margin-top:3px}.currency-picker{display:flex;align-items:center;gap:5px;padding:5px 7px;border:1px solid #DCE4F1;border-radius:10px;background:#F8FAFF;color:#526079}.currency-picker span{font-size:8px;font-weight:850}.currency-picker select{max-width:82px;border:0;outline:0;background:transparent;color:#0A2A6B;font-size:10px;font-weight:900;padding:2px}.currency-picker select option{color:#18243B}@media(max-width:420px){.currency-picker{gap:2px;padding:4px}.currency-picker span{display:none}.currency-picker select{max-width:70px;font-size:9px}}
 
 .active-badge {
   display:inline-flex;
@@ -1125,9 +1125,9 @@ footer {
     <label for="authEmail" class="auth-field-label">Email address</label>
     <input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com">
     <label for="authPhone" class="auth-field-label phone-label">Mobile number</label>
-    <div class="auth-phone-row"><select id="authPhoneCode" aria-label="Country calling code"><option value="+256" selected>🇺🇬 +256</option><option value="+234">🇳🇬 +234</option><option value="+254">🇰🇪 +254</option><option value="+255">🇹🇿 +255</option><option value="+250">🇷🇼 +250</option><option value="+233">🇬🇭 +233</option></select><input id="authPhone" type="tel" autocomplete="tel-national" placeholder="712 345678" inputmode="tel"></div>
+    <div class="auth-phone-row"><select id="authPhoneCode" aria-label="Country calling code"><option value="+256" selected>🇺🇬 +256</option><option value="+254">🇰🇪 +254</option><option value="+255">🇹🇿 +255</option><option value="+250">🇷🇼 +250</option><option value="+257">🇧🇮 +257</option><option value="+243">🇨🇩 +243</option><option value="+211">🇸🇸 +211</option><option value="+252">🇸🇴 +252</option><option value="+251">🇪🇹 +251</option><option value="+253">🇩🇯 +253</option><option value="+291">🇪🇷 +291</option><option value="+249">🇸🇩 +249</option><option value="+234">🇳🇬 +234</option><option value="+27">🇿🇦 +27</option><option value="+233">🇬🇭 +233</option></select><input id="authPhone" type="tel" autocomplete="tel-national" placeholder="712 345678" inputmode="tel"></div>
     <label for="authCountry" class="auth-field-label phone-label">Country</label>
-    <select id="authCountry"><option value="Uganda" selected>Uganda</option><option value="Nigeria">Nigeria</option><option value="Kenya">Kenya</option><option value="Tanzania">Tanzania</option><option value="Rwanda">Rwanda</option><option value="Ghana">Ghana</option><option value="Other">Other</option></select>
+    <select id="authCountry"><optgroup label="East Africa"><option value="Uganda" selected>🇺🇬 Uganda</option><option value="Kenya">🇰🇪 Kenya</option><option value="Tanzania">🇹🇿 Tanzania</option><option value="Rwanda">🇷🇼 Rwanda</option><option value="Burundi">🇧🇮 Burundi</option><option value="Democratic Republic of the Congo">🇨🇩 DR Congo</option><option value="South Sudan">🇸🇸 South Sudan</option><option value="Somalia">🇸🇴 Somalia</option><option value="Ethiopia">🇪🇹 Ethiopia</option><option value="Djibouti">🇩🇯 Djibouti</option><option value="Eritrea">🇪🇷 Eritrea</option><option value="Sudan">🇸🇩 Sudan</option></optgroup><optgroup label="Popular African countries"><option value="Nigeria">🇳🇬 Nigeria</option><option value="South Africa">🇿🇦 South Africa</option><option value="Ghana">🇬🇭 Ghana</option><option value="Egypt">🇪🇬 Egypt</option><option value="Zambia">🇿🇲 Zambia</option><option value="Zimbabwe">🇿🇼 Zimbabwe</option><option value="Malawi">🇲🇼 Malawi</option><option value="Mozambique">🇲🇿 Mozambique</option><option value="Botswana">🇧🇼 Botswana</option><option value="Namibia">🇳🇦 Namibia</option></optgroup><option value="Other">Other country (load all countries)</option></select>
    </div>
    <label class="auth-field">Email address<input id="authLoginEmail" type="text" autocomplete="username" placeholder="Email address or username"></label>
    <label class="auth-field">Password<input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="Create password"><button class="auth-password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button></label>
@@ -1179,6 +1179,7 @@ footer {
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
+    <label class="currency-picker" title="Display dashboard amounts in"><span>Currency</span><select id="dashboardCurrency" aria-label="Dashboard display currency"><option value="UGX">UGX 🇺🇬</option><option value="USD">USD 🇺🇸</option><option value="KES">KES 🇰🇪</option><option value="TZS">TZS 🇹🇿</option><option value="RWF">RWF 🇷🇼</option><option value="BIF">BIF 🇧🇮</option><option value="CDF">CDF 🇨🇩</option><option value="SSP">SSP 🇸🇸</option><option value="ETB">ETB 🇪🇹</option><option value="NGN">NGN 🇳🇬</option><option value="ZAR">ZAR 🇿🇦</option><option value="GHS">GHS 🇬🇭</option><option value="EUR">EUR 🇪🇺</option><option value="GBP">GBP 🇬🇧</option><option value="AED">AED 🇦🇪</option><option value="SAR">SAR 🇸🇦</option><option value="INR">INR 🇮🇳</option><option value="CNY">CNY 🇨🇳</option><option value="JPY">JPY 🇯🇵</option><option value="CAD">CAD 🇨🇦</option><option value="AUD">AUD 🇦🇺</option></select></label>
     <button class="icon-btn exchange-toggle" id="exchangeRateToggle" type="button" aria-label="Show live currency rate" aria-expanded="false" aria-controls="exchangeRatePanel" title="Live currency rate">💱</button>
     <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite" hidden><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
   </div>
@@ -1318,7 +1319,7 @@ footer {
 
       <div class="welcome-info">
         <h2>Hi Bridan</h2>
-        <p>A home of Digital Income.</p>
+        <p>Welcome back! Your digital income journey continues here.</p><p class="welcome-tagline">A home of Digital Income.</p>
         <span class="rank-badge welcome-rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span>
       </div>
 
@@ -2008,7 +2009,8 @@ function refreshMemberTenureCounters(){
 }
 async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');const signInButton=document.getElementById('networkSignInButton');try{const user=await ensureMemberSession();if(!user){renderNetwork(0,0);const dashboardIsOpen=authGate?.classList.contains('hidden');if(currentMember?.id||dashboardIsOpen){msg.textContent='Your dashboard is open, but the secure Supabase session is reconnecting. Your network data will reload automatically.';signInButton?.classList.remove('visible');if(!networkSessionRetryTimer)networkSessionRetryTimer=setTimeout(()=>{networkSessionRetryTimer=null;loadMemberNetwork();},4000);}else{msg.textContent='Your member information is private. Sign in to view your network results.';signInButton?.classList.add('visible');}return;}signInButton?.classList.remove('visible');currentMember=user;const [p,t,q,uplineResult]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,contact_email,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified'),supabaseClient.rpc('get_my_upline_username')]);const profile=p.error?{}:(p.data||{}),total=t.error?0:(t.count||0),qualified=q.error?0:(q.count||0),joinedAt=user.created_at||profile.created_at;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};const joinedLabel=joinedAt?new Date(joinedAt).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';put('profileEmail',profile.contact_email||user.email||'—');put('profilePhone',profile.phone||user.user_metadata?.phone||'—');put('profileCountry',profile.country||'Country not set');put('profileUpline',uplineResult?.data||'null');put('profileWhatsAppDisplay',profile.phone||user.user_metadata?.phone||'Not set');put('profileJoiningDate',joinedLabel);const tenure=document.getElementById('profileMembershipDuration');if(tenure){tenure.dataset.memberJoined=joinedAt||'';tenure.textContent=formatMemberTenure(joinedAt);}put('profileTotalReferrals',total.toLocaleString());put('profileActiveReferrals',qualified.toLocaleString());put('profileInactiveReferrals',Math.max(0,total-qualified).toLocaleString());put('profileMemberName',profile.username||(user.email?user.email.split('@')[0]:'Member'));put('profileMemberAvatar',(profile.username||(user.email||'G')).charAt(0).toUpperCase());put('profileMemberRole','GenZBag Member · '+(profile.country||'Country not set'));const wa=document.getElementById('profileWhatsAppInput');if(wa)wa.value='+'+String(profile.phone||user.user_metadata?.phone||'').replace(/[^0-9]/g,'');const emailInput=document.getElementById('profileEmailInput');if(emailInput)emailInput.value=profile.contact_email||user.email||'';const de=document.getElementById('dashboardProfileEmail'),dp=document.getElementById('dashboardProfilePhone'),dc=document.getElementById('dashboardProfileCountry'),ds=document.getElementById('dashboardProfileSince'),dr=document.getElementById('dashboardProfileReferrals');if(de)de.textContent=user.email||'—';if(dp)dp.textContent=profile.phone||'—';if(dc)dc.textContent=profile.country||'Country not set';if(ds)ds.textContent=joinedAt?new Date(joinedAt).toLocaleDateString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';if(dr)dr.textContent=total.toLocaleString();if(profile.username||profile.referral_code){const u=new URL(location.origin+location.pathname);u.searchParams.set('ref',profile.username||profile.referral_code);syncReferralLinks(u.toString());}const issues=[];if(p.error)issues.push('profile: '+p.error.message);if(t.error)issues.push('referrals: '+t.error.message);if(q.error)issues.push('qualified referrals: '+q.error.message);msg.textContent=issues.length?'You are signed in, but some network data could not be loaded. '+issues.join(' · '):'Your network data is up to date.';if(user.app_metadata?.role==='admin')await loadAdminProfileDirectory();else{const adminDirectory=document.getElementById('adminProfileDirectory');if(adminDirectory)adminDirectory.hidden=true;}refreshMemberTenureCounters();if(issues.length)console.warn('Partial member network data:',issues);}catch(e){console.warn('Member network data is temporarily unavailable:',e);if(msg)msg.textContent='Your account is signed in, but some member details could not load. '+(e?.message||'Please retry shortly.');signInButton?.classList.remove('visible');}}
 
-async function loadExchangeRate(){const v=document.getElementById('exchangeRateValue'),u=document.getElementById('exchangeRateUpdated');try{const r=await fetch('https://open.er-api.com/v6/latest/UGX',{cache:'no-store'});if(!r.ok)throw Error('Rate API '+r.status);const d=await r.json(),rate=Number(d?.rates?.USD);if(!Number.isFinite(rate)||rate<=0)throw Error('Invalid rate');v.textContent='1,000 UGX ≈ $'+(rate*1000).toFixed(3);const time=d.time_last_update_utc?new Date(d.time_last_update_utc).toLocaleString():'Latest available';u.innerHTML='<span class="rate-dot"></span>'+time;u.title='Reference rate: 1 UGX = $'+rate.toFixed(8)+' · Source: open.er-api.com';}catch(e){console.warn('Exchange rate:',e);v.textContent='Rate unavailable';u.textContent='Retrying automatically';}}
+let dashboardFxRates={UGX:1},dashboardFxUpdated=null,dashboardCurrencyRenderBusy=false;const dashboardCurrencySelect=document.getElementById('dashboardCurrency'),dashboardOriginalMoneyNodes=new WeakMap();function getDashboardCurrency(){return dashboardCurrencySelect?.value||'UGX';}function formatDashboardMoney(ugx,currency){const rate=Number(dashboardFxRates[currency]||0);if(!rate)return 'Rate unavailable';const amount=Number(ugx)*rate;try{return new Intl.NumberFormat(undefined,{style:'currency',currency,maximumFractionDigits:currency==='UGX'||currency==='TZS'||currency==='KES'||currency==='RWF'||currency==='BIF'||currency==='CDF'||currency==='NGN'||currency==='SSP'?0:2}).format(amount);}catch(e){return currency+' '+amount.toFixed(2);}}function refreshDashboardCurrency(){if(!dashboardCurrencySelect)return;const currency=getDashboardCurrency();dashboardCurrencyRenderBusy=true;const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;while((node=walker.nextNode())){const raw=node.nodeValue.trim();if(/^UGX\\s*[\\d,]+(?:\\.\\d+)?$/.test(raw)){const amount=Number(raw.replace(/[^0-9.]/g,''));dashboardOriginalMoneyNodes.set(node,amount);}const amount=dashboardOriginalMoneyNodes.get(node);if(amount!==undefined){const prefix=node.nodeValue.match(/^\\s*/)?.[0]||'';node.nodeValue=prefix+(currency==='UGX'?'UGX '+amount.toLocaleString():formatDashboardMoney(amount,currency));}}dashboardCurrencyRenderBusy=false;}const dashboardMoneyObserver=new MutationObserver(records=>{if(dashboardCurrencyRenderBusy||getDashboardCurrency()==='UGX')return;for(const record of records){if(record.type==='characterData'&&/^\\s*UGX\\s*[\\d,]+(?:\\.\\d+)?\\s*$/.test(record.target.nodeValue)){const amount=Number(record.target.nodeValue.replace(/[^0-9.]/g,''));dashboardOriginalMoneyNodes.set(record.target,amount);dashboardCurrencyRenderBusy=true;record.target.nodeValue=formatDashboardMoney(amount,getDashboardCurrency());dashboardCurrencyRenderBusy=false;}}});dashboardMoneyObserver.observe(document.body,{subtree:true,childList:true,characterData:true});dashboardCurrencySelect?.addEventListener('change',()=>{try{localStorage.setItem('genzbag:display-currency',getDashboardCurrency());}catch(e){}if(!dashboardFxRates[getDashboardCurrency()]){const v=document.getElementById('exchangeRateValue');if(v)v.textContent='Loading currency rate…';}refreshDashboardCurrency();});try{const savedCurrency=localStorage.getItem('genzbag:display-currency');if(savedCurrency&&dashboardCurrencySelect?.querySelector('option[value="'+savedCurrency+'"]'))dashboardCurrencySelect.value=savedCurrency;}catch(e){}
+async function loadExchangeRate(){const v=document.getElementById('exchangeRateValue'),u=document.getElementById('exchangeRateUpdated');try{const r=await fetch('https://open.er-api.com/v6/latest/UGX',{cache:'no-store'});if(!r.ok)throw Error('Rate API '+r.status);const d=await r.json(),rates=d?.rates||{},rate=Number(rates.USD);if(!Number.isFinite(rate)||rate<=0)throw Error('Invalid rate');dashboardFxRates={UGX:1,...rates};dashboardFxUpdated=d.time_last_update_utc||new Date().toISOString();if(v)v.textContent='1,000 UGX ≈ 
 async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('The sign-in service did not load. Refresh and try again.','error');return;}const signingUp=authMode==='signup',email=(signingUp?document.getElementById('authEmail'):document.getElementById('authLoginEmail')).value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.innerHTML=signingUp?'Creating your account…':'Signing you in…';showAuthMessage('Please wait…');try{if(signingUp){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value,phoneDigits=document.getElementById('authPhone').value.replace(/\D/g,''),phoneCode=document.getElementById('authPhoneCode').value;if(!/^[a-z0-9]{4,20}$/.test(username))throw Error('Username must contain only letters and numbers (4–20 characters).');if(!email||!/^\S+@\S+\.\S+$/.test(email))throw Error('Enter a valid email address.');if(phoneDigits.length<7||phoneDigits.length>15)throw Error('Enter a valid mobile number.');if(password.length<8)throw Error('For better account security, your password must be at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');if(!document.getElementById('authTerms').checked)throw Error('Please accept the Terms & Conditions to continue.');const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:phoneCode+phoneDigits,country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(!data?.user?.id)throw Error('Supabase did not confirm account creation. Please try again.');const successModal=document.getElementById('signupSuccessModal');if(successModal){successModal.classList.add('open');successModal.setAttribute('aria-hidden','false');}launchSignupCelebration();if(data.session){intentionalSignOut=true;lastAuthenticatedAt=0;try{sessionStorage.removeItem(LAST_AUTH_KEY);}catch(e){}const {error:signOutError}=await supabaseClient.auth.signOut();if(signOutError)console.warn('New account created; automatic sign-out notice:',signOutError);}setTimeout(()=>{successModal?.classList.remove('open');successModal?.setAttribute('aria-hidden','true');authForm.reset();setAuthMode('login');document.getElementById('authLoginEmail').value=email;document.getElementById('authPassword').value='';requireAuth();document.getElementById('authLoginEmail').focus();},3600);}else{const identifier=document.getElementById('authLoginEmail').value.trim();let data,error;if(identifier.includes('@')){({data,error}=await supabaseClient.auth.signInWithPassword({email:identifier.toLowerCase(),password}));}else{const result=await supabaseClient.functions.invoke('username-signin',{body:{username:identifier.toLowerCase(),password}});error=result.error;data=result.data;if(!error&&data?.session){const restored=await supabaseClient.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});error=restored.error;data=restored.data;}}if(error)throw error;if(!data?.session)throw Error('Invalid username/email or password. Please try again.');markSessionAlive(data.session);showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.innerHTML=authMode==='signup'?'Create my account <span>→</span>':'Sign in <span>→</span>';}}
 document.getElementById('forgotPassword').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.remove('auth-hidden-field');document.getElementById('newPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.add('auth-hidden-field');document.getElementById('authSwitchLine').classList.add('auth-hidden-field');document.getElementById('forgotPassword').classList.add('auth-hidden-field');document.getElementById('resetEmail').value=document.getElementById('authLoginEmail').value.trim();showAuthMessage('');});
 document.getElementById('backToSignIn').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.remove('auth-hidden-field');document.getElementById('authSwitchLine').classList.remove('auth-hidden-field');document.getElementById('forgotPassword').classList.remove('auth-hidden-field');showAuthMessage('');});
@@ -2046,7 +2048,933 @@ function updateSignupProgress(){
 document.getElementById('authForm').addEventListener('input',updateSignupProgress,true);
 document.getElementById('authForm').addEventListener('change',updateSignupProgress,true);
 document.getElementById('authForm').addEventListener('reset',()=>setTimeout(updateSignupProgress,0));
-document.getElementById('authCountry').addEventListener('change', function(){ const countrySelect=document.getElementById('authCountry'); const phoneCodeInput=document.getElementById('authPhoneCode'); const countryCallingCodes={Uganda:'+256',Nigeria:'+234',Kenya:'+254',Tanzania:'+255',Rwanda:'+250',Ghana:'+233'}; if(phoneCodeInput) phoneCodeInput.value=countryCallingCodes[countrySelect.value] || '+256'; updateSignupProgress(); });
+const PRIORITY_COUNTRIES=['Uganda','Kenya','Tanzania','Rwanda','Burundi','Democratic Republic of the Congo','South Sudan','Somalia','Ethiopia','Djibouti','Eritrea','Sudan','Nigeria','South Africa'];
+const COUNTRY_FALLBACK=[['Uganda','UG','+256'],['Kenya','KE','+254'],['Tanzania','TZ','+255'],['Rwanda','RW','+250'],['Burundi','BI','+257'],['Democratic Republic of the Congo','CD','+243'],['South Sudan','SS','+211'],['Somalia','SO','+252'],['Ethiopia','ET','+251'],['Djibouti','DJ','+253'],['Eritrea','ER','+291'],['Sudan','SD','+249'],['Nigeria','NG','+234'],['South Africa','ZA','+27'],['Ghana','GH','+233']];
+function setSignupCountryCode(){const name=document.getElementById('authCountry').value,entry=window.genzbagCountries?.find(x=>x.name===name)||COUNTRY_FALLBACK.find(x=>x[0]===name);if(entry){const dial=Array.isArray(entry)?entry[2]:entry.dial;const code=document.getElementById('authPhoneCode');if(code&&dial){let opt=[...code.options].find(o=>o.value===dial);if(!opt){opt=document.createElement('option');opt.value=dial;opt.textContent=dial;code.appendChild(opt);}code.value=dial;}}updateSignupProgress();}
+async function loadAllSignupCountries(){const select=document.getElementById('authCountry');if(!select)return;try{const response=await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,idd,flag',{cache:'force-cache'});if(!response.ok)throw Error('Country list unavailable');const rows=await response.json();const list=rows.map(x=>({name:x.name?.common||'',code:x.cca2||'',dial:(x.idd?.root||'')+(x.idd?.suffixes?.length===1?x.idd.suffixes[0]:'')})).filter(x=>x.name&&x.dial.startsWith('+'));window.genzbagCountries=list;const selected=select.value;const priority=new Map(PRIORITY_COUNTRIES.map((n,i)=>[n,i]));list.sort((a,b)=>(priority.has(a.name)?priority.get(a.name):1000)-(priority.has(b.name)?priority.get(b.name):1000)||a.name.localeCompare(b.name));select.innerHTML='';const east=document.createElement('optgroup');east.label='East Africa · shown first';const africa=document.createElement('optgroup');africa.label='Other African countries';const rest=document.createElement('optgroup');rest.label='All other countries';for(const item of list){const option=document.createElement('option');option.value=item.name;option.textContent=(item.code?' '+item.code+' · ':'')+item.name;const region=priority.has(item.name)?east:(['NG','ZA','GH','EG','ZM','ZW','MW','MZ','BW','NA','SN','CM','CI','ET','MA','DZ','TN'].includes(item.code)?africa:rest);region.appendChild(option);}select.append(east,africa,rest);if([...select.options].some(o=>o.value===selected))select.value=selected;else select.value='Uganda';setSignupCountryCode();}catch(error){console.warn('Could not load full country list; keeping regional country choices.',error);}}
+document.getElementById('authCountry').addEventListener('change',setSignupCountryCode);
+document.getElementById('authPhoneCode').addEventListener('change',updateSignupProgress);
+loadAllSignupCountries();
+document.getElementById('authPhoneCode').addEventListener('change',updateSignupProgress);
+document.getElementById('togglePassword').addEventListener('click',()=>{const p=document.getElementById('authPassword'),show=p.type==='password';p.type=show?'text':'password';document.getElementById('togglePassword').textContent=show?'Hide':'Show';});
+const termsPreview=document.getElementById('termsPreview');
+function openTermsPreview(){termsPreview.classList.add('open');termsPreview.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';document.getElementById('termsClose').focus();}
+function closeTermsPreview(){termsPreview.classList.remove('open');termsPreview.setAttribute('aria-hidden','true');document.body.style.overflow='';document.getElementById('termsLink').focus();}
+document.getElementById('termsLink').addEventListener('click',openTermsPreview);
+document.getElementById('termsClose').addEventListener('click',closeTermsPreview);
+document.getElementById('termsDone').addEventListener('click',closeTermsPreview);
+termsPreview.addEventListener('click',e=>{if(e.target===termsPreview)closeTermsPreview();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&termsPreview.classList.contains('open'))closeTermsPreview();});
+
+document.getElementById('forgotPassword').addEventListener('click',async()=>{if(!supabaseClient)return showAuthMessage('Authentication is unavailable.','error');const email=(document.getElementById('authLoginEmail').value||document.getElementById('authEmail').value).trim();if(!email)return showAuthMessage('Enter your email address first.','error');try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;showAuthMessage('If this email is registered, a password-reset link will be sent. Check your inbox.','success');}catch(e){showAuthMessage(e.message||'Could not request a password reset.','error');}});
+document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();const button=e.currentTarget;button.style.pointerEvents='none';try{if(!supabaseClient)throw new Error('Authentication service is unavailable. Please refresh and try again.');intentionalSignOut=true;lastAuthenticatedAt=0;try{sessionStorage.removeItem(LAST_AUTH_KEY);}catch(e){}const {error}=await supabaseClient.auth.signOut();if(error)throw error;currentMember=null;currentAvailableBalance=0;currentDirectActiveReferrals=0;activityRows=[];activitySubmissionMap={};if(globalChatChannel){await supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}teamRows=[];document.getElementById('teamMembersList').innerHTML='<div class="activity-empty">Sign in to view your team.</div>';renderNetwork(0,0);document.getElementById('networkMessage').textContent='You are signed out. Sign in to view your account.';setAuthMode('login');requireAuth();showAuthMessage('You have been signed out successfully.','success');}catch(error){console.error('Logout failed:',error);showAuthMessage(error.message||'Could not sign out. Please try again.','error');}finally{button.style.pointerEvents='';}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+function updateWeeklyScheduleLive(){
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Kampala',weekday:'short',day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date()).map(p=>[p.type,p.value]));
+ const idx=({Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6})[parts.weekday]??0;
+ const dateLabel=parts.weekday+', '+parts.day+' '+parts.month+' '+parts.year,clock=parts.hour+':'+parts.minute+':'+parts.second+' EAT';
+ const activities=['Foreign Chat + Earn With Spotify','Tap Earnings + Color Challenge','Trivia + YouTube','TikTok','Casino & Spin','Math Challenge','Ad Tasks'];
+ document.querySelectorAll('#schedule .schedule-row[data-day-index],#dashboardScheduleList .schedule-row[data-day-index]').forEach(row=>row.classList.toggle('today',Number(row.dataset.dayIndex)===idx));
+ [['scheduleTodayLabel','scheduleTodayActivity','scheduleClock'],['scheduleTodayLabelDash','scheduleTodayActivityDash','scheduleClockDash']].forEach(([di,ai,ci])=>{const d=document.getElementById(di),a=document.getElementById(ai),c=document.getElementById(ci);if(d)d.textContent='Today · '+dateLabel;if(a)a.textContent='Today’s activity: '+activities[idx]+' · Referrals are available daily.';if(c)c.textContent=clock;});
+}
+updateWeeklyScheduleLive();setInterval(updateWeeklyScheduleLive,1000);
+document.getElementById('dashboardAppButton').addEventListener('click',()=>{const a=document.querySelector('.nav-link[href="#app"]');if(a)a.click();});
+const exchangeRateToggle=document.getElementById('exchangeRateToggle'),exchangeRatePanel=document.getElementById('exchangeRatePanel');
+exchangeRateToggle?.addEventListener('click',()=>{
+ const opening=exchangeRatePanel.hidden;
+ exchangeRatePanel.hidden=!opening;
+ exchangeRateToggle.setAttribute('aria-expanded',String(opening));
+ exchangeRateToggle.setAttribute('aria-label',opening?'Hide live currency rate':'Show live currency rate');
+});
+loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
+
+/* GENZBAG ACTIVITIES + GLOBAL CHAT */
+const activityListEl=document.getElementById('activityList');
+const activityFiltersEl=document.getElementById('activityFilters');
+const activityCountEl=document.getElementById('activityCount');
+const chatMessagesEl=document.getElementById('globalChatMessages');
+const chatInputEl=document.getElementById('globalChatInput');
+const chatStatusEl=document.getElementById('globalChatStatus');
+const adminPanelEl=document.getElementById('adminActivityPanel');
+let currentActivityFilter='all',currentActivitySearch='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
+let currentAvailableBalance=0,currentDirectActiveReferrals=0;
+let teamRows=[],currentTeamLevel=1,currentTeamView='overview';
+function renderTeamMembers(){
+ const list=document.getElementById('teamMembersList'),q=(document.getElementById('teamSearchInput')?.value||'').trim().toLowerCase();
+ let rows=teamRows.filter(x=>Number(x.member_level)===Number(currentTeamLevel));
+ if(currentTeamView==='active')rows=rows.filter(x=>x.is_active);
+ if(currentTeamView==='inactive')rows=rows.filter(x=>!x.is_active);
+ if(q)rows=rows.filter(x=>String(x.username||'').toLowerCase().includes(q)||String(x.phone||'').toLowerCase().includes(q));
+ if(!rows.length){list.innerHTML='<div class="activity-empty">No matching team members found. Try another username or phone number.</div>';return;}
+ list.innerHTML=rows.map(x=>'<article class="team-member-row"><div><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small>'+escapeText(x.phone||'Phone not provided')+' · '+escapeText(x.country||'Country not set')+' · Joined '+escapeText(x.joined_at?new Date(x.joined_at).toLocaleDateString():'—')+'</small></div><span class="team-member-state '+(x.is_active?'active':'inactive')+'">'+(x.is_active?'ACTIVE':'INACTIVE')+'</span></article>').join('');
+}
+document.getElementById('teamSearchInput').addEventListener('input',renderTeamMembers);
+async function loadTeamView(level,view){
+ const member=await ensureMemberSession();
+ currentTeamLevel=Number(level);currentTeamView=view;
+ const page=document.getElementById('teamWorkspace'),list=document.getElementById('teamMembersList');
+ page.hidden=false;
+ document.getElementById('teamPageTitle').textContent='Level '+level+' Team · '+(view==='overview'?'Overview':view==='active'?'Active Team':'Inactive Team');
+ document.getElementById('teamPageDescription').textContent='Members in generation '+level+'. Active status is based on verified activation payments.';
+ list.innerHTML='<div class="activity-empty">Loading your team…</div>';
+ if(!member){list.innerHTML='<div class="activity-empty">Reconnect to restore your secure session and load your team.</div>';return;}
+ const {data,error}=await supabaseClient.rpc('get_my_referral_team');
+ if(error){console.error('Team load:',error);list.innerHTML='<div class="activity-empty">Team data could not load. '+escapeText(error.message)+'</div>';return;}
+ teamRows=data||[];
+ [1,2,3].forEach(n=>{
+  const group=teamRows.filter(x=>Number(x.member_level)===n);
+  const el=document.getElementById('teamLevel'+n+'Count');
+  if(el)el.textContent=group.length+' · '+group.filter(x=>x.is_active).length+' active';
+ });
+ renderTeamMembers();
+}
+document.querySelectorAll('[data-team-level][data-team-view]').forEach(a=>a.addEventListener('click',()=>loadTeamView(a.dataset.teamLevel,a.dataset.teamView)));
+
+const activityCategoryNames={music:'Music',video:'Video',game:'Game',challenge:'Challenge',learning:'Learning',sponsored:'Sponsored',general:'General'};
+function currentUser(){return currentMember;}
+function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function categoryName(v){return activityCategoryNames[v]||String(v||'General').replace(/_/g,' ');}
+function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
+function renderActivities(){
+ let rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
+ if(currentActivitySearch){const terms=currentActivitySearch.toLowerCase().split(/\\s+/).filter(Boolean);rows=rows.filter(x=>{const hay=(x.title+' '+(x.description||'')+' '+(x.instructions||'')).toLowerCase();return terms.some(term=>hay.includes(term));});}
+ activityCountEl.textContent=rows.length+' available';
+ if(!rows.length){setActivityMessage(activityRows.length?'No activities in this category yet.':'No activities have been published yet. Check again later.');return;}
+ activityListEl.innerHTML=rows.map(t=>{
+  const sub=activitySubmissionMap[t.id],status=sub?.status;
+  const reward=Number(t.reward_amount||0).toLocaleString()+' '+(t.currency||'UGX');
+  const disabled=status==='pending'||status==='approved';
+  return '<article class="activity-card" data-activity-id="'+escapeText(t.id)+'"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(categoryName(t.category))+'</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">'+escapeText(reward)+'</span></div><p>'+escapeText(t.description||'Open this activity to read the instructions.')+'</p>'+(t.instructions?'<p><strong>Instructions:</strong><br>'+escapeText(t.instructions)+'</p>':'')+'<div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">Open activity ↗</a>':'')+'<button class="activity-btn" type="button" data-open-proof="'+escapeText(t.id)+'" '+(disabled?'disabled':'')+'>'+(status==='pending'?'Under review':status==='approved'?'Completed':'Submit proof')+'</button></div>'+(status?'<p><span class="activity-state '+escapeText(status)+'">'+escapeText(status.toUpperCase())+'</span>'+(sub.review_note?' · '+escapeText(sub.review_note):'')+'</p>':'')+'<form class="activity-proof" data-proof-form="'+escapeText(t.id)+'"><textarea name="proof_text" maxlength="2000" required placeholder="Describe what you completed and include the requested proof details…"></textarea><input name="proof_url" type="url" maxlength="1000" placeholder="Optional proof link (https://…)"><button class="activity-btn" type="submit">Send for review</button><span class="activity-note">Your submission will remain pending until reviewed. Do not submit passwords or private account details.</span></form></article>';
+ }).join('');
+}
+async function loadActivities(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
+ activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
+ const [tasksRes,subsRes]=await Promise.all([
+  supabaseClient.from('tasks').select('id,title,description,category,instructions,reward_amount,currency,content_url,status,starts_at,ends_at,created_at').eq('status','published').order('created_at',{ascending:false}),
+  supabaseClient.from('task_submissions').select('id,task_id,status,review_note,submitted_at').eq('user_id',member.id).order('submitted_at',{ascending:false})
+ ]);
+ if(tasksRes.error){console.error('Activity load:',tasksRes.error);setActivityMessage(tasksRes.error.message.includes('activated')?'Your account must be activated before accessing activities.':'Activities could not load. Check your account activation and try again.');return;}
+ if(subsRes.error){console.warn('Submission history:',subsRes.error);}
+ activityRows=(tasksRes.data||[]).filter(t=>(!t.starts_at||new Date(t.starts_at)<=new Date())&&(!t.ends_at||new Date(t.ends_at)>new Date()));
+ activitySubmissionMap={};
+ (subsRes.data||[]).forEach(s=>{if(!activitySubmissionMap[s.task_id]||new Date(s.submitted_at)>new Date(activitySubmissionMap[s.task_id].submitted_at))activitySubmissionMap[s.task_id]=s;});
+ renderActivities();
+}
+activityFiltersEl.addEventListener('click',e=>{
+ const b=e.target.closest('[data-filter]');if(!b)return;
+ currentActivityFilter=b.dataset.filter;
+ activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x===b));
+ renderActivities();
+});
+document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListener('click',()=>{
+ const f=a.dataset.activityCategory||'all';currentActivityFilter=f;
+ activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));
+ renderActivities();
+}));
+activityListEl.addEventListener('click',e=>{
+ const b=e.target.closest('[data-open-proof]');if(!b)return;
+ const form=activityListEl.querySelector('[data-proof-form="'+b.dataset.openProof+'"]');
+ if(form)form.classList.toggle('open');
+});
+activityListEl.addEventListener('submit',async e=>{
+ const form=e.target.closest('[data-proof-form]');if(!form)return;e.preventDefault();
+ if(!currentMember){alert('Please sign in first.');return;}
+ const taskId=form.dataset.proofForm,fd=new FormData(form),proofText=String(fd.get('proof_text')||'').trim(),proofUrl=String(fd.get('proof_url')||'').trim(),button=form.querySelector('button[type=submit]');
+ if(!proofText){alert('Please describe the work you completed.');return;}
+ if(proofUrl&&!/^https:\/\//i.test(proofUrl)){alert('Proof links must start with https://');return;}
+ button.disabled=true;button.textContent='Submitting…';
+ const {error}=await supabaseClient.from('task_submissions').insert({task_id:taskId,user_id:currentMember.id,proof_text:proofText,proof_url:proofUrl||null});
+ button.disabled=false;button.textContent='Send for review';
+ if(error){alert(error.code==='23505'?'You already have a pending or approved submission for this activity.':error.message);return;}
+ form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
+});
+function renderWithdrawalQuote(){
+ const amount=Number(document.getElementById('withdrawAmountInput')?.value||0),balance=Number(currentAvailableBalance||0),fee=amount>0?Math.round(amount*0.005):0,valid=amount>=23000&&amount<=balance;
+ const money=n=>'UGX '+Math.max(0,n).toLocaleString();
+ const fields={withdrawCurrentBalance:money(balance),withdrawRequestedAmount:amount>0?money(amount):'—',withdrawServiceFee:amount>0?money(fee):'—',withdrawTotalDeducted:amount>0?money(amount):'—',withdrawNetReceive:amount>0?money(amount-fee):'—'};
+ Object.entries(fields).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
+ const status=document.getElementById('withdrawEligibilityStatus');
+ if(status){
+  if(currentDirectActiveReferrals<3)status.textContent='You need '+(3-currentDirectActiveReferrals)+' more active direct referral(s) before withdrawing.';
+  else if(balance<23000)status.textContent='Your balance is below the minimum withdrawal of UGX 23,000.';
+  else if(amount>0&&!valid)status.textContent='Enter an amount between UGX 23,000 and your Available Balance.';
+  else if(valid)status.textContent='You meet the referral and balance requirements. Payout processing is not enabled yet.';
+  else status.textContent='You are eligible to withdraw once you enter an amount.';
+ }
+}
+document.getElementById('withdrawAmountInput')?.addEventListener('input',renderWithdrawalQuote);
+function renderWithdrawalEligibility(){
+ const count=Number(currentDirectActiveReferrals||0),balance=Number(currentAvailableBalance||0);
+ const countEl=document.getElementById('withdrawDirectActiveCount'),balanceEl=document.getElementById('withdrawAvailableBalance');
+ if(countEl)countEl.textContent=count+' / 3 active';
+ if(balanceEl)balanceEl.textContent='Available: UGX '+Math.max(0,balance).toLocaleString();
+ renderWithdrawalQuote();
+}
+async function loadWithdrawalHistory(){
+ const box=document.getElementById('withdrawHistoryList');if(!box)return;
+ const member=await ensureMemberSession();
+ if(!member){box.textContent='Reconnect to restore your secure session and load withdrawal history.';return;}
+ box.textContent='Loading withdrawal history…';
+ const {data,error}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at,admin_note').eq('user_id',currentMember.id).order('created_at',{ascending:false}).limit(50);
+ if(error){box.textContent='Withdrawal history is not available yet.';console.warn(error);return;}
+ if(!data?.length){box.textContent='No withdrawal requests found.';return;}
+ box.innerHTML=data.map(x=>'<article class="team-member-row"><div><strong>UGX '+Number(x.amount).toLocaleString()+'</strong><small>'+new Date(x.created_at).toLocaleString()+(x.admin_note?' · '+escapeText(x.admin_note):'')+'</small></div><span class="team-member-state '+(x.status==='paid'?'active':'inactive')+'">'+escapeText(String(x.status||'pending').toUpperCase())+'</span></article>').join('');
+}
+async function updateTaskEarningsFromLedger(ledgerRows){
+ const definitions=[
+  {key:'foreign-chat',match:['foreign chat','chat with foreigners']},
+  {key:'spotify',match:['spotify']},
+  {key:'tap',match:['tap earnings','fix tap']},
+  {key:'color',match:['color challenge','colour challenge']},
+  {key:'trivia',match:['trivia']},
+  {key:'youtube',match:['youtube']},
+  {key:'tiktok',match:['tiktok']},
+  {key:'casino-spin',match:['casino','spin']},
+  {key:'math',match:['math challenge','math for fun']},
+  {key:'ads',match:['ad task','click ads','sponsored task']}
+ ];
+ const totals=Object.fromEntries(definitions.map(x=>[x.key,0]));
+ (ledgerRows||[]).filter(x=>x.entry_type==='task_reward'&&x.currency==='UGX').forEach(row=>{
+  const note=String(row.note||'').toLowerCase();
+  const signed=(row.direction==='debit'?-1:1)*Number(row.amount||0);
+  const definition=definitions.find(x=>x.match.some(term=>note.includes(term)));
+  if(definition)totals[definition.key]+=signed;
+ });
+ const keys=['foreign-chat','spotify','tap','color','trivia','youtube','tiktok','casino-spin','math','ads'];
+ document.querySelectorAll('#tasks .task-row .task-amount').forEach((el,index)=>{
+  el.textContent='UGX '+Math.max(0,totals[keys[index]]||0).toLocaleString(undefined,{maximumFractionDigits:2});
+ });
+}
+async function saveProfileWhatsApp(event){
+ event.preventDefault();
+ const emailInput=document.getElementById('profileEmailInput'),phoneInput=document.getElementById('profileWhatsAppInput'),button=document.getElementById('profileWhatsAppSave'),message=document.getElementById('profileWhatsAppMessage');
+ const email=String(emailInput?.value||'').trim().toLowerCase(),number=String(phoneInput?.value||'').replace(/[^0-9]/g,'');
+ message.classList.remove('error','success');
+ if(!supabaseClient){message.textContent='The account service is unavailable. Refresh the page and try again.';message.classList.add('error');return;}
+ if(!/^\S+@\S+\.\S+$/.test(email)){message.textContent='Enter a valid email address.';message.classList.add('error');return;}
+ if(!/^\d{10,15}$/.test(number)){message.textContent='Enter a valid phone number with country code (10–15 digits).';message.classList.add('error');return;}
+ button.disabled=true;button.textContent='Saving…';
+ try{
+  // Resolve the live Supabase session at save time. currentMember can briefly be
+  // unset while the auth-state callback is still initializing after page load.
+  let {data:sessionData,error:sessionError}=await supabaseClient.auth.getSession();
+  if(sessionError)throw sessionError;
+  let session=sessionData?.session;
+  if(!session){
+   const refreshed=await supabaseClient.auth.refreshSession();
+   if(refreshed.error)throw refreshed.error;
+   session=refreshed.data?.session;
+  }
+  if(!session?.user)throw Error('Your sign-in session has expired. Please sign in again.');
+  currentMember=session.user;
+  const userId=session.user.id,oldEmail=String(session.user.email||'').toLowerCase();
+  const {error:phoneError}=await supabaseClient.from('profiles').update({phone:'+'+number,contact_email:email}).eq('id',userId);
+  if(phoneError)throw phoneError;
+  let emailNotice='';
+  if(email!==oldEmail){
+   const {error:emailError}=await supabaseClient.auth.updateUser({email},{emailRedirectTo:location.origin+location.pathname});
+   if(emailError)throw emailError;
+   emailNotice=' A confirmation link has been sent; the sign-in email changes after you confirm it.';
+  }
+  message.textContent='Your phone number and contact details have been saved successfully.'+emailNotice;
+  message.classList.add('success');
+  const display=document.getElementById('profileWhatsAppDisplay'),phone=document.getElementById('profilePhone');
+  if(display)display.textContent='+'+number;if(phone)phone.textContent='+'+number;
+  const emailDisplay=document.getElementById('profileEmail');if(emailDisplay)emailDisplay.textContent=email;
+  const dashboardEmail=document.getElementById('dashboardProfileEmail');if(dashboardEmail)dashboardEmail.textContent=oldEmail===email?email:oldEmail;
+  const dashboardPhone=document.getElementById('dashboardProfilePhone');if(dashboardPhone)dashboardPhone.textContent='+'+number;
+  currentMember.user_metadata={...(currentMember.user_metadata||{}),phone:'+'+number};
+  await loadAdminProfileDirectory();
+ }catch(err){console.error('Profile contact update:',err);message.textContent=(err.message||'Could not save your contact details.')+' Please check your connection and try again.';message.classList.add('error');}
+ finally{button.disabled=false;button.textContent='Save Contact Details';}
+}
+document.getElementById('profileWhatsAppForm')?.addEventListener('submit',saveProfileWhatsApp);
+async function loadAdminProfileDirectory(){
+ const panel=document.getElementById('adminProfileDirectory'),list=document.getElementById('adminProfileDirectoryList');
+ if(!panel||!list||currentMember?.app_metadata?.role!=='admin')return;
+ panel.hidden=false;list.innerHTML='<p class="activity-empty">Loading member contacts…</p>';
+ const {data,error}=await supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(500);
+ if(error){list.innerHTML='<p class="activity-empty">Could not load member contacts: '+escapeText(error.message)+'</p>';return;}
+ const rows=data||[];
+ const render=()=>{
+  const q=String(document.getElementById('adminProfileSearch')?.value||'').trim().toLowerCase();
+  const filtered=rows.filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(q)));
+  if(!filtered.length){list.innerHTML='<p class="activity-empty">No matching members found.</p>';return;}
+  list.innerHTML=filtered.map(x=>'<article class="team-member-row"><div style="min-width:0"><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small style="display:block;overflow-wrap:anywhere">'+escapeText(x.contact_email||'Email not set')+'<br>'+escapeText(x.phone||'Phone not set')+'<br>Country: '+escapeText(x.country||'Country not set')+'<br>Joined: '+escapeText(x.created_at?new Date(x.created_at).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable')+'<br>Member for: <span data-member-joined="'+escapeText(x.created_at||'')+'">'+escapeText(formatMemberTenure(x.created_at))+'</span></small></div></article>').join('');
+  refreshMemberTenureCounters();
+ };
+ render();
+ const search=document.getElementById('adminProfileSearch');
+ if(search&&!search.dataset.bound){search.addEventListener('input',render);search.dataset.bound='1';}
+}
+document.getElementById('adminProfileRefresh')?.addEventListener('click',loadAdminProfileDirectory);
+async function loadMemberWallet(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member)return;
+ const payoutEl=document.getElementById('withdrawPayoutNumber');
+ if(payoutEl){
+  const {data:profile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
+  payoutEl.textContent=profile?.phone||currentMember.user_metadata?.phone||currentMember.phone||'No phone number saved in your profile';
+ }
+ const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
+ if(error){console.warn('Wallet ledger:',error);return;}
+ const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
+ updateTaskEarningsFromLedger(rows);
+ const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
+ const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
+ const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
+ const profitRows=ugx.filter(x=>['task_reward','welcome_bonus'].includes(x.entry_type));
+ const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
+ const balance=signed(availableRows),teamEarnings=signed(referralRows),earned=signed(profitRows),welcomeBonus=signed(welcomeRows);
+ currentAvailableBalance=Math.max(0,balance);
+ const money=n=>'UGX '+Math.max(0,n).toLocaleString(undefined,{maximumFractionDigits:2});
+ const strong=document.querySelectorAll('.balance-grid .balance-card strong');
+ if(strong[0])strong[0].textContent=money(balance);
+ if(strong[3])strong[3].textContent=money(teamEarnings);
+ if(strong[4])strong[4].textContent=money(welcomeBonus);const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent=money(balance);
+ const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
+ const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
+ if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
+ const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
+ renderWithdrawalEligibility();
+}
+function chatTime(v){return new Date(v).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+async function renderGlobalChat(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member){chatMessagesEl.innerHTML='<div class="activity-empty">Reconnect to restore your secure session and load the global lounge.</div>';return;}
+ const {data:messages,error}=await supabaseClient.from('global_chat_messages').select('id,user_id,message,created_at').order('created_at',{ascending:true}).limit(80);
+ if(error){chatMessagesEl.innerHTML='<div class="activity-empty">Chat is unavailable. Your account may need activation.</div>';chatStatusEl.textContent=error.message;return;}
+ const rows=messages||[],ids=[...new Set(rows.map(m=>m.user_id))];
+ let members=[];
+ if(ids.length){const r=await supabaseClient.from('global_chat_members').select('user_id,display_name,country').in('user_id',ids);if(!r.error)members=r.data||[];}
+ const byId=Object.fromEntries(members.map(m=>[m.user_id,m]));
+ if(!rows.length){chatMessagesEl.innerHTML='<div class="activity-empty">Welcome to the global lounge. Say hello! International members will appear here when they join GenZBag.</div>';return;}
+ chatMessagesEl.innerHTML=rows.map(m=>{
+  const p=byId[m.user_id]||{},mine=m.user_id===currentMember.id;
+  return '<article class="chat-message '+(mine?'mine':'')+'"><div class="chat-message-head"><strong>'+escapeText(p.display_name||'GenZBag member')+'</strong><span class="chat-country">'+escapeText(p.country||'Unknown')+'</span></div><div class="chat-message-text">'+escapeText(m.message)+'</div><div class="chat-message-foot"><span>'+escapeText(chatTime(m.created_at))+'</span>'+(mine?'':'<button class="chat-report" type="button" data-report-message="'+escapeText(m.id)+'">Report</button>')+'</div></article>';
+ }).join('');
+ chatMessagesEl.scrollTop=chatMessagesEl.scrollHeight;
+ chatStatusEl.textContent=rows.length+' recent messages · Be respectful and keep personal information private.';
+}
+async function loadGlobalChat(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member){await renderGlobalChat();return;}
+ const {data:profile}=await supabaseClient.from('profiles').select('username,country').eq('id',currentMember.id).maybeSingle();
+ const display=(profile?.username||currentMember.email?.split('@')[0]||'Member').slice(0,40);
+ const country=(profile?.country||'Unknown').slice(0,40);
+ const {error:memberError}=await supabaseClient.from('global_chat_members').upsert({user_id:currentMember.id,display_name:display,country},{onConflict:'user_id'});
+ if(memberError){chatStatusEl.textContent='Chat profile unavailable: '+memberError.message;return;}
+ await renderGlobalChat();
+ if(globalChatChannel)supabaseClient.removeChannel(globalChatChannel);
+ globalChatChannel=supabaseClient.channel('genzbag-global-chat')
+  .on('postgres_changes',{event:'INSERT',schema:'public',table:'global_chat_messages'},()=>renderGlobalChat())
+  .subscribe(status=>{if(status==='SUBSCRIBED')chatStatusEl.textContent='Connected to the global lounge · '+country;});
+}
+document.getElementById('globalChatSend').addEventListener('click',async()=>{
+ const member=await ensureMemberSession();
+ if(!member){chatStatusEl.textContent='Reconnect or sign in to send a message.';return;}
+ const message=chatInputEl.value.trim();if(!message)return;
+ const b=document.getElementById('globalChatSend');b.disabled=true;b.textContent='Sending…';
+ const {error}=await supabaseClient.from('global_chat_messages').insert({user_id:member.id,message});
+ b.disabled=false;b.textContent='Send';
+ if(error){chatStatusEl.textContent=error.message;return;}
+ chatInputEl.value='';await renderGlobalChat();
+});
+chatInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('globalChatSend').click();}});
+chatMessagesEl.addEventListener('click',async e=>{
+ const b=e.target.closest('[data-report-message]');if(!b)return;
+ const reason=prompt('Why are you reporting this message?');if(!reason||reason.trim().length<5)return;
+ const {error}=await supabaseClient.from('global_chat_reports').insert({message_id:b.dataset.reportMessage,reporter_id:currentMember.id,reason:reason.trim().slice(0,500)});
+ alert(error?(error.code==='23505'?'You have already reported this message.':error.message):'Report sent to the GenZBag moderation team.');
+});
+async function loadAdminActivityTools(){
+ if(!currentMember||currentMember.app_metadata?.role!=='admin')return;
+ adminPanelEl.classList.add('visible');
+ const {data,error}=await supabaseClient.from('task_submissions').select('id,user_id,task_id,proof_text,proof_url,submitted_at,status,tasks(title,reward_amount,currency)').eq('status','pending').order('submitted_at',{ascending:true}).limit(60);
+ const list=document.getElementById('adminSubmissionList');
+ if(error){list.textContent='Could not load submissions: '+error.message;return;}
+ if(!data?.length){list.innerHTML='<div class="activity-empty">No pending submissions.</div>';return;}
+ list.innerHTML=data.map(s=>'<article class="admin-submission" data-admin-submission="'+escapeText(s.id)+'"><strong style="font-size:11px">'+escapeText(s.tasks?.title||'Activity submission')+'</strong><p>Member: '+escapeText(s.user_id)+'<br>Submitted: '+escapeText(new Date(s.submitted_at).toLocaleString())+'<br>Proof: '+escapeText(s.proof_text||'No text provided')+(s.proof_url?'<br>Link: <a href="'+escapeText(s.proof_url)+'" target="_blank" rel="noopener noreferrer">Open proof</a>':'')+'<br>Reward on approval: '+escapeText(Number(s.tasks?.reward_amount||0)+' '+(s.tasks?.currency||'UGX'))+'</p><div class="admin-submission-actions"><button class="activity-btn" type="button" data-review="approved">Approve</button><button class="activity-btn secondary" type="button" data-review="rejected">Reject</button></div></article>').join('');
+}
+document.getElementById('adminTaskForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(currentMember?.app_metadata?.role!=='admin')return;
+ const b=document.getElementById('adminTaskSave');b.disabled=true;b.textContent='Saving…';
+ const limit=document.getElementById('adminTaskLimit').value;
+ const payload={title:document.getElementById('adminTaskTitle').value.trim(),category:document.getElementById('adminTaskCategory').value,description:document.getElementById('adminTaskDescription').value.trim(),instructions:document.getElementById('adminTaskInstructions').value.trim(),reward_amount:Number(document.getElementById('adminTaskReward').value||0),currency:document.getElementById('adminTaskCurrency').value,status:document.getElementById('adminTaskStatus').value,content_url:document.getElementById('adminTaskUrl').value.trim()||null,max_submissions:limit?Number(limit):null,created_by:currentMember.id};
+ const {error}=await supabaseClient.from('tasks').insert(payload);
+ b.disabled=false;b.textContent='Save activity';
+ if(error){alert('Could not save activity: '+error.message);return;}
+ e.target.reset();document.getElementById('adminTaskReward').value='0';await loadActivities();alert('Activity saved successfully.');
+});
+document.getElementById('adminSubmissionList').addEventListener('click',async e=>{
+ const b=e.target.closest('[data-review]');if(!b)return;
+ const row=b.closest('[data-admin-submission]'),id=row?.dataset.adminSubmission;if(!id)return;
+ const note=prompt('Optional review note:')||'';
+ b.disabled=true;
+ const {data,error}=await supabaseClient.rpc('admin_review_task_submission',{p_submission_id:id,p_decision:b.dataset.review,p_review_note:note});
+ if(error){alert('Review failed: '+error.message);b.disabled=false;return;}
+ await loadAdminActivityTools();await loadActivities();await loadMemberWallet();
+});
+async function initialiseMemberFeatures(session){
+ currentMember=session?.user||await ensureMemberSession()||null;
+ if(!currentMember){activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');return;}
+ await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools()]);
+}
+
+/* AUTH-GATED ENTRY: restore a persisted session before exposing the sign-in screen. */
+authGate.style.visibility='hidden';
+setAuthMode('signup');
+renderNetwork(0,0);
+if(supabaseClient){
+  supabaseClient.auth.getSession().then(async({data,error})=>{
+    if(error)console.warn('Supabase session check:',error);
+    if(data?.session){currentMember=data.session.user;markSessionAlive(data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(data.session);}
+    else if(hasRecentAuthGrace()){showDashboard();showSessionNotice('Reconnecting to your secure session. Your dashboard will remain open briefly.');beginAuthGrace();}
+    else{requireAuth();}
+  }).catch(error=>{console.warn('Supabase startup session recovery:',error);requireAuth();});
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if((event==='SIGNED_IN'||event==='INITIAL_SESSION')&&session){currentMember=session.user;markSessionAlive(session);setTimeout(()=>{showDashboard();loadMemberNetwork();initialiseMemberFeatures(session);},0);}
+    if(event==='TOKEN_REFRESHED'&&session){currentMember=session.user;markSessionAlive(session);}
+    if(event==='PASSWORD_RECOVERY'){requireAuth();document.getElementById('authForm').classList.add('auth-hidden-field');document.getElementById('authSwitchLine').classList.add('auth-hidden-field');document.getElementById('forgotPassword').classList.add('auth-hidden-field');document.getElementById('forgotPasswordPanel').classList.add('auth-hidden-field');document.getElementById('newPasswordPanel').classList.remove('auth-hidden-field');showAuthMessage('Secure link verified. Set your new password below.','success');}
+    if(event==='SIGNED_OUT'){
+      if(intentionalSignOut){
+        currentMember=null;renderNetwork(0,0);initialiseMemberFeatures(null);intentionalSignOut=false;lastAuthenticatedAt=0;
+        try{sessionStorage.removeItem(LAST_AUTH_KEY);}catch(e){}
+        removeSessionNotice();setAuthMode('signup');requireAuth();
+      }else if(!authRecoveryInProgress){
+        authRecoveryInProgress=true;
+        setTimeout(async()=>{
+          try{
+            const refreshed=await supabaseClient.auth.refreshSession();
+            if(!refreshed.error&&refreshed.data?.session){currentMember=refreshed.data.session.user;markSessionAlive(refreshed.data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(refreshed.data.session);}
+            else if(!beginAuthGrace()){currentMember=null;renderNetwork(0,0);initialiseMemberFeatures(null);setAuthMode('login');requireAuth();}
+          }catch(e){if(!beginAuthGrace()){currentMember=null;setAuthMode('login');requireAuth();}}
+          finally{authRecoveryInProgress=false;}
+        },0);
+      }
+    }
+  });
+  window.addEventListener('online',async()=>{
+    try{
+      const {data,error}=await supabaseClient.auth.refreshSession();
+      if(!error&&data?.session){currentMember=data.session.user;markSessionAlive(data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(data.session);}
+      else if(hasRecentAuthGrace())beginAuthGrace();
+    }catch(e){console.warn('Online session recovery:',e);}
+  });
+  window.addEventListener('offline',()=>{if(hasRecentAuthGrace())beginAuthGrace();else showSessionNotice('You are offline. Reconnect to load live Supabase data.');});
+
+}else{requireAuth();}
+})();
+</script>
+
+</body>
+</html>+(rate*1000).toFixed(3);const time=d.time_last_update_utc?new Date(d.time_last_update_utc).toLocaleString():'Latest available';if(u){u.innerHTML='<span class="rate-dot"></span>'+time;u.title='Reference rates from open.er-api.com · 1 UGX = 
+async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('The sign-in service did not load. Refresh and try again.','error');return;}const signingUp=authMode==='signup',email=(signingUp?document.getElementById('authEmail'):document.getElementById('authLoginEmail')).value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.innerHTML=signingUp?'Creating your account…':'Signing you in…';showAuthMessage('Please wait…');try{if(signingUp){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value,phoneDigits=document.getElementById('authPhone').value.replace(/\D/g,''),phoneCode=document.getElementById('authPhoneCode').value;if(!/^[a-z0-9]{4,20}$/.test(username))throw Error('Username must contain only letters and numbers (4–20 characters).');if(!email||!/^\S+@\S+\.\S+$/.test(email))throw Error('Enter a valid email address.');if(phoneDigits.length<7||phoneDigits.length>15)throw Error('Enter a valid mobile number.');if(password.length<8)throw Error('For better account security, your password must be at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');if(!document.getElementById('authTerms').checked)throw Error('Please accept the Terms & Conditions to continue.');const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:phoneCode+phoneDigits,country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(!data?.user?.id)throw Error('Supabase did not confirm account creation. Please try again.');const successModal=document.getElementById('signupSuccessModal');if(successModal){successModal.classList.add('open');successModal.setAttribute('aria-hidden','false');}launchSignupCelebration();if(data.session){intentionalSignOut=true;lastAuthenticatedAt=0;try{sessionStorage.removeItem(LAST_AUTH_KEY);}catch(e){}const {error:signOutError}=await supabaseClient.auth.signOut();if(signOutError)console.warn('New account created; automatic sign-out notice:',signOutError);}setTimeout(()=>{successModal?.classList.remove('open');successModal?.setAttribute('aria-hidden','true');authForm.reset();setAuthMode('login');document.getElementById('authLoginEmail').value=email;document.getElementById('authPassword').value='';requireAuth();document.getElementById('authLoginEmail').focus();},3600);}else{const identifier=document.getElementById('authLoginEmail').value.trim();let data,error;if(identifier.includes('@')){({data,error}=await supabaseClient.auth.signInWithPassword({email:identifier.toLowerCase(),password}));}else{const result=await supabaseClient.functions.invoke('username-signin',{body:{username:identifier.toLowerCase(),password}});error=result.error;data=result.data;if(!error&&data?.session){const restored=await supabaseClient.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});error=restored.error;data=restored.data;}}if(error)throw error;if(!data?.session)throw Error('Invalid username/email or password. Please try again.');markSessionAlive(data.session);showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.innerHTML=authMode==='signup'?'Create my account <span>→</span>':'Sign in <span>→</span>';}}
+document.getElementById('forgotPassword').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.remove('auth-hidden-field');document.getElementById('newPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.add('auth-hidden-field');document.getElementById('authSwitchLine').classList.add('auth-hidden-field');document.getElementById('forgotPassword').classList.add('auth-hidden-field');document.getElementById('resetEmail').value=document.getElementById('authLoginEmail').value.trim();showAuthMessage('');});
+document.getElementById('backToSignIn').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.remove('auth-hidden-field');document.getElementById('authSwitchLine').classList.remove('auth-hidden-field');document.getElementById('forgotPassword').classList.remove('auth-hidden-field');showAuthMessage('');});
+document.getElementById('sendResetLink').addEventListener('click',async()=>{const email=document.getElementById('resetEmail').value.trim().toLowerCase(),button=document.getElementById('sendResetLink');if(!/^\S+@\S+\.\S+$/.test(email)){showAuthMessage('Enter a valid email address.','error');return;}button.disabled=true;button.textContent='Sending…';try{const redirectTo=location.origin+location.pathname;const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});if(error)throw error;showAuthMessage('If an account exists for that email, a password reset link has been sent. Check your inbox and spam folder.','success');}catch(err){showAuthMessage(err.message||'Could not send the reset link. Please try again.','error');}finally{button.disabled=false;button.textContent='Send reset link';}});
+document.getElementById('saveNewPassword').addEventListener('click',async()=>{const password=document.getElementById('newPassword').value,confirm=document.getElementById('confirmNewPassword').value,button=document.getElementById('saveNewPassword');if(password.length<8){showAuthMessage('Your new password must be at least 8 characters.','error');return;}if(password!==confirm){showAuthMessage('Your passwords do not match.','error');return;}button.disabled=true;button.textContent='Updating…';try{const {error}=await supabaseClient.auth.updateUser({password});if(error)throw error;intentionalSignOut=true;lastAuthenticatedAt=0;await supabaseClient.auth.signOut();document.getElementById('newPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.remove('auth-hidden-field');document.getElementById('authSwitchLine').classList.remove('auth-hidden-field');setTimeout(()=>{setAuthMode('login');requireAuth();showAuthMessage('Password updated successfully. Please sign in with your new password.','success');},150);}catch(err){showAuthMessage(err.message||'Could not update your password. Please try again.','error');}finally{button.disabled=false;button.textContent='Update password';}});
+authForm.addEventListener('submit',submitAuth);document.getElementById('switchAuthMode').addEventListener('click',()=>setAuthMode(authMode==='login'?'signup':'login'));
+function updateSignupProgress(){
+ const field=id=>document.getElementById(id);
+ const username=field('authUsername').value.trim();
+ const email=field('authEmail').value.trim();
+ const phone=field('authPhone').value.replace(/\D/g,'');
+ const values={
+  username:/^[a-z0-9]{4,20}$/i.test(username),
+  email:/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+  phone:phone.length>=7&&phone.length<=15,
+  country:['Uganda','Nigeria','Kenya','Tanzania','Rwanda','Ghana','Other'].includes(field('authCountry').value),
+  password:field('authPassword').value.length>=8,
+  confirm:field('authConfirm').value.length>0&&field('authConfirm').value===field('authPassword').value
+ };
+ const count=Object.values(values).filter(Boolean).length;
+ const countEl=field('signupProgressCount'),bar=field('signupProgressBar'),track=bar?.parentElement;
+ if(countEl)countEl.textContent=count+' / 6';
+ if(bar)bar.style.width=(count/6*100)+'%';
+ if(track){track.setAttribute('role','progressbar');track.setAttribute('aria-label','Signup completion');track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','6');track.setAttribute('aria-valuenow',String(count));}
+ Object.entries(values).forEach(([key,ok])=>{
+  const el=document.querySelector('[data-check="'+key+'"]');
+  if(el){el.classList.toggle('complete',ok);el.setAttribute('aria-label',key+(ok?' complete':' incomplete'));}
+ });
+ return count;
+}
+['authUsername','authEmail','authPhone','authCountry','authPassword','authConfirm'].forEach(id=>{
+ const el=document.getElementById(id);
+ ['input','change','keyup','paste'].forEach(eventName=>el.addEventListener(eventName,()=>setTimeout(updateSignupProgress,0)));
+});
+document.getElementById('authForm').addEventListener('input',updateSignupProgress,true);
+document.getElementById('authForm').addEventListener('change',updateSignupProgress,true);
+document.getElementById('authForm').addEventListener('reset',()=>setTimeout(updateSignupProgress,0));
+const PRIORITY_COUNTRIES=['Uganda','Kenya','Tanzania','Rwanda','Burundi','Democratic Republic of the Congo','South Sudan','Somalia','Ethiopia','Djibouti','Eritrea','Sudan','Nigeria','South Africa'];
+const COUNTRY_FALLBACK=[['Uganda','UG','+256'],['Kenya','KE','+254'],['Tanzania','TZ','+255'],['Rwanda','RW','+250'],['Burundi','BI','+257'],['Democratic Republic of the Congo','CD','+243'],['South Sudan','SS','+211'],['Somalia','SO','+252'],['Ethiopia','ET','+251'],['Djibouti','DJ','+253'],['Eritrea','ER','+291'],['Sudan','SD','+249'],['Nigeria','NG','+234'],['South Africa','ZA','+27'],['Ghana','GH','+233']];
+function setSignupCountryCode(){const name=document.getElementById('authCountry').value,entry=window.genzbagCountries?.find(x=>x.name===name)||COUNTRY_FALLBACK.find(x=>x[0]===name);if(entry){const dial=Array.isArray(entry)?entry[2]:entry.dial;const code=document.getElementById('authPhoneCode');if(code&&dial){let opt=[...code.options].find(o=>o.value===dial);if(!opt){opt=document.createElement('option');opt.value=dial;opt.textContent=dial;code.appendChild(opt);}code.value=dial;}}updateSignupProgress();}
+async function loadAllSignupCountries(){const select=document.getElementById('authCountry');if(!select)return;try{const response=await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,idd,flag',{cache:'force-cache'});if(!response.ok)throw Error('Country list unavailable');const rows=await response.json();const list=rows.map(x=>({name:x.name?.common||'',code:x.cca2||'',dial:(x.idd?.root||'')+(x.idd?.suffixes?.length===1?x.idd.suffixes[0]:'')})).filter(x=>x.name&&x.dial.startsWith('+'));window.genzbagCountries=list;const selected=select.value;const priority=new Map(PRIORITY_COUNTRIES.map((n,i)=>[n,i]));list.sort((a,b)=>(priority.has(a.name)?priority.get(a.name):1000)-(priority.has(b.name)?priority.get(b.name):1000)||a.name.localeCompare(b.name));select.innerHTML='';const east=document.createElement('optgroup');east.label='East Africa · shown first';const africa=document.createElement('optgroup');africa.label='Other African countries';const rest=document.createElement('optgroup');rest.label='All other countries';for(const item of list){const option=document.createElement('option');option.value=item.name;option.textContent=(item.code?' '+item.code+' · ':'')+item.name;const region=priority.has(item.name)?east:(['NG','ZA','GH','EG','ZM','ZW','MW','MZ','BW','NA','SN','CM','CI','ET','MA','DZ','TN'].includes(item.code)?africa:rest);region.appendChild(option);}select.append(east,africa,rest);if([...select.options].some(o=>o.value===selected))select.value=selected;else select.value='Uganda';setSignupCountryCode();}catch(error){console.warn('Could not load full country list; keeping regional country choices.',error);}}
+document.getElementById('authCountry').addEventListener('change',setSignupCountryCode);
+document.getElementById('authPhoneCode').addEventListener('change',updateSignupProgress);
+loadAllSignupCountries();
+document.getElementById('authPhoneCode').addEventListener('change',updateSignupProgress);
+document.getElementById('togglePassword').addEventListener('click',()=>{const p=document.getElementById('authPassword'),show=p.type==='password';p.type=show?'text':'password';document.getElementById('togglePassword').textContent=show?'Hide':'Show';});
+const termsPreview=document.getElementById('termsPreview');
+function openTermsPreview(){termsPreview.classList.add('open');termsPreview.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';document.getElementById('termsClose').focus();}
+function closeTermsPreview(){termsPreview.classList.remove('open');termsPreview.setAttribute('aria-hidden','true');document.body.style.overflow='';document.getElementById('termsLink').focus();}
+document.getElementById('termsLink').addEventListener('click',openTermsPreview);
+document.getElementById('termsClose').addEventListener('click',closeTermsPreview);
+document.getElementById('termsDone').addEventListener('click',closeTermsPreview);
+termsPreview.addEventListener('click',e=>{if(e.target===termsPreview)closeTermsPreview();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&termsPreview.classList.contains('open'))closeTermsPreview();});
+
+document.getElementById('forgotPassword').addEventListener('click',async()=>{if(!supabaseClient)return showAuthMessage('Authentication is unavailable.','error');const email=(document.getElementById('authLoginEmail').value||document.getElementById('authEmail').value).trim();if(!email)return showAuthMessage('Enter your email address first.','error');try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;showAuthMessage('If this email is registered, a password-reset link will be sent. Check your inbox.','success');}catch(e){showAuthMessage(e.message||'Could not request a password reset.','error');}});
+document.getElementById('logoutButton').addEventListener('click',async e=>{e.preventDefault();closeMenu();const button=e.currentTarget;button.style.pointerEvents='none';try{if(!supabaseClient)throw new Error('Authentication service is unavailable. Please refresh and try again.');intentionalSignOut=true;lastAuthenticatedAt=0;try{sessionStorage.removeItem(LAST_AUTH_KEY);}catch(e){}const {error}=await supabaseClient.auth.signOut();if(error)throw error;currentMember=null;currentAvailableBalance=0;currentDirectActiveReferrals=0;activityRows=[];activitySubmissionMap={};if(globalChatChannel){await supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}teamRows=[];document.getElementById('teamMembersList').innerHTML='<div class="activity-empty">Sign in to view your team.</div>';renderNetwork(0,0);document.getElementById('networkMessage').textContent='You are signed out. Sign in to view your account.';setAuthMode('login');requireAuth();showAuthMessage('You have been signed out successfully.','success');}catch(error){console.error('Logout failed:',error);showAuthMessage(error.message||'Could not sign out. Please try again.','error');}finally{button.style.pointerEvents='';}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+function updateWeeklyScheduleLive(){
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Kampala',weekday:'short',day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date()).map(p=>[p.type,p.value]));
+ const idx=({Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6})[parts.weekday]??0;
+ const dateLabel=parts.weekday+', '+parts.day+' '+parts.month+' '+parts.year,clock=parts.hour+':'+parts.minute+':'+parts.second+' EAT';
+ const activities=['Foreign Chat + Earn With Spotify','Tap Earnings + Color Challenge','Trivia + YouTube','TikTok','Casino & Spin','Math Challenge','Ad Tasks'];
+ document.querySelectorAll('#schedule .schedule-row[data-day-index],#dashboardScheduleList .schedule-row[data-day-index]').forEach(row=>row.classList.toggle('today',Number(row.dataset.dayIndex)===idx));
+ [['scheduleTodayLabel','scheduleTodayActivity','scheduleClock'],['scheduleTodayLabelDash','scheduleTodayActivityDash','scheduleClockDash']].forEach(([di,ai,ci])=>{const d=document.getElementById(di),a=document.getElementById(ai),c=document.getElementById(ci);if(d)d.textContent='Today · '+dateLabel;if(a)a.textContent='Today’s activity: '+activities[idx]+' · Referrals are available daily.';if(c)c.textContent=clock;});
+}
+updateWeeklyScheduleLive();setInterval(updateWeeklyScheduleLive,1000);
+document.getElementById('dashboardAppButton').addEventListener('click',()=>{const a=document.querySelector('.nav-link[href="#app"]');if(a)a.click();});
+const exchangeRateToggle=document.getElementById('exchangeRateToggle'),exchangeRatePanel=document.getElementById('exchangeRatePanel');
+exchangeRateToggle?.addEventListener('click',()=>{
+ const opening=exchangeRatePanel.hidden;
+ exchangeRatePanel.hidden=!opening;
+ exchangeRateToggle.setAttribute('aria-expanded',String(opening));
+ exchangeRateToggle.setAttribute('aria-label',opening?'Hide live currency rate':'Show live currency rate');
+});
+loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
+
+/* GENZBAG ACTIVITIES + GLOBAL CHAT */
+const activityListEl=document.getElementById('activityList');
+const activityFiltersEl=document.getElementById('activityFilters');
+const activityCountEl=document.getElementById('activityCount');
+const chatMessagesEl=document.getElementById('globalChatMessages');
+const chatInputEl=document.getElementById('globalChatInput');
+const chatStatusEl=document.getElementById('globalChatStatus');
+const adminPanelEl=document.getElementById('adminActivityPanel');
+let currentActivityFilter='all',currentActivitySearch='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
+let currentAvailableBalance=0,currentDirectActiveReferrals=0;
+let teamRows=[],currentTeamLevel=1,currentTeamView='overview';
+function renderTeamMembers(){
+ const list=document.getElementById('teamMembersList'),q=(document.getElementById('teamSearchInput')?.value||'').trim().toLowerCase();
+ let rows=teamRows.filter(x=>Number(x.member_level)===Number(currentTeamLevel));
+ if(currentTeamView==='active')rows=rows.filter(x=>x.is_active);
+ if(currentTeamView==='inactive')rows=rows.filter(x=>!x.is_active);
+ if(q)rows=rows.filter(x=>String(x.username||'').toLowerCase().includes(q)||String(x.phone||'').toLowerCase().includes(q));
+ if(!rows.length){list.innerHTML='<div class="activity-empty">No matching team members found. Try another username or phone number.</div>';return;}
+ list.innerHTML=rows.map(x=>'<article class="team-member-row"><div><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small>'+escapeText(x.phone||'Phone not provided')+' · '+escapeText(x.country||'Country not set')+' · Joined '+escapeText(x.joined_at?new Date(x.joined_at).toLocaleDateString():'—')+'</small></div><span class="team-member-state '+(x.is_active?'active':'inactive')+'">'+(x.is_active?'ACTIVE':'INACTIVE')+'</span></article>').join('');
+}
+document.getElementById('teamSearchInput').addEventListener('input',renderTeamMembers);
+async function loadTeamView(level,view){
+ const member=await ensureMemberSession();
+ currentTeamLevel=Number(level);currentTeamView=view;
+ const page=document.getElementById('teamWorkspace'),list=document.getElementById('teamMembersList');
+ page.hidden=false;
+ document.getElementById('teamPageTitle').textContent='Level '+level+' Team · '+(view==='overview'?'Overview':view==='active'?'Active Team':'Inactive Team');
+ document.getElementById('teamPageDescription').textContent='Members in generation '+level+'. Active status is based on verified activation payments.';
+ list.innerHTML='<div class="activity-empty">Loading your team…</div>';
+ if(!member){list.innerHTML='<div class="activity-empty">Reconnect to restore your secure session and load your team.</div>';return;}
+ const {data,error}=await supabaseClient.rpc('get_my_referral_team');
+ if(error){console.error('Team load:',error);list.innerHTML='<div class="activity-empty">Team data could not load. '+escapeText(error.message)+'</div>';return;}
+ teamRows=data||[];
+ [1,2,3].forEach(n=>{
+  const group=teamRows.filter(x=>Number(x.member_level)===n);
+  const el=document.getElementById('teamLevel'+n+'Count');
+  if(el)el.textContent=group.length+' · '+group.filter(x=>x.is_active).length+' active';
+ });
+ renderTeamMembers();
+}
+document.querySelectorAll('[data-team-level][data-team-view]').forEach(a=>a.addEventListener('click',()=>loadTeamView(a.dataset.teamLevel,a.dataset.teamView)));
+
+const activityCategoryNames={music:'Music',video:'Video',game:'Game',challenge:'Challenge',learning:'Learning',sponsored:'Sponsored',general:'General'};
+function currentUser(){return currentMember;}
+function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function categoryName(v){return activityCategoryNames[v]||String(v||'General').replace(/_/g,' ');}
+function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
+function renderActivities(){
+ let rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
+ if(currentActivitySearch){const terms=currentActivitySearch.toLowerCase().split(/\\s+/).filter(Boolean);rows=rows.filter(x=>{const hay=(x.title+' '+(x.description||'')+' '+(x.instructions||'')).toLowerCase();return terms.some(term=>hay.includes(term));});}
+ activityCountEl.textContent=rows.length+' available';
+ if(!rows.length){setActivityMessage(activityRows.length?'No activities in this category yet.':'No activities have been published yet. Check again later.');return;}
+ activityListEl.innerHTML=rows.map(t=>{
+  const sub=activitySubmissionMap[t.id],status=sub?.status;
+  const reward=Number(t.reward_amount||0).toLocaleString()+' '+(t.currency||'UGX');
+  const disabled=status==='pending'||status==='approved';
+  return '<article class="activity-card" data-activity-id="'+escapeText(t.id)+'"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(categoryName(t.category))+'</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">'+escapeText(reward)+'</span></div><p>'+escapeText(t.description||'Open this activity to read the instructions.')+'</p>'+(t.instructions?'<p><strong>Instructions:</strong><br>'+escapeText(t.instructions)+'</p>':'')+'<div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">Open activity ↗</a>':'')+'<button class="activity-btn" type="button" data-open-proof="'+escapeText(t.id)+'" '+(disabled?'disabled':'')+'>'+(status==='pending'?'Under review':status==='approved'?'Completed':'Submit proof')+'</button></div>'+(status?'<p><span class="activity-state '+escapeText(status)+'">'+escapeText(status.toUpperCase())+'</span>'+(sub.review_note?' · '+escapeText(sub.review_note):'')+'</p>':'')+'<form class="activity-proof" data-proof-form="'+escapeText(t.id)+'"><textarea name="proof_text" maxlength="2000" required placeholder="Describe what you completed and include the requested proof details…"></textarea><input name="proof_url" type="url" maxlength="1000" placeholder="Optional proof link (https://…)"><button class="activity-btn" type="submit">Send for review</button><span class="activity-note">Your submission will remain pending until reviewed. Do not submit passwords or private account details.</span></form></article>';
+ }).join('');
+}
+async function loadActivities(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
+ activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
+ const [tasksRes,subsRes]=await Promise.all([
+  supabaseClient.from('tasks').select('id,title,description,category,instructions,reward_amount,currency,content_url,status,starts_at,ends_at,created_at').eq('status','published').order('created_at',{ascending:false}),
+  supabaseClient.from('task_submissions').select('id,task_id,status,review_note,submitted_at').eq('user_id',member.id).order('submitted_at',{ascending:false})
+ ]);
+ if(tasksRes.error){console.error('Activity load:',tasksRes.error);setActivityMessage(tasksRes.error.message.includes('activated')?'Your account must be activated before accessing activities.':'Activities could not load. Check your account activation and try again.');return;}
+ if(subsRes.error){console.warn('Submission history:',subsRes.error);}
+ activityRows=(tasksRes.data||[]).filter(t=>(!t.starts_at||new Date(t.starts_at)<=new Date())&&(!t.ends_at||new Date(t.ends_at)>new Date()));
+ activitySubmissionMap={};
+ (subsRes.data||[]).forEach(s=>{if(!activitySubmissionMap[s.task_id]||new Date(s.submitted_at)>new Date(activitySubmissionMap[s.task_id].submitted_at))activitySubmissionMap[s.task_id]=s;});
+ renderActivities();
+}
+activityFiltersEl.addEventListener('click',e=>{
+ const b=e.target.closest('[data-filter]');if(!b)return;
+ currentActivityFilter=b.dataset.filter;
+ activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x===b));
+ renderActivities();
+});
+document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListener('click',()=>{
+ const f=a.dataset.activityCategory||'all';currentActivityFilter=f;
+ activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));
+ renderActivities();
+}));
+activityListEl.addEventListener('click',e=>{
+ const b=e.target.closest('[data-open-proof]');if(!b)return;
+ const form=activityListEl.querySelector('[data-proof-form="'+b.dataset.openProof+'"]');
+ if(form)form.classList.toggle('open');
+});
+activityListEl.addEventListener('submit',async e=>{
+ const form=e.target.closest('[data-proof-form]');if(!form)return;e.preventDefault();
+ if(!currentMember){alert('Please sign in first.');return;}
+ const taskId=form.dataset.proofForm,fd=new FormData(form),proofText=String(fd.get('proof_text')||'').trim(),proofUrl=String(fd.get('proof_url')||'').trim(),button=form.querySelector('button[type=submit]');
+ if(!proofText){alert('Please describe the work you completed.');return;}
+ if(proofUrl&&!/^https:\/\//i.test(proofUrl)){alert('Proof links must start with https://');return;}
+ button.disabled=true;button.textContent='Submitting…';
+ const {error}=await supabaseClient.from('task_submissions').insert({task_id:taskId,user_id:currentMember.id,proof_text:proofText,proof_url:proofUrl||null});
+ button.disabled=false;button.textContent='Send for review';
+ if(error){alert(error.code==='23505'?'You already have a pending or approved submission for this activity.':error.message);return;}
+ form.reset();form.classList.remove('open');await loadActivities();await loadMemberWallet();
+});
+function renderWithdrawalQuote(){
+ const amount=Number(document.getElementById('withdrawAmountInput')?.value||0),balance=Number(currentAvailableBalance||0),fee=amount>0?Math.round(amount*0.005):0,valid=amount>=23000&&amount<=balance;
+ const money=n=>'UGX '+Math.max(0,n).toLocaleString();
+ const fields={withdrawCurrentBalance:money(balance),withdrawRequestedAmount:amount>0?money(amount):'—',withdrawServiceFee:amount>0?money(fee):'—',withdrawTotalDeducted:amount>0?money(amount):'—',withdrawNetReceive:amount>0?money(amount-fee):'—'};
+ Object.entries(fields).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
+ const status=document.getElementById('withdrawEligibilityStatus');
+ if(status){
+  if(currentDirectActiveReferrals<3)status.textContent='You need '+(3-currentDirectActiveReferrals)+' more active direct referral(s) before withdrawing.';
+  else if(balance<23000)status.textContent='Your balance is below the minimum withdrawal of UGX 23,000.';
+  else if(amount>0&&!valid)status.textContent='Enter an amount between UGX 23,000 and your Available Balance.';
+  else if(valid)status.textContent='You meet the referral and balance requirements. Payout processing is not enabled yet.';
+  else status.textContent='You are eligible to withdraw once you enter an amount.';
+ }
+}
+document.getElementById('withdrawAmountInput')?.addEventListener('input',renderWithdrawalQuote);
+function renderWithdrawalEligibility(){
+ const count=Number(currentDirectActiveReferrals||0),balance=Number(currentAvailableBalance||0);
+ const countEl=document.getElementById('withdrawDirectActiveCount'),balanceEl=document.getElementById('withdrawAvailableBalance');
+ if(countEl)countEl.textContent=count+' / 3 active';
+ if(balanceEl)balanceEl.textContent='Available: UGX '+Math.max(0,balance).toLocaleString();
+ renderWithdrawalQuote();
+}
+async function loadWithdrawalHistory(){
+ const box=document.getElementById('withdrawHistoryList');if(!box)return;
+ const member=await ensureMemberSession();
+ if(!member){box.textContent='Reconnect to restore your secure session and load withdrawal history.';return;}
+ box.textContent='Loading withdrawal history…';
+ const {data,error}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at,admin_note').eq('user_id',currentMember.id).order('created_at',{ascending:false}).limit(50);
+ if(error){box.textContent='Withdrawal history is not available yet.';console.warn(error);return;}
+ if(!data?.length){box.textContent='No withdrawal requests found.';return;}
+ box.innerHTML=data.map(x=>'<article class="team-member-row"><div><strong>UGX '+Number(x.amount).toLocaleString()+'</strong><small>'+new Date(x.created_at).toLocaleString()+(x.admin_note?' · '+escapeText(x.admin_note):'')+'</small></div><span class="team-member-state '+(x.status==='paid'?'active':'inactive')+'">'+escapeText(String(x.status||'pending').toUpperCase())+'</span></article>').join('');
+}
+async function updateTaskEarningsFromLedger(ledgerRows){
+ const definitions=[
+  {key:'foreign-chat',match:['foreign chat','chat with foreigners']},
+  {key:'spotify',match:['spotify']},
+  {key:'tap',match:['tap earnings','fix tap']},
+  {key:'color',match:['color challenge','colour challenge']},
+  {key:'trivia',match:['trivia']},
+  {key:'youtube',match:['youtube']},
+  {key:'tiktok',match:['tiktok']},
+  {key:'casino-spin',match:['casino','spin']},
+  {key:'math',match:['math challenge','math for fun']},
+  {key:'ads',match:['ad task','click ads','sponsored task']}
+ ];
+ const totals=Object.fromEntries(definitions.map(x=>[x.key,0]));
+ (ledgerRows||[]).filter(x=>x.entry_type==='task_reward'&&x.currency==='UGX').forEach(row=>{
+  const note=String(row.note||'').toLowerCase();
+  const signed=(row.direction==='debit'?-1:1)*Number(row.amount||0);
+  const definition=definitions.find(x=>x.match.some(term=>note.includes(term)));
+  if(definition)totals[definition.key]+=signed;
+ });
+ const keys=['foreign-chat','spotify','tap','color','trivia','youtube','tiktok','casino-spin','math','ads'];
+ document.querySelectorAll('#tasks .task-row .task-amount').forEach((el,index)=>{
+  el.textContent='UGX '+Math.max(0,totals[keys[index]]||0).toLocaleString(undefined,{maximumFractionDigits:2});
+ });
+}
+async function saveProfileWhatsApp(event){
+ event.preventDefault();
+ const emailInput=document.getElementById('profileEmailInput'),phoneInput=document.getElementById('profileWhatsAppInput'),button=document.getElementById('profileWhatsAppSave'),message=document.getElementById('profileWhatsAppMessage');
+ const email=String(emailInput?.value||'').trim().toLowerCase(),number=String(phoneInput?.value||'').replace(/[^0-9]/g,'');
+ message.classList.remove('error','success');
+ if(!supabaseClient){message.textContent='The account service is unavailable. Refresh the page and try again.';message.classList.add('error');return;}
+ if(!/^\S+@\S+\.\S+$/.test(email)){message.textContent='Enter a valid email address.';message.classList.add('error');return;}
+ if(!/^\d{10,15}$/.test(number)){message.textContent='Enter a valid phone number with country code (10–15 digits).';message.classList.add('error');return;}
+ button.disabled=true;button.textContent='Saving…';
+ try{
+  // Resolve the live Supabase session at save time. currentMember can briefly be
+  // unset while the auth-state callback is still initializing after page load.
+  let {data:sessionData,error:sessionError}=await supabaseClient.auth.getSession();
+  if(sessionError)throw sessionError;
+  let session=sessionData?.session;
+  if(!session){
+   const refreshed=await supabaseClient.auth.refreshSession();
+   if(refreshed.error)throw refreshed.error;
+   session=refreshed.data?.session;
+  }
+  if(!session?.user)throw Error('Your sign-in session has expired. Please sign in again.');
+  currentMember=session.user;
+  const userId=session.user.id,oldEmail=String(session.user.email||'').toLowerCase();
+  const {error:phoneError}=await supabaseClient.from('profiles').update({phone:'+'+number,contact_email:email}).eq('id',userId);
+  if(phoneError)throw phoneError;
+  let emailNotice='';
+  if(email!==oldEmail){
+   const {error:emailError}=await supabaseClient.auth.updateUser({email},{emailRedirectTo:location.origin+location.pathname});
+   if(emailError)throw emailError;
+   emailNotice=' A confirmation link has been sent; the sign-in email changes after you confirm it.';
+  }
+  message.textContent='Your phone number and contact details have been saved successfully.'+emailNotice;
+  message.classList.add('success');
+  const display=document.getElementById('profileWhatsAppDisplay'),phone=document.getElementById('profilePhone');
+  if(display)display.textContent='+'+number;if(phone)phone.textContent='+'+number;
+  const emailDisplay=document.getElementById('profileEmail');if(emailDisplay)emailDisplay.textContent=email;
+  const dashboardEmail=document.getElementById('dashboardProfileEmail');if(dashboardEmail)dashboardEmail.textContent=oldEmail===email?email:oldEmail;
+  const dashboardPhone=document.getElementById('dashboardProfilePhone');if(dashboardPhone)dashboardPhone.textContent='+'+number;
+  currentMember.user_metadata={...(currentMember.user_metadata||{}),phone:'+'+number};
+  await loadAdminProfileDirectory();
+ }catch(err){console.error('Profile contact update:',err);message.textContent=(err.message||'Could not save your contact details.')+' Please check your connection and try again.';message.classList.add('error');}
+ finally{button.disabled=false;button.textContent='Save Contact Details';}
+}
+document.getElementById('profileWhatsAppForm')?.addEventListener('submit',saveProfileWhatsApp);
+async function loadAdminProfileDirectory(){
+ const panel=document.getElementById('adminProfileDirectory'),list=document.getElementById('adminProfileDirectoryList');
+ if(!panel||!list||currentMember?.app_metadata?.role!=='admin')return;
+ panel.hidden=false;list.innerHTML='<p class="activity-empty">Loading member contacts…</p>';
+ const {data,error}=await supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(500);
+ if(error){list.innerHTML='<p class="activity-empty">Could not load member contacts: '+escapeText(error.message)+'</p>';return;}
+ const rows=data||[];
+ const render=()=>{
+  const q=String(document.getElementById('adminProfileSearch')?.value||'').trim().toLowerCase();
+  const filtered=rows.filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(q)));
+  if(!filtered.length){list.innerHTML='<p class="activity-empty">No matching members found.</p>';return;}
+  list.innerHTML=filtered.map(x=>'<article class="team-member-row"><div style="min-width:0"><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small style="display:block;overflow-wrap:anywhere">'+escapeText(x.contact_email||'Email not set')+'<br>'+escapeText(x.phone||'Phone not set')+'<br>Country: '+escapeText(x.country||'Country not set')+'<br>Joined: '+escapeText(x.created_at?new Date(x.created_at).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable')+'<br>Member for: <span data-member-joined="'+escapeText(x.created_at||'')+'">'+escapeText(formatMemberTenure(x.created_at))+'</span></small></div></article>').join('');
+  refreshMemberTenureCounters();
+ };
+ render();
+ const search=document.getElementById('adminProfileSearch');
+ if(search&&!search.dataset.bound){search.addEventListener('input',render);search.dataset.bound='1';}
+}
+document.getElementById('adminProfileRefresh')?.addEventListener('click',loadAdminProfileDirectory);
+async function loadMemberWallet(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member)return;
+ const payoutEl=document.getElementById('withdrawPayoutNumber');
+ if(payoutEl){
+  const {data:profile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
+  payoutEl.textContent=profile?.phone||currentMember.user_metadata?.phone||currentMember.phone||'No phone number saved in your profile';
+ }
+ const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type').eq('user_id',currentMember.id);
+ if(error){console.warn('Wallet ledger:',error);return;}
+ const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
+ updateTaskEarningsFromLedger(rows);
+ const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
+ const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal'].includes(x.entry_type));
+ const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
+ const profitRows=ugx.filter(x=>['task_reward','welcome_bonus'].includes(x.entry_type));
+ const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
+ const balance=signed(availableRows),teamEarnings=signed(referralRows),earned=signed(profitRows),welcomeBonus=signed(welcomeRows);
+ currentAvailableBalance=Math.max(0,balance);
+ const money=n=>'UGX '+Math.max(0,n).toLocaleString(undefined,{maximumFractionDigits:2});
+ const strong=document.querySelectorAll('.balance-grid .balance-card strong');
+ if(strong[0])strong[0].textContent=money(balance);
+ if(strong[3])strong[3].textContent=money(teamEarnings);
+ if(strong[4])strong[4].textContent=money(welcomeBonus);const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent=money(balance);
+ const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
+ const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
+ if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
+ const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
+ renderWithdrawalEligibility();
+}
+function chatTime(v){return new Date(v).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+async function renderGlobalChat(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member){chatMessagesEl.innerHTML='<div class="activity-empty">Reconnect to restore your secure session and load the global lounge.</div>';return;}
+ const {data:messages,error}=await supabaseClient.from('global_chat_messages').select('id,user_id,message,created_at').order('created_at',{ascending:true}).limit(80);
+ if(error){chatMessagesEl.innerHTML='<div class="activity-empty">Chat is unavailable. Your account may need activation.</div>';chatStatusEl.textContent=error.message;return;}
+ const rows=messages||[],ids=[...new Set(rows.map(m=>m.user_id))];
+ let members=[];
+ if(ids.length){const r=await supabaseClient.from('global_chat_members').select('user_id,display_name,country').in('user_id',ids);if(!r.error)members=r.data||[];}
+ const byId=Object.fromEntries(members.map(m=>[m.user_id,m]));
+ if(!rows.length){chatMessagesEl.innerHTML='<div class="activity-empty">Welcome to the global lounge. Say hello! International members will appear here when they join GenZBag.</div>';return;}
+ chatMessagesEl.innerHTML=rows.map(m=>{
+  const p=byId[m.user_id]||{},mine=m.user_id===currentMember.id;
+  return '<article class="chat-message '+(mine?'mine':'')+'"><div class="chat-message-head"><strong>'+escapeText(p.display_name||'GenZBag member')+'</strong><span class="chat-country">'+escapeText(p.country||'Unknown')+'</span></div><div class="chat-message-text">'+escapeText(m.message)+'</div><div class="chat-message-foot"><span>'+escapeText(chatTime(m.created_at))+'</span>'+(mine?'':'<button class="chat-report" type="button" data-report-message="'+escapeText(m.id)+'">Report</button>')+'</div></article>';
+ }).join('');
+ chatMessagesEl.scrollTop=chatMessagesEl.scrollHeight;
+ chatStatusEl.textContent=rows.length+' recent messages · Be respectful and keep personal information private.';
+}
+async function loadGlobalChat(){
+ const member=await ensureMemberSession();
+ if(!supabaseClient||!member){await renderGlobalChat();return;}
+ const {data:profile}=await supabaseClient.from('profiles').select('username,country').eq('id',currentMember.id).maybeSingle();
+ const display=(profile?.username||currentMember.email?.split('@')[0]||'Member').slice(0,40);
+ const country=(profile?.country||'Unknown').slice(0,40);
+ const {error:memberError}=await supabaseClient.from('global_chat_members').upsert({user_id:currentMember.id,display_name:display,country},{onConflict:'user_id'});
+ if(memberError){chatStatusEl.textContent='Chat profile unavailable: '+memberError.message;return;}
+ await renderGlobalChat();
+ if(globalChatChannel)supabaseClient.removeChannel(globalChatChannel);
+ globalChatChannel=supabaseClient.channel('genzbag-global-chat')
+  .on('postgres_changes',{event:'INSERT',schema:'public',table:'global_chat_messages'},()=>renderGlobalChat())
+  .subscribe(status=>{if(status==='SUBSCRIBED')chatStatusEl.textContent='Connected to the global lounge · '+country;});
+}
+document.getElementById('globalChatSend').addEventListener('click',async()=>{
+ const member=await ensureMemberSession();
+ if(!member){chatStatusEl.textContent='Reconnect or sign in to send a message.';return;}
+ const message=chatInputEl.value.trim();if(!message)return;
+ const b=document.getElementById('globalChatSend');b.disabled=true;b.textContent='Sending…';
+ const {error}=await supabaseClient.from('global_chat_messages').insert({user_id:member.id,message});
+ b.disabled=false;b.textContent='Send';
+ if(error){chatStatusEl.textContent=error.message;return;}
+ chatInputEl.value='';await renderGlobalChat();
+});
+chatInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('globalChatSend').click();}});
+chatMessagesEl.addEventListener('click',async e=>{
+ const b=e.target.closest('[data-report-message]');if(!b)return;
+ const reason=prompt('Why are you reporting this message?');if(!reason||reason.trim().length<5)return;
+ const {error}=await supabaseClient.from('global_chat_reports').insert({message_id:b.dataset.reportMessage,reporter_id:currentMember.id,reason:reason.trim().slice(0,500)});
+ alert(error?(error.code==='23505'?'You have already reported this message.':error.message):'Report sent to the GenZBag moderation team.');
+});
+async function loadAdminActivityTools(){
+ if(!currentMember||currentMember.app_metadata?.role!=='admin')return;
+ adminPanelEl.classList.add('visible');
+ const {data,error}=await supabaseClient.from('task_submissions').select('id,user_id,task_id,proof_text,proof_url,submitted_at,status,tasks(title,reward_amount,currency)').eq('status','pending').order('submitted_at',{ascending:true}).limit(60);
+ const list=document.getElementById('adminSubmissionList');
+ if(error){list.textContent='Could not load submissions: '+error.message;return;}
+ if(!data?.length){list.innerHTML='<div class="activity-empty">No pending submissions.</div>';return;}
+ list.innerHTML=data.map(s=>'<article class="admin-submission" data-admin-submission="'+escapeText(s.id)+'"><strong style="font-size:11px">'+escapeText(s.tasks?.title||'Activity submission')+'</strong><p>Member: '+escapeText(s.user_id)+'<br>Submitted: '+escapeText(new Date(s.submitted_at).toLocaleString())+'<br>Proof: '+escapeText(s.proof_text||'No text provided')+(s.proof_url?'<br>Link: <a href="'+escapeText(s.proof_url)+'" target="_blank" rel="noopener noreferrer">Open proof</a>':'')+'<br>Reward on approval: '+escapeText(Number(s.tasks?.reward_amount||0)+' '+(s.tasks?.currency||'UGX'))+'</p><div class="admin-submission-actions"><button class="activity-btn" type="button" data-review="approved">Approve</button><button class="activity-btn secondary" type="button" data-review="rejected">Reject</button></div></article>').join('');
+}
+document.getElementById('adminTaskForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(currentMember?.app_metadata?.role!=='admin')return;
+ const b=document.getElementById('adminTaskSave');b.disabled=true;b.textContent='Saving…';
+ const limit=document.getElementById('adminTaskLimit').value;
+ const payload={title:document.getElementById('adminTaskTitle').value.trim(),category:document.getElementById('adminTaskCategory').value,description:document.getElementById('adminTaskDescription').value.trim(),instructions:document.getElementById('adminTaskInstructions').value.trim(),reward_amount:Number(document.getElementById('adminTaskReward').value||0),currency:document.getElementById('adminTaskCurrency').value,status:document.getElementById('adminTaskStatus').value,content_url:document.getElementById('adminTaskUrl').value.trim()||null,max_submissions:limit?Number(limit):null,created_by:currentMember.id};
+ const {error}=await supabaseClient.from('tasks').insert(payload);
+ b.disabled=false;b.textContent='Save activity';
+ if(error){alert('Could not save activity: '+error.message);return;}
+ e.target.reset();document.getElementById('adminTaskReward').value='0';await loadActivities();alert('Activity saved successfully.');
+});
+document.getElementById('adminSubmissionList').addEventListener('click',async e=>{
+ const b=e.target.closest('[data-review]');if(!b)return;
+ const row=b.closest('[data-admin-submission]'),id=row?.dataset.adminSubmission;if(!id)return;
+ const note=prompt('Optional review note:')||'';
+ b.disabled=true;
+ const {data,error}=await supabaseClient.rpc('admin_review_task_submission',{p_submission_id:id,p_decision:b.dataset.review,p_review_note:note});
+ if(error){alert('Review failed: '+error.message);b.disabled=false;return;}
+ await loadAdminActivityTools();await loadActivities();await loadMemberWallet();
+});
+async function initialiseMemberFeatures(session){
+ currentMember=session?.user||await ensureMemberSession()||null;
+ if(!currentMember){activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');return;}
+ await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools()]);
+}
+
+/* AUTH-GATED ENTRY: restore a persisted session before exposing the sign-in screen. */
+authGate.style.visibility='hidden';
+setAuthMode('signup');
+renderNetwork(0,0);
+if(supabaseClient){
+  supabaseClient.auth.getSession().then(async({data,error})=>{
+    if(error)console.warn('Supabase session check:',error);
+    if(data?.session){currentMember=data.session.user;markSessionAlive(data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(data.session);}
+    else if(hasRecentAuthGrace()){showDashboard();showSessionNotice('Reconnecting to your secure session. Your dashboard will remain open briefly.');beginAuthGrace();}
+    else{requireAuth();}
+  }).catch(error=>{console.warn('Supabase startup session recovery:',error);requireAuth();});
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if((event==='SIGNED_IN'||event==='INITIAL_SESSION')&&session){currentMember=session.user;markSessionAlive(session);setTimeout(()=>{showDashboard();loadMemberNetwork();initialiseMemberFeatures(session);},0);}
+    if(event==='TOKEN_REFRESHED'&&session){currentMember=session.user;markSessionAlive(session);}
+    if(event==='PASSWORD_RECOVERY'){requireAuth();document.getElementById('authForm').classList.add('auth-hidden-field');document.getElementById('authSwitchLine').classList.add('auth-hidden-field');document.getElementById('forgotPassword').classList.add('auth-hidden-field');document.getElementById('forgotPasswordPanel').classList.add('auth-hidden-field');document.getElementById('newPasswordPanel').classList.remove('auth-hidden-field');showAuthMessage('Secure link verified. Set your new password below.','success');}
+    if(event==='SIGNED_OUT'){
+      if(intentionalSignOut){
+        currentMember=null;renderNetwork(0,0);initialiseMemberFeatures(null);intentionalSignOut=false;lastAuthenticatedAt=0;
+        try{sessionStorage.removeItem(LAST_AUTH_KEY);}catch(e){}
+        removeSessionNotice();setAuthMode('signup');requireAuth();
+      }else if(!authRecoveryInProgress){
+        authRecoveryInProgress=true;
+        setTimeout(async()=>{
+          try{
+            const refreshed=await supabaseClient.auth.refreshSession();
+            if(!refreshed.error&&refreshed.data?.session){currentMember=refreshed.data.session.user;markSessionAlive(refreshed.data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(refreshed.data.session);}
+            else if(!beginAuthGrace()){currentMember=null;renderNetwork(0,0);initialiseMemberFeatures(null);setAuthMode('login');requireAuth();}
+          }catch(e){if(!beginAuthGrace()){currentMember=null;setAuthMode('login');requireAuth();}}
+          finally{authRecoveryInProgress=false;}
+        },0);
+      }
+    }
+  });
+  window.addEventListener('online',async()=>{
+    try{
+      const {data,error}=await supabaseClient.auth.refreshSession();
+      if(!error&&data?.session){currentMember=data.session.user;markSessionAlive(data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(data.session);}
+      else if(hasRecentAuthGrace())beginAuthGrace();
+    }catch(e){console.warn('Online session recovery:',e);}
+  });
+  window.addEventListener('offline',()=>{if(hasRecentAuthGrace())beginAuthGrace();else showSessionNotice('You are offline. Reconnect to load live Supabase data.');});
+
+}else{requireAuth();}
+})();
+</script>
+
+</body>
+</html>+rate.toFixed(8);}refreshDashboardCurrency();}catch(e){console.warn('Exchange rate:',e);if(v)v.textContent='Rate unavailable';if(u)u.textContent='Retrying automatically';}}
+async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('The sign-in service did not load. Refresh and try again.','error');return;}const signingUp=authMode==='signup',email=(signingUp?document.getElementById('authEmail'):document.getElementById('authLoginEmail')).value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.innerHTML=signingUp?'Creating your account…':'Signing you in…';showAuthMessage('Please wait…');try{if(signingUp){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value,phoneDigits=document.getElementById('authPhone').value.replace(/\D/g,''),phoneCode=document.getElementById('authPhoneCode').value;if(!/^[a-z0-9]{4,20}$/.test(username))throw Error('Username must contain only letters and numbers (4–20 characters).');if(!email||!/^\S+@\S+\.\S+$/.test(email))throw Error('Enter a valid email address.');if(phoneDigits.length<7||phoneDigits.length>15)throw Error('Enter a valid mobile number.');if(password.length<8)throw Error('For better account security, your password must be at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');if(!document.getElementById('authTerms').checked)throw Error('Please accept the Terms & Conditions to continue.');const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:phoneCode+phoneDigits,country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(!data?.user?.id)throw Error('Supabase did not confirm account creation. Please try again.');const successModal=document.getElementById('signupSuccessModal');if(successModal){successModal.classList.add('open');successModal.setAttribute('aria-hidden','false');}launchSignupCelebration();if(data.session){intentionalSignOut=true;lastAuthenticatedAt=0;try{sessionStorage.removeItem(LAST_AUTH_KEY);}catch(e){}const {error:signOutError}=await supabaseClient.auth.signOut();if(signOutError)console.warn('New account created; automatic sign-out notice:',signOutError);}setTimeout(()=>{successModal?.classList.remove('open');successModal?.setAttribute('aria-hidden','true');authForm.reset();setAuthMode('login');document.getElementById('authLoginEmail').value=email;document.getElementById('authPassword').value='';requireAuth();document.getElementById('authLoginEmail').focus();},3600);}else{const identifier=document.getElementById('authLoginEmail').value.trim();let data,error;if(identifier.includes('@')){({data,error}=await supabaseClient.auth.signInWithPassword({email:identifier.toLowerCase(),password}));}else{const result=await supabaseClient.functions.invoke('username-signin',{body:{username:identifier.toLowerCase(),password}});error=result.error;data=result.data;if(!error&&data?.session){const restored=await supabaseClient.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});error=restored.error;data=restored.data;}}if(error)throw error;if(!data?.session)throw Error('Invalid username/email or password. Please try again.');markSessionAlive(data.session);showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.innerHTML=authMode==='signup'?'Create my account <span>→</span>':'Sign in <span>→</span>';}}
+document.getElementById('forgotPassword').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.remove('auth-hidden-field');document.getElementById('newPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.add('auth-hidden-field');document.getElementById('authSwitchLine').classList.add('auth-hidden-field');document.getElementById('forgotPassword').classList.add('auth-hidden-field');document.getElementById('resetEmail').value=document.getElementById('authLoginEmail').value.trim();showAuthMessage('');});
+document.getElementById('backToSignIn').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.remove('auth-hidden-field');document.getElementById('authSwitchLine').classList.remove('auth-hidden-field');document.getElementById('forgotPassword').classList.remove('auth-hidden-field');showAuthMessage('');});
+document.getElementById('sendResetLink').addEventListener('click',async()=>{const email=document.getElementById('resetEmail').value.trim().toLowerCase(),button=document.getElementById('sendResetLink');if(!/^\S+@\S+\.\S+$/.test(email)){showAuthMessage('Enter a valid email address.','error');return;}button.disabled=true;button.textContent='Sending…';try{const redirectTo=location.origin+location.pathname;const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});if(error)throw error;showAuthMessage('If an account exists for that email, a password reset link has been sent. Check your inbox and spam folder.','success');}catch(err){showAuthMessage(err.message||'Could not send the reset link. Please try again.','error');}finally{button.disabled=false;button.textContent='Send reset link';}});
+document.getElementById('saveNewPassword').addEventListener('click',async()=>{const password=document.getElementById('newPassword').value,confirm=document.getElementById('confirmNewPassword').value,button=document.getElementById('saveNewPassword');if(password.length<8){showAuthMessage('Your new password must be at least 8 characters.','error');return;}if(password!==confirm){showAuthMessage('Your passwords do not match.','error');return;}button.disabled=true;button.textContent='Updating…';try{const {error}=await supabaseClient.auth.updateUser({password});if(error)throw error;intentionalSignOut=true;lastAuthenticatedAt=0;await supabaseClient.auth.signOut();document.getElementById('newPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.remove('auth-hidden-field');document.getElementById('authSwitchLine').classList.remove('auth-hidden-field');setTimeout(()=>{setAuthMode('login');requireAuth();showAuthMessage('Password updated successfully. Please sign in with your new password.','success');},150);}catch(err){showAuthMessage(err.message||'Could not update your password. Please try again.','error');}finally{button.disabled=false;button.textContent='Update password';}});
+authForm.addEventListener('submit',submitAuth);document.getElementById('switchAuthMode').addEventListener('click',()=>setAuthMode(authMode==='login'?'signup':'login'));
+function updateSignupProgress(){
+ const field=id=>document.getElementById(id);
+ const username=field('authUsername').value.trim();
+ const email=field('authEmail').value.trim();
+ const phone=field('authPhone').value.replace(/\D/g,'');
+ const values={
+  username:/^[a-z0-9]{4,20}$/i.test(username),
+  email:/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+  phone:phone.length>=7&&phone.length<=15,
+  country:['Uganda','Nigeria','Kenya','Tanzania','Rwanda','Ghana','Other'].includes(field('authCountry').value),
+  password:field('authPassword').value.length>=8,
+  confirm:field('authConfirm').value.length>0&&field('authConfirm').value===field('authPassword').value
+ };
+ const count=Object.values(values).filter(Boolean).length;
+ const countEl=field('signupProgressCount'),bar=field('signupProgressBar'),track=bar?.parentElement;
+ if(countEl)countEl.textContent=count+' / 6';
+ if(bar)bar.style.width=(count/6*100)+'%';
+ if(track){track.setAttribute('role','progressbar');track.setAttribute('aria-label','Signup completion');track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','6');track.setAttribute('aria-valuenow',String(count));}
+ Object.entries(values).forEach(([key,ok])=>{
+  const el=document.querySelector('[data-check="'+key+'"]');
+  if(el){el.classList.toggle('complete',ok);el.setAttribute('aria-label',key+(ok?' complete':' incomplete'));}
+ });
+ return count;
+}
+['authUsername','authEmail','authPhone','authCountry','authPassword','authConfirm'].forEach(id=>{
+ const el=document.getElementById(id);
+ ['input','change','keyup','paste'].forEach(eventName=>el.addEventListener(eventName,()=>setTimeout(updateSignupProgress,0)));
+});
+document.getElementById('authForm').addEventListener('input',updateSignupProgress,true);
+document.getElementById('authForm').addEventListener('change',updateSignupProgress,true);
+document.getElementById('authForm').addEventListener('reset',()=>setTimeout(updateSignupProgress,0));
+const PRIORITY_COUNTRIES=['Uganda','Kenya','Tanzania','Rwanda','Burundi','Democratic Republic of the Congo','South Sudan','Somalia','Ethiopia','Djibouti','Eritrea','Sudan','Nigeria','South Africa'];
+const COUNTRY_FALLBACK=[['Uganda','UG','+256'],['Kenya','KE','+254'],['Tanzania','TZ','+255'],['Rwanda','RW','+250'],['Burundi','BI','+257'],['Democratic Republic of the Congo','CD','+243'],['South Sudan','SS','+211'],['Somalia','SO','+252'],['Ethiopia','ET','+251'],['Djibouti','DJ','+253'],['Eritrea','ER','+291'],['Sudan','SD','+249'],['Nigeria','NG','+234'],['South Africa','ZA','+27'],['Ghana','GH','+233']];
+function setSignupCountryCode(){const name=document.getElementById('authCountry').value,entry=window.genzbagCountries?.find(x=>x.name===name)||COUNTRY_FALLBACK.find(x=>x[0]===name);if(entry){const dial=Array.isArray(entry)?entry[2]:entry.dial;const code=document.getElementById('authPhoneCode');if(code&&dial){let opt=[...code.options].find(o=>o.value===dial);if(!opt){opt=document.createElement('option');opt.value=dial;opt.textContent=dial;code.appendChild(opt);}code.value=dial;}}updateSignupProgress();}
+async function loadAllSignupCountries(){const select=document.getElementById('authCountry');if(!select)return;try{const response=await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,idd,flag',{cache:'force-cache'});if(!response.ok)throw Error('Country list unavailable');const rows=await response.json();const list=rows.map(x=>({name:x.name?.common||'',code:x.cca2||'',dial:(x.idd?.root||'')+(x.idd?.suffixes?.length===1?x.idd.suffixes[0]:'')})).filter(x=>x.name&&x.dial.startsWith('+'));window.genzbagCountries=list;const selected=select.value;const priority=new Map(PRIORITY_COUNTRIES.map((n,i)=>[n,i]));list.sort((a,b)=>(priority.has(a.name)?priority.get(a.name):1000)-(priority.has(b.name)?priority.get(b.name):1000)||a.name.localeCompare(b.name));select.innerHTML='';const east=document.createElement('optgroup');east.label='East Africa · shown first';const africa=document.createElement('optgroup');africa.label='Other African countries';const rest=document.createElement('optgroup');rest.label='All other countries';for(const item of list){const option=document.createElement('option');option.value=item.name;option.textContent=(item.code?' '+item.code+' · ':'')+item.name;const region=priority.has(item.name)?east:(['NG','ZA','GH','EG','ZM','ZW','MW','MZ','BW','NA','SN','CM','CI','ET','MA','DZ','TN'].includes(item.code)?africa:rest);region.appendChild(option);}select.append(east,africa,rest);if([...select.options].some(o=>o.value===selected))select.value=selected;else select.value='Uganda';setSignupCountryCode();}catch(error){console.warn('Could not load full country list; keeping regional country choices.',error);}}
+document.getElementById('authCountry').addEventListener('change',setSignupCountryCode);
+document.getElementById('authPhoneCode').addEventListener('change',updateSignupProgress);
+loadAllSignupCountries();
 document.getElementById('authPhoneCode').addEventListener('change',updateSignupProgress);
 document.getElementById('togglePassword').addEventListener('click',()=>{const p=document.getElementById('authPassword'),show=p.type==='password';p.type=show?'text':'password';document.getElementById('togglePassword').textContent=show?'Hide':'Show';});
 const termsPreview=document.getElementById('termsPreview');
