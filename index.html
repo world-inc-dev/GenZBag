@@ -3329,7 +3329,7 @@ body.activation-screen-open{overflow:hidden!important}
     </div>
    </section>
    <div class="genz-fast-help"><a href="https://wa.me/256761537538" target="_blank" rel="noopener">Need help?</a></div>
-   <p class="genz-fast-footer">© 2026 GenZBag. All rights reserved.</p>
+   <p class="genz-fast-footer">© 2026 GenZBag. All rights reserved. <span class="genz-ronnie-tech">RONNIETECH MANAGEMENT</span></p>
   </div>
   <div id="genzActivationMtn" class="genz-activation-page genz-fast-payment-page" hidden>
    <div class="genz-fast-detail-top"><button type="button" class="genz-activation-back genz-fast-back" data-activation-back>← &nbsp; Back</button><div class="genz-fast-profile"><span>G</span><strong>GenZBag</strong></div></div>
@@ -4945,5 +4945,53 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #genzActivationGate #genzActivationAirtel .genz-fast-instruction button{background:#fff!important;color:#1d4ed8!important}
 </style>
 
-</body>
+
+<style id="genzbag-live-activation-polish-v1">
+/* High-contrast logout control */
+#genzActivationGate .genz-fast-logout,
+#genzActivationGate button.genz-fast-logout{
+  background:linear-gradient(135deg,#0b2d69,#1769e0)!important;
+  color:#fff!important;border:1px solid #60a5fa!important;
+  box-shadow:0 5px 15px rgba(23,105,224,.28)!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.2)!important;
+}
+#genzActivationGate .genz-fast-logout,
+#genzActivationGate .genz-fast-logout *{color:#fff!important;opacity:1!important}
+#genzActivationGate #logoutButton{background:#0b2d69!important;color:#fff!important;border-color:#60a5fa!important}
+#genzActivationGate .genz-fast-footer{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:7px}
+#genzActivationGate .genz-ronnie-tech{display:inline-block;color:#1558bd!important;font-weight:950!important;letter-spacing:1px;font-size:10px;padding:4px 8px;border:1px solid #9fc4ff;border-radius:20px;background:#eaf3ff}
+#genzActivationGate{isolation:isolate;overflow:hidden}
+#genzActivationGate:before,#genzActivationGate:after{content:"";position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(2px);opacity:.48}
+#genzActivationGate:before{width:230px;height:230px;top:8%;left:-90px;background:radial-gradient(circle,#60a5fa66,transparent 70%);animation:genzLiveOrbA 12s ease-in-out infinite alternate}
+#genzActivationGate:after{width:280px;height:280px;right:-110px;bottom:4%;background:radial-gradient(circle,#8b5cf666,transparent 70%);animation:genzLiveOrbB 15s ease-in-out infinite alternate}
+#genzActivationGate .genz-fast-hero{background-size:220% 220%!important;animation:genzLiveGradient 10s ease infinite}
+#genzActivationGate .genz-fast-logo{animation:genzLiveLogo 7s linear infinite}
+#genzActivationGate .genz-activation-live-pill{animation:genzLivePill 2s ease-in-out infinite}
+#genzActivationGate .genz-activation-live-pill i{animation:genzLiveDot 1.5s ease-in-out infinite}
+#genzActivationGate .genz-fast-progress>div,
+#genzActivationGate .genz-fast-instruction,
+#genzActivationGate .genz-fast-amount,
+#genzActivationGate .genz-fast-method{animation:genzLiveRise .65s both}
+#genzActivationGate .genz-fast-progress>div:nth-child(2){animation-delay:.08s}
+#genzActivationGate .genz-fast-progress>div:nth-child(3){animation-delay:.16s}
+#genzActivationGate .genz-fast-instruction:nth-child(2){animation-delay:.06s}
+#genzActivationGate .genz-fast-instruction:nth-child(3){animation-delay:.12s}
+#genzActivationGate .genz-fast-instruction:nth-child(4){animation-delay:.18s}
+#genzActivationGate .genz-fast-instruction:nth-child(5){animation-delay:.24s}
+#genzActivationGate .genz-fast-instruction:nth-child(6){animation-delay:.30s}
+#genzActivationGate .genz-fast-instruction:nth-child(7){animation-delay:.36s}
+#genzActivationGate .genz-fast-method{transition:transform .25s ease,box-shadow .25s ease!important}
+#genzActivationGate .genz-fast-method:active{transform:scale(.98)!important}
+@keyframes genzLiveGradient{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes genzLiveLogo{to{transform:rotate(360deg)}}
+@keyframes genzLivePill{50%{box-shadow:0 0 0 5px rgba(34,197,94,.10)}}
+@keyframes genzLiveDot{50%{opacity:.35;transform:scale(.72)}}
+@keyframes genzLiveRise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes genzLiveOrbA{to{transform:translate(65px,45px) scale(1.2)}}
+@keyframes genzLiveOrbB{to{transform:translate(-55px,-40px) scale(1.15)}}
+@media(prefers-reduced-motion:reduce){
+ #genzActivationGate *,#genzActivationGate:before,#genzActivationGate:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+\n</body>
 </html>
