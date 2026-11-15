@@ -3928,6 +3928,7 @@ body.activation-screen-open{overflow:hidden!important}
   <!-- LIVE ACTIVITY PAGE -->
   <section class="card" id="activityPageContent">
     <div class="section-heading"><h2 id="activityPageTitle">Activities</h2><small id="activityCount">Loading activities…</small></div><p id="activityPageDescription" style="padding:0 15px 12px;color:#64748b;font-size:11px">Choose an activity from the sidebar to view its available tasks.</p>
+    <div id="videoPlatformIntro" style="display:none;margin:0 15px 14px;padding:16px;border:1px solid #243b63;border-radius:16px;background:linear-gradient(135deg,#101d35,#172b4d);color:#eaf2ff;box-shadow:0 10px 26px rgba(5,12,28,.18)"></div>
     <div class="activity-toolbar" id="activityFilters" hidden aria-hidden="true">
       <button class="activity-filter active" type="button" data-filter="all">All</button>
       <button class="activity-filter" type="button" data-filter="music">Music</button>
@@ -4700,7 +4701,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   currentActivitySearch=a.dataset.activitySearch||'';
   document.getElementById('activityPageTitle').textContent=a.dataset.activityTitle||a.textContent.trim();
   document.getElementById('activityPageDescription').textContent='Browse '+(a.dataset.activityTitle||'this activity')+' tasks, follow the instructions and submit proof for review.';
-  renderActivities();
+  updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
  }
  closeMenu();target.scrollIntoView({behavior:'smooth',block:'start'});
 
@@ -4973,19 +4974,30 @@ function categoryName(v){return activityCategoryNames[v]||String(v||'General').r
 function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
 function renderActivities(){
  let rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
- if(currentActivitySearch){const terms=currentActivitySearch.toLowerCase().split(/\\s+/).filter(Boolean);rows=rows.filter(x=>{const hay=(x.title+' '+(x.description||'')+' '+(x.instructions||'')).toLowerCase();return terms.some(term=>hay.includes(term));});}
+ if(currentActivitySearch){const terms=currentActivitySearch.toLowerCase().split(/\\s+/).filter(Boolean);rows=rows.filter(x=>{const hay=(x.title+' '+(x.description||'')+' '+(x.instructions||'')+' '+(x.content_url||'')).toLowerCase();return terms.some(term=>hay.includes(term));});}
  activityCountEl.textContent=rows.length+' available';
  if(!rows.length){setActivityMessage(activityRows.length?'No activities in this category yet.':'No activities have been published yet. Check again later.');return;}
  activityListEl.innerHTML=rows.map(t=>{
   const sub=activitySubmissionMap[t.id],status=sub?.status;
   const reward=Number(t.reward_amount||0).toLocaleString()+' '+(t.currency||'UGX');
   const isVideoTask=t.category==='video';
+  const videoUrl=String(t.content_url||'').toLowerCase();
+  const platform=videoUrl.includes('youtu')||/youtube/i.test(t.title+' '+(t.description||''))?'YouTube':videoUrl.includes('tiktok')||/tiktok/i.test(t.title+' '+(t.description||''))?'TikTok':(isVideoTask?'Video activity':'');
+  const platformIcon=platform==='YouTube'?'▶':platform==='TikTok'?'♪':'▶';
   const dailyVideoLimitReached=isVideoTask&&activityDailyVideoCount>=5;
   const disabled=status==='pending'||status==='approved'||dailyVideoLimitReached;
-  return '<article class="activity-card" data-activity-id="'+escapeText(t.id)+'"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(categoryName(t.category))+'</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">'+escapeText(reward)+'</span></div><p>'+escapeText(t.description||'Open this activity to read the instructions.')+'</p>'+(t.instructions?'<p><strong>Instructions:</strong><br>'+escapeText(t.instructions)+'</p>':'')+(isVideoTask?'<p class="activity-note">Daily video allowance: '+activityDailyVideoCount+' / 5 submitted today.</p>':'')+'<div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">Open activity ↗</a>':'')+'<button class="activity-btn" type="button" data-open-proof="'+escapeText(t.id)+'" '+(disabled?'disabled':'')+'>'+(status==='pending'?'Under review':status==='approved'?'Completed':dailyVideoLimitReached?'Daily limit reached':'Submit proof')+'</button></div>'+(status?'<p><span class="activity-state '+escapeText(status)+'">'+escapeText(status.toUpperCase())+'</span>'+(sub.review_note?' · '+escapeText(sub.review_note):'')+'</p>':'')+'<form class="activity-proof" data-proof-form="'+escapeText(t.id)+'"><textarea name="proof_text" maxlength="2000" required placeholder="Describe what you completed and include the requested proof details…"></textarea><input name="proof_url" type="url" maxlength="1000" placeholder="Optional proof link (https://…)"><button class="activity-btn" type="submit">Send for review</button><span class="activity-note">Your submission will remain pending until reviewed. Do not submit passwords or private account details.</span></form></article>';
+  return '<article class="activity-card" data-activity-id="'+escapeText(t.id)+'"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(platformIcon+' '+(platform||categoryName(t.category)))+'</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">'+escapeText(reward)+'</span></div><p>'+escapeText(t.description||'Open this activity to read the instructions.')+'</p>'+(t.instructions?'<p><strong>Instructions:</strong><br>'+escapeText(t.instructions)+'</p>':'')+(isVideoTask?'<p class="activity-note">Daily video allowance: '+activityDailyVideoCount+' / 5 submitted today.</p>':'')+'<div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">Open activity ↗</a>':'')+'<button class="activity-btn" type="button" data-open-proof="'+escapeText(t.id)+'" '+(disabled?'disabled':'')+'>'+(status==='pending'?'Under review':status==='approved'?'Completed':dailyVideoLimitReached?'Daily limit reached':'Submit proof')+'</button></div>'+(status?'<p><span class="activity-state '+escapeText(status)+'">'+escapeText(status.toUpperCase())+'</span>'+(sub.review_note?' · '+escapeText(sub.review_note):'')+'</p>':'')+'<form class="activity-proof" data-proof-form="'+escapeText(t.id)+'"><textarea name="proof_text" maxlength="2000" required placeholder="Describe what you completed and include the requested proof details…"></textarea><input name="proof_url" type="url" maxlength="1000" placeholder="Optional proof link (https://…)"><button class="activity-btn" type="submit">Send for review</button><span class="activity-note">Your submission will remain pending until reviewed. Do not submit passwords or private account details.</span></form></article>';
  }).join('');
 }
 let activityDailyVideoCount=0;
+function updateVideoPlatformIntro(){
+ const box=document.getElementById('videoPlatformIntro');if(!box)return;
+ const platform=currentActivitySearch.toLowerCase().includes('youtube')?'youtube':currentActivitySearch.toLowerCase().includes('tiktok')?'tiktok':'';
+ if(!platform){box.style.display='none';box.innerHTML='';return;}
+ box.style.display='block';
+ const isYT=platform==='youtube',brand=isYT?'YouTube':'TikTok',icon=isYT?'▶':'♪',color=isYT?'#ff4b4b':'#69e6d5';
+ box.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><span style="width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:'+color+'22;color:'+color+';font-size:22px;font-weight:900">'+icon+'</span><div><div style="font-size:10px;letter-spacing:1.4px;color:#9fb5d6;font-weight:800">GENZBAG VIDEO HUB</div><strong style="font-size:17px">'+brand+' activities</strong></div></div><p style="font-size:11px;line-height:1.6;color:#c9d7ec;margin:0 0 10px">Open a published '+brand+' link, complete the activity as instructed, then submit honest proof for review. Up to 5 video activities may be submitted per day across YouTube and TikTok.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ External platform links</span><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ Admin-reviewed proof</span><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ 5 submissions / day</span></div><p style="font-size:10px;line-height:1.5;color:#9fb5d6;margin:10px 0 0">GenZBag cannot confirm watch time or views inside another platform. Never use bots, looping, or fake engagement.</p>';
+}
 function updateDailyVideoLimit(){
  const box=document.getElementById('dailyVideoLimit');if(!box)return;
  const visible=activityRows.some(t=>t.category==='video')||currentActivityFilter==='video';
@@ -5009,13 +5021,13 @@ async function loadActivities(){
  const dayStart=new Date();dayStart.setHours(0,0,0,0);
  activityDailyVideoCount=(subsRes.data||[]).filter(s=>videoTaskIds.has(String(s.task_id))&&s.submitted_at&&new Date(s.submitted_at)>=dayStart).length;
  (subsRes.data||[]).forEach(s=>{if(!activitySubmissionMap[s.task_id]||new Date(s.submitted_at)>new Date(activitySubmissionMap[s.task_id].submitted_at))activitySubmissionMap[s.task_id]=s;});
- updateDailyVideoLimit();renderActivities();
+ updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
 }
 activityFiltersEl.addEventListener('click',e=>{
  const b=e.target.closest('[data-filter]');if(!b)return;
  currentActivityFilter=b.dataset.filter;
  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x===b));
- renderActivities();
+ updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
 });
 document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListener('click',()=>{
  const f=a.dataset.activityCategory||'all';currentActivityFilter=f;
