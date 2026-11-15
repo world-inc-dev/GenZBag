@@ -6917,5 +6917,57 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #videoPlatformIntro{border-color:#27536c!important;background:radial-gradient(circle at 100% 0%,#1d5260 0,transparent 42%),linear-gradient(145deg,#0b1a30,#153451)!important}
 @media(max-width:420px){#activityList .activity-card{margin:0 8px 12px;padding:12px}#activityList .sponsored-ad-card{padding:0}#activityList .sponsored-ad-image{height:165px}#activityList .sponsored-ad-content{padding:12px}#activityList .activity-btn{width:100%}}
 </style>
+<style id="genzbag-activity-dashboard-theme-v19">
+/* Bring sponsored ads, YouTube and TikTok screens into GenZBag's blue dashboard system */
+#activityPage #activityPageContent{background:transparent;box-shadow:none;overflow:visible;margin-bottom:18px}
+#activityPage #activityPageContent>.section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px;padding:17px 18px;border-radius:18px;background:linear-gradient(115deg,#0A2A6B,#1769E0);color:#fff;box-shadow:0 9px 22px rgba(10,42,107,.14)}
+#activityPage #activityPageContent>.section-heading h2{color:#fff;font-size:18px;font-weight:900;letter-spacing:-.3px}
+#activityPage #activityPageContent>.section-heading small{color:#dce9ff;font-size:10px;font-weight:800}
+#activityPage #activityPageDescription{margin:0 0 12px;padding:13px 15px!important;border:1px solid #dce7f8;border-radius:14px;background:#fff;color:#64748b!important;box-shadow:0 4px 14px rgba(10,42,107,.045)}
+#activityPage #videoPlatformIntro{display:none;margin:0 0 13px!important;padding:17px!important;border:1px solid #d8e5f8!important;border-radius:17px!important;background:linear-gradient(135deg,#fff,#edf4ff)!important;color:#18243b!important;box-shadow:0 6px 18px rgba(10,42,107,.07)!important}
+#activityPage #videoPlatformIntro h3,#activityPage #videoPlatformIntro strong{color:#0A2A6B}
+#activityPage #videoPlatformIntro p{color:#64748b!important}
+#activityPage #activityFilters{display:flex;gap:8px;padding:11px 3px 14px;border:0;scrollbar-width:none}
+#activityPage #activityFilters::-webkit-scrollbar{display:none}
+#activityPage .activity-filter{padding:9px 13px;border:1px solid #dce5f3;border-radius:11px;background:#fff;color:#526079;font-size:10px;font-weight:850;box-shadow:0 2px 7px rgba(10,42,107,.04)}
+#activityPage .activity-filter.active{border-color:#0A2A6B;background:#0A2A6B;color:#fff;box-shadow:0 5px 12px rgba(10,42,107,.16)}
+#activityPage #dailyVideoLimit{margin:0 0 13px!important;border:1px solid #cfe2ff!important;border-radius:14px!important;background:#eaf2ff!important;color:#0A2A6B!important;font-weight:750}
+#activityPage #activityList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:0}
+#activityPage #activityList .activity-card{min-width:0;margin:0;padding:14px;border:1px solid #e1e9f5;border-radius:17px;background:#fff;color:#18243b;box-shadow:0 5px 17px rgba(10,42,107,.065);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+#activityPage #activityList .activity-card:hover{transform:translateY(-2px);box-shadow:0 10px 23px rgba(10,42,107,.1)}
+#activityPage #activityList .activity-card-top h3{color:#18243b!important;font-size:14px;font-weight:850}
+#activityPage #activityList .activity-tag{background:#eaf2ff!important;color:#1769e0!important;border:1px solid #d9e7ff;font-size:9px;letter-spacing:.45px}
+#activityPage #activityList .activity-reward{display:inline-flex;align-items:center;justify-content:center;padding:7px 9px;border:1px solid #c9f0df;border-radius:10px;background:#e8fbf2!important;color:#12804c!important;font-size:11px;font-weight:950}
+#activityPage #activityList .activity-card>p{color:#718096!important;font-size:10px;line-height:1.6}
+#activityPage #activityList .sponsored-ad-card,#activityPage #activityList .video-task-card{padding:0;border:1px solid #dce6f5;background:#fff!important;color:#18243b!important;box-shadow:0 6px 20px rgba(10,42,107,.08)}
+#activityPage #activityList .sponsored-ad-image{display:block;width:100%;height:150px;object-fit:cover;background:#edf3fc}
+#activityPage #activityList .sponsored-ad-content{padding:14px}
+#activityPage #activityList .sponsored-ad-content h3,#activityPage #activityList .video-task-card h3{color:#18243b!important}
+#activityPage #activityList .sponsored-ad-content>p,#activityPage #activityList .video-task-card>p{color:#718096!important}
+#activityPage #activityList .sponsored-ad-content .activity-tag{background:#fff2e5!important;color:#b65a08!important;border-color:#ffe2c2}
+#activityPage #activityList .genz-inline-video{position:relative;width:100%;aspect-ratio:16/9;margin:12px 0;border-radius:13px;overflow:hidden;background:#071a3a;border:1px solid #dce6f5;box-shadow:0 5px 13px rgba(10,42,107,.12)}
+#activityPage #activityList .genz-inline-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#activityPage #activityList .genz-native-video{display:block;width:100%;max-height:320px;aspect-ratio:16/9;object-fit:contain;margin:12px 0;border-radius:13px;background:#071a3a}
+#activityPage #activityList .genz-video-unavailable{margin:12px 0;padding:14px;border:1px dashed #c8d8ee;border-radius:12px;background:#f5f8fd;color:#64748b;font-size:10px;line-height:1.6}
+#activityPage #activityList .activity-note{color:#78849a!important;font-size:9px;line-height:1.55}
+#activityPage #activityList .ad-timer-track{height:7px;margin:13px 0 8px;border-radius:20px;background:#e7eef8;overflow:hidden}
+#activityPage #activityList .ad-timer-track span{display:block;width:0;height:100%;border-radius:20px;background:linear-gradient(90deg,#1769e0,#16a34a);transition:width .35s linear}
+#activityPage #activityList .activity-actions{display:flex;gap:8px;margin-top:12px}
+#activityPage #activityList .activity-btn{flex:1;min-height:42px;padding:10px 12px;border:0;border-radius:11px;background:linear-gradient(105deg,#0A2A6B,#1769E0);color:#fff;font-size:10px;font-weight:900;box-shadow:0 5px 12px rgba(10,42,107,.14)}
+#activityPage #activityList .activity-btn.secondary{background:#eaf2ff;color:#1769e0;box-shadow:none}
+#activityPage #activityList .activity-btn:disabled{opacity:.72;box-shadow:none}
+#activityPage #activityList .ad-view-status{padding:9px 10px;border:1px solid #e4ebf5;border-radius:10px;background:#f7f9fd;color:#64748b!important;font-size:9px}
+#activityPage #activityList .activity-empty{grid-column:1/-1;padding:28px 17px;border:1px dashed #cfdbed;border-radius:15px;background:#fff;color:#718096}
+#activityPage #activityPageContent>.activity-note{display:block;margin-top:13px;padding:12px 13px!important;border:1px solid #e1eaf7;border-radius:12px;background:#f7faff;color:#718096}
+@media(max-width:520px){
+ #activityPage #activityList{grid-template-columns:minmax(0,1fr);gap:11px}
+ #activityPage #activityList .activity-card{border-radius:15px}
+ #activityPage #activityList .sponsored-ad-image{height:175px}
+ #activityPage #activityList .activity-card-top h3{font-size:14px}
+ #activityPage #activityList .activity-btn{min-height:44px;font-size:11px}
+ #activityPage #activityPageContent>.section-heading{padding:15px}
+}
+@media(min-width:760px){#activityPage #activityList{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 </body>
 </html>
