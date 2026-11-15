@@ -5149,7 +5149,8 @@ function renderActivities(){
    ];
    const image=t.image_url||fallbackImages[activityRows.filter(x=>x.category==='sponsored').findIndex(x=>x.id===t.id)%fallbackImages.length];
    const completed=activityAdCompleted.has(String(t.id));
-   return '<article class="activity-card sponsored-ad-card" data-activity-id="'+escapeText(t.id)+'"><img class="sponsored-ad-image" src="'+escapeText(image)+'" alt="'+escapeText(t.title)+' promotional image" loading="lazy" referrerpolicy="no-referrer"><div class="sponsored-ad-content"><div class="activity-card-top"><div><span class="activity-tag">📢 SPONSORED AD</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">UGX 150</span></div><p>'+escapeText(t.description||'View this featured promotion to earn a reward.')+'</p>'+(t.instructions?'<p>'+escapeText(t.instructions)+'</p>':'')+'<div class="ad-timer-track"><span data-ad-progress="'+escapeText(t.id)+'"></span></div><div class="activity-actions"><button class="activity-btn" type="button" data-ad-view="'+escapeText(t.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ UGX 150 earned':'▶ Start 60-second ad')+'</button></div><p class="ad-view-status" data-ad-status="'+escapeText(t.id)+'" aria-live="polite">'+(completed?'Reward credited':'Ready to start')+'</p></div></article>';
+   const viewed=activityAdViewed.has(String(t.id));
+   return '<article class="activity-card sponsored-ad-card" data-activity-id="'+escapeText(t.id)+'"><img class="sponsored-ad-image" src="'+escapeText(image)+'" alt="'+escapeText(t.title)+' promotional image" loading="lazy" referrerpolicy="no-referrer"><div class="sponsored-ad-content"><div class="activity-card-top"><div><span class="activity-tag">📢 SPONSORED AD</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">UGX 150</span></div><p>'+escapeText(t.description||'View this featured promotion to earn a reward.')+'</p>'+(t.instructions?'<p>'+escapeText(t.instructions)+'</p>':'')+'<div class="ad-timer-track"><span data-ad-progress="'+escapeText(t.id)+'"></span></div><div class="activity-actions"><button class="activity-btn" type="button" data-ad-view="'+escapeText(t.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ Already credited':viewed?'↻ Resume viewing':'▶ Start 60-second ad')+'</button></div><p class="ad-view-status" data-ad-status="'+escapeText(t.id)+'" aria-live="polite">'+(completed?'UGX 150 already credited':viewed?'Viewing session saved · reward pending':'Ready to start')+'</p></div></article>';
   }
   const videoUrl=String(t.content_url||'').toLowerCase();
   const platform=videoUrl.includes('youtu')||/youtube/i.test(t.title+' '+(t.description||''))?'YouTube':videoUrl.includes('tiktok')||/tiktok/i.test(t.title+' '+(t.description||''))?'TikTok':(isVideoTask?'Video activity':'');
@@ -5182,6 +5183,7 @@ function renderActivities(){
 }
 let activityDailyVideoCount=0;
 let activityAdCompleted=new Set();
+let activityAdViewed=new Set();
 const activeAdViewTimers=new Map();
 function updateVideoPlatformIntro(){
  const box=document.getElementById('videoPlatformIntro');if(!box)return;
@@ -5213,6 +5215,7 @@ async function loadActivities(){
  activityRows=(tasksRes.data||[]).filter(t=>(!t.starts_at||new Date(t.starts_at)<=new Date())&&(!t.ends_at||new Date(t.ends_at)>new Date()));
  activitySubmissionMap={};
  activityAdCompleted=new Set(adStatusRes.error?[]:(adStatusRes.data?.completed_task_ids||[]).map(String));
+ activityAdViewed=new Set(adStatusRes.error?[]:(adStatusRes.data?.viewed_task_ids||[]).map(String));
  activityDailyVideoCount=Number(adStatusRes.data?.video_claims_today||0);
  (subsRes.data||[]).forEach(s=>{if(!activitySubmissionMap[s.task_id]||new Date(s.submitted_at)>new Date(activitySubmissionMap[s.task_id].submitted_at))activitySubmissionMap[s.task_id]=s;});
  updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
@@ -5239,8 +5242,12 @@ activityListEl.addEventListener('click',async e=>{
   adViewButton.disabled=true;adViewButton.textContent='Starting 60-second timer…';
   const {data,error}=await supabaseClient.rpc('start_sponsored_ad_view',{p_task_id:taskId});
   if(error){adViewButton.disabled=false;adViewButton.textContent='Try again · Start 60 seconds';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent=error.message||'Could not start this activity.';return;}
-  if(data?.already_claimed){activityAdCompleted.add(String(taskId));adViewButton.textContent='✓ UGX 150 earned';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='You have already earned for this activity.';return;}
-  let remaining=60;adViewButton.textContent='Viewing… '+remaining+'s';
+  if(data?.already_claimed){activityAdCompleted.add(String(taskId));activityAdViewed.add(String(taskId));adViewButton.textContent='✓ Already credited';adViewButton.disabled=true;const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='UGX 150 was already credited for this ad.';return;}
+  activityAdViewed.add(String(taskId));
+  const startedAtMs=Date.parse(data?.started_at||new Date().toISOString());
+  let remaining=Math.max(0,60-Math.floor((Date.now()-startedAtMs)/1000));
+  if(remaining===0){adViewButton.disabled=false;adViewButton.dataset.adClaim=taskId;adViewButton.removeAttribute('data-ad-view');adViewButton.textContent='Claim UGX 150';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='Your saved 60-second view is complete. Tap Claim to receive UGX 150.';return;}
+  adViewButton.textContent='Viewing… '+remaining+'s';
   const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');
   if(status)status.textContent='Timer running. Keep this activity visible; the claim button unlocks at zero.';
   const progress=activityListEl.querySelector('[data-ad-progress="'+taskId+'"]');
@@ -5267,7 +5274,7 @@ activityListEl.addEventListener('click',async e=>{
   const taskId=claimAdButton.dataset.adClaim;claimAdButton.disabled=true;claimAdButton.textContent='Crediting…';
   const result=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:taskId});
   if(result.error){claimAdButton.disabled=false;claimAdButton.textContent='Claim UGX 150';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent=result.error.message||'Reward could not be credited. Please retry.';return;}
-  activityAdCompleted.add(String(taskId));claimAdButton.textContent='✓ UGX 150 earned';claimAdButton.disabled=true;
+  activityAdCompleted.add(String(taskId));activityAdViewed.add(String(taskId));claimAdButton.textContent='✓ Already credited';claimAdButton.disabled=true;
   const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='UGX 150 has been added to your Net Profits.';
   await loadMemberWallet();return;
  }
