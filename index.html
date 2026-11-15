@@ -2064,6 +2064,33 @@ body.activation-body-locked{
 /* TRIVIA CHALLENGE */
 .trivia-shell{margin:0 14px 15px;padding:17px;border-radius:18px;background:radial-gradient(circle at 100% 0%,#1a5a83 0,transparent 42%),linear-gradient(145deg,#07172f,#0b2b4b 65%,#0b3d4b);color:#eff8ff;box-shadow:0 14px 32px #07172f24;border:1px solid #1d496b}
 .trivia-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.trivia-kicker{font-size:9px;letter-spacing:1.7px;color:#75e5df;font-weight:950}.trivia-badge{padding:6px 9px;border:1px solid #5eead455;border-radius:20px;background:#5eead414;color:#8af0e7;font-size:9px;font-weight:900}.trivia-shell h2{margin:10px 0 5px;color:#fff;font-size:21px}.trivia-shell p{color:#bfd2e4;font-size:11px;line-height:1.6}.trivia-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.trivia-stat{padding:10px 8px;border:1px solid #ffffff19;border-radius:12px;background:#ffffff0b;text-align:center}.trivia-stat strong{display:block;color:#68e4d9;font-size:16px}.trivia-stat span{display:block;margin-top:3px;color:#a9bfd4;font-size:8px;font-weight:800;text-transform:uppercase}.trivia-progress{height:6px;margin:13px 0 17px;border-radius:10px;background:#ffffff20;overflow:hidden}.trivia-progress span{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#27c7b9,#68e4d9);transition:width .25s}.trivia-question-meta{display:flex;justify-content:space-between;gap:8px;color:#a9bfd4;font-size:9px;font-weight:850}.trivia-question{margin:12px 0 15px!important;color:#fff!important;font-size:16px!important;font-weight:850;line-height:1.45!important}.trivia-options{display:grid;gap:8px}.trivia-option{width:100%;padding:12px;text-align:left;border:1px solid #ffffff24;border-radius:11px;background:#ffffff0d;color:#eef8ff;font-size:11px;font-weight:750}.trivia-option:disabled{opacity:1}.trivia-option.correct{border-color:#34d399;background:#064e3b;color:#d1fae5}.trivia-option.wrong{border-color:#fb7185;background:#4c1525;color:#ffe4e6}.trivia-feedback{min-height:20px;margin:10px 0;color:#a7f3d0!important;font-size:10px!important;font-weight:800}.trivia-primary{width:100%;margin-top:9px;padding:12px;border:0;border-radius:11px;background:linear-gradient(100deg,#2dd4bf,#0d9488);color:#062c30;font-size:11px;font-weight:950}.trivia-primary:disabled{opacity:.5}.trivia-secondary{width:100%;margin-top:8px;padding:10px;border:1px solid #ffffff30;border-radius:11px;background:transparent;color:#d6e7f7;font-size:10px;font-weight:850}.trivia-result-score{margin:15px 0;padding:18px;border:1px solid #5eead455;border-radius:15px;background:#5eead410;text-align:center}.trivia-result-score strong{display:block;color:#68e4d9;font-size:36px;font-weight:950}.trivia-result-score span{color:#c3d8e8;font-size:10px}
+
+.tap-spin-panel{max-width:620px;margin:0 auto;padding:20px;border:1px solid #dce6f4;border-radius:22px;background:linear-gradient(145deg,#101d3b,#142d55);color:#f7fbff;box-shadow:0 16px 38px #06142c25}
+.tap-spin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.tap-spin-kicker{font-size:10px;letter-spacing:1.5px;font-weight:900;color:#70e1d1}
+.tap-spin-panel h2{margin:7px 0;font-size:22px;color:#fff}
+.tap-spin-panel p{font-size:13px;line-height:1.55;color:#c3d1e7}
+.tap-spin-counter{border:1px solid #5c789d;border-radius:14px;padding:9px 12px;background:#ffffff0d;font-size:12px;font-weight:850;white-space:nowrap}
+.tap-spin-counter strong{color:#7af0d6}
+.tap-spin-main{margin:22px 0 14px;padding:22px;border-radius:17px;text-align:center;background:#ffffff0c;border:1px solid #ffffff19}
+.tap-spin-value{display:block;font-size:clamp(34px,8vw,48px);font-weight:1000;letter-spacing:-1px;color:#80f0d8}
+.tap-spin-action{width:100%;min-height:50px;border:0;border-radius:14px;background:linear-gradient(100deg,#24d6b0,#6be7ce);color:#092c35;font-weight:950;font-size:15px;cursor:pointer;padding:13px 18px}
+.tap-spin-action:disabled{opacity:.48;cursor:not-allowed}
+.tap-spin-note{font-size:11px!important;color:#9fb4d0!important;margin:12px 0 0}
+.spin-stage{display:grid;justify-items:center;gap:14px;margin:22px auto 16px}
+.spin-pointer{position:relative;z-index:2;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:24px solid #fff;filter:drop-shadow(0 3px 4px #0008);margin-bottom:-22px}
+.spin-wheel{position:relative;width:min(78vw,300px);aspect-ratio:1;border-radius:50%;border:8px solid #d5e4f7;box-shadow:0 0 0 5px #233d62,0 14px 30px #0008;overflow:hidden;background:conic-gradient(from -30deg,#1e9c89 0deg 60deg,#1b467b 60deg 120deg,#e2a43d 120deg 180deg,#713f9c 180deg 240deg,#227e9d 240deg 300deg,#a24c60 300deg 360deg);transition:transform 4.3s cubic-bezier(.12,.72,.12,1)}
+.spin-wheel:after{content:"";position:absolute;inset:38%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#a9bfd7 75%,#526d8d);border:5px solid #fff;box-shadow:0 2px 12px #0006}
+.spin-wheel-label{position:absolute;left:50%;top:50%;width:82px;margin-left:-41px;margin-top:-11px;text-align:center;font-size:12px;font-weight:1000;color:#fff;text-shadow:0 2px 4px #000a;z-index:1}
+.spin-wheel-label.l0{transform:translateY(-105px)}
+.spin-wheel-label.l1{transform:translate(54px,-53px) rotate(60deg)}
+.spin-wheel-label.l2{transform:translate(54px,53px) rotate(120deg)}
+.spin-wheel-label.l3{transform:translateY(105px) rotate(180deg)}
+.spin-wheel-label.l4{transform:translate(-54px,53px) rotate(240deg)}
+.spin-wheel-label.l5{transform:translate(-54px,-53px) rotate(300deg)}
+.spin-result{min-height:28px;text-align:center;font-size:14px;font-weight:900;color:#83f1d8}
+@media(prefers-reduced-motion:reduce){.spin-wheel{transition-duration:.1s}}
+
 </style>
 
 <style id="genzbag-iphone-typography">
@@ -5070,33 +5097,7 @@ async function finishColourChallenge(){
 }
 
 
-<style id="genzbag-tap-spin-styles">
-.tap-spin-panel{max-width:620px;margin:0 auto;padding:20px;border:1px solid #dce6f4;border-radius:22px;background:linear-gradient(145deg,#101d3b,#142d55);color:#f7fbff;box-shadow:0 16px 38px #06142c25}
-.tap-spin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
-.tap-spin-kicker{font-size:10px;letter-spacing:1.5px;font-weight:900;color:#70e1d1}
-.tap-spin-panel h2{margin:7px 0;font-size:22px;color:#fff}
-.tap-spin-panel p{font-size:13px;line-height:1.55;color:#c3d1e7}
-.tap-spin-counter{border:1px solid #5c789d;border-radius:14px;padding:9px 12px;background:#ffffff0d;font-size:12px;font-weight:850;white-space:nowrap}
-.tap-spin-counter strong{color:#7af0d6}
-.tap-spin-main{margin:22px 0 14px;padding:22px;border-radius:17px;text-align:center;background:#ffffff0c;border:1px solid #ffffff19}
-.tap-spin-value{display:block;font-size:clamp(34px,8vw,48px);font-weight:1000;letter-spacing:-1px;color:#80f0d8}
-.tap-spin-action{width:100%;min-height:50px;border:0;border-radius:14px;background:linear-gradient(100deg,#24d6b0,#6be7ce);color:#092c35;font-weight:950;font-size:15px;cursor:pointer;padding:13px 18px}
-.tap-spin-action:disabled{opacity:.48;cursor:not-allowed}
-.tap-spin-note{font-size:11px!important;color:#9fb4d0!important;margin:12px 0 0}
-.spin-stage{display:grid;justify-items:center;gap:14px;margin:22px auto 16px}
-.spin-pointer{position:relative;z-index:2;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:24px solid #fff;filter:drop-shadow(0 3px 4px #0008);margin-bottom:-22px}
-.spin-wheel{position:relative;width:min(78vw,300px);aspect-ratio:1;border-radius:50%;border:8px solid #d5e4f7;box-shadow:0 0 0 5px #233d62,0 14px 30px #0008;overflow:hidden;background:conic-gradient(from -30deg,#1e9c89 0deg 60deg,#1b467b 60deg 120deg,#e2a43d 120deg 180deg,#713f9c 180deg 240deg,#227e9d 240deg 300deg,#a24c60 300deg 360deg);transition:transform 4.3s cubic-bezier(.12,.72,.12,1)}
-.spin-wheel:after{content:"";position:absolute;inset:38%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#a9bfd7 75%,#526d8d);border:5px solid #fff;box-shadow:0 2px 12px #0006}
-.spin-wheel-label{position:absolute;left:50%;top:50%;width:82px;margin-left:-41px;margin-top:-11px;text-align:center;font-size:12px;font-weight:1000;color:#fff;text-shadow:0 2px 4px #000a;z-index:1}
-.spin-wheel-label.l0{transform:translateY(-105px)}
-.spin-wheel-label.l1{transform:translate(54px,-53px) rotate(60deg)}
-.spin-wheel-label.l2{transform:translate(54px,53px) rotate(120deg)}
-.spin-wheel-label.l3{transform:translateY(105px) rotate(180deg)}
-.spin-wheel-label.l4{transform:translate(-54px,53px) rotate(240deg)}
-.spin-wheel-label.l5{transform:translate(-54px,-53px) rotate(300deg)}
-.spin-result{min-height:28px;text-align:center;font-size:14px;font-weight:900;color:#83f1d8}
-@media(prefers-reduced-motion:reduce){.spin-wheel{transition-duration:.1s}}
-</style>
+
 
 async function getDailyActivityStatus(){
  const {data,error}=await supabaseClient.rpc('get_daily_activity_status');
