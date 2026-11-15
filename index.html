@@ -4206,6 +4206,15 @@ body.activation-screen-open{overflow:hidden!important}
     <div class="feature-workspace-head"><h2 id="featureTitle">Leaderboard</h2><span class="feature-status" id="featureStatus">PREVIEW · SETUP REQUIRED</span></div>
     <p id="featureDescription">See how members are progressing across GenZBag.</p>
     <div class="feature-notice" id="featureNotice">This section is being prepared. No balance changes or payments are made from this preview.</div>
+    <section class="referral-bonus-panel" id="referralBonusPanel" hidden style="margin-top:14px;padding:18px;border-radius:16px;background:linear-gradient(145deg,#0a2a6b,#123f70);color:#fff">
+      <div style="font-size:11px;font-weight:900;letter-spacing:1px;color:#9fe8e2">DIRECT REFERRAL REWARD</div>
+      <h3 style="margin:8px 0;color:#fff;font-size:25px">UGX 10,500</h3>
+      <p style="margin:0;color:#dcecff;font-size:12px">Reach 30 direct referrals to unlock this one-time bonus.</p>
+      <div style="height:9px;margin:16px 0 8px;border-radius:20px;background:#ffffff25;overflow:hidden"><div id="referralBonusProgressBar" style="height:100%;width:0%;border-radius:20px;background:#66e0c9"></div></div>
+      <div style="display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#e2f5ff"><strong id="referralBonusProgressText">0 / 30 direct referrals</strong><span id="referralBonusState">Checking…</span></div>
+      <button type="button" id="claimDirectReferralBonusButton" class="activity-btn" style="width:100%;margin-top:16px;background:#66e0c9;color:#082b43;font-weight:900" disabled>Claim UGX 10,500</button>
+      <p id="referralBonusFeedback" role="status" style="margin-top:10px;color:#dcecff;font-size:11px"></p>
+    </section>
     <div class="voucher-tabs" id="voucherTabs" hidden role="tablist" aria-label="Voucher pages">
       <button type="button" class="voucher-tab active" data-voucher-tab="voucher-buy" role="tab" aria-selected="true"><span>🎟️</span><b>Buy Voucher</b></button>
       <button type="button" class="voucher-tab" data-voucher-tab="voucher-activate" role="tab" aria-selected="false"><span>⚡</span><b>Activate User</b></button>
@@ -4591,7 +4600,7 @@ const featureContent={
  'withdraw-tiktok':{icon:'🎬',title:'Withdraw TikTok videos',description:'View eligible rewards associated with approved TikTok video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
  'withdraw-youtube':{icon:'▶️',title:'Withdraw YouTube Videos',description:'View eligible rewards associated with approved YouTube video activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on fake views or engagement.'},
  'withdraw-spotify':{icon:'🎵',title:'Withdraw Spotify',description:'View eligible rewards associated with approved Spotify activities.',notice:'This earning category has no separate withdrawal wallet or payout connection yet. Rewards must come from legitimate, approved activities and must not depend on artificial streams.'},
- 'welcome-bonus':{icon:'🎁',title:'Welcome Bonus',description:'A planned welcome reward area where new members can check whether an official welcome offer is available to their account.',notice:'No welcome-bonus amount, eligibility rules or funding have been configured yet. No bonus has been credited or promised. The offer will appear here only after it is officially funded and approved.'},
+ 'welcome-bonus':{icon:'🎁',title:'Claim Bonus',description:'Earn a one-time UGX 10,500 reward when you build a network of 30 direct referrals.',notice:'Your direct referral count is checked securely. Once you reach 30 direct referrals and your own account is activated, claim UGX 10,500 into Net Profits.'},
  'chat-claim-bonus':{icon:'🎁',title:'Chat Bonus',description:'Check official bonus campaigns related to Chat with Foreigners.',notice:'No chat bonus campaign is currently active. This page does not award or credit money. Only verified, funded campaigns approved by GenZBag will appear here.'},
  'voucher-buy':{icon:'🎟️',title:'Buy Voucher',description:'Purchase activation vouchers for eligible downline members.',notice:'Each voucher costs UGX 19,500 and is deducted securely from your available wallet balance.'},
  'voucher-activate':{icon:'🔑',title:'Activate User',description:'Use a voucher to activate a direct downline account.',notice:'Activations are verified on the server. Only direct downline members in Uganda qualify; maximum two per day.'},
@@ -4734,15 +4743,16 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
   featureNotice.hidden=featureKey==='leaderboard';
   document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':(featureKey==='pay-client'?'LIVE CLIENT PAYMENTS':(featureKey==='withdraw-balance'?'LIVE WITHDRAWAL REQUESTS':'PREVIEW · SETUP REQUIRED')));
   document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
-  const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel'};
+  const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel','welcome-bonus':'referralBonusPanel'};
   const isVoucherFeature=['voucher-buy','voucher-activate','voucher-history'].includes(featureKey);
   document.getElementById('voucherTabs').hidden=!isVoucherFeature;
   document.getElementById('featureWorkspace').classList.toggle('voucher-mode',isVoucherFeature);
   document.getElementById('featureWorkspace').classList.toggle('pay-client-mode',featureKey==='pay-client');
   document.getElementById('featureWorkspace').classList.toggle('withdraw-mode',['withdraw-balance','withdraw-history'].includes(featureKey));
-  ['leaderboardPanel','payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
+  ['leaderboardPanel','payClientPanel','voucherBuyPanel','voucherActivatePanel','voucherHistoryPanel','withdrawHistoryPanel','referralBonusPanel'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=panelMap[featureKey]!==id;});
   if(isVoucherFeature)setVoucherTab(featureKey);
   if(featureKey==='leaderboard')loadWeeklyLeaderboard();
+  if(featureKey==='welcome-bonus')loadDirectReferralBonusStatus();
   if(featureKey==='pay-client'){document.getElementById('clientAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();loadPayClientHistory();}
   if(featureKey==='voucher-buy')document.getElementById('voucherAccountBalance').textContent='UGX '+Math.max(0,currentAvailableBalance).toLocaleString();
   if(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey))loadVoucherSummary();
@@ -4760,6 +4770,32 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
 
  if(['referrals','profile','wallet','schedule','app','featureWorkspace'].includes(targetId))history.replaceState(null,'','#'+(featureKey||targetId));
 }));
+async function loadDirectReferralBonusStatus(){
+ const countEl=document.getElementById('referralBonusProgressText'),stateEl=document.getElementById('referralBonusState'),bar=document.getElementById('referralBonusProgressBar'),button=document.getElementById('claimDirectReferralBonusButton'),feedback=document.getElementById('referralBonusFeedback');
+ if(!countEl||!button)return;
+ button.disabled=true;stateEl.textContent='Checking…';feedback.textContent='';
+ const {data,error}=await supabaseClient.rpc('get_direct_referral_bonus_status');
+ if(error){stateEl.textContent='Unavailable';feedback.textContent=error.message||'Could not load referral bonus status.';return;}
+ const count=Number(data?.direct_referrals||0),qualified=count>=30,claimed=!!data?.claimed;
+ countEl.textContent=count+' / 30 direct referrals';
+ bar.style.width=Math.min(100,(count/30)*100)+'%';
+ stateEl.textContent=claimed?'Already claimed':(qualified?'Unlocked':'In progress');
+ button.disabled=!qualified||claimed;
+ button.textContent=claimed?'Bonus already claimed':'Claim UGX 10,500';
+ if(claimed)feedback.textContent='This one-time bonus has already been credited to your Net Profits.';
+ else if(qualified)feedback.textContent='Congratulations! You have reached 30 direct referrals. Your account must be activated to claim.';
+ else feedback.textContent='You need '+(30-count)+' more direct referral'+(30-count===1?'':'s')+' to unlock the bonus.';
+}
+document.getElementById('claimDirectReferralBonusButton')?.addEventListener('click',async()=>{
+ const button=document.getElementById('claimDirectReferralBonusButton'),feedback=document.getElementById('referralBonusFeedback');
+ if(!button||button.disabled)return;
+ button.disabled=true;button.textContent='Claiming…';feedback.textContent='';
+ const {data,error}=await supabaseClient.rpc('claim_direct_referral_bonus');
+ if(error){feedback.textContent=error.message||'The bonus could not be claimed. Please try again.';button.textContent='Claim UGX 10,500';await loadDirectReferralBonusStatus();return;}
+ feedback.textContent=data?.message||'Your claim has been processed.';
+ await loadDirectReferralBonusStatus();
+ if(data?.success){await loadWallet();feedback.textContent='UGX 10,500 has been added to your Net Profits.';}
+});
 const referralInput=document.getElementById('refLink'),feedback=document.getElementById('copyFeedback');
 const dashboardReferralInput=document.getElementById('dashboardRefLink'),dashboardReferralFeedback=document.getElementById('dashboardCopyFeedback');
 function syncReferralLinks(value){[referralInput,dashboardReferralInput].forEach(el=>{if(el)el.value=value;});}
