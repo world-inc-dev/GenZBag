@@ -5069,7 +5069,59 @@ async function finishColourChallenge(){
  await loadActivities();
 }
 
+
+<style id="genzbag-tap-spin-styles">
+.tap-spin-panel{max-width:620px;margin:0 auto;padding:20px;border:1px solid #dce6f4;border-radius:22px;background:linear-gradient(145deg,#101d3b,#142d55);color:#f7fbff;box-shadow:0 16px 38px #06142c25}
+.tap-spin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.tap-spin-kicker{font-size:10px;letter-spacing:1.5px;font-weight:900;color:#70e1d1}
+.tap-spin-panel h2{margin:7px 0;font-size:22px;color:#fff}
+.tap-spin-panel p{font-size:13px;line-height:1.55;color:#c3d1e7}
+.tap-spin-counter{border:1px solid #5c789d;border-radius:14px;padding:9px 12px;background:#ffffff0d;font-size:12px;font-weight:850;white-space:nowrap}
+.tap-spin-counter strong{color:#7af0d6}
+.tap-spin-main{margin:22px 0 14px;padding:22px;border-radius:17px;text-align:center;background:#ffffff0c;border:1px solid #ffffff19}
+.tap-spin-value{display:block;font-size:clamp(34px,8vw,48px);font-weight:1000;letter-spacing:-1px;color:#80f0d8}
+.tap-spin-action{width:100%;min-height:50px;border:0;border-radius:14px;background:linear-gradient(100deg,#24d6b0,#6be7ce);color:#092c35;font-weight:950;font-size:15px;cursor:pointer;padding:13px 18px}
+.tap-spin-action:disabled{opacity:.48;cursor:not-allowed}
+.tap-spin-note{font-size:11px!important;color:#9fb4d0!important;margin:12px 0 0}
+.spin-stage{display:grid;justify-items:center;gap:14px;margin:22px auto 16px}
+.spin-pointer{position:relative;z-index:2;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:24px solid #fff;filter:drop-shadow(0 3px 4px #0008);margin-bottom:-22px}
+.spin-wheel{position:relative;width:min(78vw,300px);aspect-ratio:1;border-radius:50%;border:8px solid #d5e4f7;box-shadow:0 0 0 5px #233d62,0 14px 30px #0008;overflow:hidden;background:conic-gradient(from -30deg,#1e9c89 0deg 60deg,#1b467b 60deg 120deg,#e2a43d 120deg 180deg,#713f9c 180deg 240deg,#227e9d 240deg 300deg,#a24c60 300deg 360deg);transition:transform 4.3s cubic-bezier(.12,.72,.12,1)}
+.spin-wheel:after{content:"";position:absolute;inset:38%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#a9bfd7 75%,#526d8d);border:5px solid #fff;box-shadow:0 2px 12px #0006}
+.spin-wheel-label{position:absolute;left:50%;top:50%;width:82px;margin-left:-41px;margin-top:-11px;text-align:center;font-size:12px;font-weight:1000;color:#fff;text-shadow:0 2px 4px #000a;z-index:1}
+.spin-wheel-label.l0{transform:translateY(-105px)}
+.spin-wheel-label.l1{transform:translate(54px,-53px) rotate(60deg)}
+.spin-wheel-label.l2{transform:translate(54px,53px) rotate(120deg)}
+.spin-wheel-label.l3{transform:translateY(105px) rotate(180deg)}
+.spin-wheel-label.l4{transform:translate(-54px,53px) rotate(240deg)}
+.spin-wheel-label.l5{transform:translate(-54px,-53px) rotate(300deg)}
+.spin-result{min-height:28px;text-align:center;font-size:14px;font-weight:900;color:#83f1d8}
+@media(prefers-reduced-motion:reduce){.spin-wheel{transition-duration:.1s}}
+</style>
+
+async function getDailyActivityStatus(){
+ const {data,error}=await supabaseClient.rpc('get_daily_activity_status');
+ if(error)throw error;return data||{tap_used:0,tap_remaining:2,spin_used:0,spin_remaining:2,daily_limit:2};
+}
+async function renderTapEarnings(){
+ activityListEl.innerHTML='<div class="activity-empty">Loading your daily Tap Earnings allowance…</div>';
+ try{
+  const status=await getDailyActivityStatus(),used=Number(status.tap_used||0),remaining=Number(status.tap_remaining||0);
+  activityCountEl.textContent=remaining+' of 2 taps remaining today';
+  activityListEl.innerHTML='<section class="tap-spin-panel"><div class="tap-spin-head"><div><span class="tap-spin-kicker">GENZBAG • QUICK EARN</span><h2>👆 Tap Earnings</h2><p>Tap once to claim UGX 500. You can complete this activity twice each Uganda day.</p></div><div class="tap-spin-counter"><strong>'+used+'</strong> / 2 used</div></div><div class="tap-spin-main"><span class="tap-spin-kicker">REWARD PER TAP</span><strong class="tap-spin-value">UGX 500</strong><p>'+remaining+' successful '+(remaining===1?'tap':'taps')+' remaining today.</p></div><button class="tap-spin-action" type="button" data-tap-claim '+(remaining===0?'disabled':'')+'>'+(remaining===0?'Daily limit reached':'TAP TO EARN UGX 500')+'</button><p class="tap-spin-note">Rewards are recorded securely in your Net Profits. Daily limit resets at midnight Uganda time.</p></section>';
+ }catch(error){activityListEl.innerHTML='<div class="activity-empty">Could not load Tap Earnings: '+escapeText(error.message||'Please retry.')+'</div>';}
+}
+async function renderSpinAndWin(){
+ activityListEl.innerHTML='<div class="activity-empty">Loading Spin &amp; Win…</div>';
+ try{
+  const status=await getDailyActivityStatus(),used=Number(status.spin_used||0),remaining=Number(status.spin_remaining||0);
+  activityCountEl.textContent=remaining+' of 2 spins remaining today';
+  const amounts=[100,200,500,1000,2000,5000];
+  activityListEl.innerHTML='<section class="tap-spin-panel"><div class="tap-spin-head"><div><span class="tap-spin-kicker">GENZBAG • LUCKY WHEEL</span><h2>🎰 Spin &amp; Win</h2><p>Tap SPIN and watch the wheel land on your reward. Each result is added to your Net Profits.</p></div><div class="tap-spin-counter"><strong>'+used+'</strong> / 2 used</div></div><div class="spin-stage"><div class="spin-pointer" aria-hidden="true"></div><div class="spin-wheel" data-spin-wheel role="img" aria-label="Prize wheel with six possible amounts">'+amounts.map((a,i)=>'<span class="spin-wheel-label l'+i+'">UGX '+a.toLocaleString()+'</span>').join('')+'</div></div><div class="spin-result" data-spin-result aria-live="polite">Your next spin is ready.</div><button class="tap-spin-action" type="button" data-spin-action '+(remaining===0?'disabled':'')+'>'+(remaining===0?'Daily limit reached':'🎰 SPIN NOW')+'</button><p class="tap-spin-note">Possible results: UGX 100 · 200 · 500 · 1,000 · 2,000 · 5,000. Maximum two spins per Uganda day.</p></section>';
+ }catch(error){activityListEl.innerHTML='<div class="activity-empty">Could not load Spin &amp; Win: '+escapeText(error.message||'Please retry.')+'</div>';}
+}
 function renderActivities(){
+ if(currentActivitySearch.toLowerCase().includes('tap')){renderTapEarnings();return;}
+ if(currentActivitySearch.toLowerCase().includes('casino')||currentActivitySearch.toLowerCase().includes('spin')){renderSpinAndWin();return;}
  if(/colou?r/.test(currentActivitySearch.toLowerCase())){renderColourChallenge();return;}
  if(currentActivitySearch.toLowerCase().includes('math')){renderMathChallenge();return;}
  if(currentActivitySearch.toLowerCase().includes('trivia')){renderTriviaChallenge();return;}
@@ -5135,6 +5187,10 @@ document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListe
  renderActivities();
 }));
 activityListEl.addEventListener('click',async e=>{
+ const tapClaim=e.target.closest('[data-tap-claim]');
+ if(tapClaim){tapClaim.disabled=true;const {data,error}=await supabaseClient.rpc('claim_tap_earnings');if(error){alert(error.message||'Tap reward could not be recorded.');await renderTapEarnings();return;}await loadMemberWallet();await renderTapEarnings();alert(data?.message||'UGX 500 added to your Net Profits.');return;}
+ const spinAction=e.target.closest('[data-spin-action]');
+ if(spinAction){spinAction.disabled=true;const {data,error}=await supabaseClient.rpc('spin_and_win');if(error){alert(error.message||'Spin could not be completed.');await renderSpinAndWin();return;}const wheel=activityListEl.querySelector('[data-spin-wheel]'),result=activityListEl.querySelector('[data-spin-result]');if(!wheel||!result){await renderSpinAndWin();return;}const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const angle=(reduced?0:8*360)+(360-Number(data.segment_index||0)*60);requestAnimationFrame(()=>{wheel.style.transform='rotate('+angle+'deg)';});const finish=async()=>{result.textContent='🎉 UGX '+Number(data.amount).toLocaleString()+' added to your Net Profits!';spinAction.textContent='Spin recorded';await loadMemberWallet();const status=await getDailyActivityStatus();const counter=activityListEl.querySelector('.tap-spin-counter');if(counter)counter.innerHTML='<strong>'+status.spin_used+'</strong> / 2 used';spinAction.disabled=Number(status.spin_remaining)<=0;if(spinAction.disabled)spinAction.textContent='Daily limit reached';};if(reduced){await finish();}else{setTimeout(finish,4450);}return;}
  const colourStart=e.target.closest('[data-colour-start]');if(colourStart){if(!currentMember){alert('Please sign in to play the Colour Challenge.');return;}colourStart.disabled=true;const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:'colour'});if(error||!data){colourStart.disabled=false;alert(error?.message||'Unable to start challenge.');return;}colourState={taskId:colourStart.dataset.colourStart,sessionId:data.session_id,questions:data.questions.map(q=>({name:'',hex:q.display_hex,o:q.options,question_key:q.question_key})),index:0,score:0,selected:null,seconds:15,answers:[]};renderColourQuestion();startColourTimer();return;}
  const colourAnswer=e.target.closest('[data-colour-answer]');if(colourAnswer&&colourState&&colourState.selected===null){stopColourTimer();const chosen=Number(colourAnswer.dataset.colourAnswer),q=colourState.questions[colourState.index];colourState.selected=chosen;colourState.answers[colourState.index]=chosen;renderColourQuestion();return;}
  if(e.target.closest('[data-colour-next]')){if(!colourState)return;if(colourState.index>=9){finishColourChallenge();return;}colourState.index++;colourState.selected=null;renderColourQuestion();startColourTimer();return;}
@@ -5396,7 +5452,7 @@ async function loadMemberWallet(){
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
  const withdrawRows=availableRows;
  currentWithdrawableBalance=Math.max(0,signed(withdrawRows));
- const profitRows=ugx.filter(x=>['task_reward','welcome_bonus','referral_commission'].includes(x.entry_type));
+ const profitRows=ugx.filter(x=>['task_reward','welcome_bonus','referral_commission','tap_reward','spin_reward'].includes(x.entry_type));
  const welcomeRows=ugx.filter(x=>x.entry_type==='welcome_bonus');
  const balance=signed(availableRows),teamEarnings=signed(referralRows),earned=signed(profitRows),welcomeBonus=signed(welcomeRows);
  currentAvailableBalance=Math.max(0,balance);
