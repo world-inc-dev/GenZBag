@@ -5423,7 +5423,7 @@ async function loadActivities(){
  const member=await ensureMemberSession();
  if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
  // Math and Colour are built-in challenge screens; do not make their display wait for the published-task, submission, or ad-status requests.
- if(currentActivityFilter==='challenge'||/math|colou?r challenge/i.test(currentActivitySearch)){
+ if(currentActivityFilter==='challenge'||/math|colou?r/i.test(currentActivitySearch)){
   activityRows=[];activitySubmissionMap={};activityCountEl.textContent='2 challenges available';renderActivities();return;
  }
  activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
