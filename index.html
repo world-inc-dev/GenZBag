@@ -5064,18 +5064,85 @@ function setActivityMessage(message){activityListEl.innerHTML='<div class="activ
 
 let musicListenTimer=null,musicListenSeconds=0,musicListenTaskId=null,musicListenAudio=null;
 function stopMusicListenTimer(){if(musicListenTimer){clearInterval(musicListenTimer);musicListenTimer=null;}}
+
+let genzMusicYTPlayer=null,genzMusicVideoTimer=null,genzMusicVideoSeconds=60,genzMusicVideoId='SGovymtCzvA',genzMusicVideoApiRequested=false;
+function initGenZMusicVideoPlayer(videos){
+ const countdown=document.getElementById('genzVideoCountdown'),bar=document.getElementById('genzVideoProgressBar'),status=document.getElementById('genzVideoTrackerStatus');
+ const title=document.getElementById('genzVideoNowTitle'),artist=document.getElementById('genzVideoNowArtist'),open=document.getElementById('genzVideoOpenYoutube');
+ if(!countdown||!bar||!status)return;
+ if(genzMusicVideoTimer)clearInterval(genzMusicVideoTimer);
+ genzMusicVideoSeconds=60;
+ countdown.textContent='60s remaining';bar.style.width='0%';status.textContent='Press play to start the 60-second viewing tracker. This tracker does not award money.';
+ const choices=[...activityListEl.querySelectorAll('[data-video-id]')];
+ choices.forEach(btn=>btn.addEventListener('click',()=>{
+  const id=btn.dataset.videoId;genzMusicVideoId=id;genzMusicVideoSeconds=60;
+  if(genzMusicVideoTimer){clearInterval(genzMusicVideoTimer);genzMusicVideoTimer=null;}
+  countdown.textContent='60s remaining';bar.style.width='0%';
+  status.textContent='Selected. Press play to start the viewing tracker.';
+  choices.forEach(b=>b.classList.toggle('active',b===btn));
+  if(title)title.textContent=btn.dataset.videoTitle||'Music video';
+  if(artist)artist.textContent=btn.dataset.videoArtist||'';
+  if(open)open.href='https://www.youtube.com/watch?v='+id;
+  if(genzMusicYTPlayer&&typeof genzMusicYTPlayer.loadVideoById==='function')genzMusicYTPlayer.loadVideoById(id);
+ }));
+ const createPlayer=()=>{
+  const target=document.getElementById('genzMusicVideoPlayer');
+  if(!target||!window.YT||!YT.Player)return;
+  if(genzMusicYTPlayer&&typeof genzMusicYTPlayer.destroy==='function'){try{genzMusicYTPlayer.destroy();}catch(e){}}
+  genzMusicYTPlayer=new YT.Player('genzMusicVideoPlayer',{
+   videoId:genzMusicVideoId,
+   playerVars:{playsinline:1,rel:0,modestbranding:1},
+   events:{
+    onReady:()=>{status.textContent='Ready. Play the video to begin the 60-second tracker.';},
+    onStateChange:(event)=>{
+     if(event.data===1){
+      if(genzMusicVideoSeconds<=0){genzMusicVideoSeconds=60;countdown.textContent='60s remaining';bar.style.width='0%';}
+      if(genzMusicVideoTimer)clearInterval(genzMusicVideoTimer);
+      status.textContent='Video playing · tracker is counting viewing time.';
+      genzMusicVideoTimer=setInterval(()=>{
+       if(!document.getElementById('genzVideoCountdown')){clearInterval(genzMusicVideoTimer);genzMusicVideoTimer=null;return;}
+       genzMusicVideoSeconds=Math.max(0,genzMusicVideoSeconds-1);
+       countdown.textContent=genzMusicVideoSeconds+'s remaining';
+       bar.style.width=((60-genzMusicVideoSeconds)/60*100)+'%';
+       if(genzMusicVideoSeconds<=0){
+        clearInterval(genzMusicVideoTimer);genzMusicVideoTimer=null;
+        try{genzMusicYTPlayer.pauseVideo();}catch(e){}
+        status.textContent='60-second viewing session complete. Choose another video or keep watching.';
+       }
+      },1000);
+     }else if(genzMusicVideoTimer){
+      clearInterval(genzMusicVideoTimer);genzMusicVideoTimer=null;
+      if(event.data===2)status.textContent='Paused · tracker stopped. Resume playback to continue.';
+      else if(event.data===0)status.textContent='Video ended · choose another music video.';
+     }
+    },
+    onError:()=>{status.textContent='This video cannot be embedded here. Use “Open on YouTube” to watch it.';}
+   }
+  });
+ };
+ if(window.YT&&window.YT.Player){createPlayer();return;}
+ window.genzMusicVideoReady=createPlayer;
+ if(!genzMusicVideoApiRequested){
+  genzMusicVideoApiRequested=true;
+  const existing=document.querySelector('script[data-genz-youtube-api]');
+  if(!existing){const script=document.createElement('script');script.src='https://www.youtube.com/iframe_api';script.async=true;script.dataset.genzYoutubeApi='1';document.head.appendChild(script);}
+  const previous=window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady=function(){if(typeof previous==='function')previous();if(typeof window.genzMusicVideoReady==='function')window.genzMusicVideoReady();};
+ }
+}
+
 function renderSpotifyMusic(){
  stopMusicListenTimer();musicListenSeconds=0;musicListenTaskId=null;musicListenAudio=null;
  const task=activityRows.find(t=>t.category==='music'&&/music listening/i.test(t.title))||activityRows.find(t=>t.category==='music');
- const songs=[
-  {title:'As It Was',artist:'Harry Styles',id:'4Dvkj6JhhA12EX05fT7y2e'},
-  {title:'Sorry',artist:'Justin Bieber',id:'3ACnarSkTKiOTj4rsnFkgf'},
-  {title:'Starships',artist:'Nicki Minaj',id:'7yTZk1LMxRY9fdyk0DIls7'},
-  {title:'I Like It',artist:'Cardi B · Bad Bunny · J Balvin',id:'58q2HKrzhC3ozto2nDdN4z'},
-  {title:"God's Plan",artist:'Drake',id:'6DCZcSspjsKoFjzjrWoCdn'},
-  {title:'Beauty And A Beat',artist:'Justin Bieber · Nicki Minaj',id:'1k6iMLL8ozTbezUsZsywzk'}
+ const videos=[
+  {title:"UP",artist:"ATEEZ",id:"SGovymtCzvA",label:"Trending now"},
+  {title:"I Want You",artist:"ENHYPEN",id:"dE_Ro8Sac2M",label:"Trending now"},
+  {title:"Dai Dai",artist:"Shakira · Burna Boy",id:"fcnDmrtj6Sk",label:"Global hit"},
+  {title:"POKITO",artist:"Daddy Yankee · Diljit Dosanjh",id:"XO1h5G6xytU",label:"Trending now"},
+  {title:"Hong Kong",artist:"The Weeknd · Faye Wong",id:"hX9S94XsySk",label:"New release"},
+  {title:"SHOCK",artist:"TREASURE",id:"u_hpZueWI9g",label:"Trending now"}
  ];
- activityCountEl.textContent='6 Spotify songs';
+ activityCountEl.textContent='6 music videos';
  const completed=task&&activityAdCompleted.has(String(task.id));
  const audioUrl=String(task?.content_url||'').trim();
  const rewardPlaylist=[
@@ -5084,9 +5151,10 @@ function renderSpotifyMusic(){
   {title:'Happy Beat',artist:'burabotti',url:'https://opengameart.org/sites/default/files/happybeat.ogg',credit:'OpenGameArt · CC0',source:'https://opengameart.org/content/happy-beat'},
   {title:'Bright Melodic EDM',artist:'Fupi',url:'https://opengameart.org/sites/default/files/brightmelodicedm.ogg',credit:'OpenGameArt · CC0',source:'https://opengameart.org/content/melodic-edm-loops'}
  ].filter(track=>track.url);
- const spotifyCards=songs.map((song,i)=>'<article class="spotify-song-card"><div class="spotify-song-meta"><span class="spotify-song-number">'+String(i+1).padStart(2,'0')+'</span><div><h3>'+escapeText(song.title)+'</h3><p>'+escapeText(song.artist)+'</p></div></div><iframe title="Spotify player: '+escapeText(song.title)+' by '+escapeText(song.artist)+'" src="https://open.spotify.com/embed/track/'+song.id+'?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></article>').join('');
+
  const rewardCard=task?'<article class="activity-card spotify-reward-card" data-music-card="'+escapeText(task.id)+'"><div class="activity-card-top"><div><span class="activity-tag">🎧 REWARD-ELIGIBLE MUSIC</span><h3 id="genzMusicTrackTitle" style="margin:9px 0 4px;color:#fff">Classical Pop (Instrumental)</h3><p id="genzMusicTrackArtist" style="margin:0;color:#b9d3df;font-size:12px">CC0 music · Alex McCulloch</p></div><span class="activity-reward">UGX 150</span></div><p style="color:#d5e5ed;margin:14px 0">This separate royalty-free track is the eligible 69-second listening reward. Spotify songs above are for enjoyment and do not earn streaming rewards.</p><label for="genzMusicTrack" style="display:block;color:#b9d3df;font-size:12px;margin:12px 0 6px">Choose a reward track</label><select id="genzMusicTrack" style="width:100%;padding:12px;border-radius:10px;background:#102b3d;color:#fff;border:1px solid rgba(94,234,212,.4);margin-bottom:10px">'+rewardPlaylist.map((track,i)=>'<option value="'+i+'">'+escapeText(track.title)+' — '+escapeText(track.artist)+'</option>').join('')+'</select><audio id="genzMusicAudio" controls preload="metadata" playsinline style="width:100%;margin:8px 0 14px"><source src="'+escapeText(audioUrl)+'" type="audio/mpeg">Your browser does not support audio playback.</audio><div class="music-live-tracker" style="margin:12px 0 14px;padding:14px;border:1px solid rgba(94,234,212,.38);border-radius:14px;background:rgba(7,25,39,.88)"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px"><strong style="font-size:11px;letter-spacing:.08em;color:#73e6d3">LIVE LISTENING TRACKER</strong><strong id="genzMusicTimer" style="font-size:15px;color:#fff">69 seconds remaining</strong></div><div class="ad-timer-track"><span id="genzMusicProgress" style="width:0%"></span></div><div id="genzMusicStatus" aria-live="polite" style="margin-top:9px;color:#b9d3df;font-size:12px">'+(completed?'Reward already credited':'Ready to listen')+'</div></div><div class="activity-actions"><button class="activity-btn" type="button" data-music-start="'+escapeText(task.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ Already credited':'▶ Start listening')+'</button><button class="activity-btn" type="button" data-music-claim="'+escapeText(task.id)+'" hidden disabled>Claim UGX 150</button></div><p id="genzMusicTrackCredit" style="font-size:10px;color:#9bb7c6;margin:12px 0 0">Music source: <a href="https://opengameart.org/content/classical-pop-instrumental" target="_blank" rel="noopener noreferrer" style="color:#73e6d3">OpenGameArt · CC0</a> · Credit: Alex McCulloch.</p></article>':'<div class="activity-empty">The separate listening reward is currently unavailable. Spotify songs remain available above.</div>';
- activityListEl.innerHTML='<section class="spotify-feature-panel"><div class="spotify-feature-heading"><span>GENZBAG · SPOTIFY</span><h2>Popular songs</h2><p>Six tracks selected from the artists you requested. Tap play in any Spotify player. Playback availability and full-track access are controlled by Spotify.</p></div><div class="spotify-song-grid">'+spotifyCards+'</div><div class="spotify-embed-note">Spotify embeds · Open Spotify for full playback where required.</div></section><section class="spotify-reward-section"><div class="spotify-reward-heading"><h2>🎧 GenZBag Reward Music Player</h2><p>Play this separately licensed reward track for 69 seconds to unlock UGX 150. Spotify tracks are for listening only and are not reward-eligible.</p></div>'+rewardCard+'</section>';
+ activityListEl.innerHTML='<section class="spotify-feature-panel genz-music-video-panel"><div class="spotify-feature-heading"><span>GENZBAG · MUSIC VIDEOS</span><h2>Trending Music Videos</h2><p>Watch six real music videos from their official YouTube uploads. Choose a video below to play it here.</p></div><div class="genz-video-player-wrap"><div id="genzMusicVideoPlayer"></div></div><div class="genz-video-now-playing"><div><strong id="genzVideoNowTitle">UP</strong><small id="genzVideoNowArtist">ATEEZ</small></div><a id="genzVideoOpenYoutube" href="https://www.youtube.com/watch?v=SGovymtCzvA" target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a></div><div class="genz-video-tracker"><div class="genz-video-tracker-top"><strong>VIDEO WATCH TRACKER</strong><b id="genzVideoCountdown">60s remaining</b></div><div class="genz-video-progress"><span id="genzVideoProgressBar"></span></div><p id="genzVideoTrackerStatus" aria-live="polite">Press play to start the 60-second viewing tracker. This tracker does not award money.</p></div><div class="genz-music-video-grid">'+videos.map((v,i)=>'<button type="button" class="genz-music-video-choice '+(i===0?'active':'')+'" data-video-id="'+v.id+'" data-video-title="'+escapeText(v.title)+'" data-video-artist="'+escapeText(v.artist)+'"><img src="https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg" alt="" loading="lazy"><span class="genz-video-choice-play">▶</span><span class="genz-video-choice-info"><strong>'+escapeText(v.title)+'</strong><small>'+escapeText(v.artist)+'</small><em>'+escapeText(v.label)+'</em></span></button>').join('')+'</div><p class="spotify-embed-note">Videos are streamed from YouTube. Availability and embedding are controlled by each video owner and YouTube.</p></section><section class="spotify-reward-section"><div class="spotify-reward-heading"><h2>🎧 GenZBag Reward Music Player</h2><p>Earn eligibility remains limited to the separately licensed reward tracks. Commercial music videos above are for entertainment and do not earn streaming rewards.</p></div>'+rewardCard+'</section>';
+ initGenZMusicVideoPlayer(videos);
  if(!task||completed)return;
  musicListenAudio=document.getElementById('genzMusicAudio');
  const startButton=activityListEl.querySelector('[data-music-start]'),claimButton=activityListEl.querySelector('[data-music-claim]');
@@ -7227,5 +7295,33 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #activityPage #activityList .spotify-reward-card{margin:0!important}
 @media(max-width:520px){#activityPage #activityList .spotify-feature-panel{padding:11px}#activityPage #activityList .spotify-song-grid{grid-template-columns:minmax(0,1fr);gap:10px}#activityPage #activityList .spotify-song-card{padding:9px}#activityPage #activityList .spotify-song-card iframe{height:152px}}
 </style>
+
+<style id="genzbag-music-video-tracker-v22">
+#activityPage #activityList .genz-music-video-panel{grid-column:1/-1}
+#activityPage #activityList .genz-video-player-wrap{width:100%;aspect-ratio:16/9;max-height:430px;overflow:hidden;border:1px solid #31566e;border-radius:15px;background:#020914;box-shadow:0 10px 24px #0005}
+#activityPage #activityList #genzMusicVideoPlayer{width:100%;height:100%;min-height:190px}
+#activityPage #activityList #genzMusicVideoPlayer iframe{display:block;width:100%;height:100%;border:0}
+#activityPage #activityList .genz-video-now-playing{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 2px}
+#activityPage #activityList .genz-video-now-playing strong{display:block;color:#f1fbff;font-size:14px}
+#activityPage #activityList .genz-video-now-playing small{display:block;margin-top:4px;color:#a9c3d2;font-size:10px}
+#activityPage #activityList .genz-video-now-playing a{color:#70ead9;font-size:10px;font-weight:850;white-space:nowrap}
+#activityPage #activityList .genz-video-tracker{padding:13px;border:1px solid #2c6571;border-radius:13px;background:linear-gradient(120deg,#0b2b40,#103e4b);margin:3px 0 14px}
+#activityPage #activityList .genz-video-tracker-top{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#8df2df;font-size:10px}
+#activityPage #activityList .genz-video-tracker-top b{color:#fff;font-size:14px}
+#activityPage #activityList .genz-video-progress{height:8px;margin:10px 0;border-radius:20px;background:#ffffff20;overflow:hidden}
+#activityPage #activityList .genz-video-progress span{display:block;width:0;height:100%;border-radius:20px;background:linear-gradient(90deg,#5eead4,#20b8b0);transition:width .3s linear}
+#activityPage #activityList .genz-video-tracker p{margin:0;color:#b8cedc;font-size:10px;line-height:1.5}
+#activityPage #activityList .genz-music-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#activityPage #activityList .genz-music-video-choice{position:relative;display:flex;flex-direction:column;min-width:0;padding:0;overflow:hidden;text-align:left;border:1px solid #31566e;border-radius:13px;background:#102b43;color:#fff}
+#activityPage #activityList .genz-music-video-choice.active{border:2px solid #5eead4;box-shadow:0 0 0 2px #5eead422}
+#activityPage #activityList .genz-music-video-choice>img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#071326}
+#activityPage #activityList .genz-video-choice-play{position:absolute;top:calc((100% - 62px)/2);left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:37px;height:37px;border-radius:50%;background:#061c30c9;border:1px solid #ffffff90;color:#8ff5e3}
+#activityPage #activityList .genz-video-choice-info{display:block;padding:9px 10px 10px}
+#activityPage #activityList .genz-video-choice-info strong{display:block;color:#f1fbff;font-size:11px;line-height:1.35}
+#activityPage #activityList .genz-video-choice-info small{display:block;margin-top:4px;color:#b8cedc;font-size:9px;line-height:1.35}
+#activityPage #activityList .genz-video-choice-info em{display:inline-block;margin-top:7px;padding:4px 6px;border-radius:6px;background:#0b4b50;color:#8ff4e2;font-size:8px;font-style:normal;font-weight:850}
+@media(max-width:520px){#activityPage #activityList .genz-music-video-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#activityPage #activityList .genz-video-choice-info{padding:8px}#activityPage #activityList .genz-video-player-wrap{border-radius:12px}}
+</style>
+
 </body>
 </html>
