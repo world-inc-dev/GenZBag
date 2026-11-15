@@ -5982,8 +5982,9 @@ document.getElementById('globalChatMessages').addEventListener('click',async e=>
 document.getElementById('gbChatBack').addEventListener('click',async()=>{currentPrivateConversation=null;currentChatPartner=null;if(memberConversationChannel){await supabaseClient.removeChannel(memberConversationChannel);memberConversationChannel=null;}document.getElementById('gbChatPartner').textContent='Your private conversations';document.getElementById('gbChatPartnerCountry').textContent='Choose an online member to start chatting.';document.getElementById('gbChatHistory').innerHTML='<div class="activity-empty">Choose another online member to start a private chat.</div>';chatInputEl.disabled=true;document.getElementById('globalChatSend').disabled=true;document.getElementById('gbChatBack').hidden=true;});
 document.getElementById('foreignChatClaim').addEventListener('click',async()=>{const b=document.getElementById('foreignChatClaim');b.disabled=true;b.textContent='Verifying…';const {data,error}=await supabaseClient.rpc('claim_foreign_chat_bonus');b.disabled=false;b.textContent='Claim UGX 10,000';if(error){document.getElementById('foreignChatRewardStatus').textContent='Claim could not be verified: '+error.message;return;}document.getElementById('foreignChatRewardStatus').textContent=data?.message||'Claim processed.';if(data?.success){b.hidden=true;if(typeof loadMemberWallet==='function')await loadMemberWallet();}else if(data?.already_claimed){b.hidden=true;}await loadForeignChatProgress();if(data?.success||data?.already_claimed){b.hidden=true;document.getElementById('foreignChatRewardStatus').textContent=data?.message||'Your bonus is already scheduled or credited.';}});
 async function loadAdminActivityTools(){
- if(!currentMember||currentMember.app_metadata?.role!=='admin')return;
- adminPanelEl.classList.add('visible');
+ const authorized=adminIsAuthorized();
+ if(!authorized){adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';const list=document.getElementById('adminSubmissionList');if(list)list.replaceChildren();return;}
+ adminPanelEl.hidden=false;adminPanelEl.style.display='block';adminPanelEl.classList.add('visible');
  const {data,error}=await supabaseClient.from('task_submissions').select('id,user_id,task_id,proof_text,proof_url,submitted_at,status,tasks(title,category,content_url,reward_amount,currency)').eq('status','pending').order('submitted_at',{ascending:true}).limit(60);
  const list=document.getElementById('adminSubmissionList');
  if(error){list.textContent='Could not load submissions: '+error.message;return;}
@@ -6223,7 +6224,8 @@ async function loadAdminConsoleTab(id){
 function adminProfileDirectoryMount(){const panel=document.getElementById('adminProfileDirectory'),mount=document.getElementById('adminMembersMount');if(panel&&mount){panel.hidden=false;mount.appendChild(panel);}return true;}
 function setupAdminConsole(){
  const authorized=adminIsAuthorized();if(adminConsoleNav)adminConsoleNav.hidden=!authorized;
- if(!authorized){const page=document.getElementById('adminPage');if(page)page.hidden=true;return;}
+ if(!authorized){adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';const page=document.getElementById('adminPage');if(page)page.hidden=true;const submissions=document.getElementById('adminSubmissionList');if(submissions)submissions.replaceChildren();return;}
+ adminPanelEl.hidden=false;adminPanelEl.style.display='block';
  const activityMount=document.getElementById('adminActivityMount');if(activityMount&&adminPanelEl){activityMount.appendChild(adminPanelEl);adminPanelEl.classList.add('visible');}
  adminProfileDirectoryMount();
  document.querySelectorAll('[data-admin-tab]').forEach(btn=>{if(btn.dataset.bound)return;btn.dataset.bound='1';btn.addEventListener('click',()=>{document.querySelectorAll('[data-admin-tab]').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('.admin-console-panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.adminTab));loadAdminConsoleTab(btn.dataset.adminTab);});});
