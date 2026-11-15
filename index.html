@@ -6132,7 +6132,8 @@ document.getElementById('uplineChatSend').addEventListener('click',async()=>{
  input.value='';await renderUplineMessages();await markMemberConversationRead(uplineConversationId);await loadMemberInboxCounters();await loadUplineInbox();
 });
 document.getElementById('uplineChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('uplineChatSend').click();}});
-\nasync function loadAdminActivityTools(){
+
+async function loadAdminActivityTools(){
  const authorized=adminIsAuthorized();
  if(!authorized){adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';const list=document.getElementById('adminSubmissionList');if(list)list.replaceChildren();return;}
  adminPanelEl.hidden=false;adminPanelEl.style.display='block';adminPanelEl.classList.add('visible');
