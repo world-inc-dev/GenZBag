@@ -3991,8 +3991,14 @@ body.activation-screen-open{overflow:hidden!important}
           <label>Currency<select id="adminTaskCurrency"><option>UGX</option><option>NGN</option><option>KES</option><option>TZS</option><option>RWF</option><option>GHS</option><option>USD</option></select></label>
           <label>Maximum submissions<input id="adminTaskLimit" type="number" min="1" step="1" placeholder="Unlimited"></label>
         </div>
-        <label>Description<textarea id="adminTaskDescription" maxlength="2000" placeholder="What should members do?"></textarea></label>
-        <label>Instructions<textarea id="adminTaskInstructions" maxlength="4000" placeholder="Explain the exact steps and what proof is required."></textarea></label>
+        <label>Description<textarea id="adminTaskDescription" maxlength="2000" placeholder="What should members know about this ad?"></textarea></label>
+        <label id="adminTaskImageWrap" hidden>Ad image<select id="adminTaskImage">
+          <option value="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85">Smartphone &amp; technology</option>
+          <option value="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85">Fashion &amp; lifestyle</option>
+          <option value="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=85">Food &amp; refreshments</option>
+          <option value="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85">Digital tools &amp; services</option>
+        </select></label>
+        <label>Instructions<textarea id="adminTaskInstructions" maxlength="4000" placeholder="Optional details for members."></textarea></label>
         <label>Optional activity link<input id="adminTaskUrl" type="url" placeholder="https://…"></label>
         <label>Publish status<select id="adminTaskStatus"><option value="draft">Save as draft</option><option value="published">Publish now</option></select></label>
         <button class="activity-btn" type="submit" id="adminTaskSave">Save activity</button>
@@ -5134,6 +5140,17 @@ function renderActivities(){
   const sub=activitySubmissionMap[t.id],status=sub?.status;
   const reward=Number(t.reward_amount||0).toLocaleString()+' '+(t.currency||'UGX');
   const isVideoTask=t.category==='video',isSponsoredTask=t.category==='sponsored';
+  if(isSponsoredTask){
+   const fallbackImages=[
+    'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85',
+    'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85',
+    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=85',
+    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85'
+   ];
+   const image=t.image_url||fallbackImages[activityRows.filter(x=>x.category==='sponsored').findIndex(x=>x.id===t.id)%fallbackImages.length];
+   const completed=activityAdCompleted.has(String(t.id));
+   return '<article class="activity-card sponsored-ad-card" data-activity-id="'+escapeText(t.id)+'"><img class="sponsored-ad-image" src="'+escapeText(image)+'" alt="'+escapeText(t.title)+' promotional image" loading="lazy" referrerpolicy="no-referrer"><div class="sponsored-ad-content"><div class="activity-card-top"><div><span class="activity-tag">📢 SPONSORED AD</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">UGX 150</span></div><p>'+escapeText(t.description||'View this featured promotion to earn a reward.')+'</p>'+(t.instructions?'<p>'+escapeText(t.instructions)+'</p>':'')+'<p class="activity-note">Keep this ad visible for 8 seconds. One reward per member for this ad.</p><div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">More details ↗</a>':'')+'<button class="activity-btn" type="button" data-ad-view="'+escapeText(t.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ UGX 150 earned':'View ad · Earn UGX 150')+'</button></div><p class="ad-view-status" data-ad-status="'+escapeText(t.id)+'" aria-live="polite">'+(completed?'Reward already credited to your Net Profits.':'Your reward is credited after a verified 8-second view.')+'</p></div></article>';
+  }
   const videoUrl=String(t.content_url||'').toLowerCase();
   const platform=videoUrl.includes('youtu')||/youtube/i.test(t.title+' '+(t.description||''))?'YouTube':videoUrl.includes('tiktok')||/tiktok/i.test(t.title+' '+(t.description||''))?'TikTok':(isVideoTask?'Video activity':'');
   const platformIcon=platform==='YouTube'?'▶':platform==='TikTok'?'♪':'▶';
@@ -5143,6 +5160,8 @@ function renderActivities(){
  }).join('');
 }
 let activityDailyVideoCount=0;
+let activityAdCompleted=new Set();
+const activeAdViewTimers=new Map();
 function updateVideoPlatformIntro(){
  const box=document.getElementById('videoPlatformIntro');if(!box)return;
  const platform=currentActivitySearch.toLowerCase().includes('youtube')?'youtube':currentActivitySearch.toLowerCase().includes('tiktok')?'tiktok':'';
@@ -5162,14 +5181,16 @@ async function loadActivities(){
  const member=await ensureMemberSession();
  if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
  activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
- const [tasksRes,subsRes]=await Promise.all([
-  supabaseClient.from('tasks').select('id,title,description,category,instructions,reward_amount,currency,content_url,status,starts_at,ends_at,created_at').eq('status','published').order('created_at',{ascending:false}),
-  supabaseClient.from('task_submissions').select('id,task_id,status,review_note,submitted_at').eq('user_id',member.id).order('submitted_at',{ascending:false})
+ const [tasksRes,subsRes,adStatusRes]=await Promise.all([
+  supabaseClient.from('tasks').select('id,title,description,category,instructions,reward_amount,currency,content_url,image_url,status,starts_at,ends_at,created_at').eq('status','published').order('created_at',{ascending:false}),
+  supabaseClient.from('task_submissions').select('id,task_id,status,review_note,submitted_at').eq('user_id',member.id).order('submitted_at',{ascending:false}),
+  supabaseClient.rpc('get_sponsored_ad_view_statuses')
  ]);
  if(tasksRes.error){console.error('Activity load:',tasksRes.error);setActivityMessage(tasksRes.error.message.includes('activated')?'Your account must be activated before accessing activities.':'Activities could not load. Check your account activation and try again.');return;}
  if(subsRes.error){console.warn('Submission history:',subsRes.error);}
  activityRows=(tasksRes.data||[]).filter(t=>(!t.starts_at||new Date(t.starts_at)<=new Date())&&(!t.ends_at||new Date(t.ends_at)>new Date()));
  activitySubmissionMap={};
+ activityAdCompleted=new Set(adStatusRes.error?[]:(adStatusRes.data?.completed_task_ids||[]).map(String));
  const videoTaskIds=new Set(activityRows.filter(t=>t.category==='video').map(t=>String(t.id)));
  const dayStart=new Date();dayStart.setHours(0,0,0,0);
  activityDailyVideoCount=(subsRes.data||[]).filter(s=>videoTaskIds.has(String(s.task_id))&&s.submitted_at&&new Date(s.submitted_at)>=dayStart).length;
@@ -5188,6 +5209,37 @@ document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListe
  renderActivities();
 }));
 activityListEl.addEventListener('click',async e=>{
+ const adViewButton=e.target.closest('[data-ad-view]');
+ if(adViewButton){
+  const taskId=adViewButton.dataset.adView;
+  if(activeAdViewTimers.has(taskId))return;
+  const task=activityRows.find(x=>String(x.id)===String(taskId));
+  if(!task)return;
+  if(task.content_url)window.open(task.content_url,'_blank','noopener,noreferrer');
+  adViewButton.disabled=true;adViewButton.textContent='Starting ad view…';
+  const {data,error}=await supabaseClient.rpc('start_sponsored_ad_view',{p_task_id:taskId});
+  if(error){adViewButton.disabled=false;adViewButton.textContent='Try again · UGX 150';alert(error.message||'Could not start this ad view.');return;}
+  if(data?.already_claimed){activityAdCompleted.add(String(taskId));adViewButton.textContent='✓ UGX 150 earned';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='You have already earned for this ad.';return;}
+  let remaining=8;adViewButton.textContent='Viewing ad… '+remaining+'s';
+  const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');
+  if(status)status.textContent='Keep this ad card visible on your screen.';
+  const timer=setInterval(async()=>{
+   if(!document.contains(adViewButton)){clearInterval(timer);activeAdViewTimers.delete(taskId);return;}
+   if(document.visibilityState!=='visible')return;
+   const card=adViewButton.closest('.sponsored-ad-card'),rect=card?.getBoundingClientRect();
+   if(!rect||rect.bottom<=0||rect.top>=window.innerHeight)return;
+   remaining--;adViewButton.textContent='Viewing ad… '+remaining+'s';
+   if(remaining>0)return;
+   clearInterval(timer);activeAdViewTimers.delete(taskId);adViewButton.textContent='Crediting…';
+   const result=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:taskId});
+   if(result.error){adViewButton.disabled=false;adViewButton.textContent='Try again · UGX 150';if(status)status.textContent=result.error.message||'Reward could not be credited. Please retry.';return;}
+   activityAdCompleted.add(String(taskId));adViewButton.textContent='✓ UGX 150 earned';adViewButton.disabled=true;
+   if(status)status.textContent='UGX 150 has been added to your Net Profits.';
+   await loadMemberWallet();
+  },1000);
+  activeAdViewTimers.set(taskId,timer);
+  return;
+ }
  const tapClaim=e.target.closest('[data-tap-claim]');
  if(tapClaim){tapClaim.disabled=true;const {data,error}=await supabaseClient.rpc('claim_tap_earnings');if(error){alert(error.message||'Tap reward could not be recorded.');await renderTapEarnings();return;}await loadMemberWallet();await renderTapEarnings();alert(data?.message||'UGX 500 added to your Net Profits.');return;}
  const spinAction=e.target.closest('[data-spin-action]');
@@ -5318,7 +5370,7 @@ async function updateTaskEarningsFromLedger(ledgerRows){
   {key:'tiktok',match:['tiktok']},
   {key:'casino-spin',match:['casino','spin']},
   {key:'math',match:['math challenge','math for fun']},
-  {key:'ads',match:['ad task','click ads','sponsored task']}
+  {key:'ads',match:['ad task','click ads','sponsored task','sponsored ad view reward']}
  ];
  const totals=Object.fromEntries(definitions.map(x=>[x.key,0]));
  (ledgerRows||[]).filter(x=>x.entry_type==='task_reward'&&x.currency==='UGX').forEach(row=>{
@@ -5571,13 +5623,12 @@ async function loadAdminActivityTools(){
  list.innerHTML=data.map(s=>'<article class="admin-submission" data-admin-submission="'+escapeText(s.id)+'"><strong style="font-size:11px">'+escapeText(s.tasks?.title||'Activity submission')+'</strong><p>Category: '+escapeText(s.tasks?.category||'Activity')+(s.tasks?.content_url?'<br>Activity link: <a href="'+escapeText(s.tasks.content_url)+'" target="_blank" rel="noopener noreferrer">Open original video</a>':'')+'<br>Member: '+escapeText(s.user_id)+'<br>Submitted: '+escapeText(new Date(s.submitted_at).toLocaleString())+'<br>Proof: '+escapeText(s.proof_text||'No text provided')+(s.proof_url?'<br>Proof link: <a href="'+escapeText(s.proof_url)+'" target="_blank" rel="noopener noreferrer">Open proof</a>':'')+'<br>Reward on approval: '+escapeText(Number(s.tasks?.reward_amount||0)+' '+(s.tasks?.currency||'UGX'))+'</p><div class="admin-submission-actions"><button class="activity-btn" type="button" data-review="approved">Approve</button><button class="activity-btn secondary" type="button" data-review="rejected">Reject</button></div></article>').join('');
 }
 const adminTaskCategoryEl=document.getElementById('adminTaskCategory');
-function syncAdminVideoPlatform(){const on=adminTaskCategoryEl.value==='video',sponsored=adminTaskCategoryEl.value==='sponsored';document.getElementById('adminVideoPlatformWrap').hidden=!on;document.getElementById('adminVideoPlatformHelp').hidden=!on;document.getElementById('adminTaskUrl').required=on||sponsored;document.getElementById('adminTaskUrl').placeholder=on?'Paste the public YouTube or TikTok video URL':sponsored?'Paste the sponsor video or promotional page URL (https://…)':'https://…';document.getElementById('adminTaskInstructions').placeholder=sponsored?'Tell members what to watch or view and exactly what proof to submit.':'Explain the exact steps and what proof is required.';const save=document.getElementById('adminTaskSave');if(save)save.textContent=sponsored?'Publish sponsored ad task':'Save activity';}
+function syncAdminVideoPlatform(){const on=adminTaskCategoryEl.value==='video',sponsored=adminTaskCategoryEl.value==='sponsored';document.getElementById('adminVideoPlatformWrap').hidden=!on;document.getElementById('adminVideoPlatformHelp').hidden=!on;document.getElementById('adminTaskUrl').required=on;document.getElementById('adminTaskUrl').placeholder=on?'Paste the public YouTube or TikTok video URL':'Optional destination link (https://…)';document.getElementById('adminTaskInstructions').placeholder=sponsored?'Optional extra details for members.':'Explain the exact steps and what proof is required.';const imageWrap=document.getElementById('adminTaskImageWrap');if(imageWrap)imageWrap.hidden=!sponsored;const reward=document.getElementById('adminTaskReward');if(reward){if(sponsored){reward.value='150';reward.readOnly=true;}else{reward.readOnly=false;}}const save=document.getElementById('adminTaskSave');if(save)save.textContent=sponsored?'Publish ad · UGX 150 per view':'Save activity';}
 adminTaskCategoryEl.addEventListener('change',syncAdminVideoPlatform);syncAdminVideoPlatform();
 document.getElementById('adminTaskForm').addEventListener('submit',async e=>{
  e.preventDefault();if(currentMember?.app_metadata?.role!=='admin')return;
  const b=document.getElementById('adminTaskSave'),category=adminTaskCategoryEl.value,videoPlatform=document.getElementById('adminVideoPlatform').value,videoUrl=document.getElementById('adminTaskUrl').value.trim();
- if(category==='sponsored'&&!/^https:\/\//i.test(videoUrl)){alert('Add the sponsor video or promotional page link starting with https://.');return;}
- if(category==='sponsored'&&!document.getElementById('adminTaskInstructions').value.trim()){alert('Add clear instructions explaining what members must watch and submit as proof.');return;}
+ if(category==='sponsored'&&videoUrl&&!/^https:\/\//i.test(videoUrl)){alert('Ad destination links must start with https://.');return;}
  if(category==='video'){
   let host='';try{host=new URL(videoUrl).hostname.toLowerCase().replace(/^www\\./,'');}catch(e){}
   const valid=videoPlatform==='youtube'?['youtube.com','youtu.be','m.youtube.com','music.youtube.com'].some(d=>host===d||host.endsWith('.'+d)):['tiktok.com','vm.tiktok.com'].some(d=>host===d||host.endsWith('.'+d));
@@ -5587,9 +5638,9 @@ document.getElementById('adminTaskForm').addEventListener('submit',async e=>{
  const limit=document.getElementById('adminTaskLimit').value;
  let title=document.getElementById('adminTaskTitle').value.trim();
  if(category==='video'&&!new RegExp(videoPlatform,'i').test(title))title=(videoPlatform==='youtube'?'YouTube · ':'TikTok · ')+title;
- const payload={title,category,description:document.getElementById('adminTaskDescription').value.trim(),instructions:document.getElementById('adminTaskInstructions').value.trim(),reward_amount:Number(document.getElementById('adminTaskReward').value||0),currency:document.getElementById('adminTaskCurrency').value,status:document.getElementById('adminTaskStatus').value,content_url:videoUrl||null,max_submissions:limit?Number(limit):null,created_by:currentMember.id};
+ const payload={title,category,description:document.getElementById('adminTaskDescription').value.trim(),instructions:document.getElementById('adminTaskInstructions').value.trim(),reward_amount:category==='sponsored'?150:Number(document.getElementById('adminTaskReward').value||0),currency:category==='sponsored'?'UGX':document.getElementById('adminTaskCurrency').value,status:document.getElementById('adminTaskStatus').value,content_url:videoUrl||null,image_url:category==='sponsored'?document.getElementById('adminTaskImage').value:null,max_submissions:limit?Number(limit):null,created_by:currentMember.id};
  const {error}=await supabaseClient.from('tasks').insert(payload);
- b.disabled=false;b.textContent='Save activity';
+ b.disabled=false;b.textContent=category==='sponsored'?'Publish ad · UGX 150 per view':'Save activity';
  if(error){alert('Could not save activity: '+error.message);return;}
  e.target.reset();document.getElementById('adminTaskReward').value='0';syncAdminVideoPlatform();await loadActivities();alert('Activity saved successfully.');
 });
@@ -6792,6 +6843,15 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card{
  border-color:#2b8d78!important;background:linear-gradient(145deg,#103d43,#102d46)!important;
 }
+
+/* Sponsored ad cards */
+.sponsored-ad-card{overflow:hidden;padding:0!important;border:1px solid rgba(85,221,202,.22);background:linear-gradient(145deg,rgba(10,29,51,.98),rgba(7,18,34,.98))!important;box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.sponsored-ad-image{display:block;width:100%;height:176px;object-fit:cover;background:#10243b}
+.sponsored-ad-content{padding:14px 15px 15px}
+.sponsored-ad-content .activity-reward{white-space:nowrap;color:#7af0c9;background:rgba(58,211,166,.12);border:1px solid rgba(58,211,166,.24);border-radius:20px;padding:7px 10px;font-weight:900}
+.sponsored-ad-content .activity-note,.ad-view-status{font-size:10px;line-height:1.5;color:#a9bfd8}
+.ad-view-status{margin:10px 0 0}
+#adminTaskImageWrap[hidden]{display:none}
 </style>
 
 </body>
