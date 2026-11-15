@@ -4711,6 +4711,33 @@ document.querySelectorAll('[data-voucher-tab]').forEach(btn=>btn.addEventListene
 
 bindDropdown('teamMenuToggle','teamSubmenu');
 [1,2,3].forEach(n=>bindDropdown('teamLevel'+n+'Toggle','teamLevel'+n+'Submenu'));
+// Dedicated challenge navigation: intercept Math/Colour before the general activity loader.
+document.addEventListener('click',e=>{
+ const link=e.target.closest('a[data-activity-search]');
+ if(!link)return;
+ const search=String(link.dataset.activitySearch||'').toLowerCase();
+ const challenge=search.includes('math')?'math':(/colou?r/.test(search)?'colour':'');
+ if(!challenge)return;
+ e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+ document.querySelectorAll('.nav-link').forEach(x=>x.classList.toggle('active',x===link));
+ document.querySelectorAll('.page-view').forEach(page=>{page.hidden=page.id!=='activityPage';});
+ const featureWorkspace=document.getElementById('featureWorkspace');if(featureWorkspace)featureWorkspace.hidden=true;
+ currentActivityFilter=link.dataset.activityCategory||'game';
+ currentActivitySearch=search;
+ currentActivityChallenge=challenge;
+ if(typeof activityLoadSequence!=='undefined')activityLoadSequence++;
+ if(typeof stopMathTimer==='function')stopMathTimer();
+ if(typeof stopColourTimer==='function')stopColourTimer();
+ mathState=null;
+ activityRows=[];activitySubmissionMap={};
+ const title=challenge==='math'?'Math Challenge':'Colour Challenge';
+ document.getElementById('activityPageTitle').textContent=title;
+ document.getElementById('activityPageDescription').textContent=challenge==='math'?'Answer 10 timed maths questions. Score a perfect 10/10 to qualify for UGX 1,000.':'Identify the colour shown in each of 10 timed rounds. Score 10/10 to qualify for UGX 1,000.';
+ activityCountEl.textContent=challenge==='math'?'Math challenge ready':'Colour challenge ready';
+ if(challenge==='math')renderMathChallenge();else renderColourChallenge();
+ closeMenu();
+ document.getElementById('activityPage').scrollIntoView({behavior:'smooth',block:'start'});
+},true);
 document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',async e=>{
  if(a.id==='logoutButton')return;
  e.preventDefault();
