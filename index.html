@@ -3938,7 +3938,42 @@ body.activation-screen-open{overflow:hidden!important}
     </section>
     <section class="admin-console-panel" id="adminActivitiesPanel">
       <h2>Activities and submission reviews</h2><p class="admin-muted">Create tasks, set reward terms, and review proof before approving eligible submissions.</p>
-      <div id="adminActivityMount"></div>
+      <div id="adminActivityMount">
+  <!-- ADMIN ACTIVITY MANAGEMENT -->
+  <section class="card admin-panel" id="adminActivityPanel">
+    <div class="section-heading"><h2>Admin · Activities</h2><small>Manage and review</small></div>
+    <div style="padding:15px">
+      <h3 style="font-size:13px;margin-bottom:10px">Publish a new activity</h3>
+      <form class="admin-task-form" id="adminTaskForm">        <label>Activity title<input id="adminTaskTitle" required minlength="3" maxlength="140" placeholder="e.g. Complete a digital skills lesson"></label>
+        <div class="two">
+          <label>Category<select id="adminTaskCategory"><option value="music">Music</option><option value="video">Video</option><option value="game">Game</option><option value="challenge">Challenge</option><option value="learning">Learning</option><option value="sponsored">Sponsored task</option><option value="general">General</option></select></label>
+        <label id="adminVideoPlatformWrap" hidden>Media platform<select id="adminVideoPlatform"><option value="youtube">YouTube</option><option value="tiktok">TikTok</option><option value="spotify">Spotify</option></select></label>
+        <div id="adminVideoPlatformHelp" hidden class="activity-note" style="padding:9px 11px;border-radius:10px;background:#eef6ff;color:#1e3a8a">Choose YouTube, TikTok or Spotify and paste its public link below. Spotify embeds are for listening only; do not reward Spotify streams. YouTube views and Spotify streams must not be incentivised.</div>
+          <label>Reward<input id="adminTaskReward" type="number" min="0" step="1" value="0" required></label>
+        </div>
+        <div class="two">
+          <label>Currency<select id="adminTaskCurrency"><option>UGX</option><option>NGN</option><option>KES</option><option>TZS</option><option>RWF</option><option>GHS</option><option>USD</option></select></label>
+          <label>Maximum submissions<input id="adminTaskLimit" type="number" min="1" step="1" placeholder="Unlimited"></label>
+        </div>
+        <label>Description<textarea id="adminTaskDescription" maxlength="2000" placeholder="What should members know about this ad?"></textarea></label>
+        <label id="adminTaskImageWrap" hidden>Ad image<select id="adminTaskImage">
+          <option value="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85">Smartphone &amp; technology</option>
+          <option value="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85">Fashion &amp; lifestyle</option>
+          <option value="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=85">Food &amp; refreshments</option>
+          <option value="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85">Digital tools &amp; services</option>
+        </select></label>
+        <label>Instructions<textarea id="adminTaskInstructions" maxlength="4000" placeholder="Optional details for members."></textarea></label>
+        <label>Optional activity link<input id="adminTaskUrl" type="url" placeholder="https://…"></label>
+        <label>Publish status<select id="adminTaskStatus"><option value="draft">Save as draft</option><option value="published">Publish now</option></select></label>
+        <button class="activity-btn" type="submit" id="adminTaskSave">Save activity</button>
+        <p class="activity-note">Sponsored ads automatically pay UGX 150 per completed view, once per member per ad. Publish only promotions you are authorized to show and can fund.</p>
+      </form>
+      <h3 style="font-size:13px;margin:20px 0 8px">Pending submissions</h3>
+      <div id="adminSubmissionList"><div class="activity-empty">Loading review queue…</div></div>
+    </div>
+  </section>
+
+      </div>
     </section>
     <section class="admin-console-panel" id="adminWithdrawalsPanel">
       <h2>Withdrawal requests</h2><p class="admin-muted">Review requests and track mobile-money payouts.</p>
@@ -3985,39 +4020,6 @@ body.activation-screen-open{overflow:hidden!important}
     <div class="activity-list" id="activityList"><div class="activity-empty">Sign in to load activities published by GenZBag.</div></div>
       </section>
 
-  <!-- ADMIN ACTIVITY MANAGEMENT -->
-  <section class="card admin-panel" id="adminActivityPanel">
-    <div class="section-heading"><h2>Admin · Activities</h2><small>Manage and review</small></div>
-    <div style="padding:15px">
-      <h3 style="font-size:13px;margin-bottom:10px">Publish a new activity</h3>
-      <form class="admin-task-form" id="adminTaskForm">        <label>Activity title<input id="adminTaskTitle" required minlength="3" maxlength="140" placeholder="e.g. Complete a digital skills lesson"></label>
-        <div class="two">
-          <label>Category<select id="adminTaskCategory"><option value="music">Music</option><option value="video">Video</option><option value="game">Game</option><option value="challenge">Challenge</option><option value="learning">Learning</option><option value="sponsored">Sponsored task</option><option value="general">General</option></select></label>
-        <label id="adminVideoPlatformWrap" hidden>Media platform<select id="adminVideoPlatform"><option value="youtube">YouTube</option><option value="tiktok">TikTok</option><option value="spotify">Spotify</option></select></label>
-        <div id="adminVideoPlatformHelp" hidden class="activity-note" style="padding:9px 11px;border-radius:10px;background:#eef6ff;color:#1e3a8a">Choose YouTube, TikTok or Spotify and paste its public link below. Spotify embeds are for listening only; do not reward Spotify streams. YouTube views and Spotify streams must not be incentivised.</div>
-          <label>Reward<input id="adminTaskReward" type="number" min="0" step="1" value="0" required></label>
-        </div>
-        <div class="two">
-          <label>Currency<select id="adminTaskCurrency"><option>UGX</option><option>NGN</option><option>KES</option><option>TZS</option><option>RWF</option><option>GHS</option><option>USD</option></select></label>
-          <label>Maximum submissions<input id="adminTaskLimit" type="number" min="1" step="1" placeholder="Unlimited"></label>
-        </div>
-        <label>Description<textarea id="adminTaskDescription" maxlength="2000" placeholder="What should members know about this ad?"></textarea></label>
-        <label id="adminTaskImageWrap" hidden>Ad image<select id="adminTaskImage">
-          <option value="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85">Smartphone &amp; technology</option>
-          <option value="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85">Fashion &amp; lifestyle</option>
-          <option value="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=85">Food &amp; refreshments</option>
-          <option value="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85">Digital tools &amp; services</option>
-        </select></label>
-        <label>Instructions<textarea id="adminTaskInstructions" maxlength="4000" placeholder="Optional details for members."></textarea></label>
-        <label>Optional activity link<input id="adminTaskUrl" type="url" placeholder="https://…"></label>
-        <label>Publish status<select id="adminTaskStatus"><option value="draft">Save as draft</option><option value="published">Publish now</option></select></label>
-        <button class="activity-btn" type="submit" id="adminTaskSave">Save activity</button>
-        <p class="activity-note">Sponsored ads automatically pay UGX 150 per completed view, once per member per ad. Publish only promotions you are authorized to show and can fund.</p>
-      </form>
-      <h3 style="font-size:13px;margin:20px 0 8px">Pending submissions</h3>
-      <div id="adminSubmissionList"><div class="activity-empty">Loading review queue…</div></div>
-    </div>
-  </section>
   </section>
 
 
@@ -5545,7 +5547,7 @@ async function loadActivities(){
  if(loadSequence!==activityLoadSequence)return;
  if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
  // Math and Colour are built-in challenge screens; do not make their display wait for the published-task, submission, or ad-status requests.
- if(currentActivityChallenge||currentActivityFilter==='challenge'||/math|colou?r/i.test(currentActivitySearch)){
+ if(currentActivityChallenge||(currentActivityFilter==='challenge'&&!/trivia/i.test(currentActivitySearch))||/math|colou?r/i.test(currentActivitySearch)){
   activityRows=[];activitySubmissionMap={};activityCountEl.textContent='2 challenges available';renderActivities();return;
  }
  activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
@@ -5869,7 +5871,7 @@ async function loadMemberWallet(){
  if(payoutEl)payoutEl.textContent=savedPhone||'No phone number saved';
  const phoneInput=document.getElementById('withdrawMobileNumber');if(phoneInput&&!phoneInput.value&&savedPhone)phoneInput.value=savedPhone;
  const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type,note,created_at').eq('user_id',member.id);
- if(error){console.warn('Wallet ledger:',error);return;}
+ if(error){console.warn('Wallet ledger:',error);const balanceLabel=document.querySelector('.balance-grid .balance-card strong');if(balanceLabel)balanceLabel.textContent='Unavailable';const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent='Unavailable';return;}
  const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
  updateTaskEarningsFromLedger(rows);
  renderDashboardWalletInsights(rows);
@@ -6234,7 +6236,7 @@ async function loadAdminConsoleTab(id){
 }
 function adminProfileDirectoryMount(){const panel=document.getElementById('adminProfileDirectory'),mount=document.getElementById('adminMembersMount');if(panel&&mount){panel.hidden=false;mount.appendChild(panel);}return true;}
 function setupAdminConsole(){
- const authorized=adminIsAuthorized();if(adminConsoleNav)adminConsoleNav.hidden=!authorized;
+ const authorized=adminIsAuthorized();if(adminConsoleNav){adminConsoleNav.hidden=!authorized;adminConsoleNav.style.display=authorized?'flex':'none';}
  if(!authorized){adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';const page=document.getElementById('adminPage');if(page)page.hidden=true;const submissions=document.getElementById('adminSubmissionList');if(submissions)submissions.replaceChildren();return;}
  adminPanelEl.hidden=false;adminPanelEl.style.display='block';
  const activityMount=document.getElementById('adminActivityMount');if(activityMount&&adminPanelEl){activityMount.appendChild(adminPanelEl);adminPanelEl.classList.add('visible');}
