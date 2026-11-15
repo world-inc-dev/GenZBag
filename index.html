@@ -4979,30 +4979,7 @@ function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function categoryName(v){return activityCategoryNames[v]||String(v||'General').replace(/_/g,' ');}
 function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
 
-const triviaQuestionBank=[
- {q:'What is the capital city of Uganda?',o:['Jinja','Kampala','Entebbe','Gulu'],a:1},
- {q:'Which planet is the largest in our solar system?',o:['Earth','Saturn','Jupiter','Mars'],a:2},
- {q:'What does HTML mainly help create?',o:['Web page structure','Phone batteries','Computer processors','Internet cables'],a:0},
- {q:'What is the chemical formula for water?',o:['CO2','O2','H2O','NaCl'],a:2},
- {q:'Which river is commonly identified as the world’s longest?',o:['Nile','Congo','Niger','Zambezi'],a:0},
- {q:'What is 7 × 8?',o:['54','56','64','58'],a:1},
- {q:'What is the currency of Kenya?',o:['Naira','Cedi','Kenyan shilling','Rand'],a:2},
- {q:'Which organ pumps blood around the human body?',o:['Lungs','Liver','Brain','Heart'],a:3},
- {q:'Solar energy comes from which source?',o:['The Moon','The Sun','Wind','Ocean tides'],a:1},
- {q:'Who was the first person to walk on the Moon?',o:['Yuri Gagarin','Buzz Aldrin','Neil Armstrong','John Glenn'],a:2},
- {q:'Python is best known as what?',o:['A programming language','A web browser','A phone network','A database cable'],a:0},
- {q:'At sea level, water boils at approximately what temperature?',o:['50°C','80°C','100°C','120°C'],a:2},
- {q:'Uganda is located on which continent?',o:['Asia','Africa','Europe','South America'],a:1},
- {q:'How many seconds are in one minute?',o:['30','45','60','100'],a:2},
- {q:'What process do green plants use to make food?',o:['Evaporation','Photosynthesis','Condensation','Fermentation'],a:1},
- {q:'Which is the largest ocean on Earth?',o:['Atlantic','Indian','Arctic','Pacific'],a:3},
- {q:'How many sides does a triangle have?',o:['Two','Three','Four','Five'],a:1},
- {q:'What does CPU stand for?',o:['Central Processing Unit','Computer Power Utility','Core Program Upload','Central Print Unit'],a:0},
- {q:'In which year did Uganda gain independence?',o:['1957','1960','1962','1965'],a:2},
- {q:'How many cents are in one US dollar?',o:['10','50','100','1000'],a:2}
-];
 let triviaState=null,triviaTimer=null;
-function triviaPickQuestions(){const pool=[...triviaQuestionBank];for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}return pool.slice(0,10);}
 function renderTriviaChallenge(){
  const task=activityRows.find(t=>/trivia challenge/i.test(t.title));
  activityCountEl.textContent=task?'Challenge ready':'Challenge unavailable';
@@ -5022,23 +4999,20 @@ function renderTriviaQuestion(){
  if(!triviaState)return;
  const q=triviaState.questions[triviaState.index],answered=triviaState.selected!==null;
  activityCountEl.textContent='Question '+(triviaState.index+1)+' of 10';
- activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • BRAIN ARENA</span><span class="trivia-badge">⏱ '+triviaState.seconds+'s left</span></div><div class="trivia-progress"><span style="width:'+((triviaState.index)/10*100)+'%"></span></div><div class="trivia-question-meta"><span>QUESTION '+(triviaState.index+1)+' / 10</span><span>SCORE '+(triviaState.score*10)+' PTS</span></div><h2 class="trivia-question">'+escapeText(q.q)+'</h2><div class="trivia-options">'+q.o.map((opt,i)=>'<button class="trivia-option '+(answered&&i===q.a?'correct':answered&&i===triviaState.selected?'wrong':'')+'" type="button" data-trivia-answer="'+i+'" '+(answered?'disabled':'')+'><strong>'+String.fromCharCode(65+i)+'.</strong> '+escapeText(opt)+'</button>').join('')+'</div><p class="trivia-feedback">'+(answered?(triviaState.selected===q.a?'Correct! +10 points.':triviaState.selected===-1?'Time is up. Correct answer: '+escapeText(q.o[q.a]):'Not quite. Correct answer: '+escapeText(q.o[q.a])):'Select your answer before the timer runs out.')+'</p>'+(answered?'<button class="trivia-primary" type="button" data-trivia-next>'+(triviaState.index===9?'Finish challenge':'Next question →')+'</button>':'')+'<button class="trivia-secondary" type="button" data-trivia-exit>Exit challenge</button></div>';
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • BRAIN ARENA</span><span class="trivia-badge">⏱ '+triviaState.seconds+'s left</span></div><div class="trivia-progress"><span style="width:'+((triviaState.index)/10*100)+'%"></span></div><div class="trivia-question-meta"><span>QUESTION '+(triviaState.index+1)+' / 10</span><span>SERVER-SCORED</span></div><h2 class="trivia-question">'+escapeText(q.prompt)+'</h2><div class="trivia-options">'+q.options.map((opt,i)=>'<button class="trivia-option '+(answered&&i===triviaState.selected?'wrong':'')+'" type="button" data-trivia-answer="'+i+'" '+(answered?'disabled':'')+'><strong>'+String.fromCharCode(65+i)+'.</strong> '+escapeText(opt)+'</button>').join('')+'</div><p class="trivia-feedback">'+(answered?'Answer saved. Continue to the next question.':'Select your answer before the timer runs out.')+'</p>'+(answered?'<button class="trivia-primary" type="button" data-trivia-next>'+(triviaState.index===9?'Finish challenge':'Next question →')+'</button>':'')+'<button class="trivia-secondary" type="button" data-trivia-exit>Exit challenge</button></div>';
 }
 function stopTriviaTimer(){if(triviaTimer){clearInterval(triviaTimer);triviaTimer=null;}}
 function startTriviaTimer(){stopTriviaTimer();triviaState.seconds=15;triviaTimer=setInterval(()=>{if(!triviaState){stopTriviaTimer();return;}triviaState.seconds--;if(triviaState.seconds<=0){stopTriviaTimer();if(triviaState.selected===null){triviaState.selected=-1;triviaState.answers[triviaState.index]=-1;}renderTriviaQuestion();}else{const badge=activityListEl.querySelector('.trivia-badge');if(badge)badge.textContent='⏱ '+triviaState.seconds+'s left';}},1000);}
 async function finishTriviaChallenge(){
  stopTriviaTimer();const state=triviaState;if(!state)return;
- const task=activityRows.find(t=>String(t.id)===String(state.taskId));
- if(!task||!currentMember||!supabaseClient){activityListEl.innerHTML='<div class="activity-empty">Your session expired. Sign in again before submitting your score.</div>';triviaState=null;return;}
- const pct=Math.round(state.score/10*100),summary=state.questions.map((q,i)=>'Q'+(i+1)+': '+(state.answers[i]===q.a?'correct':state.answers[i]===-1?'timeout':'incorrect')).join('; ');
- const proof='TRIVIA CHALLENGE RESULT\nScore: '+state.score+'/10 ('+pct+'%)\nPoints: '+(state.score*10)+'/100\nQualification: '+(state.score===10?'ELIGIBLE FOR UGX 3,000':'NOT ELIGIBLE — PERFECT SCORE REQUIRED')+'\nAnswers: '+summary+'\nCompleted: '+new Date().toISOString();
- activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Well played!</h2><div class="trivia-result-score"><strong>'+state.score+'/10</strong><span>'+pct+'% • '+(state.score*10)+' points</span></div><p>'+(state.score===10?'Perfect score! You qualify for UGX 3,000, subject to administrator approval.':'You scored '+state.score+'/10. You do not qualify for the UGX 3,000 reward. Your result is being recorded.')+'</p></div>';
- const {error}=await supabaseClient.from('task_submissions').insert({task_id:task.id,user_id:currentMember.id,proof_text:proof,proof_url:null});
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Checking your answers securely…</h2><p>The server is validating your answers.</p></div>';
+ const answers=state.questions.map((q,i)=>({question_key:q.question_key,answer_index:Number.isInteger(state.answers[i])?state.answers[i]:-1}));
+ const {data,error}=await supabaseClient.rpc('submit_secure_challenge',{p_session_id:state.sessionId,p_answers:answers});
  triviaState=null;
- if(error){activityListEl.innerHTML='<div class="trivia-shell"><h2>Result not submitted</h2><p>'+escapeText(error.code==='23505'?'A challenge result is already awaiting review or has been approved for this activity.':error.message)+'</p><button class="trivia-secondary" type="button" data-trivia-retry>Back to Trivia</button></div>';return;}
+ if(error||!data?.success){activityListEl.innerHTML='<div class="trivia-shell"><h2>Result not submitted</h2><p>'+escapeText(error?.message||'Your answers could not be verified.')+'</p><button class="trivia-secondary" type="button" data-trivia-retry>Back to Trivia</button></div>';return;}
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Trivia challenge finished!</h2><div class="trivia-result-score"><strong>'+data.score+'/10</strong><span>'+data.points+'/100 points</span></div><p>'+(data.qualified?'Perfect score! You qualify for UGX 3,000, subject to administrator approval.':'You do not qualify for the UGX 3,000 reward. A perfect 10/10 is required.')+'</p><p>Your server-verified result has been sent for administrator review.</p></div>';
  await loadActivities();
 }
-
 
 function renderMathChallenge(){
  const task=activityRows.find(t=>/math challenge/i.test(t.title));
@@ -5171,8 +5145,8 @@ activityListEl.addEventListener('click',async e=>{
  if(e.target.closest('[data-math-next]')){if(!mathState)return;if(mathState.index>=9){finishMathChallenge();return;}mathState.index++;mathState.selected=null;renderMathQuestion();startMathTimer();return;}
  if(e.target.closest('[data-math-exit]')){stopMathTimer();mathState=null;renderMathChallenge();return;}
  if(e.target.closest('[data-math-retry]')){mathState=null;renderMathChallenge();return;}
- const start=e.target.closest('[data-trivia-start]');if(start){if(!currentMember){alert('Please sign in to play Trivia.');return;}triviaState={taskId:start.dataset.triviaStart,questions:triviaPickQuestions(),index:0,score:0,selected:null,seconds:15,answers:[]};renderTriviaQuestion();startTriviaTimer();return;}
- const answer=e.target.closest('[data-trivia-answer]');if(answer&&triviaState&&triviaState.selected===null){stopTriviaTimer();const chosen=Number(answer.dataset.triviaAnswer),q=triviaState.questions[triviaState.index];triviaState.selected=chosen;triviaState.answers[triviaState.index]=chosen;if(chosen===q.a)triviaState.score++;renderTriviaQuestion();return;}
+ const start=e.target.closest('[data-trivia-start]');if(start){if(!currentMember){alert('Please sign in to play Trivia.');return;}start.disabled=true;const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:'trivia'});if(error||!data){start.disabled=false;alert(error?.message||'Unable to start Trivia Challenge.');return;}triviaState={taskId:start.dataset.triviaStart,sessionId:data.session_id,questions:data.questions,index:0,selected:null,seconds:15,answers:[]};renderTriviaQuestion();startTriviaTimer();return;}
+ const answer=e.target.closest('[data-trivia-answer]');if(answer&&triviaState&&triviaState.selected===null){stopTriviaTimer();const chosen=Number(answer.dataset.triviaAnswer);triviaState.selected=chosen;triviaState.answers[triviaState.index]=chosen;renderTriviaQuestion();return;}
  if(e.target.closest('[data-trivia-next]')){if(!triviaState)return;if(triviaState.index>=9){finishTriviaChallenge();return;}triviaState.index++;triviaState.selected=null;renderTriviaQuestion();startTriviaTimer();return;}
  if(e.target.closest('[data-trivia-exit]')){stopTriviaTimer();triviaState=null;renderTriviaChallenge();return;}
  if(e.target.closest('[data-trivia-retry]')){triviaState=null;renderTriviaChallenge();return;}
