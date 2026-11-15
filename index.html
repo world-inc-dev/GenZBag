@@ -5419,8 +5419,11 @@ function updateDailyVideoLimit(){
  const left=Math.max(0,5-activityDailyVideoCount);
  box.innerHTML='<strong>Daily video limit</strong><br>'+activityDailyVideoCount+' of 5 video activities submitted today · '+left+' remaining. Watch YouTube or TikTok videos inside GenZBag. Each completed 60-second view unlocks UGX 150; maximum 5 video rewards per Uganda day.';
 }
+let activityLoadSequence=0;
 async function loadActivities(){
+ const loadSequence=++activityLoadSequence;
  const member=await ensureMemberSession();
+ if(loadSequence!==activityLoadSequence)return;
  if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
  // Math and Colour are built-in challenge screens; do not make their display wait for the published-task, submission, or ad-status requests.
  if(currentActivityFilter==='challenge'||/math|colou?r/i.test(currentActivitySearch)){
@@ -5432,6 +5435,7 @@ async function loadActivities(){
   supabaseClient.from('task_submissions').select('id,task_id,status,review_note,submitted_at').eq('user_id',member.id).order('submitted_at',{ascending:false}),
   supabaseClient.rpc('get_sponsored_ad_view_statuses')
  ]);
+ if(loadSequence!==activityLoadSequence)return;
  if(tasksRes.error){console.error('Activity load:',tasksRes.error);setActivityMessage(tasksRes.error.message.includes('activated')?'Your account must be activated before accessing activities.':'Activities could not load. Check your account activation and try again.');return;}
  if(subsRes.error){console.warn('Submission history:',subsRes.error);}
  activityRows=(tasksRes.data||[]).filter(t=>(!t.starts_at||new Date(t.starts_at)<=new Date())&&(!t.ends_at||new Date(t.ends_at)>new Date()));
