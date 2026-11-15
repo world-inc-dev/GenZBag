@@ -4033,7 +4033,7 @@ body.activation-screen-open{overflow:hidden!important}
     <div class="global-chat-guideline">🤝 Be respectful. Never share passwords, verification codes, or private financial information. Only real registered members appear here.</div>
     <section class="gb-chat-reward">
       <div><span class="gb-chat-kicker">CHAT & EARN</span><h3>UGX 10,000 Foreign Chat Bonus</h3><p>Start and complete genuine conversations with five different members. Each person must reply.</p></div>
-      <div class="gb-chat-progress"><strong id="foreignChatProgress">0 / 5</strong><span>completed chats</span></div>
+      <div class="gb-chat-progress"><strong id="foreignChatProgress">0 / 5</strong><span>completed chats today · LIVE SYNC</span></div>
       <button type="button" id="foreignChatClaim" class="gb-chat-claim" hidden>Claim UGX 10,000</button>
       <small id="foreignChatRewardStatus" role="status">Your progress is checked securely. The bonus goes to Net Profits only.</small>
     </section>
@@ -5897,7 +5897,7 @@ async function loadMemberWallet(){
  renderWithdrawalEligibility();
 }
 function chatTime(v){return new Date(v).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
-let globalChatSending=false,globalChatPresence=null,memberConversationChannel=null,currentPrivateConversation=null,currentChatPartner=null,chatDirectoryProfiles=[],memberLiveChannel=null,memberLiveChannelUser=null;
+let globalChatSending=false,globalChatPresence=null,memberConversationChannel=null,currentPrivateConversation=null,currentChatPartner=null,chatDirectoryProfiles=[],memberLiveChannel=null,memberLiveChannelUser=null,memberLiveRefreshTimer=null;
 const gbCountryEmoji=(country)=>({Uganda:'🇺🇬',Nigeria:'🇳🇬',Kenya:'🇰🇪',Tanzania:'🇹🇿',Rwanda:'🇷🇼',Ghana:'🇬🇭','United States':'🇺🇸','United Kingdom':'🇬🇧',Canada:'🇨🇦',India:'🇮🇳',SouthAfrica:'🇿🇦','South Africa':'🇿🇦'}[country]||'🌐');
 function getKampalaDayStartISO(){
  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Kampala',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
@@ -5935,7 +5935,9 @@ function setupMemberLiveCounters(){
  const member=currentMember;if(!member?.id||!supabaseClient)return;
  if(memberLiveChannel&&memberLiveChannelUser===member.id)return;
  if(memberLiveChannel)supabaseClient.removeChannel(memberLiveChannel);
+ if(memberLiveRefreshTimer)clearInterval(memberLiveRefreshTimer);
  memberLiveChannelUser=member.id;
+ memberLiveRefreshTimer=setInterval(()=>{loadMemberInboxCounters();loadForeignChatProgress();},60000);
  memberLiveChannel=supabaseClient.channel('member-live-counters-'+member.id)
   .on('postgres_changes',{event:'*',schema:'public',table:'notifications',filter:'user_id=eq.'+member.id},()=>loadMemberInboxCounters())
   .on('postgres_changes',{event:'INSERT',schema:'public',table:'member_messages'},async payload=>{
@@ -6020,6 +6022,7 @@ async function loadGlobalChat(){
  });
  await loadForeignChatProgress();await loadMemberInboxCounters();
 }
+document.getElementById('messagesButton')?.addEventListener('click',()=>{location.hash='#chatPage';});
 document.getElementById('globalChatSend').addEventListener('click',async()=>{
  if(globalChatSending||!currentPrivateConversation)return;
  const member=await ensureMemberSession(),message=chatInputEl.value.trim();if(!member)return;
@@ -6080,7 +6083,7 @@ document.getElementById('adminSubmissionList').addEventListener('click',async e=
 });
 async function initialiseMemberFeatures(session){
  currentMember=session?.user||await ensureMemberSession()||null;
- if(!currentMember){if(memberLiveChannel){supabaseClient.removeChannel(memberLiveChannel);memberLiveChannel=null;memberLiveChannelUser=null;}setLiveBadge('notificationCount',0);setLiveBadge('messageCount',0);activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';if(adminConsoleNav)adminConsoleNav.hidden=true;return;}
+ if(!currentMember){if(memberLiveChannel){supabaseClient.removeChannel(memberLiveChannel);memberLiveChannel=null;memberLiveChannelUser=null;}if(memberLiveRefreshTimer){clearInterval(memberLiveRefreshTimer);memberLiveRefreshTimer=null;}setLiveBadge('notificationCount',0);setLiveBadge('messageCount',0);activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';if(adminConsoleNav)adminConsoleNav.hidden=true;return;}
  await refreshAdminRoleClaim();
  setupMemberLiveCounters();
  await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools(),loadMemberInboxCounters()]);setupAdminConsole();
