@@ -4807,7 +4807,8 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
  const targetId=(a.getAttribute('href')||'').replace(/^#/,'');
  const target=document.getElementById(targetId);
  if(!target){closeMenu();return;}if(targetId==='profile')loadMemberNetwork();
- if(targetId==='chatPage')loadGlobalChat();\n  if(targetId==='uplinePage')loadUplineConversation();
+ if(targetId==='chatPage')loadGlobalChat();
+  if(targetId==='uplinePage')loadUplineConversation();
  document.querySelectorAll('.page-view').forEach(page=>{page.hidden=page!==target;});
  if(targetId!=='featureWorkspace')document.getElementById('featureWorkspace').hidden=true;
  if(feature){
