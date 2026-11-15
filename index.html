@@ -5591,7 +5591,7 @@ document.getElementById('adminTaskForm').addEventListener('submit',async e=>{
  const {error}=await supabaseClient.from('tasks').insert(payload);
  b.disabled=false;b.textContent='Save activity';
  if(error){alert('Could not save activity: '+error.message);return;}
- e.target.reset();document.getElementById('adminTaskReward').value='0';await loadActivities();alert('Activity saved successfully.');
+ e.target.reset();document.getElementById('adminTaskReward').value='0';syncAdminVideoPlatform();await loadActivities();alert('Activity saved successfully.');
 });
 document.getElementById('adminSubmissionList').addEventListener('click',async e=>{
  const b=e.target.closest('[data-review]');if(!b)return;
