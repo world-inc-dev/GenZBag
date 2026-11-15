@@ -3682,7 +3682,7 @@ body.activation-screen-open{overflow:hidden!important}
   </div>
   <a class="nav-link" href="#featureWorkspace" data-feature="products"><span class="nav-icon">🛒</span>Products</a>
   <div class="nav-label">EARN & ACTIVITIES</div>
-  <a class="nav-link" href="#chatPage"><span class="nav-icon">💬</span>Foreign Chat</a>
+  <a class="nav-link" href="#chatPage" data-weekly-task="foreign_chat" data-activity-title="Foreign Chat"><span class="nav-icon">💬</span>Foreign Chat</a>
   <a class="nav-link" href="#activityPage" data-activity-category="music" data-activity-search="spotify" data-activity-title="Music Listening"><span class="nav-icon">🎧</span>Earn With Spotify</a>
   <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="tap" data-activity-title="Tap Earnings"><span class="nav-icon">👆</span>Tap Earnings</a>
   <a class="nav-link" href="#activityPage" data-activity-category="game" data-activity-search="colour" data-activity-title="Colour Challenge"><span class="nav-icon">🎨</span>Color Challenge</a>
@@ -5083,6 +5083,64 @@ const adminPanelEl=document.getElementById('adminActivityPanel');
 let currentActivityFilter='all',currentActivitySearch='',currentActivityChallenge='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
 let currentAvailableBalance=0,currentWithdrawableBalance=0,currentDirectActiveReferrals=0;
 let teamRows=[],currentTeamLevel=1,currentTeamView='overview';
+function genzbagScheduledDay(search,title,category){
+ const q=(String(search||'')+' '+String(title||'')).toLowerCase(),c=String(category||'').toLowerCase();
+ if(q.includes('foreign_chat')||q.includes('foreign chat'))return 1;
+ if(q.includes('spotify')||q.includes('music')||c==='music')return 1;
+ if(q.includes('tap')||q.includes('colour')||q.includes('color')||q.includes('tap earning'))return 2;
+ if(q.includes('trivia')||q.includes('youtube')||c==='challenge')return 3;
+ if(q.includes('tiktok'))return 4;
+ if(q.includes('casino')||q.includes('spin'))return 5;
+ if(q.includes('math'))return 6;
+ if(q.includes('ad task')||q.includes('sponsored')||c==='sponsored')return 0;
+ if(c==='video')return q.includes('youtube')?3:(q.includes('tiktok')?4:null);
+ return null;
+}
+function genzbagTodayIndex(){
+ const day=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Kampala',weekday:'short'}).format(new Date());
+ return ({Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6})[day]??0;
+}
+function genzbagScheduleAllowed(search,title,category){
+ const required=genzbagScheduledDay(search,title,category);
+ if(required===null)return true;
+ const today=genzbagTodayIndex();
+ if(today===required)return true;
+ const names=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+ alert((title||'This task')+' is available on '+names[required]+' only. Today is '+names[today]+' (East Africa Time).');
+ return false;
+}
+document.addEventListener('click',e=>{
+ const link=e.target.closest('a[data-weekly-task],a[data-activity-search]');
+ if(!link)return;
+ const key=link.dataset.weeklyTask||link.dataset.activitySearch||'';
+ const title=link.dataset.activityTitle||link.textContent.trim();
+ if(!genzbagScheduleAllowed(key,title,link.dataset.activityCategory||'')){
+  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+ }
+},true);
+activityListEl.addEventListener('click',e=>{
+ const card=e.target.closest('[data-activity-id]');
+ if(currentActivityChallenge){
+  if(!genzbagScheduleAllowed(currentActivityChallenge,currentActivityChallenge==='math'?'Math Challenge':'Colour Challenge','game')){
+   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+  }
+  return;
+ }
+ if(!card)return;
+ const task=activityRows.find(x=>String(x.id)===String(card.dataset.activityId));
+ if(task&&!genzbagScheduleAllowed(task.title,task.title,task.category)){
+  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+ }
+},true);
+activityListEl.addEventListener('submit',e=>{
+ const form=e.target.closest('[data-proof-form]');
+ if(!form)return;
+ const task=activityRows.find(x=>String(x.id)===String(form.dataset.proofForm));
+ if(task&&!genzbagScheduleAllowed(task.title,task.title,task.category)){
+  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+ }
+},true);
+
 function renderTeamMembers(){
  const list=document.getElementById('teamMembersList'),q=(document.getElementById('teamSearchInput')?.value||'').trim().toLowerCase();
  let rows=teamRows.filter(x=>Number(x.member_level)===Number(currentTeamLevel)); if(currentTeamView==='active')rows=rows.filter(x=>x.is_active);
