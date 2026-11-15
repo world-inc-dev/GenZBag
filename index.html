@@ -97,6 +97,7 @@ a {text-decoration:none;color:inherit}
   place-items:center;
   border:2px solid white;
 }
+.count[hidden]{display:none!important}
 
 .brand-button {
   display:flex;
@@ -5896,25 +5897,70 @@ async function loadMemberWallet(){
  renderWithdrawalEligibility();
 }
 function chatTime(v){return new Date(v).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
-let globalChatSending=false,globalChatPresence=null,memberConversationChannel=null,currentPrivateConversation=null,currentChatPartner=null,chatDirectoryProfiles=[];
+let globalChatSending=false,globalChatPresence=null,memberConversationChannel=null,currentPrivateConversation=null,currentChatPartner=null,chatDirectoryProfiles=[],memberLiveChannel=null,memberLiveChannelUser=null;
 const gbCountryEmoji=(country)=>({Uganda:'🇺🇬',Nigeria:'🇳🇬',Kenya:'🇰🇪',Tanzania:'🇹🇿',Rwanda:'🇷🇼',Ghana:'🇬🇭','United States':'🇺🇸','United Kingdom':'🇬🇧',Canada:'🇨🇦',India:'🇮🇳',SouthAfrica:'🇿🇦','South Africa':'🇿🇦'}[country]||'🌐');
+function getKampalaDayStartISO(){
+ const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Kampala',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+ return new Date(v.year+'-'+v.month+'-'+v.day+'T00:00:00+03:00').toISOString();
+}
+function setLiveBadge(id,count){
+ const el=document.getElementById(id);if(!el)return;
+ const n=Math.max(0,Number(count)||0);el.textContent=n>99?'99+':String(n);el.hidden=n===0;
+}
+async function loadMemberInboxCounters(){
+ const member=await ensureMemberSession();if(!member||!supabaseClient)return;
+ const {count:unreadNotifications,error:notificationError}=await supabaseClient.from('notifications').select('id',{count:'exact',head:true}).eq('user_id',member.id).is('read_at',null);
+ if(notificationError)console.warn('Notification counter:',notificationError.message);else setLiveBadge('notificationCount',unreadNotifications||0);
+ const {data:convos,error:conversationError}=await supabaseClient.from('member_conversations').select('id').or('member_a.eq.'+member.id+',member_b.eq.'+member.id);
+ if(conversationError){console.warn('Message conversations:',conversationError.message);return;}
+ const ids=(convos||[]).map(c=>c.id);
+ if(!ids.length){setLiveBadge('messageCount',0);return;}
+ const [readsResult,messagesResult]=await Promise.all([
+  supabaseClient.from('member_conversation_reads').select('conversation_id,last_read_at').eq('user_id',member.id).in('conversation_id',ids),
+  supabaseClient.from('member_messages').select('conversation_id,created_at').in('conversation_id',ids).neq('sender_id',member.id).order('created_at',{ascending:false}).limit(1000)
+ ]);
+ if(readsResult.error||messagesResult.error){console.warn('Unread message counter:',readsResult.error||messagesResult.error);return;}
+ const readMap=new Map((readsResult.data||[]).map(r=>[r.conversation_id,new Date(r.last_read_at).getTime()]));
+ const unread=(messagesResult.data||[]).filter(m=>!readMap.has(m.conversation_id)||new Date(m.created_at).getTime()>readMap.get(m.conversation_id)).length;
+ setLiveBadge('messageCount',unread);
+}
+async function markMemberConversationRead(conversationId){
+ const member=await ensureMemberSession();if(!member||!conversationId||!supabaseClient)return;
+ const {error}=await supabaseClient.from('member_conversation_reads').upsert({user_id:member.id,conversation_id:conversationId,last_read_at:new Date().toISOString()},{onConflict:'user_id,conversation_id'});
+ if(error)console.warn('Could not mark conversation read:',error.message);
+ await loadMemberInboxCounters();
+}
+function setupMemberLiveCounters(){
+ const member=currentMember;if(!member?.id||!supabaseClient)return;
+ if(memberLiveChannel&&memberLiveChannelUser===member.id)return;
+ if(memberLiveChannel)supabaseClient.removeChannel(memberLiveChannel);
+ memberLiveChannelUser=member.id;
+ memberLiveChannel=supabaseClient.channel('member-live-counters-'+member.id)
+  .on('postgres_changes',{event:'*',schema:'public',table:'notifications',filter:'user_id=eq.'+member.id},()=>loadMemberInboxCounters())
+  .on('postgres_changes',{event:'INSERT',schema:'public',table:'member_messages'},async payload=>{
+   if(currentPrivateConversation&&payload.new?.conversation_id===currentPrivateConversation){await renderPrivateMessages();await markMemberConversationRead(currentPrivateConversation);}
+   else await loadMemberInboxCounters();
+   await loadForeignChatProgress();
+  })
+  .subscribe(status=>{if(status==='SUBSCRIBED')loadMemberInboxCounters();else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')console.warn('Live message/notification counters disconnected:',status);});
+}
 async function loadForeignChatProgress(){
- const member=await ensureMemberSession();if(!member)return;
- const {data:convos,error}=await supabaseClient.from('member_conversations').select('id,member_a,member_b').eq('initiated_by',member.id);
+ const member=await ensureMemberSession();if(!member||!supabaseClient)return;
+ const {data:convos,error}=await supabaseClient.from('member_conversations').select('id,member_a,member_b').or('member_a.eq.'+member.id+',member_b.eq.'+member.id);
  if(error){console.warn('Chat reward progress:',error.message);return;}
  const ids=(convos||[]).map(x=>x.id);let qualified=0;
  if(ids.length){
-  const {data:msgs,error:msgErr}=await supabaseClient.from('member_messages').select('conversation_id,sender_id').in('conversation_id',ids);
-  if(!msgErr){
-   const by=Object.groupBy?Object.groupBy(msgs||[],m=>m.conversation_id):(msgs||[]).reduce((o,m)=>((o[m.conversation_id]??=[]).push(m),o),{});
-   qualified=(convos||[]).filter(cv=>{const list=by[cv.id]||[],other=cv.member_a===member.id?cv.member_b:cv.member_a;return list.some(m=>m.sender_id===member.id)&&list.some(m=>m.sender_id===other);}).length;
-  }
+  const {data:msgs,error:msgErr}=await supabaseClient.from('member_messages').select('conversation_id,sender_id,created_at').in('conversation_id',ids).gte('created_at',getKampalaDayStartISO()).order('created_at',{ascending:false}).limit(2000);
+  if(msgErr){console.warn('Daily chat progress messages:',msgErr.message);return;}
+  const by=(msgs||[]).reduce((o,m)=>((o[m.conversation_id]??=[]).push(m.sender_id),o),{});
+  qualified=(convos||[]).filter(cv=>{const senders=by[cv.id]||[],other=cv.member_a===member.id?cv.member_b:cv.member_a;return senders.includes(member.id)&&senders.includes(other);}).length;
  }
  qualified=Math.min(5,qualified);
  const p=document.getElementById('foreignChatProgress'),claim=document.getElementById('foreignChatClaim'),status=document.getElementById('foreignChatRewardStatus');
  if(p)p.textContent=qualified+' / 5';
  if(claim)claim.hidden=qualified<5;
- if(status)status.textContent=qualified>=5?'You have completed five conversations. Claim your UGX 10,000 bonus.':'Complete '+(5-qualified)+' more genuine conversation'+(5-qualified===1?'':'s')+' with different members. The bonus goes to Net Profits only.';
+ if(status)status.textContent=qualified>=5?'You have completed five two-way conversations today. Your bonus claim is checked securely.':'Today: complete '+(5-qualified)+' more two-way conversation'+(5-qualified===1?'':'s')+' with different members. Live progress is synced with Supabase. The bonus goes to Net Profits only.';
 }
 async function renderForeignDirectory(){
  const member=await ensureMemberSession();if(!member||!globalChatPresence)return;
@@ -5945,6 +5991,7 @@ async function openMemberConversation(otherId,otherName,otherCountry){
  document.getElementById('gbChatPartnerCountry').textContent=gbCountryEmoji(otherCountry)+' '+otherCountry+' · Private conversation';
  document.getElementById('globalChatInput').disabled=false;document.getElementById('globalChatSend').disabled=false;document.getElementById('gbChatBack').hidden=false;
  await renderPrivateMessages();
+ await markMemberConversationRead(cv.id);
  if(memberConversationChannel)await supabaseClient.removeChannel(memberConversationChannel);
  memberConversationChannel=supabaseClient.channel('member-chat-'+cv.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'member_messages',filter:'conversation_id=eq.'+cv.id},renderPrivateMessages).subscribe();
 }
@@ -5971,7 +6018,7 @@ async function loadGlobalChat(){
   if(status==='SUBSCRIBED'){await globalChatPresence.track(presencePayload);chatStatusEl.textContent='● Connected · Showing real registered members who are online.';}
   else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')chatStatusEl.textContent='Live connection interrupted. Tap refresh to reconnect.';
  });
- await loadForeignChatProgress();
+ await loadForeignChatProgress();await loadMemberInboxCounters();
 }
 document.getElementById('globalChatSend').addEventListener('click',async()=>{
  if(globalChatSending||!currentPrivateConversation)return;
@@ -5981,7 +6028,7 @@ document.getElementById('globalChatSend').addEventListener('click',async()=>{
  const {error}=await supabaseClient.from('member_messages').insert({conversation_id:currentPrivateConversation,sender_id:member.id,body:message});
  globalChatSending=false;b.disabled=false;b.textContent='Send ➤';
  if(error){chatStatusEl.textContent='Message not sent: '+error.message;return;}
- chatInputEl.value='';await renderPrivateMessages();await loadForeignChatProgress();
+ chatInputEl.value='';await renderPrivateMessages();await loadForeignChatProgress();await loadMemberInboxCounters();
 });
 document.getElementById('globalChatRefresh').addEventListener('click',async()=>{const b=document.getElementById('globalChatRefresh');b.disabled=true;b.classList.add('spinning');await loadGlobalChat();b.disabled=false;b.classList.remove('spinning');});
 chatInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('globalChatSend').click();}});
@@ -6033,9 +6080,10 @@ document.getElementById('adminSubmissionList').addEventListener('click',async e=
 });
 async function initialiseMemberFeatures(session){
  currentMember=session?.user||await ensureMemberSession()||null;
- if(!currentMember){activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';if(adminConsoleNav)adminConsoleNav.hidden=true;return;}
+ if(!currentMember){if(memberLiveChannel){supabaseClient.removeChannel(memberLiveChannel);memberLiveChannel=null;memberLiveChannelUser=null;}setLiveBadge('notificationCount',0);setLiveBadge('messageCount',0);activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';if(adminConsoleNav)adminConsoleNav.hidden=true;return;}
  await refreshAdminRoleClaim();
- await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools()]);setupAdminConsole();
+ setupMemberLiveCounters();
+ await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools(),loadMemberInboxCounters()]);setupAdminConsole();
 }
 
 /* AUTH-GATED ENTRY: restore a persisted session before exposing the sign-in screen. */
