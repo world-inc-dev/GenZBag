@@ -5863,7 +5863,7 @@ async function loadMemberWallet(){
  const savedPhone=withdrawProfile?.phone||currentMember.user_metadata?.phone||currentMember.phone||'';
  if(payoutEl)payoutEl.textContent=savedPhone||'No phone number saved';
  const phoneInput=document.getElementById('withdrawMobileNumber');if(phoneInput&&!phoneInput.value&&savedPhone)phoneInput.value=savedPhone;
- const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type,note,created_at').eq('user_id',currentMember.id);
+ const {data,error}=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type,note,created_at').eq('user_id',member.id);
  if(error){console.warn('Wallet ledger:',error);return;}
  const rows=data||[],ugx=rows.filter(x=>x.currency==='UGX');
  updateTaskEarningsFromLedger(rows);
@@ -6026,7 +6026,8 @@ document.getElementById('adminSubmissionList').addEventListener('click',async e=
 });
 async function initialiseMemberFeatures(session){
  currentMember=session?.user||await ensureMemberSession()||null;
- if(!currentMember){activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');return;}
+ if(!currentMember){activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';if(adminConsoleNav)adminConsoleNav.hidden=true;return;}
+ await refreshAdminRoleClaim();
  await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools()]);setupAdminConsole();
 }
 
@@ -6076,6 +6077,11 @@ if(supabaseClient){
 /* ADMIN CONTROL CENTRE: all privileged reads/writes are also enforced by Supabase RLS. */
 const adminConsoleNav=document.getElementById('adminConsoleNav');
 let adminConsoleLoaded={};
+async function refreshAdminRoleClaim(){
+ if(!supabaseClient||!currentMember||currentMember.app_metadata?.role==='admin')return;
+ const expectedId=currentMember.id;
+ try{const refreshed=await supabaseClient.auth.refreshSession();if(!refreshed.error&&refreshed.data?.session?.user?.id===expectedId){currentMember=refreshed.data.session.user;markSessionAlive(refreshed.data.session);}else if(refreshed.error)console.warn('Admin role refresh:',refreshed.error.message);}catch(err){console.warn('Admin role refresh:',err);}
+}
 function adminIsAuthorized(){return !!currentMember&&currentMember.app_metadata?.role==='admin';}
 function adminMessage(t){const el=document.getElementById('adminConsoleMessage');if(el)el.textContent=t||'';}
 function adminSafe(v){return escapeText(v===null||v===undefined?'':String(v));}
