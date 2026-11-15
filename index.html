@@ -3971,7 +3971,7 @@ body.activation-screen-open{overflow:hidden!important}
     </div>
     <div id="dailyVideoLimit" style="display:none;margin:0 15px 12px;padding:12px 14px;border:1px solid #dbeafe;border-radius:13px;background:#eff6ff;color:#1e3a8a;font-size:11px;line-height:1.5"></div>
     <div class="activity-list" id="activityList"><div class="activity-empty">Sign in to load activities published by GenZBag.</div></div>
-    <div class="activity-note" style="padding:0 15px 14px">Sponsored ads credit UGX 150 to Net Profits after an 8-second visible view (once per ad per member). Other activities follow their displayed review rules.</div>
+    <div class="activity-note" style="padding:0 15px 14px">Sponsored ads and video activities unlock a UGX 150 claim after a 60-second visible timer (once per activity per member). Video rewards are limited to 5 per Uganda day.</div>
   </section>
 
   <!-- ADMIN ACTIVITY MANAGEMENT -->
@@ -5149,31 +5149,35 @@ function renderActivities(){
    ];
    const image=t.image_url||fallbackImages[activityRows.filter(x=>x.category==='sponsored').findIndex(x=>x.id===t.id)%fallbackImages.length];
    const completed=activityAdCompleted.has(String(t.id));
-   return '<article class="activity-card sponsored-ad-card" data-activity-id="'+escapeText(t.id)+'"><img class="sponsored-ad-image" src="'+escapeText(image)+'" alt="'+escapeText(t.title)+' promotional image" loading="lazy" referrerpolicy="no-referrer"><div class="sponsored-ad-content"><div class="activity-card-top"><div><span class="activity-tag">📢 SPONSORED AD</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">UGX 150</span></div><p>'+escapeText(t.description||'View this featured promotion to earn a reward.')+'</p>'+(t.instructions?'<p>'+escapeText(t.instructions)+'</p>':'')+'<p class="activity-note">Keep this ad visible for 8 seconds. One reward per member for this ad.</p><div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">More details ↗</a>':'')+'<button class="activity-btn" type="button" data-ad-view="'+escapeText(t.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ UGX 150 earned':'View ad · Earn UGX 150')+'</button></div><p class="ad-view-status" data-ad-status="'+escapeText(t.id)+'" aria-live="polite">'+(completed?'Reward already credited to your Net Profits.':'Your reward is credited after a verified 8-second view.')+'</p></div></article>';
+   return '<article class="activity-card sponsored-ad-card" data-activity-id="'+escapeText(t.id)+'"><img class="sponsored-ad-image" src="'+escapeText(image)+'" alt="'+escapeText(t.title)+' promotional image" loading="lazy" referrerpolicy="no-referrer"><div class="sponsored-ad-content"><div class="activity-card-top"><div><span class="activity-tag">📢 SPONSORED AD</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">UGX 150</span></div><p>'+escapeText(t.description||'View this featured promotion to earn a reward.')+'</p>'+(t.instructions?'<p>'+escapeText(t.instructions)+'</p>':'')+'<div class="ad-timer-track"><span data-ad-progress="'+escapeText(t.id)+'"></span></div><p class="activity-note">Keep this sponsored ad visible for 60 seconds. One reward per member for this ad.</p><div class="activity-actions"><button class="activity-btn" type="button" data-ad-view="'+escapeText(t.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ UGX 150 earned':'▶ Start 60-second ad')+'</button></div><p class="ad-view-status" data-ad-status="'+escapeText(t.id)+'" aria-live="polite">'+(completed?'UGX 150 already credited to your Net Profits.':'Start the ad timer when you are ready.')+'</p></div></article>';
   }
   const videoUrl=String(t.content_url||'').toLowerCase();
   const platform=videoUrl.includes('youtu')||/youtube/i.test(t.title+' '+(t.description||''))?'YouTube':videoUrl.includes('tiktok')||/tiktok/i.test(t.title+' '+(t.description||''))?'TikTok':(isVideoTask?'Video activity':'');
   const platformIcon=platform==='YouTube'?'▶':platform==='TikTok'?'♪':'▶';
   const rawVideoUrl=String(t.content_url||'').trim();
+  const completed=activityAdCompleted.has(String(t.id));
   let inlineVideo='';
   if(isVideoTask&&rawVideoUrl){
-   let videoId='';
+   let videoId='',tiktokId='';
    try{
     const parsed=new URL(rawVideoUrl);
     if(parsed.hostname.includes('youtu.be'))videoId=parsed.pathname.split('/').filter(Boolean)[0]||'';
     else if(parsed.hostname.includes('youtube.com')||parsed.hostname.includes('youtube-nocookie.com'))videoId=parsed.searchParams.get('v')||parsed.pathname.match(/\/(?:embed|shorts|live)\/([^/?]+)/)?.[1]||'';
+    if(parsed.hostname.includes('tiktok.com'))tiktokId=parsed.pathname.match(/\/video\/(\d+)/)?.[1]||'';
    }catch(e){}
    if(videoId&&/^[a-zA-Z0-9_-]{6,20}$/.test(videoId)){
-    inlineVideo='<div class="genz-inline-video" style="position:relative;width:100%;aspect-ratio:16/9;margin:12px 0;border-radius:15px;overflow:hidden;background:#050b18"><iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(videoId)+'?playsinline=1&rel=0" title="'+escapeText(t.title)+'" style="position:absolute;inset:0;width:100%;height:100%;border:0" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+    inlineVideo='<div class="genz-inline-video"><iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(videoId)+'?playsinline=1&rel=0&enablejsapi=1" title="'+escapeText(t.title)+'" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen></iframe></div>';
+   }else if(tiktokId){
+    inlineVideo='<div class="genz-inline-video"><iframe src="https://www.tiktok.com/player/v1/'+encodeURIComponent(tiktokId)+'?controls=1&progress_bar=1" title="'+escapeText(t.title)+'" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
    }else if(/\.mp4(?:$|[?#])/i.test(rawVideoUrl)){
-    inlineVideo='<video controls playsinline preload="metadata" style="display:block;width:100%;max-height:360px;aspect-ratio:16/9;object-fit:contain;margin:12px 0;border-radius:15px;background:#050b18"><source src="'+escapeText(rawVideoUrl)+'" type="video/mp4">Your browser does not support video playback.</video>';
+    inlineVideo='<video class="genz-native-video" controls playsinline preload="metadata"><source src="'+escapeText(rawVideoUrl)+'" type="video/mp4">Your browser does not support video playback.</video>';
    }else{
-    inlineVideo='<div class="genz-inline-video" style="margin:12px 0;padding:18px;border-radius:14px;background:#101d35;color:#dbeafe;font-size:12px">This video link cannot be embedded. Please use a public YouTube video, or a direct MP4 video URL.</div>';
+    inlineVideo='<div class="genz-video-unavailable">This video link cannot be embedded. Use a public YouTube or TikTok video, or a direct MP4 URL.</div>';
    }
   }
   const dailyVideoLimitReached=isVideoTask&&activityDailyVideoCount>=5;
-  const disabled=status==='pending'||status==='approved'||dailyVideoLimitReached;
-  return '<article class="activity-card" data-activity-id="'+escapeText(t.id)+'"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(isSponsoredTask?'📢 Sponsored ad':platformIcon+' '+(platform||categoryName(t.category)))+'</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">'+escapeText(reward)+'</span></div><p>'+escapeText(t.description||(isSponsoredTask?'Open the sponsor link, view the promotion, then submit the requested proof.':'Open this activity to read the instructions.'))+'</p>'+(t.instructions?'<p><strong>Instructions:</strong><br>'+escapeText(t.instructions)+'</p>':'')+(isVideoTask?inlineVideo+'<p class="activity-note">Daily video allowance: '+activityDailyVideoCount+' / 5 submitted today. Watch here without leaving GenZBag.</p>':'')+(isSponsoredTask?'<p class="activity-note">Reward is credited only after the admin checks and approves your proof. Opening the link alone does not earn a reward.</p>':'')+'<div class="activity-actions">'+(!isVideoTask&&t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">Open '+(isSponsoredTask?'sponsored ad':'activity')+' ↗</a>':'')+'<button class="activity-btn" type="button" data-open-proof="'+escapeText(t.id)+'" '+(disabled?'disabled':'')+'>'+(status==='pending'?'Under review':status==='approved'?'Completed':dailyVideoLimitReached?'Daily limit reached':'Submit proof')+'</button></div>'+(status?'<p><span class="activity-state '+escapeText(status)+'">'+escapeText(status.toUpperCase())+'</span>'+(sub.review_note?' · '+escapeText(sub.review_note):'')+'</p>':'')+'<form class="activity-proof" data-proof-form="'+escapeText(t.id)+'"><textarea name="proof_text" maxlength="2000" required placeholder="'+(isSponsoredTask?'Describe the promotion you watched and confirm you completed the sponsor instructions…':'Describe what you completed and include the requested proof details…')+'"></textarea><input name="proof_url" type="url" maxlength="1000" placeholder="Optional proof link (https://…)"><button class="activity-btn" type="submit">Send for review</button><span class="activity-note">Your submission will remain pending until reviewed. Do not submit passwords or private account details.</span></form></article>';
+  const videoRewardButton=isVideoTask?'<div class="ad-timer-track"><span data-ad-progress="'+escapeText(t.id)+'"></span></div><div class="activity-actions"><button class="activity-btn" type="button" data-ad-view="'+escapeText(t.id)+'" '+(completed||dailyVideoLimitReached?'disabled':'')+'>'+(completed?'✓ UGX 150 earned':dailyVideoLimitReached?'Daily limit reached':'▶ Start 60-second video')+'</button></div><p class="ad-view-status" data-ad-status="'+escapeText(t.id)+'" aria-live="polite">'+(completed?'UGX 150 already credited to your Net Profits.':dailyVideoLimitReached?'You have used all 5 video rewards today.':'Play the video and keep this page visible for 60 seconds.')+'</p>':'';
+  return '<article class="activity-card '+(isVideoTask?'video-task-card':'')+'" data-activity-id="'+escapeText(t.id)+'"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(platformIcon+' '+(platform||categoryName(t.category)))+'</span><h3 style="margin-top:8px">'+escapeText(t.title)+'</h3></div><span class="activity-reward">'+(isVideoTask?'UGX 150':escapeText(reward))+'</span></div><p>'+escapeText(t.description||'Watch this featured video inside GenZBag.')+'</p>'+(t.instructions?'<p><strong>Instructions:</strong><br>'+escapeText(t.instructions)+'</p>':'')+(isVideoTask?inlineVideo+'<p class="activity-note">Daily video rewards: '+activityDailyVideoCount+' / 5 claimed. Watch here without leaving GenZBag.</p>'+videoRewardButton:'')+(!isVideoTask?'<div class="activity-actions">'+(t.content_url?'<a class="activity-btn secondary" href="'+escapeText(t.content_url)+'" target="_blank" rel="noopener noreferrer">Open activity ↗</a>':'')+'<button class="activity-btn" type="button" data-open-proof="'+escapeText(t.id)+'" '+(status==='pending'||status==='approved'?'disabled':'')+'>'+(status==='pending'?'Under review':status==='approved'?'Completed':'Submit proof')+'</button></div>':'')+'</article>';
  }).join('');
 }
 let activityDailyVideoCount=0;
@@ -5185,14 +5189,14 @@ function updateVideoPlatformIntro(){
  if(!platform){box.style.display='none';box.innerHTML='';return;}
  box.style.display='block';
  const isYT=platform==='youtube',brand=isYT?'YouTube':'TikTok',icon=isYT?'▶':'♪',color=isYT?'#ff4b4b':'#69e6d5';
- box.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><span style="width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:'+color+'22;color:'+color+';font-size:22px;font-weight:900">'+icon+'</span><div><div style="font-size:10px;letter-spacing:1.4px;color:#9fb5d6;font-weight:800">GENZBAG VIDEO HUB</div><strong style="font-size:17px">'+brand+' activities</strong></div></div><p style="font-size:11px;line-height:1.6;color:#c9d7ec;margin:0 0 10px">Open a published '+brand+' link, complete the activity as instructed, then submit honest proof for review. Up to 5 video activities may be submitted per day across YouTube and TikTok.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ External platform links</span><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ Admin-reviewed proof</span><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ 5 submissions / day</span></div><p style="font-size:10px;line-height:1.5;color:#9fb5d6;margin:10px 0 0">GenZBag cannot confirm watch time or views inside another platform. Never use bots, looping, or fake engagement.</p>';
+ box.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><span style="width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:'+color+'22;color:'+color+';font-size:22px;font-weight:900">'+icon+'</span><div><div style="font-size:10px;letter-spacing:1.4px;color:#9fb5d6;font-weight:800">GENZBAG VIDEO HUB</div><strong style="font-size:17px">'+brand+' activities</strong></div></div><p style="font-size:11px;line-height:1.6;color:#c9d7ec;margin:0 0 10px">Watch a published '+brand+' video inside GenZBag for 60 seconds. When the timer ends, tap Claim UGX 150. Up to 5 video rewards may be claimed per Uganda day across both platforms.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ In-app video playback</span><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ 60-second reward timer</span><span style="padding:6px 9px;border-radius:20px;background:#ffffff12;font-size:10px">✓ 5 submissions / day</span></div><p style="font-size:10px;line-height:1.5;color:#9fb5d6;margin:10px 0 0">GenZBag cannot confirm watch time or views inside another platform. Never use bots, looping, or fake engagement.</p>';
 }
 function updateDailyVideoLimit(){
  const box=document.getElementById('dailyVideoLimit');if(!box)return;
  const visible=activityRows.some(t=>t.category==='video')||currentActivityFilter==='video';
  box.style.display=visible?'block':'none';
  const left=Math.max(0,5-activityDailyVideoCount);
- box.innerHTML='<strong>Daily video limit</strong><br>'+activityDailyVideoCount+' of 5 video activities submitted today · '+left+' remaining. External links open on YouTube or TikTok. Submissions are reviewed; GenZBag does not claim to verify platform views or create artificial engagement.';
+ box.innerHTML='<strong>Daily video limit</strong><br>'+activityDailyVideoCount+' of 5 video activities submitted today · '+left+' remaining. Watch YouTube or TikTok videos inside GenZBag. Each completed 60-second view unlocks UGX 150; maximum 5 video rewards per Uganda day.';
 }
 async function loadActivities(){
  const member=await ensureMemberSession();
@@ -5233,30 +5237,40 @@ activityListEl.addEventListener('click',async e=>{
   if(activeAdViewTimers.has(taskId))return;
   const task=activityRows.find(x=>String(x.id)===String(taskId));
   if(!task)return;
-  if(task.content_url)window.open(task.content_url,'_blank','noopener,noreferrer');
-  adViewButton.disabled=true;adViewButton.textContent='Starting ad view…';
+  adViewButton.disabled=true;adViewButton.textContent='Starting 60-second timer…';
   const {data,error}=await supabaseClient.rpc('start_sponsored_ad_view',{p_task_id:taskId});
-  if(error){adViewButton.disabled=false;adViewButton.textContent='Try again · UGX 150';alert(error.message||'Could not start this ad view.');return;}
-  if(data?.already_claimed){activityAdCompleted.add(String(taskId));adViewButton.textContent='✓ UGX 150 earned';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='You have already earned for this ad.';return;}
-  let remaining=8;adViewButton.textContent='Viewing ad… '+remaining+'s';
+  if(error){adViewButton.disabled=false;adViewButton.textContent='Try again · Start 60 seconds';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent=error.message||'Could not start this activity.';return;}
+  if(data?.already_claimed){activityAdCompleted.add(String(taskId));adViewButton.textContent='✓ UGX 150 earned';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='You have already earned for this activity.';return;}
+  let remaining=60;adViewButton.textContent='Viewing… '+remaining+'s';
   const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');
-  if(status)status.textContent='Keep this ad card visible on your screen.';
+  if(status)status.textContent='Timer running. Keep this activity visible; the claim button unlocks at zero.';
+  const progress=activityListEl.querySelector('[data-ad-progress="'+taskId+'"]');
+  const card=adViewButton.closest('.activity-card');
   const timer=setInterval(async()=>{
    if(!document.contains(adViewButton)){clearInterval(timer);activeAdViewTimers.delete(taskId);return;}
    if(document.visibilityState!=='visible')return;
-   const card=adViewButton.closest('.sponsored-ad-card'),rect=card?.getBoundingClientRect();
+   const rect=card?.getBoundingClientRect();
    if(!rect||rect.bottom<=0||rect.top>=window.innerHeight)return;
-   remaining--;adViewButton.textContent='Viewing ad… '+remaining+'s';
+   remaining=Math.max(0,remaining-1);
+   adViewButton.textContent='Viewing… '+remaining+'s';
+   if(progress)progress.style.width=((60-remaining)/60*100)+'%';
    if(remaining>0)return;
-   clearInterval(timer);activeAdViewTimers.delete(taskId);adViewButton.textContent='Crediting…';
-   const result=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:taskId});
-   if(result.error){adViewButton.disabled=false;adViewButton.textContent='Try again · UGX 150';if(status)status.textContent=result.error.message||'Reward could not be credited. Please retry.';return;}
-   activityAdCompleted.add(String(taskId));adViewButton.textContent='✓ UGX 150 earned';adViewButton.disabled=true;
-   if(status)status.textContent='UGX 150 has been added to your Net Profits.';
-   await loadMemberWallet();
+   clearInterval(timer);activeAdViewTimers.delete(taskId);
+   adViewButton.disabled=false;adViewButton.dataset.adClaim=taskId;adViewButton.removeAttribute('data-ad-view');
+   adViewButton.textContent='Claim UGX 150';
+   if(status)status.textContent='60 seconds completed. Tap Claim to add UGX 150 to your Net Profits.';
   },1000);
   activeAdViewTimers.set(taskId,timer);
   return;
+ }
+ const claimAdButton=e.target.closest('[data-ad-claim]');
+ if(claimAdButton){
+  const taskId=claimAdButton.dataset.adClaim;claimAdButton.disabled=true;claimAdButton.textContent='Crediting…';
+  const result=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:taskId});
+  if(result.error){claimAdButton.disabled=false;claimAdButton.textContent='Claim UGX 150';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent=result.error.message||'Reward could not be credited. Please retry.';return;}
+  activityAdCompleted.add(String(taskId));claimAdButton.textContent='✓ UGX 150 earned';claimAdButton.disabled=true;
+  const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='UGX 150 has been added to your Net Profits.';
+  await loadMemberWallet();return;
  }
  const tapClaim=e.target.closest('[data-tap-claim]');
  if(tapClaim){tapClaim.disabled=true;const {data,error}=await supabaseClient.rpc('claim_tap_earnings');if(error){alert(error.message||'Tap reward could not be recorded.');await renderTapEarnings();return;}await loadMemberWallet();await renderTapEarnings();alert(data?.message||'UGX 500 added to your Net Profits.');return;}
@@ -6872,5 +6886,38 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #adminTaskImageWrap[hidden]{display:none}
 </style>
 
+<style id="genzbag-video-ads-visibility-v18">
+#activityList .activity-card{border:1px solid #dce6f3;border-radius:18px;background:linear-gradient(160deg,#fff,#f7faff);box-shadow:0 8px 24px rgba(10,42,107,.09);padding:15px;margin:0 12px 14px;overflow:hidden}
+#activityList .activity-card-top{align-items:flex-start;gap:10px}
+#activityList .activity-card-top h3{font-size:15px;line-height:1.35;color:#10284e}
+#activityList .activity-tag{display:inline-flex;padding:6px 9px;border-radius:30px;background:#eaf2ff;color:#1754a6;font-size:10px;font-weight:900;letter-spacing:.35px}
+#activityList .activity-reward{display:inline-flex;align-items:center;white-space:nowrap;padding:8px 11px;border-radius:12px;background:linear-gradient(135deg,#d9fff2,#b8f4df);border:1px solid #8ce2c2;color:#08784f;font-size:12px;font-weight:950}
+#activityList .activity-card>p{font-size:11px;line-height:1.6;color:#52647f;margin-top:9px}
+#activityList .sponsored-ad-card{padding:0;background:linear-gradient(145deg,#0b1a30,#112b48);border:1px solid #27516c;box-shadow:0 14px 30px rgba(3,15,34,.2)}
+#activityList .sponsored-ad-image{height:190px;object-fit:cover}
+#activityList .sponsored-ad-content{padding:15px}
+#activityList .sponsored-ad-content h3{color:#f4fbff}
+#activityList .sponsored-ad-content>p{color:#c2d3e4}
+#activityList .sponsored-ad-content .activity-tag{background:#153c4b;color:#7ce9d8}
+#activityList .sponsored-ad-content .activity-reward{background:#0e453f;color:#8cf2c9;border-color:#247d68}
+#activityList .video-task-card{border-color:#274d68;background:linear-gradient(145deg,#0c1c33,#132e4b);color:#eff8ff}
+#activityList .video-task-card .activity-card-top h3{color:#f4fbff}
+#activityList .video-task-card>p{color:#bfd0e2}
+#activityList .video-task-card .activity-tag{background:#183b56;color:#8fe9e0}
+#activityList .video-task-card .activity-reward{background:#0e453f;color:#8cf2c9;border-color:#247d68}
+#activityList .genz-inline-video{position:relative;width:100%;aspect-ratio:16/9;margin:13px 0;border-radius:14px;overflow:hidden;background:#020914;border:1px solid #2b5068;box-shadow:0 10px 24px #0004}
+#activityList .genz-inline-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#activityList .genz-native-video{display:block;width:100%;max-height:380px;aspect-ratio:16/9;object-fit:contain;margin:13px 0;border-radius:14px;background:#020914}
+#activityList .genz-video-unavailable{padding:18px;margin:12px 0;border-radius:13px;background:#1a2e47;color:#d5e4f4;font-size:11px;line-height:1.5}
+#activityList .activity-note{display:block;margin:9px 0;color:#a9bfd0;font-size:10px;line-height:1.5}
+#activityList .activity-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+#activityList .activity-btn{min-height:43px;padding:11px 16px;border:0;border-radius:12px;background:linear-gradient(100deg,#16b8a6,#0d9488);color:#fff;font-size:12px;font-weight:900;box-shadow:0 7px 16px #0d948833}
+#activityList .activity-btn:disabled{opacity:.75;cursor:not-allowed}
+#activityList .ad-view-status{margin-top:10px;padding:9px 11px;border-radius:10px;background:#ffffff0c;color:#b9d2e4;font-size:10px;line-height:1.5}
+#activityList .ad-timer-track{height:8px;margin:14px 0 8px;border-radius:20px;background:#ffffff1b;overflow:hidden}
+#activityList .ad-timer-track span{display:block;width:0;height:100%;border-radius:20px;background:linear-gradient(90deg,#2dd4bf,#a7f3d0);transition:width .35s linear}
+#videoPlatformIntro{border-color:#27536c!important;background:radial-gradient(circle at 100% 0%,#1d5260 0,transparent 42%),linear-gradient(145deg,#0b1a30,#153451)!important}
+@media(max-width:420px){#activityList .activity-card{margin:0 8px 12px;padding:12px}#activityList .sponsored-ad-card{padding:0}#activityList .sponsored-ad-image{height:165px}#activityList .sponsored-ad-content{padding:12px}#activityList .activity-btn{width:100%}}
+</style>
 </body>
 </html>
