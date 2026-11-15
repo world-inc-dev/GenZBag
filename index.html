@@ -6235,7 +6235,7 @@ function setupAdminConsole(){
  const activityMount=document.getElementById('adminActivityMount');if(activityMount&&adminPanelEl){activityMount.appendChild(adminPanelEl);adminPanelEl.classList.add('visible');}
  adminProfileDirectoryMount();
  document.querySelectorAll('[data-admin-tab]').forEach(btn=>{if(btn.dataset.bound)return;btn.dataset.bound='1';btn.addEventListener('click',()=>{document.querySelectorAll('[data-admin-tab]').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('.admin-console-panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.adminTab));loadAdminConsoleTab(btn.dataset.adminTab);});});
- if(adminConsoleNav&&!adminConsoleNav.dataset.bound){adminConsoleNav.dataset.bound='1';adminConsoleNav.addEventListener('click',()=>{if(adminIsAuthorized())loadAdminConsoleTab('adminOverviewPanel');});}
+ if(adminConsoleNav&&!adminConsoleNav.dataset.bound){adminConsoleNav.dataset.bound='1';adminConsoleNav.addEventListener('click',e=>{if(!adminIsAuthorized()){e.preventDefault();adminConsoleNav.hidden=true;adminMessage('Administrator authorization required.');return;}e.preventDefault();const page=document.getElementById('adminPage');document.querySelectorAll('.page-view').forEach(view=>{view.hidden=view!==page;});if(page){page.hidden=false;page.scrollIntoView({behavior:'smooth',block:'start'});}const workspace=document.getElementById('featureWorkspace');if(workspace)workspace.hidden=true;adminConsoleNav.classList.add('active');loadAdminConsoleTab('adminOverviewPanel');});}
  loadAdminConsoleOverview();
 }
 document.getElementById('adminTestEmailBtn')?.addEventListener('click',async()=>{
