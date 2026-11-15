@@ -4559,7 +4559,12 @@ async function ensureMemberSession(){
  try{return await memberSessionCheck;}finally{memberSessionCheck=null;}
 }
 function beginAuthGrace(){
- if(!hasRecentAuthGrace())return false;
+ if(intentionalSignOut)return false;
+ if(!hasRecentAuthGrace()){
+  if(!currentMember?.id)return false;
+  lastAuthenticatedAt=Date.now();
+  try{sessionStorage.setItem(LAST_AUTH_KEY,String(lastAuthenticatedAt));}catch(e){}
+ }
  showDashboard();
  const remaining=Math.max(0,AUTH_GRACE_MS-(Date.now()-lastAuthenticatedAt));
  showSessionNotice('Connection interrupted. Your dashboard will remain open for up to '+Math.max(1,Math.ceil(remaining/60000))+' more minute(s). Reconnect to restore live Supabase data.');
@@ -6071,7 +6076,7 @@ if(supabaseClient){
       else if(hasRecentAuthGrace())beginAuthGrace();
     }catch(e){console.warn('Online session recovery:',e);}
   });
-  window.addEventListener('offline',()=>{if(hasRecentAuthGrace())beginAuthGrace();else showSessionNotice('You are offline. Reconnect to load live Supabase data.');});
+  window.addEventListener('offline',()=>{if(currentMember?.id&&!intentionalSignOut)beginAuthGrace();else showSessionNotice('You are offline. Reconnect to load live Supabase data.');});
 
 }else{requireAuth();}
 /* ADMIN CONTROL CENTRE: all privileged reads/writes are also enforced by Supabase RLS. */
