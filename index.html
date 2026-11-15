@@ -4717,10 +4717,13 @@ async function startBuiltInChallenge(key,taskId){
  const title=key==='math'?'Math Challenge':'Colour Challenge';
  const host=activityListEl;
  if(builtInChallengeStarting)return;
- if(!currentMember){
-  if(key==='math')renderMathChallenge();else renderColourChallenge();
+ const member=await ensureMemberSession();
+ if(!member){
+  host.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">SIGN IN REQUIRED</div><h2>'+title+'</h2><p>Please sign in to your GenZBag account to load the real challenge questions.</p></div>';
+  activityCountEl.textContent='Sign in required';
   return;
  }
+ currentMember=member;
  builtInChallengeStarting=true;
  host.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • '+(key==='math'?'MATH':'COLOUR')+' ARENA</span><span class="trivia-badge">SECURE SESSION</span></div><h2>Preparing your '+title+'…</h2><p>Loading your 10 server-issued questions. Please wait.</p></div>';
  activityCountEl.textContent='Loading 10 questions…';
@@ -5261,6 +5264,7 @@ function renderSpotifyMusic(){
  musicListenAudio.addEventListener('play',()=>{if(musicListenTaskId&&statusLabel)statusLabel.textContent='Playing · listening timer active.';});
 }
 
+let mathState=null,mathTimer=null,colourState=null,colourTimer=null;
 let triviaState=null,triviaTimer=null;
 function renderTriviaChallenge(){
  const task=activityRows.find(t=>/trivia challenge/i.test(t.title));
