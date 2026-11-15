@@ -2060,6 +2060,10 @@ body.activation-body-locked{
 .voucher-confetti{position:absolute;top:-12px;width:8px;height:15px;border-radius:2px;opacity:.9;animation:voucherConfettiFall 1.8s ease-in forwards}
 @keyframes voucherConfettiFall{to{transform:translateY(430px) rotate(650deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){.voucher-celebration-card,.voucher-confetti{animation:none}}
+
+/* TRIVIA CHALLENGE */
+.trivia-shell{margin:0 14px 15px;padding:17px;border-radius:18px;background:radial-gradient(circle at 100% 0%,#1a5a83 0,transparent 42%),linear-gradient(145deg,#07172f,#0b2b4b 65%,#0b3d4b);color:#eff8ff;box-shadow:0 14px 32px #07172f24;border:1px solid #1d496b}
+.trivia-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.trivia-kicker{font-size:9px;letter-spacing:1.7px;color:#75e5df;font-weight:950}.trivia-badge{padding:6px 9px;border:1px solid #5eead455;border-radius:20px;background:#5eead414;color:#8af0e7;font-size:9px;font-weight:900}.trivia-shell h2{margin:10px 0 5px;color:#fff;font-size:21px}.trivia-shell p{color:#bfd2e4;font-size:11px;line-height:1.6}.trivia-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.trivia-stat{padding:10px 8px;border:1px solid #ffffff19;border-radius:12px;background:#ffffff0b;text-align:center}.trivia-stat strong{display:block;color:#68e4d9;font-size:16px}.trivia-stat span{display:block;margin-top:3px;color:#a9bfd4;font-size:8px;font-weight:800;text-transform:uppercase}.trivia-progress{height:6px;margin:13px 0 17px;border-radius:10px;background:#ffffff20;overflow:hidden}.trivia-progress span{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#27c7b9,#68e4d9);transition:width .25s}.trivia-question-meta{display:flex;justify-content:space-between;gap:8px;color:#a9bfd4;font-size:9px;font-weight:850}.trivia-question{margin:12px 0 15px!important;color:#fff!important;font-size:16px!important;font-weight:850;line-height:1.45!important}.trivia-options{display:grid;gap:8px}.trivia-option{width:100%;padding:12px;text-align:left;border:1px solid #ffffff24;border-radius:11px;background:#ffffff0d;color:#eef8ff;font-size:11px;font-weight:750}.trivia-option:disabled{opacity:1}.trivia-option.correct{border-color:#34d399;background:#064e3b;color:#d1fae5}.trivia-option.wrong{border-color:#fb7185;background:#4c1525;color:#ffe4e6}.trivia-feedback{min-height:20px;margin:10px 0;color:#a7f3d0!important;font-size:10px!important;font-weight:800}.trivia-primary{width:100%;margin-top:9px;padding:12px;border:0;border-radius:11px;background:linear-gradient(100deg,#2dd4bf,#0d9488);color:#062c30;font-size:11px;font-weight:950}.trivia-primary:disabled{opacity:.5}.trivia-secondary{width:100%;margin-top:8px;padding:10px;border:1px solid #ffffff30;border-radius:11px;background:transparent;color:#d6e7f7;font-size:10px;font-weight:850}.trivia-result-score{margin:15px 0;padding:18px;border:1px solid #5eead455;border-radius:15px;background:#5eead410;text-align:center}.trivia-result-score strong{display:block;color:#68e4d9;font-size:36px;font-weight:950}.trivia-result-score span{color:#c3d8e8;font-size:10px}
 </style>
 
 <style id="genzbag-iphone-typography">
@@ -4974,7 +4978,69 @@ function currentUser(){return currentMember;}
 function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function categoryName(v){return activityCategoryNames[v]||String(v||'General').replace(/_/g,' ');}
 function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
+
+const triviaQuestionBank=[
+ {q:'What is the capital city of Uganda?',o:['Jinja','Kampala','Entebbe','Gulu'],a:1},
+ {q:'Which planet is the largest in our solar system?',o:['Earth','Saturn','Jupiter','Mars'],a:2},
+ {q:'What does HTML mainly help create?',o:['Web page structure','Phone batteries','Computer processors','Internet cables'],a:0},
+ {q:'What is the chemical formula for water?',o:['CO2','O2','H2O','NaCl'],a:2},
+ {q:'Which river is commonly identified as the world’s longest?',o:['Nile','Congo','Niger','Zambezi'],a:0},
+ {q:'What is 7 × 8?',o:['54','56','64','58'],a:1},
+ {q:'What is the currency of Kenya?',o:['Naira','Cedi','Kenyan shilling','Rand'],a:2},
+ {q:'Which organ pumps blood around the human body?',o:['Lungs','Liver','Brain','Heart'],a:3},
+ {q:'Solar energy comes from which source?',o:['The Moon','The Sun','Wind','Ocean tides'],a:1},
+ {q:'Who was the first person to walk on the Moon?',o:['Yuri Gagarin','Buzz Aldrin','Neil Armstrong','John Glenn'],a:2},
+ {q:'Python is best known as what?',o:['A programming language','A web browser','A phone network','A database cable'],a:0},
+ {q:'At sea level, water boils at approximately what temperature?',o:['50°C','80°C','100°C','120°C'],a:2},
+ {q:'Uganda is located on which continent?',o:['Asia','Africa','Europe','South America'],a:1},
+ {q:'How many seconds are in one minute?',o:['30','45','60','100'],a:2},
+ {q:'What process do green plants use to make food?',o:['Evaporation','Photosynthesis','Condensation','Fermentation'],a:1},
+ {q:'Which is the largest ocean on Earth?',o:['Atlantic','Indian','Arctic','Pacific'],a:3},
+ {q:'How many sides does a triangle have?',o:['Two','Three','Four','Five'],a:1},
+ {q:'What does CPU stand for?',o:['Central Processing Unit','Computer Power Utility','Core Program Upload','Central Print Unit'],a:0},
+ {q:'In which year did Uganda gain independence?',o:['1957','1960','1962','1965'],a:2},
+ {q:'How many cents are in one US dollar?',o:['10','50','100','1000'],a:2}
+];
+let triviaState=null,triviaTimer=null;
+function triviaPickQuestions(){const pool=[...triviaQuestionBank];for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}return pool.slice(0,10);}
+function renderTriviaChallenge(){
+ const task=activityRows.find(t=>/trivia challenge/i.test(t.title));
+ activityCountEl.textContent=task?'Challenge ready':'Challenge unavailable';
+ if(!task){activityListEl.innerHTML='<div class="activity-empty">The Trivia Challenge is not published yet. Please check again later.</div>';return;}
+ const sub=activitySubmissionMap[task.id];
+ const locked=sub&&['pending','approved'].includes(sub.status);
+ if(locked){
+  activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • BRAIN ARENA</span><span class="trivia-badge">RESULT SAVED</span></div><h2>Trivia Challenge</h2><p>Your challenge result has been submitted.</p><div class="trivia-result-score"><strong>✓</strong><span>Submission status: '+escapeText(sub.status.toUpperCase())+'</span></div><p>'+(sub.status==='approved'?'Your attempt has been reviewed.':'Your score is waiting for administrator review.')+'</p>'+(sub.review_note?'<p>'+escapeText(sub.review_note)+'</p>':'')+'</div>';return;
+ }
+ if(!triviaState){
+  activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • BRAIN ARENA</span><span class="trivia-badge">10 QUESTIONS</span></div><h2>Trivia Challenge 🧠</h2><p>Test your knowledge across general knowledge, Africa, science, technology and quick maths. You have <strong style="color:#fff">15 seconds per question</strong>. Your score is saved for review when you finish.</p><div class="trivia-stats"><div class="trivia-stat"><strong>10</strong><span>Questions</span></div><div class="trivia-stat"><strong>15s</strong><span>Per question</span></div><div class="trivia-stat"><strong>100</strong><span>Max points</span></div></div><p>Choose one answer for each question. There is no penalty for a wrong answer. Keep your connection active until your result is submitted.</p><button class="trivia-primary" type="button" data-trivia-start="'+escapeText(task.id)+'">Start Trivia Challenge →</button><p style="margin-top:10px;font-size:9px">Scores are submitted for review. No cash reward is promised or credited automatically.</p></div>';
+  return;
+ }
+ renderTriviaQuestion();
+}
+function renderTriviaQuestion(){
+ if(!triviaState)return;
+ const q=triviaState.questions[triviaState.index],answered=triviaState.selected!==null;
+ activityCountEl.textContent='Question '+(triviaState.index+1)+' of 10';
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • BRAIN ARENA</span><span class="trivia-badge">⏱ '+triviaState.seconds+'s left</span></div><div class="trivia-progress"><span style="width:'+((triviaState.index)/10*100)+'%"></span></div><div class="trivia-question-meta"><span>QUESTION '+(triviaState.index+1)+' / 10</span><span>SCORE '+(triviaState.score*10)+' PTS</span></div><h2 class="trivia-question">'+escapeText(q.q)+'</h2><div class="trivia-options">'+q.o.map((opt,i)=>'<button class="trivia-option '+(answered&&i===q.a?'correct':answered&&i===triviaState.selected?'wrong':'')+'" type="button" data-trivia-answer="'+i+'" '+(answered?'disabled':'')+'><strong>'+String.fromCharCode(65+i)+'.</strong> '+escapeText(opt)+'</button>').join('')+'</div><p class="trivia-feedback">'+(answered?(triviaState.selected===q.a?'Correct! +10 points.':'Not quite. Correct answer: '+escapeText(q.o[q.a])):'Select your answer before the timer runs out.')+'</p>'+(answered?'<button class="trivia-primary" type="button" data-trivia-next>'+(triviaState.index===9?'Finish challenge':'Next question →')+'</button>':'')+'<button class="trivia-secondary" type="button" data-trivia-exit>Exit challenge</button></div>';
+}
+function stopTriviaTimer(){if(triviaTimer){clearInterval(triviaTimer);triviaTimer=null;}}
+function startTriviaTimer(){stopTriviaTimer();triviaState.seconds=15;triviaTimer=setInterval(()=>{if(!triviaState){stopTriviaTimer();return;}triviaState.seconds--;if(triviaState.seconds<=0){stopTriviaTimer();if(triviaState.selected===null)triviaState.selected=-1;renderTriviaQuestion();}else{const badge=activityListEl.querySelector('.trivia-badge');if(badge)badge.textContent='⏱ '+triviaState.seconds+'s left';}},1000);}
+async function finishTriviaChallenge(){
+ stopTriviaTimer();const state=triviaState;if(!state)return;
+ const task=activityRows.find(t=>String(t.id)===String(state.taskId));
+ if(!task||!currentMember||!supabaseClient){activityListEl.innerHTML='<div class="activity-empty">Your session expired. Sign in again before submitting your score.</div>';triviaState=null;return;}
+ const pct=Math.round(state.score/10*100),summary=state.questions.map((q,i)=>'Q'+(i+1)+': '+(state.answers[i]===q.a?'correct':state.answers[i]===-1?'timeout':'incorrect')).join('; ');
+ const proof='TRIVIA CHALLENGE RESULT\nScore: '+state.score+'/10 ('+pct+'%)\nPoints: '+(state.score*10)+'/100\nAnswers: '+summary+'\nCompleted: '+new Date().toISOString();
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Well played!</h2><div class="trivia-result-score"><strong>'+state.score+'/10</strong><span>'+pct+'% • '+(state.score*10)+' points</span></div><p>Saving your result for administrator review…</p></div>';
+ const {error}=await supabaseClient.from('task_submissions').insert({task_id:task.id,user_id:currentMember.id,proof_text:proof,proof_url:null});
+ triviaState=null;
+ if(error){activityListEl.innerHTML='<div class="trivia-shell"><h2>Result not submitted</h2><p>'+escapeText(error.code==='23505'?'A challenge result is already awaiting review or has been approved for this activity.':error.message)+'</p><button class="trivia-secondary" type="button" data-trivia-retry>Back to Trivia</button></div>';return;}
+ await loadActivities();
+}
+
 function renderActivities(){
+ if(currentActivitySearch.toLowerCase().includes('trivia')){renderTriviaChallenge();return;}
  let rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
  if(currentActivitySearch){const terms=currentActivitySearch.toLowerCase().split(/\\s+/).filter(Boolean);rows=rows.filter(x=>{const hay=(x.title+' '+(x.description||'')+' '+(x.instructions||'')+' '+(x.content_url||'')).toLowerCase();return terms.some(term=>hay.includes(term));});}
  activityCountEl.textContent=rows.length+' available';
@@ -5036,6 +5102,13 @@ document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListe
  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));
  renderActivities();
 }));
+activityListEl.addEventListener('click',async e=>{
+ const start=e.target.closest('[data-trivia-start]');if(start){if(!currentMember){alert('Please sign in to play Trivia.');return;}triviaState={taskId:start.dataset.triviaStart,questions:triviaPickQuestions(),index:0,score:0,selected:null,seconds:15,answers:[]};renderTriviaQuestion();startTriviaTimer();return;}
+ const answer=e.target.closest('[data-trivia-answer]');if(answer&&triviaState&&triviaState.selected===null){stopTriviaTimer();const chosen=Number(answer.dataset.triviaAnswer),q=triviaState.questions[triviaState.index];triviaState.selected=chosen;triviaState.answers[triviaState.index]=chosen;if(chosen===q.a)triviaState.score++;renderTriviaQuestion();return;}
+ if(e.target.closest('[data-trivia-next]')){if(!triviaState)return;if(triviaState.index>=9){finishTriviaChallenge();return;}triviaState.index++;triviaState.selected=null;renderTriviaQuestion();startTriviaTimer();return;}
+ if(e.target.closest('[data-trivia-exit]')){stopTriviaTimer();triviaState=null;renderTriviaChallenge();return;}
+ if(e.target.closest('[data-trivia-retry]')){triviaState=null;renderTriviaChallenge();return;}
+});
 activityListEl.addEventListener('click',e=>{
  const b=e.target.closest('[data-open-proof]');if(!b)return;
  const form=activityListEl.querySelector('[data-proof-form="'+b.dataset.openProof+'"]');
