@@ -3718,7 +3718,7 @@ body.activation-screen-open{overflow:hidden!important}
   <a class="nav-link" href="#featureWorkspace" data-feature="products"><span class="nav-icon">🛒</span>Products</a>
   <div class="nav-label">EARN & ACTIVITIES</div>
   <a class="nav-link" href="#chatPage"><span class="nav-icon">💬</span>Foreign Chat</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="music" data-activity-search="spotify" data-activity-title="Earn With Spotify"><span class="nav-icon">🎧</span>Earn With Spotify</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="music" data-activity-search="spotify" data-activity-title="Music Listening"><span class="nav-icon">🎧</span>Earn With Spotify</a>
   <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="tap" data-activity-title="Tap Earnings"><span class="nav-icon">👆</span>Tap Earnings</a>
   <a class="nav-link" href="#activityPage" data-activity-category="game" data-activity-search="colour" data-activity-title="Colour Challenge"><span class="nav-icon">🎨</span>Color Challenge</a>
   <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="trivia" data-activity-title="Trivia"><span class="nav-icon">🧠</span>Trivia</a>
@@ -5061,6 +5061,59 @@ function escapeText(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function categoryName(v){return activityCategoryNames[v]||String(v||'General').replace(/_/g,' ');}
 function setActivityMessage(message){activityListEl.innerHTML='<div class="activity-empty">'+escapeText(message)+'</div>';activityCountEl.textContent='0 activities';}
 
+
+let musicListenTimer=null,musicListenSeconds=0,musicListenTaskId=null,musicListenAudio=null;
+function stopMusicListenTimer(){if(musicListenTimer){clearInterval(musicListenTimer);musicListenTimer=null;}}
+function renderSpotifyMusic(){
+ stopMusicListenTimer();musicListenSeconds=0;musicListenTaskId=null;musicListenAudio=null;
+ const task=activityRows.find(t=>t.category==='music'&&/music listening/i.test(t.title))||activityRows.find(t=>t.category==='music');
+ activityCountEl.textContent=task?'Music player ready':'Music unavailable';
+ if(!task){activityListEl.innerHTML='<div class="activity-empty">The music player is being prepared. Please check again shortly.</div>';return;}
+ const completed=activityAdCompleted.has(String(task.id));
+ const audioUrl=String(task.content_url||'').trim();
+ activityListEl.innerHTML='<article class="activity-card" data-music-card="'+escapeText(task.id)+'" style="padding:18px;border:1px solid #24415c;background:linear-gradient(145deg,#101d35,#142b3c);color:#effaff;border-radius:18px"><div class="activity-card-top"><div><span class="activity-tag">🎧 GENZBAG MUSIC</span><h3 style="margin:9px 0 4px;color:#fff">Classical Pop (Instrumental)</h3><p style="margin:0;color:#b9d3df;font-size:12px">CC0 music · Alex McCulloch</p></div><span class="activity-reward">UGX 150</span></div><p style="color:#d5e5ed;margin:14px 0">Listen to the track inside GenZBag. Keep it playing for 60 seconds to unlock your reward.</p><audio id="genzMusicAudio" controls preload="metadata" playsinline style="width:100%;margin:8px 0 14px"><source src="'+escapeText(audioUrl)+'" type="audio/mpeg">Your browser does not support audio playback.</audio><div class="ad-timer-track"><span id="genzMusicProgress" style="width:0%"></span></div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0;color:#b9d3df;font-size:12px"><span id="genzMusicTimer">0 / 60 seconds listened</span><span id="genzMusicStatus" aria-live="polite">'+(completed?'Reward already credited':'Ready to listen')+'</span></div><div class="activity-actions"><button class="activity-btn" type="button" data-music-start="'+escapeText(task.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ Already credited':'▶ Start listening')+'</button><button class="activity-btn" type="button data-music-claim="'+escapeText(task.id)+'" hidden disabled>Claim UGX 150</button></div><p style="font-size:10px;color:#9bb7c6;margin:12px 0 0">Music source: <a href="https://opengameart.org/content/classical-pop-instrumental" target="_blank" rel="noopener noreferrer" style="color:#73e6d3">OpenGameArt · CC0</a> · Credit: Alex McCulloch.</p></article>';
+ musicListenAudio=document.getElementById('genzMusicAudio');
+ if(completed)return;
+ const startButton=activityListEl.querySelector('[data-music-start]');
+ const claimButton=activityListEl.querySelector('[data-music-claim]');
+ const timerLabel=document.getElementById('genzMusicTimer'),statusLabel=document.getElementById('genzMusicStatus'),progress=document.getElementById('genzMusicProgress');
+ if(!musicListenAudio||!startButton||!claimButton)return;
+ musicListenAudio.addEventListener('error',()=>{if(statusLabel)statusLabel.textContent='Track could not load. Please try again later.';});
+ startButton.addEventListener('click',async()=>{
+  if(startButton.disabled)return;
+  startButton.disabled=true;startButton.textContent='Preparing player…';
+  const {data,error}=await supabaseClient.rpc('start_sponsored_ad_view',{p_task_id:task.id});
+  if(error||!data){startButton.disabled=false;startButton.textContent='Try again';if(statusLabel)statusLabel.textContent=error?.message||'Could not start listening.';return;}
+  if(data.already_claimed){activityAdCompleted.add(String(task.id));startButton.textContent='✓ Already credited';if(statusLabel)statusLabel.textContent='UGX 150 was already credited.';return;}
+  musicListenTaskId=String(task.id);musicListenSeconds=0;
+  try{await musicListenAudio.play();}catch(err){startButton.disabled=false;startButton.textContent='▶ Start listening';if(statusLabel)statusLabel.textContent='Tap the audio player to allow playback, then press Start listening again.';return;}
+  startButton.textContent='Listening…';if(statusLabel)statusLabel.textContent='Timer counts only while audio is playing and this page is visible.';
+  musicListenTimer=setInterval(()=>{
+   if(!musicListenAudio||musicListenAudio.paused||musicListenAudio.ended||document.visibilityState!=='visible'||musicListenAudio.muted||musicListenAudio.volume<=0)return;
+   const card=startButton.closest('[data-music-card]'),rect=card?.getBoundingClientRect();
+   if(!rect||rect.bottom<=0||rect.top>=window.innerHeight)return;
+   musicListenSeconds=Math.min(60,musicListenSeconds+1);
+   if(timerLabel)timerLabel.textContent=musicListenSeconds+' / 60 seconds listened';
+   if(progress)progress.style.width=(musicListenSeconds/60*100)+'%';
+   if(musicListenSeconds>=60){
+    stopMusicListenTimer();musicListenAudio.pause();startButton.textContent='Listening complete';startButton.disabled=true;
+    claimButton.hidden=false;claimButton.disabled=false;
+    if(statusLabel)statusLabel.textContent='60 seconds of playback completed. Claim your UGX 150 reward.';
+   }
+  },1000);
+ });
+ claimButton.addEventListener('click',async()=>{
+  claimButton.disabled=true;claimButton.textContent='Crediting…';
+  const result=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:task.id});
+  if(result.error){claimButton.disabled=false;claimButton.textContent='Claim UGX 150';if(statusLabel)statusLabel.textContent=result.error.message||'Reward could not be credited. Please retry.';return;}
+  activityAdCompleted.add(String(task.id));claimButton.textContent='✓ Already credited';claimButton.disabled=true;
+  if(statusLabel)statusLabel.textContent='UGX 150 has been added to your Net Profits.';
+  await loadMemberWallet();
+ });
+ musicListenAudio.addEventListener('pause',()=>{if(musicListenTimer&&statusLabel)statusLabel.textContent='Paused · timer stopped. Resume playback to continue.';});
+ musicListenAudio.addEventListener('play',()=>{if(musicListenTaskId&&statusLabel)statusLabel.textContent='Playing · listening timer active.';});
+}
+
 let triviaState=null,triviaTimer=null;
 function renderTriviaChallenge(){
  const task=activityRows.find(t=>/trivia challenge/i.test(t.title));
@@ -5176,6 +5229,7 @@ async function renderSpinAndWin(){
  }catch(error){activityListEl.innerHTML='<div class="activity-empty">Could not load Spin &amp; Win: '+escapeText(error.message||'Please retry.')+'</div>';}
 }
 function renderActivities(){
+ if(currentActivitySearch.toLowerCase().includes('spotify')){renderSpotifyMusic();return;}
  if(currentActivitySearch.toLowerCase().includes('tap')){renderTapEarnings();return;}
  if(currentActivitySearch.toLowerCase().includes('casino')||currentActivitySearch.toLowerCase().includes('spin')){renderSpinAndWin();return;}
  if(/colou?r/.test(currentActivitySearch.toLowerCase())){renderColourChallenge();return;}
