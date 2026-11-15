@@ -4753,9 +4753,15 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
  if(category){
   currentActivityFilter=category;
   currentActivitySearch=a.dataset.activitySearch||'';
-  document.getElementById('activityPageTitle').textContent=a.dataset.activityTitle||a.textContent.trim();
-  document.getElementById('activityPageDescription').textContent='Browse '+(a.dataset.activityTitle||'this activity')+' tasks, follow the instructions and submit proof for review.';
-  await loadActivities();
+  const activityTitle=a.dataset.activityTitle||a.textContent.trim();
+  currentActivityChallenge=/^math challenge$/i.test(activityTitle)?'math':(/^colou?r challenge$/i.test(activityTitle)?'colour':'');
+  document.getElementById('activityPageTitle').textContent=activityTitle;
+  document.getElementById('activityPageDescription').textContent=currentActivityChallenge==='math'?'Answer 10 timed maths questions. Score a perfect 10/10 to qualify for UGX 1,000.':(currentActivityChallenge==='colour'?'Identify the colour shown in each of 10 timed rounds. Score 10/10 to qualify for UGX 1,000.':'Browse '+activityTitle+' tasks, follow the instructions and submit proof for review.');
+  if(currentActivityChallenge){
+   activityLoadSequence++;
+   activityRows=[];activitySubmissionMap={};
+   renderActivities();
+  }else{await loadActivities();}
  }
  closeMenu();target.scrollIntoView({behavior:'smooth',block:'start'});
 
@@ -5009,7 +5015,7 @@ const activityCountEl=document.getElementById('activityCount');const chatMessage
 const chatInputEl=document.getElementById('globalChatInput');
 const chatStatusEl=document.getElementById('globalChatStatus');
 const adminPanelEl=document.getElementById('adminActivityPanel');
-let currentActivityFilter='all',currentActivitySearch='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
+let currentActivityFilter='all',currentActivitySearch='',currentActivityChallenge='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
 let currentAvailableBalance=0,currentWithdrawableBalance=0,currentDirectActiveReferrals=0;
 let teamRows=[],currentTeamLevel=1,currentTeamView='overview';
 function renderTeamMembers(){
@@ -5341,6 +5347,8 @@ async function renderMemberRewards(){
  activityListEl.innerHTML='<section class="activity-card rewards-summary-card"><span class="activity-tag">YOUR REWARDS</span><h3 style="margin:10px 0 5px">UGX '+total.toLocaleString('en-UG',{maximumFractionDigits:0})+'</h3><p>Reward credits recorded in your Net Profits.</p></section>'+rows.map(x=>'<article class="activity-card reward-ledger-row"><div class="activity-card-top"><div><span class="activity-tag">'+escapeText(String(x.entry_type||'Reward').replace(/_/g,' '))+'</span><h3 style="margin-top:8px">'+escapeText(x.note||'Reward ledger entry')+'</h3></div><strong class="activity-reward">'+(String(x.direction||'').toLowerCase()==='credit'?'+':'−')+escapeText(money(x))+'</strong></div><p>'+escapeText(x.created_at?new Date(x.created_at).toLocaleString('en-GB'):'')+'</p></article>').join('');
 }
 function renderActivities(){
+ if(currentActivityChallenge==='math'){renderMathChallenge();return;}
+ if(currentActivityChallenge==='colour'){renderColourChallenge();return;}
  if(!currentActivitySearch.toLowerCase().includes('spotify')){stopMusicListenTimer();if(musicListenAudio&&!musicListenAudio.paused)musicListenAudio.pause();musicListenAudio=null;musicListenTaskId=null;}
  if(currentActivitySearch.toLowerCase().includes('spotify')){renderSpotifyMusic();return;}
  if(currentActivitySearch.toLowerCase().includes('tap')){renderTapEarnings();return;}
@@ -5426,7 +5434,7 @@ async function loadActivities(){
  if(loadSequence!==activityLoadSequence)return;
  if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
  // Math and Colour are built-in challenge screens; do not make their display wait for the published-task, submission, or ad-status requests.
- if(currentActivityFilter==='challenge'||/math|colou?r/i.test(currentActivitySearch)){
+ if(currentActivityChallenge||currentActivityFilter==='challenge'||/math|colou?r/i.test(currentActivitySearch)){
   activityRows=[];activitySubmissionMap={};activityCountEl.textContent='2 challenges available';renderActivities();return;
  }
  activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
@@ -5448,6 +5456,7 @@ async function loadActivities(){
 }
 activityFiltersEl.addEventListener('click',e=>{
  const b=e.target.closest('[data-filter]');if(!b)return;
+ currentActivityChallenge='';
  currentActivityFilter=b.dataset.filter;
  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x===b));
  updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
