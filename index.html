@@ -4794,7 +4794,7 @@ document.getElementById('claimDirectReferralBonusButton')?.addEventListener('cli
  if(error){feedback.textContent=error.message||'The bonus could not be claimed. Please try again.';button.textContent='Claim UGX 10,500';await loadDirectReferralBonusStatus();return;}
  feedback.textContent=data?.message||'Your claim has been processed.';
  await loadDirectReferralBonusStatus();
- if(data?.success){await loadWallet();feedback.textContent='UGX 10,500 has been added to your Net Profits.';}
+ if(data?.success){await loadMemberWallet();feedback.textContent='UGX 10,500 has been added to your Net Profits.';}
 });
 const referralInput=document.getElementById('refLink'),feedback=document.getElementById('copyFeedback');
 const dashboardReferralInput=document.getElementById('dashboardRefLink'),dashboardReferralFeedback=document.getElementById('dashboardCopyFeedback');
