@@ -4711,7 +4711,37 @@ document.querySelectorAll('[data-voucher-tab]').forEach(btn=>btn.addEventListene
 
 bindDropdown('teamMenuToggle','teamSubmenu');
 [1,2,3].forEach(n=>bindDropdown('teamLevel'+n+'Toggle','teamLevel'+n+'Submenu'));
-// Keep both sidebar links and challenge-directory buttons on the dedicated built-in challenge screens.
+// Launch the secure question session directly when a member opens either built-in challenge.
+let builtInChallengeStarting=false;
+async function startBuiltInChallenge(key,taskId){
+ const title=key==='math'?'Math Challenge':'Colour Challenge';
+ const host=activityListEl;
+ if(builtInChallengeStarting)return;
+ if(!currentMember){
+  if(key==='math')renderMathChallenge();else renderColourChallenge();
+  return;
+ }
+ builtInChallengeStarting=true;
+ host.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • '+(key==='math'?'MATH':'COLOUR')+' ARENA</span><span class="trivia-badge">SECURE SESSION</span></div><h2>Preparing your '+title+'…</h2><p>Loading your 10 server-issued questions. Please wait.</p></div>';
+ activityCountEl.textContent='Loading 10 questions…';
+ try{
+  const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:key});
+  if(error)throw error;
+  if(!data||!data.session_id||!Array.isArray(data.questions)||data.questions.length!==10)throw new Error('The server did not return all 10 challenge questions. Please try again.');
+  if(key==='math'){
+   mathState={taskId:taskId||'math-challenge',sessionId:data.session_id,questions:data.questions.map(q=>({q:q.prompt,o:Array.isArray(q.options)?q.options:[],question_key:q.question_key})),index:0,score:0,selected:null,seconds:20,answers:[]};
+   if(mathState.questions.some(q=>!q.q||q.o.length!==4||!q.question_key))throw new Error('The Math Challenge question data is incomplete. Please contact support.');
+   renderMathQuestion();startMathTimer();
+  }else{
+   colourState={taskId:taskId||'colour-challenge',sessionId:data.session_id,questions:data.questions.map(q=>({name:'',hex:q.display_hex,o:Array.isArray(q.options)?q.options:[],question_key:q.question_key})),index:0,score:0,selected:null,seconds:15,answers:[]};
+   if(colourState.questions.some(q=>!q.hex||q.o.length!==4||!q.question_key))throw new Error('The Colour Challenge question data is incomplete. Please contact support.');
+   renderColourQuestion();startColourTimer();
+  }
+ }catch(error){
+  host.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE NOT READY</div><h2>'+title+'</h2><p>'+escapeText(error?.message||'The questions could not be loaded. Please try again.')+'</p><button class="trivia-primary" type="button" data-challenge-retry="'+key+'">Try again</button></div>';
+  activityCountEl.textContent='Unable to load questions';
+ }finally{builtInChallengeStarting=false;}
+}
 function openBuiltInChallenge(challenge){
  const key=challenge==='colour'?'colour':'math';
  currentActivityChallenge=key;
@@ -4719,15 +4749,15 @@ function openBuiltInChallenge(challenge){
  currentActivitySearch=key;
  activityLoadSequence++;
  stopMathTimer();stopColourTimer();
- mathState=null;colourState=null;
+ mathState=null;colourState=null;builtInChallengeStarting=false;
  activityRows=[];activitySubmissionMap={};
  const title=key==='math'?'Math Challenge':'Colour Challenge';
  document.getElementById('activityPageTitle').textContent=title;
  document.getElementById('activityPageDescription').textContent=key==='math'
   ?'Answer 10 timed maths questions. Score a perfect 10/10 to qualify for UGX 1,000.'
   :'Identify the colour shown in each of 10 timed rounds. Score 10/10 to qualify for UGX 1,000.';
- activityCountEl.textContent=key==='math'?'Math challenge ready':'Colour challenge ready';
- if(key==='math')renderMathChallenge();else renderColourChallenge();
+ activityCountEl.textContent='Preparing challenge…';
+ startBuiltInChallenge(key,key==='math'?'math-challenge':'colour-challenge');
 }
 document.addEventListener('click',e=>{
  const link=e.target.closest('a[data-activity-search]');
@@ -5538,14 +5568,15 @@ activityListEl.addEventListener('click',async e=>{
  if(tapClaim){tapClaim.disabled=true;const {data,error}=await supabaseClient.rpc('claim_tap_earnings');if(error){alert(error.message||'Tap reward could not be recorded.');await renderTapEarnings();return;}await loadMemberWallet();await renderTapEarnings();alert(data?.message||'UGX 500 added to your Net Profits.');return;}
  const spinAction=e.target.closest('[data-spin-action]');
  if(spinAction){spinAction.disabled=true;const {data,error}=await supabaseClient.rpc('spin_and_win');if(error){alert(error.message||'Spin could not be completed.');await renderSpinAndWin();return;}const wheel=activityListEl.querySelector('[data-spin-wheel]'),result=activityListEl.querySelector('[data-spin-result]');if(!wheel||!result){await renderSpinAndWin();return;}const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const angle=(reduced?0:8*360)+(360-Number(data.segment_index||0)*60);requestAnimationFrame(()=>{wheel.style.transform='rotate('+angle+'deg)';});const finish=async()=>{if(result)result.textContent='🎉 UGX '+Number(data.amount).toLocaleString()+' added to your Net Profits!';if(spinAction)spinAction.textContent='Spin recorded';await loadMemberWallet();const status=await getDailyActivityStatus();const counter=activityListEl.querySelector('.tap-spin-counter');if(counter)counter.innerHTML='<strong>'+status.spin_used+'</strong> / 2 used';if(spinAction){spinAction.disabled=Number(status.spin_remaining)<=0;if(spinAction.disabled)spinAction.textContent='Daily limit reached';}};if(reduced){await finish();}else{setTimeout(finish,4450);}return;}
+ const retryChallenge=e.target.closest('[data-challenge-retry]');if(retryChallenge){await startBuiltInChallenge(retryChallenge.dataset.challengeRetry,retryChallenge.dataset.challengeRetry==='math'?'math-challenge':'colour-challenge');return;}
  const openMath=e.target.closest('[data-open-math-challenge]');if(openMath){openBuiltInChallenge('math');return;}
  const openColour=e.target.closest('[data-open-colour-challenge]');if(openColour){openBuiltInChallenge('colour');return;}
- const colourStart=e.target.closest('[data-colour-start]');if(colourStart){if(!currentMember){alert('Please sign in to play the Colour Challenge.');return;}colourStart.disabled=true;const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:'colour'});if(error||!data){colourStart.disabled=false;alert(error?.message||'Unable to start challenge.');return;}colourState={taskId:colourStart.dataset.colourStart,sessionId:data.session_id,questions:data.questions.map(q=>({name:'',hex:q.display_hex,o:q.options,question_key:q.question_key})),index:0,score:0,selected:null,seconds:15,answers:[]};renderColourQuestion();startColourTimer();return;}
+ const colourStart=e.target.closest('[data-colour-start]');if(colourStart){await startBuiltInChallenge('colour',colourStart.dataset.colourStart);return;}
  const colourAnswer=e.target.closest('[data-colour-answer]');if(colourAnswer&&colourState&&colourState.selected===null){stopColourTimer();const chosen=Number(colourAnswer.dataset.colourAnswer),q=colourState.questions[colourState.index];colourState.selected=chosen;colourState.answers[colourState.index]=chosen;renderColourQuestion();return;}
  if(e.target.closest('[data-colour-next]')){if(!colourState)return;if(colourState.index>=9){finishColourChallenge();return;}colourState.index++;colourState.selected=null;renderColourQuestion();startColourTimer();return;}
  if(e.target.closest('[data-colour-exit]')){stopColourTimer();colourState=null;renderColourChallenge();return;}
  if(e.target.closest('[data-colour-retry]')){colourState=null;renderColourChallenge();return;}
- const mathStart=e.target.closest('[data-math-start]');if(mathStart){if(!currentMember){alert('Please sign in to play the Math Challenge.');return;}mathStart.disabled=true;const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:'math'});if(error||!data){mathStart.disabled=false;alert(error?.message||'Unable to start challenge.');return;}mathState={taskId:mathStart.dataset.mathStart,sessionId:data.session_id,questions:data.questions.map(q=>({q:q.prompt,o:q.options,question_key:q.question_key})),index:0,score:0,selected:null,seconds:20,answers:[]};renderMathQuestion();startMathTimer();return;}
+ const mathStart=e.target.closest('[data-math-start]');if(mathStart){await startBuiltInChallenge('math',mathStart.dataset.mathStart);return;}
  const mathAnswer=e.target.closest('[data-math-answer]');if(mathAnswer&&mathState&&mathState.selected===null){stopMathTimer();const chosen=Number(mathAnswer.dataset.mathAnswer),q=mathState.questions[mathState.index];mathState.selected=chosen;mathState.answers[mathState.index]=chosen;renderMathQuestion();return;} if(e.target.closest('[data-math-next]')){if(!mathState)return;if(mathState.index>=9){finishMathChallenge();return;}mathState.index++;mathState.selected=null;renderMathQuestion();startMathTimer();return;}
  if(e.target.closest('[data-math-exit]')){stopMathTimer();mathState=null;renderMathChallenge();return;}
  if(e.target.closest('[data-math-retry]')){mathState=null;renderMathChallenge();return;}
