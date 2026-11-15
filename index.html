@@ -4028,9 +4028,19 @@ body.activation-screen-open{overflow:hidden!important}
 
 
   <section class="page-view" id="notificationsPage" hidden>
-    <section class="card" style="max-width:780px;margin:0 auto;padding:20px">
-      <div class="chat-header"><div><span class="global-chat-kicker">YOUR ACCOUNT UPDATES</span><h2>🔔 Notifications</h2><p>Important updates and messages about your GenZBag account.</p></div><button type="button" id="markAllNotificationsRead" class="profile-save-button" style="width:auto;margin:0;padding:9px 12px">Mark all read</button></div>
-      <div id="notificationsList" class="gb-chat-people" aria-live="polite"><div class="activity-empty">Loading your notifications…</div></div>
+    <section class="card notifications-panel">
+      <div class="notifications-heading">
+        <div class="notifications-heading-copy">
+          <span class="notifications-kicker">YOUR ACCOUNT UPDATES</span>
+          <h2><span aria-hidden="true">🔔</span> Notifications</h2>
+          <p>Stay informed about important activity and updates on your GenZBag account.</p>
+        </div>
+        <button type="button" id="markAllNotificationsRead" class="notifications-mark-read">Mark all as read</button>
+      </div>
+      <div class="notifications-list-wrap">
+        <div class="notifications-list-title"><strong>Recent notifications</strong><span>Latest updates appear first</span></div>
+        <div id="notificationsList" class="notifications-list" aria-live="polite"><div class="activity-empty">Loading your notifications…</div></div>
+      </div>
     </section>
   </section>
 
@@ -5955,7 +5965,7 @@ async function loadNotifications(){
  const {data,error}=await supabaseClient.from('notifications').select('id,title,message,kind,read_at,created_at').eq('user_id',member.id).order('created_at',{ascending:false}).limit(100);
  if(error){box.innerHTML='<div class="activity-empty">Could not load notifications: '+escapeText(error.message)+'</div>';return;}
  if(!data?.length){box.innerHTML='<div class="activity-empty">You have no notifications yet.</div>';setLiveBadge('notificationCount',0);return;}
- box.innerHTML=data.map(n=>'<article class="gb-chat-person" style="display:block;text-align:left;cursor:default;'+(n.read_at?'opacity:.72':'border-color:#2dd4bf')+'"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><strong style="color:inherit">'+escapeText(n.title||'GenZBag update')+'</strong><small>'+escapeText(n.read_at?'Read':'New')+'</small></div><p style="margin:7px 0 4px;white-space:pre-wrap">'+escapeText(n.message||'')+'</p><small>'+escapeText(new Date(n.created_at).toLocaleString())+'</small></article>').join('');
+ box.innerHTML=data.map(n=>'<article class="notification-item '+(n.read_at?'is-read':'is-unread')+'"><div class="notification-item-top"><strong>'+escapeText(n.title||'GenZBag update')+'</strong><span class="notification-state">'+(n.read_at?'Read':'New')+'</span></div><p>'+escapeText(n.message||'')+'</p><div class="notification-item-footer"><span class="notification-date">'+escapeText(new Date(n.created_at).toLocaleString())+'</span></div></article>').join('');
  const unread=data.filter(n=>!n.read_at).map(n=>n.id);
  if(unread.length){const {error:markError}=await supabaseClient.from('notifications').update({read_at:new Date().toISOString()}).in('id',unread).eq('user_id',member.id);if(markError)console.warn('Could not mark notifications read:',markError.message);}
  await loadMemberInboxCounters();
@@ -7636,6 +7646,59 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 #activityPage #activityList .genz-video-choice-info small{display:block;margin-top:4px;color:#b8cedc;font-size:9px;line-height:1.35}
 #activityPage #activityList .genz-video-choice-info em{display:inline-block;margin-top:7px;padding:4px 6px;border-radius:6px;background:#0b4b50;color:#8ff4e2;font-size:8px;font-style:normal;font-weight:850}
 @media(max-width:520px){#activityPage #activityList .genz-music-video-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#activityPage #activityList .genz-video-choice-info{padding:8px}#activityPage #activityList .genz-video-player-wrap{border-radius:12px}}
+
+/* Notifications page: high-contrast dashboard styling */
+#notificationsPage{padding:4px 0 28px}
+#notificationsPage .notifications-panel{
+ max-width:860px;margin:0 auto;padding:0!important;overflow:hidden;
+ border:1px solid #244a63!important;border-radius:20px!important;
+ background:linear-gradient(145deg,#10243d,#142f49)!important;
+ color:#edf8ff!important;box-shadow:0 16px 38px #02081735!important;
+}
+#notificationsPage .notifications-heading{
+ display:flex;align-items:center;justify-content:space-between;gap:18px;
+ padding:23px 24px;background:radial-gradient(circle at 100% 0%,#1d5260 0,transparent 43%),linear-gradient(135deg,#0b1c31,#123b55);
+ border-bottom:1px solid #28536a;
+}
+#notificationsPage .notifications-kicker{display:block;color:#76ead9;font-size:10px;font-weight:950;letter-spacing:1.7px}
+#notificationsPage .notifications-heading h2{display:flex;align-items:center;gap:9px;margin:8px 0 6px;color:#f4fbff;font-size:23px;font-weight:950;line-height:1.2}
+#notificationsPage .notifications-heading-copy p{margin:0;color:#c4d7e4;font-size:12px;line-height:1.6}
+#notificationsPage .notifications-mark-read{
+ flex:0 0 auto;min-height:42px;padding:10px 15px;border:1px solid #42d7c4;border-radius:11px;
+ background:linear-gradient(100deg,#19b8a8,#0d9488);color:#042f35;font-size:11px;font-weight:950;
+ box-shadow:0 7px 17px #0d948833;cursor:pointer;
+}
+#notificationsPage .notifications-mark-read:hover{filter:brightness(1.08);transform:translateY(-1px)}
+#notificationsPage .notifications-list-wrap{padding:19px 22px 22px}
+#notificationsPage .notifications-list-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 1px 13px}
+#notificationsPage .notifications-list-title strong{color:#f1fbff;font-size:14px;font-weight:900}
+#notificationsPage .notifications-list-title span{color:#9fb9ca;font-size:10px}
+#notificationsPage .notifications-list{display:grid;gap:11px}
+#notificationsPage .notification-item{
+ min-width:0;padding:15px 16px;border:1px solid #31566e;border-radius:14px;
+ background:linear-gradient(145deg,#173b56,#102d46);color:#eaf8ff;
+ box-shadow:0 7px 18px #02081724;
+}
+#notificationsPage .notification-item.is-unread{border-color:#2b9f9a;background:linear-gradient(110deg,#123b4c,#14364e);box-shadow:inset 3px 0 #5eead4,0 7px 18px #02081724}
+#notificationsPage .notification-item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#notificationsPage .notification-item-top strong{color:#f4fbff;font-size:13px;font-weight:900;line-height:1.45;overflow-wrap:anywhere}
+#notificationsPage .notification-state{flex:0 0 auto;padding:5px 8px;border:1px solid #315f70;border-radius:7px;background:#0b2c43;color:#a9c5d5;font-size:9px;font-weight:900;letter-spacing:.5px}
+#notificationsPage .notification-item.is-unread .notification-state{border-color:#276b72;background:#0b4b50;color:#8ff4e2}
+#notificationsPage .notification-item p{margin:9px 0 11px;color:#d0e0e9;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+#notificationsPage .notification-item-footer{display:flex;align-items:center;justify-content:flex-end;padding-top:9px;border-top:1px solid #ffffff12}
+#notificationsPage .notification-date{color:#9fb9ca;font-size:10px;line-height:1.4}
+#notificationsPage .notifications-list .activity-empty{padding:28px 16px;border:1px dashed #31566e;border-radius:13px;background:#0b2035;color:#c4d7e4;text-align:center;font-size:12px;line-height:1.6}
+@media(max-width:560px){
+ #notificationsPage .notifications-heading{align-items:flex-start;flex-direction:column;padding:19px 16px;gap:14px}
+ #notificationsPage .notifications-heading h2{font-size:21px}
+ #notificationsPage .notifications-mark-read{width:100%;min-height:43px}
+ #notificationsPage .notifications-list-wrap{padding:16px 13px 18px}
+ #notificationsPage .notifications-list-title{align-items:flex-start;flex-direction:column;gap:4px}
+ #notificationsPage .notification-item{padding:13px 12px}
+ #notificationsPage .notification-item-top strong{font-size:12px}
+ #notificationsPage .notification-item p{font-size:11px}
+}
+
 </style>
 
 </body>
