@@ -5083,84 +5083,46 @@ const adminPanelEl=document.getElementById('adminActivityPanel');
 let currentActivityFilter='all',currentActivitySearch='',currentActivityChallenge='',activityRows=[],activitySubmissionMap={},currentMember=null,globalChatChannel=null;
 let currentAvailableBalance=0,currentWithdrawableBalance=0,currentDirectActiveReferrals=0;
 let teamRows=[],currentTeamLevel=1,currentTeamView='overview';
+
 function genzbagScheduledDay(search,title,category){
  const q=(String(search||'')+' '+String(title||'')).toLowerCase(),c=String(category||'').toLowerCase();
- if(q.includes('foreign_chat')||q.includes('foreign chat'))return 1;
- if(q.includes('spotify')||q.includes('music')||c==='music')return 1;
- if(q.includes('tap')||q.includes('colour')||q.includes('color')||q.includes('tap earning'))return 2;
- if(q.includes('math'))return 6;
- if(q.includes('casino')||q.includes('spin'))return 5;
- if(q.includes('tiktok'))return 4;
- if(q.includes('trivia')||q.includes('youtube')||c==='challenge')return 3;
- if(q.includes('ad task')||q.includes('sponsored')||c==='sponsored')return 0;
- if(c==='video')return q.includes('youtube')?3:(q.includes('tiktok')?4:null);
+ if(q.includes('foreign_chat')||q.includes('foreign chat')||q.includes('spotify')||q.includes('music')||c==='music')return 0;
+ if(q.includes('tap')||q.includes('colour')||q.includes('color')||q.includes('tap earning'))return 1;
+ if(q.includes('trivia')||q.includes('youtube')||c==='challenge')return 2;
+ if(q.includes('tiktok'))return 3;
+ if(q.includes('casino')||q.includes('spin'))return 4;
+ if(q.includes('math'))return 5;
+ if(q.includes('ad task')||q.includes('sponsored')||c==='sponsored')return 6;
+ if(c==='video')return 2;
  return null;
 }
 function genzbagTodayIndex(){
  const day=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Kampala',weekday:'short'}).format(new Date());
- return ({Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6})[day]??0;
+ return ({Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6})[day]??0;
 }
-function genzbagScheduleIsAllowed(search,title,category){
- const required=genzbagScheduledDay(search,title,category);
- return required===null||genzbagTodayIndex()===required;
+function genzbagCreditDayName(search,title,category){
+ const d=genzbagScheduledDay(search,title,category);
+ return d===null?null:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][d];
 }
-function genzbagScheduleAllowed(search,title,category){
- if(genzbagScheduleIsAllowed(search,title,category))return true;
- const required=genzbagScheduledDay(search,title,category),today=genzbagTodayIndex();
- const names=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
- alert((title||'This task')+' is available on '+names[required]+' only. Today is '+names[today]+' (East Africa Time).');
- return false;
-}
-document.addEventListener('click',e=>{
- const link=e.target.closest('a[data-weekly-task],a[data-activity-search]');
- if(!link)return;
- const key=link.dataset.weeklyTask||link.dataset.activitySearch||'';
- const title=link.dataset.activityTitle||link.textContent.trim();
- if(!genzbagScheduleAllowed(key,title,link.dataset.activityCategory||'')){
-  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
- }
-},true);
-activityListEl.addEventListener('click',e=>{
- const card=e.target.closest('[data-activity-id]');
- if(currentActivityChallenge){
-  if(!genzbagScheduleAllowed(currentActivityChallenge,currentActivityChallenge==='math'?'Math Challenge':'Colour Challenge','game')){
-   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
-  }
-  return;
- }
- if(!card)return;
- const task=activityRows.find(x=>String(x.id)===String(card.dataset.activityId));
- if(task&&!genzbagScheduleAllowed(task.title,task.title,task.category)){
-  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
- }
-},true);
-const genzbagScheduleObserver=new MutationObserver(()=>{
- let locked=0;
+const genzbagCreditNoticeObserver=new MutationObserver(()=>{
  activityListEl.querySelectorAll('[data-activity-id]').forEach(card=>{
   const task=activityRows.find(x=>String(x.id)===String(card.dataset.activityId));
   if(!task)return;
-  const isLocked=!genzbagScheduleIsAllowed(task.title,task.title,task.category);
-  card.hidden=isLocked;
-  if(isLocked)locked++;
+  const day=genzbagCreditDayName(task.title,task.title,task.category);
+  if(!day)return;
+  let note=card.querySelector('.weekly-credit-day-note');
+  if(!note){
+   note=document.createElement('div');
+   note.className='weekly-credit-day-note';
+   note.style.cssText='margin:8px 0;padding:8px 10px;border-radius:9px;background:#eef5ff;color:#174b86;font-size:12px;line-height:1.45;';
+   const target=card.querySelector('.activity-card-content,.activity-card-body,.activity-details')||card;
+   target.appendChild(note);
+  }
+  const msg='You can complete this task any day. Its reward is credited on '+day+' only (East Africa Time).';
+  if(note.textContent!==msg)note.textContent=msg;
  });
- let note=document.getElementById('weeklyScheduleLockNote');
- if(locked){
-  if(!note){note=document.createElement('div');note.id='weeklyScheduleLockNote';note.className='activity-empty';activityListEl.prepend(note);}
-  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const message=locked+' task(s) are hidden because they are scheduled for another weekday. Today is '+days[genzbagTodayIndex()]+' (EAT). Check the Weekly Schedule for their days.';
-  if(note.textContent!==message)note.textContent=message;
- }else if(note)note.remove();
 });
-genzbagScheduleObserver.observe(activityListEl,{childList:true,subtree:true});
-activityListEl.addEventListener('submit',e=>{
- const form=e.target.closest('[data-proof-form]');
- if(!form)return;
- const task=activityRows.find(x=>String(x.id)===String(form.dataset.proofForm));
- if(task&&!genzbagScheduleAllowed(task.title,task.title,task.category)){
-  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
- }
-},true);
-
+genzbagCreditNoticeObserver.observe(activityListEl,{childList:true,subtree:true});
 function renderTeamMembers(){
  const list=document.getElementById('teamMembersList'),q=(document.getElementById('teamSearchInput')?.value||'').trim().toLowerCase();
  let rows=teamRows.filter(x=>Number(x.member_level)===Number(currentTeamLevel)); if(currentTeamView==='active')rows=rows.filter(x=>x.is_active);
@@ -5335,7 +5297,7 @@ function renderSpotifyMusic(){
   const result=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:task.id});
   if(result.error){claimButton.disabled=false;claimButton.textContent='Claim UGX 150';if(statusLabel)statusLabel.textContent=result.error.message||'Reward could not be credited. Please retry.';return;}
   activityAdCompleted.add(String(task.id));claimButton.textContent='✓ Already credited';claimButton.disabled=true;
-  if(statusLabel)statusLabel.textContent='UGX 150 has been added to your Net Profits.';
+  if(statusLabel)statusLabel.textContent=result.data?.credit?.credited?'UGX 150 has been added to your Net Profits.':'Task completed. Your UGX 150 reward will be credited on '+(result.data?.credit?.credit_day||'its scheduled weekday')+'.';
   await loadMemberWallet();
  });
  musicListenAudio.addEventListener('pause',()=>{if(musicListenTimer&&statusLabel)statusLabel.textContent='Paused · timer stopped. Resume playback to continue.';});
@@ -5472,7 +5434,7 @@ async function creditSponsoredReward(taskId,button,statusLabel){
  }
  activityAdCompleted.add(key);activityAdViewed.add(key);
  if(button){button.disabled=true;button.textContent='✓ Already credited';delete button.dataset.adClaim;delete button.dataset.adView;}
- if(statusLabel)statusLabel.textContent='UGX 150 has been added to your Net Profits.';
+ if(statusLabel)statusLabel.textContent=result.data?.credit?.credited?'UGX 150 has been added to your Net Profits.':'Task completed. Your UGX 150 reward will be credited on '+(result.data?.credit?.credit_day||'its scheduled weekday')+'.';
  await loadMemberWallet();
  return true;
 }
@@ -5894,6 +5856,7 @@ function renderDashboardWalletInsights(ledgerRows){
 }
 async function loadMemberWallet(){
  const member=await ensureMemberSession();
+ if(supabaseClient)await supabaseClient.rpc('release_scheduled_task_credits').catch(()=>{});
  if(!supabaseClient||!member)return;
  const payoutEl=document.getElementById('withdrawPayoutNumber');
  const {data:withdrawProfile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
