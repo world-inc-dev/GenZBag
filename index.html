@@ -5212,9 +5212,7 @@ async function loadActivities(){
  activityRows=(tasksRes.data||[]).filter(t=>(!t.starts_at||new Date(t.starts_at)<=new Date())&&(!t.ends_at||new Date(t.ends_at)>new Date()));
  activitySubmissionMap={};
  activityAdCompleted=new Set(adStatusRes.error?[]:(adStatusRes.data?.completed_task_ids||[]).map(String));
- const videoTaskIds=new Set(activityRows.filter(t=>t.category==='video').map(t=>String(t.id)));
- const dayStart=new Date();dayStart.setHours(0,0,0,0);
- activityDailyVideoCount=(subsRes.data||[]).filter(s=>videoTaskIds.has(String(s.task_id))&&s.submitted_at&&new Date(s.submitted_at)>=dayStart).length;
+ activityDailyVideoCount=Number(adStatusRes.data?.video_claims_today||0);
  (subsRes.data||[]).forEach(s=>{if(!activitySubmissionMap[s.task_id]||new Date(s.submitted_at)>new Date(activitySubmissionMap[s.task_id].submitted_at))activitySubmissionMap[s.task_id]=s;});
  updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
 }
