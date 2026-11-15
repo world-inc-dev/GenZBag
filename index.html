@@ -5863,7 +5863,7 @@ function renderDashboardWalletInsights(ledgerRows){
 }
 async function loadMemberWallet(){
  const member=await ensureMemberSession();
- if(supabaseClient)await supabaseClient.rpc('release_scheduled_task_credits').catch(()=>{});
+ if(supabaseClient){try{await supabaseClient.rpc('release_scheduled_task_credits');}catch(rpcError){console.warn('Scheduled task credit release skipped:',rpcError);}}
  if(!supabaseClient||!member)return;
  const payoutEl=document.getElementById('withdrawPayoutNumber');
  const {data:withdrawProfile}=await supabaseClient.from('profiles').select('phone').eq('id',currentMember.id).maybeSingle();
