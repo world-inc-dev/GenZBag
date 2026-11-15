@@ -5289,11 +5289,12 @@ async function loadForeignChatProgress(){
 }
 async function renderForeignDirectory(){
  const member=await ensureMemberSession();if(!member||!globalChatPresence)return;
- const state=globalChatPresence.presenceState(),online=[];
- Object.values(state).flat().forEach(p=>{if(p.user_id&&p.user_id!==member.id)online.push(p);});
+ const state=globalChatPresence.presenceState(),onlineIds=[...new Set(Object.values(state).flat().map(p=>p.user_id).filter(id=>id&&id!==member.id))];
  const own=(await supabaseClient.from('profiles').select('country').eq('id',member.id).maybeSingle()).data;
  const ownCountry=(own?.country||'').trim().toLowerCase();
- const unique=[...new Map(online.filter(p=>(p.country||'').trim().toLowerCase()!==ownCountry).map(p=>[p.user_id,p])).values()].slice(0,5);
+ let registered=[];
+ if(onlineIds.length){const result=await supabaseClient.from('member_public_profiles').select('user_id,username,country,avatar_emoji').in('user_id',onlineIds);if(!result.error)registered=result.data||[];}
+ const unique=registered.filter(p=>(p.country||'').trim().toLowerCase()!==ownCountry).slice(0,5);
  const list=document.getElementById('globalChatMessages'),count=document.getElementById('gbOnlineCount'),badge=document.getElementById('globalChatMembersCount');
  if(count)count.textContent=unique.length+' online';if(badge)badge.textContent='● '+unique.length+' online';
  if(!unique.length){list.innerHTML='<div class="activity-empty">No foreign members are online right now. Check back shortly or invite friends in other countries to register.</div>';return;}
@@ -5357,7 +5358,7 @@ document.getElementById('globalChatRefresh').addEventListener('click',async()=>{
 chatInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('globalChatSend').click();}});
 document.getElementById('globalChatMessages').addEventListener('click',async e=>{const b=e.target.closest('[data-chat-user]');if(!b)return;const p=Object.values(globalChatPresence?.presenceState()||{}).flat().find(x=>x.user_id===b.dataset.chatUser);if(p)await openMemberConversation(p.user_id,p.username||'GenZBag member',p.country||'Unknown');});
 document.getElementById('gbChatBack').addEventListener('click',async()=>{currentPrivateConversation=null;currentChatPartner=null;if(memberConversationChannel){await supabaseClient.removeChannel(memberConversationChannel);memberConversationChannel=null;}document.getElementById('gbChatPartner').textContent='Your private conversations';document.getElementById('gbChatPartnerCountry').textContent='Choose an online member to start chatting.';document.getElementById('gbChatHistory').innerHTML='<div class="activity-empty">Choose another online member to start a private chat.</div>';chatInputEl.disabled=true;document.getElementById('globalChatSend').disabled=true;document.getElementById('gbChatBack').hidden=true;});
-document.getElementById('foreignChatClaim').addEventListener('click',async()=>{const b=document.getElementById('foreignChatClaim');b.disabled=true;b.textContent='Verifying…';const {data,error}=await supabaseClient.rpc('claim_foreign_chat_bonus');b.disabled=false;b.textContent='Claim UGX 10,000';if(error){document.getElementById('foreignChatRewardStatus').textContent='Claim could not be verified: '+error.message;return;}document.getElementById('foreignChatRewardStatus').textContent=data?.message||'Claim processed.';if(data?.success){b.hidden=true;if(typeof loadMemberWallet==='function')await loadMemberWallet();}await loadForeignChatProgress();});
+document.getElementById('foreignChatClaim').addEventListener('click',async()=>{const b=document.getElementById('foreignChatClaim');b.disabled=true;b.textContent='Verifying…';const {data,error}=await supabaseClient.rpc('claim_foreign_chat_bonus');b.disabled=false;b.textContent='Claim UGX 10,000';if(error){document.getElementById('foreignChatRewardStatus').textContent='Claim could not be verified: '+error.message;return;}document.getElementById('foreignChatRewardStatus').textContent=data?.message||'Claim processed.';if(data?.success){b.hidden=true;if(typeof loadMemberWallet==='function')await loadMemberWallet();}else if(data?.already_claimed){b.hidden=true;}await loadForeignChatProgress();});
 async function loadAdminActivityTools(){
  if(!currentMember||currentMember.app_metadata?.role!=='admin')return;
  adminPanelEl.classList.add('visible');
