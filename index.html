@@ -5039,7 +5039,63 @@ async function finishTriviaChallenge(){
  await loadActivities();
 }
 
+
+const mathQuestionBank=[
+ {q:'What is 48 + 37?',o:['75','85','95','86'],a:1},
+ {q:'What is 96 − 58?',o:['38','42','48','36'],a:0},
+ {q:'What is 12 × 9?',o:['98','108','118','112'],a:1},
+ {q:'What is 144 ÷ 12?',o:['10','11','12','14'],a:2},
+ {q:'What is 15% of 200?',o:['20','25','30','35'],a:2},
+ {q:'Simplify 3/6 to its lowest terms.',o:['1/3','1/2','2/3','3/4'],a:1},
+ {q:'What is 7²?',o:['14','42','49','56'],a:2},
+ {q:'A book costs UGX 8,000. What is the cost of 3 books?',o:['UGX 16,000','UGX 21,000','UGX 24,000','UGX 28,000'],a:2},
+ {q:'What is 0.75 expressed as a percentage?',o:['7.5%','25%','75%','750%'],a:2},
+ {q:'What is the perimeter of a square with side 6 cm?',o:['12 cm','18 cm','24 cm','36 cm'],a:2},
+ {q:'What is 5/8 + 1/8?',o:['3/8','1/2','6/8','7/8'],a:2},
+ {q:'Solve: 4x = 28. What is x?',o:['6','7','8','9'],a:1},
+ {q:'What is the average of 4, 8 and 12?',o:['6','7','8','9'],a:2},
+ {q:'A bus travels 120 km in 2 hours. What is its average speed?',o:['40 km/h','50 km/h','60 km/h','80 km/h'],a:2},
+ {q:'What is 1.2 + 0.85?',o:['1.95','2.05','2.5','2.15'],a:1},
+ {q:'How many degrees are in a right angle?',o:['45°','60°','90°','180°'],a:2},
+ {q:'What is 25 × 4?',o:['75','90','100','125'],a:2},
+ {q:'If 5 pens cost UGX 2,500, what is the cost of one pen?',o:['UGX 250','UGX 400','UGX 500','UGX 750'],a:2},
+ {q:'What is the next number: 3, 6, 9, 12, ...?',o:['13','14','15','18'],a:2},
+ {q:'What is ⅓ of  ninety?',o:['20','30','40','45'],a:1}
+];
+let mathState=null,mathTimer=null;
+function mathPickQuestions(){const pool=[...mathQuestionBank];for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}return pool.slice(0,10);}
+function renderMathChallenge(){
+ const task=activityRows.find(t=>/math challenge/i.test(t.title));
+ activityCountEl.textContent=task?'Math challenge ready':'Math challenge unavailable';
+ if(!task){activityListEl.innerHTML='<div class="activity-empty">The Math Challenge is not published yet.</div>';return;}
+ const sub=activitySubmissionMap[task.id],locked=sub&&['pending','approved'].includes(sub.status);
+ if(locked){activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • MATH ARENA</span><span class="trivia-badge">RESULT SAVED</span></div><h2>Math Challenge</h2><p>Your score has been submitted.</p><div class="trivia-result-score"><strong>✓</strong><span>'+escapeText(sub.status.toUpperCase())+'</span></div><p>'+(sub.status==='approved'?'Your result has been reviewed.':'Your result is awaiting administrator review.')+'</p></div>';return;}
+ if(!mathState){activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • MATH ARENA</span><span class="trivia-badge">100 POINTS</span></div><h2>Math Challenge ➗</h2><p>Test your speed and accuracy with 10 questions in arithmetic, fractions, percentages and everyday maths.</p><div class="trivia-stats"><div class="trivia-stat"><strong>10</strong><span>Questions</span></div><div class="trivia-stat"><strong>20s</strong><span>Per question</span></div><div class="trivia-stat"><strong>100</strong><span>Max points</span></div></div><p>Each correct answer earns 10 points. Your result is saved for review. This challenge currently awards points only, not cash.</p><button class="trivia-primary" type="button" data-math-start="'+escapeText(task.id)+'">Start Math Challenge →</button></div>';return;}
+ renderMathQuestion();
+}
+function renderMathQuestion(){
+ if(!mathState)return;
+ const q=mathState.questions[mathState.index],answered=mathState.selected!==null;
+ activityCountEl.textContent='Math question '+(mathState.index+1)+' of 10';
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-top"><span class="trivia-kicker">GENZBAG • MATH ARENA</span><span class="trivia-badge">⏱ '+mathState.seconds+'s left</span></div><div class="trivia-progress"><span style="width:'+((mathState.index)/10*100)+'%"></span></div><div class="trivia-question-meta"><span>QUESTION '+(mathState.index+1)+' / 10</span><span>SCORE '+(mathState.score*10)+' PTS</span></div><h2 class="trivia-question">'+escapeText(q.q)+'</h2><div class="trivia-options">'+q.o.map((opt,i)=>'<button class="trivia-option '+(answered&&i===q.a?'correct':answered&&i===mathState.selected?'wrong':'')+'" type="button" data-math-answer="'+i+'" '+(answered?'disabled':'')+'><strong>'+String.fromCharCode(65+i)+'.</strong> '+escapeText(opt)+'</button>').join('')+'</div><p class="trivia-feedback">'+(answered?(mathState.selected===q.a?'Correct! +10 points.':mathState.selected===-1?'Time is up. Correct answer: '+escapeText(q.o[q.a]):'Incorrect. Correct answer: '+escapeText(q.o[q.a])):'Choose the correct answer before time runs out.')+'</p>'+(answered?'<button class="trivia-primary" type="button" data-math-next>'+(mathState.index===9?'Finish challenge':'Next question →')+'</button>':'')+'<button class="trivia-secondary" type="button" data-math-exit>Exit challenge</button></div>';
+}
+function stopMathTimer(){if(mathTimer){clearInterval(mathTimer);mathTimer=null;}}
+function startMathTimer(){stopMathTimer();mathState.seconds=20;mathTimer=setInterval(()=>{if(!mathState){stopMathTimer();return;}mathState.seconds--;if(mathState.seconds<=0){stopMathTimer();if(mathState.selected===null){mathState.selected=-1;mathState.answers[mathState.index]=-1;}renderMathQuestion();}else{const badge=activityListEl.querySelector('.trivia-badge');if(badge)badge.textContent='⏱ '+mathState.seconds+'s left';}},1000);}
+async function finishMathChallenge(){
+ stopMathTimer();const state=mathState;if(!state)return;
+ const task=activityRows.find(t=>String(t.id)===String(state.taskId));
+ if(!task||!currentMember||!supabaseClient){activityListEl.innerHTML='<div class="activity-empty">Your session expired. Sign in again before submitting your score.</div>';mathState=null;return;}
+ const pct=Math.round(state.score/10*100),summary=state.questions.map((q,i)=>'Q'+(i+1)+': '+(state.answers[i]===q.a?'correct':state.answers[i]===-1?'timeout':'incorrect')).join('; ');
+ const proof='MATH CHALLENGE RESULT\\nScore: '+state.score+'/10 ('+pct+'%)\\nPoints: '+(state.score*10)+'/100\\nAnswers: '+summary+'\\nCompleted: '+new Date().toISOString();
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Math challenge finished!</h2><div class="trivia-result-score"><strong>'+state.score+'/10</strong><span>'+pct+'% • '+(state.score*10)+' points</span></div><p>Saving your result for administrator review…</p></div>';
+ const {error}=await supabaseClient.from('task_submissions').insert({task_id:task.id,user_id:currentMember.id,proof_text:proof,proof_url:null});
+ mathState=null;
+ if(error){activityListEl.innerHTML='<div class="trivia-shell"><h2>Result not submitted</h2><p>'+escapeText(error.code==='23505'?'A result is already awaiting review or has been approved for this challenge.':error.message)+'</p><button class="trivia-secondary" type="button" data-math-retry>Back to Math Challenge</button></div>';return;}
+ await loadActivities();
+}
+
 function renderActivities(){
+ if(currentActivitySearch.toLowerCase().includes('math')){renderMathChallenge();return;}
  if(currentActivitySearch.toLowerCase().includes('trivia')){renderTriviaChallenge();return;}
  let rows=currentActivityFilter==='all'?activityRows:activityRows.filter(x=>x.category===currentActivityFilter);
  if(currentActivitySearch){const terms=currentActivitySearch.toLowerCase().split(/\\s+/).filter(Boolean);rows=rows.filter(x=>{const hay=(x.title+' '+(x.description||'')+' '+(x.instructions||'')+' '+(x.content_url||'')).toLowerCase();return terms.some(term=>hay.includes(term));});}
@@ -5103,6 +5159,11 @@ document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListe
  renderActivities();
 }));
 activityListEl.addEventListener('click',async e=>{
+ const mathStart=e.target.closest('[data-math-start]');if(mathStart){if(!currentMember){alert('Please sign in to play the Math Challenge.');return;}mathState={taskId:mathStart.dataset.mathStart,questions:mathPickQuestions(),index:0,score:0,selected:null,seconds:20,answers:[]};renderMathQuestion();startMathTimer();return;}
+ const mathAnswer=e.target.closest('[data-math-answer]');if(mathAnswer&&mathState&&mathState.selected===null){stopMathTimer();const chosen=Number(mathAnswer.dataset.mathAnswer),q=mathState.questions[mathState.index];mathState.selected=chosen;mathState.answers[mathState.index]=chosen;if(chosen===q.a)mathState.score++;renderMathQuestion();return;}
+ if(e.target.closest('[data-math-next]')){if(!mathState)return;if(mathState.index>=9){finishMathChallenge();return;}mathState.index++;mathState.selected=null;renderMathQuestion();startMathTimer();return;}
+ if(e.target.closest('[data-math-exit]')){stopMathTimer();mathState=null;renderMathChallenge();return;}
+ if(e.target.closest('[data-math-retry]')){mathState=null;renderMathChallenge();return;}
  const start=e.target.closest('[data-trivia-start]');if(start){if(!currentMember){alert('Please sign in to play Trivia.');return;}triviaState={taskId:start.dataset.triviaStart,questions:triviaPickQuestions(),index:0,score:0,selected:null,seconds:15,answers:[]};renderTriviaQuestion();startTriviaTimer();return;}
  const answer=e.target.closest('[data-trivia-answer]');if(answer&&triviaState&&triviaState.selected===null){stopTriviaTimer();const chosen=Number(answer.dataset.triviaAnswer),q=triviaState.questions[triviaState.index];triviaState.selected=chosen;triviaState.answers[triviaState.index]=chosen;if(chosen===q.a)triviaState.score++;renderTriviaQuestion();return;}
  if(e.target.closest('[data-trivia-next]')){if(!triviaState)return;if(triviaState.index>=9){finishTriviaChallenge();return;}triviaState.index++;triviaState.selected=null;renderTriviaQuestion();startTriviaTimer();return;}
