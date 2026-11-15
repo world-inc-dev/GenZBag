@@ -1,4 +1,4 @@
-const CACHE_NAME = 'genzbag-shell-v18';
+const CACHE_NAME = 'genzbag-shell-v19';
 const BASE_URL = new URL('./', self.location.href);
 const SHELL_URLS = [
   BASE_URL.href,
