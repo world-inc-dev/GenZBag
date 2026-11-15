@@ -5031,7 +5031,7 @@ async function finishTriviaChallenge(){
  const task=activityRows.find(t=>String(t.id)===String(state.taskId));
  if(!task||!currentMember||!supabaseClient){activityListEl.innerHTML='<div class="activity-empty">Your session expired. Sign in again before submitting your score.</div>';triviaState=null;return;}
  const pct=Math.round(state.score/10*100),summary=state.questions.map((q,i)=>'Q'+(i+1)+': '+(state.answers[i]===q.a?'correct':state.answers[i]===-1?'timeout':'incorrect')).join('; ');
- const proof='TRIVIA CHALLENGE RESULT\nScore: '+state.score+'/10 ('+pct+'%)\nPoints: '+(state.score*10)+'/100\nAnswers: '+summary+'\nCompleted: '+new Date().toISOString();
+ const proof='TRIVIA CHALLENGE RESULT\nScore: '+state.score+'/10 ('+pct+'%)\nPoints: '+(state.score*10)+'/100\nQualification: '+(state.score===10?'ELIGIBLE FOR UGX 3,000':'NOT ELIGIBLE — PERFECT SCORE REQUIRED')+'\nAnswers: '+summary+'\nCompleted: '+new Date().toISOString();
  activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Well played!</h2><div class="trivia-result-score"><strong>'+state.score+'/10</strong><span>'+pct+'% • '+(state.score*10)+' points</span></div><p>Saving your result for administrator review…</p></div>';
  const {error}=await supabaseClient.from('task_submissions').insert({task_id:task.id,user_id:currentMember.id,proof_text:proof,proof_url:null});
  triviaState=null;
