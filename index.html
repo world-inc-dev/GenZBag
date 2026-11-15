@@ -3952,6 +3952,8 @@ body.activation-screen-open{overflow:hidden!important}
         <label>Activity title<input id="adminTaskTitle" required minlength="3" maxlength="140" placeholder="e.g. Complete a digital skills lesson"></label>
         <div class="two">
           <label>Category<select id="adminTaskCategory"><option value="music">Music</option><option value="video">Video</option><option value="game">Game</option><option value="challenge">Challenge</option><option value="learning">Learning</option><option value="sponsored">Sponsored task</option><option value="general">General</option></select></label>
+        <label id="adminVideoPlatformWrap" hidden>Video platform<select id="adminVideoPlatform"><option value="youtube">YouTube</option><option value="tiktok">TikTok</option></select></label>
+        <div id="adminVideoPlatformHelp" hidden class="activity-note" style="padding:9px 11px;border-radius:10px;background:#eef6ff;color:#1e3a8a">Choose the platform, paste its real public video URL below, and set the reward only when funding is approved. Each member may submit up to 5 video activities per Uganda day across both platforms.</div>
           <label>Reward<input id="adminTaskReward" type="number" min="0" step="1" value="0" required></label>
         </div>
         <div class="two">
@@ -5390,17 +5392,28 @@ document.getElementById('foreignChatClaim').addEventListener('click',async()=>{c
 async function loadAdminActivityTools(){
  if(!currentMember||currentMember.app_metadata?.role!=='admin')return;
  adminPanelEl.classList.add('visible');
- const {data,error}=await supabaseClient.from('task_submissions').select('id,user_id,task_id,proof_text,proof_url,submitted_at,status,tasks(title,reward_amount,currency)').eq('status','pending').order('submitted_at',{ascending:true}).limit(60);
+ const {data,error}=await supabaseClient.from('task_submissions').select('id,user_id,task_id,proof_text,proof_url,submitted_at,status,tasks(title,category,content_url,reward_amount,currency)').eq('status','pending').order('submitted_at',{ascending:true}).limit(60);
  const list=document.getElementById('adminSubmissionList');
  if(error){list.textContent='Could not load submissions: '+error.message;return;}
  if(!data?.length){list.innerHTML='<div class="activity-empty">No pending submissions.</div>';return;}
- list.innerHTML=data.map(s=>'<article class="admin-submission" data-admin-submission="'+escapeText(s.id)+'"><strong style="font-size:11px">'+escapeText(s.tasks?.title||'Activity submission')+'</strong><p>Member: '+escapeText(s.user_id)+'<br>Submitted: '+escapeText(new Date(s.submitted_at).toLocaleString())+'<br>Proof: '+escapeText(s.proof_text||'No text provided')+(s.proof_url?'<br>Link: <a href="'+escapeText(s.proof_url)+'" target="_blank" rel="noopener noreferrer">Open proof</a>':'')+'<br>Reward on approval: '+escapeText(Number(s.tasks?.reward_amount||0)+' '+(s.tasks?.currency||'UGX'))+'</p><div class="admin-submission-actions"><button class="activity-btn" type="button" data-review="approved">Approve</button><button class="activity-btn secondary" type="button" data-review="rejected">Reject</button></div></article>').join('');
+ list.innerHTML=data.map(s=>'<article class="admin-submission" data-admin-submission="'+escapeText(s.id)+'"><strong style="font-size:11px">'+escapeText(s.tasks?.title||'Activity submission')+'</strong><p>Category: '+escapeText(s.tasks?.category||'Activity')+(s.tasks?.content_url?'<br>Activity link: <a href="'+escapeText(s.tasks.content_url)+'" target="_blank" rel="noopener noreferrer">Open original video</a>':'')+'<br>Member: '+escapeText(s.user_id)+'<br>Submitted: '+escapeText(new Date(s.submitted_at).toLocaleString())+'<br>Proof: '+escapeText(s.proof_text||'No text provided')+(s.proof_url?'<br>Proof link: <a href="'+escapeText(s.proof_url)+'" target="_blank" rel="noopener noreferrer">Open proof</a>':'')+'<br>Reward on approval: '+escapeText(Number(s.tasks?.reward_amount||0)+' '+(s.tasks?.currency||'UGX'))+'</p><div class="admin-submission-actions"><button class="activity-btn" type="button" data-review="approved">Approve</button><button class="activity-btn secondary" type="button" data-review="rejected">Reject</button></div></article>').join('');
 }
+const adminTaskCategoryEl=document.getElementById('adminTaskCategory');
+function syncAdminVideoPlatform(){const on=adminTaskCategoryEl.value==='video';document.getElementById('adminVideoPlatformWrap').hidden=!on;document.getElementById('adminVideoPlatformHelp').hidden=!on;document.getElementById('adminTaskUrl').placeholder=on?'Paste the public YouTube or TikTok video URL':'https://…';}
+adminTaskCategoryEl.addEventListener('change',syncAdminVideoPlatform);syncAdminVideoPlatform();
 document.getElementById('adminTaskForm').addEventListener('submit',async e=>{
  e.preventDefault();if(currentMember?.app_metadata?.role!=='admin')return;
- const b=document.getElementById('adminTaskSave');b.disabled=true;b.textContent='Saving…';
+ const b=document.getElementById('adminTaskSave'),category=adminTaskCategoryEl.value,videoPlatform=document.getElementById('adminVideoPlatform').value,videoUrl=document.getElementById('adminTaskUrl').value.trim();
+ if(category==='video'){
+  let host='';try{host=new URL(videoUrl).hostname.toLowerCase().replace(/^www\\./,'');}catch(e){}
+  const valid=videoPlatform==='youtube'?['youtube.com','youtu.be','m.youtube.com','music.youtube.com'].some(d=>host===d||host.endsWith('.'+d)):['tiktok.com','vm.tiktok.com'].some(d=>host===d||host.endsWith('.'+d));
+  if(!valid){alert(videoPlatform==='youtube'?'Enter a valid YouTube or youtu.be video link.':'Enter a valid TikTok video link.');return;}
+ }
+ b.disabled=true;b.textContent='Saving…';
  const limit=document.getElementById('adminTaskLimit').value;
- const payload={title:document.getElementById('adminTaskTitle').value.trim(),category:document.getElementById('adminTaskCategory').value,description:document.getElementById('adminTaskDescription').value.trim(),instructions:document.getElementById('adminTaskInstructions').value.trim(),reward_amount:Number(document.getElementById('adminTaskReward').value||0),currency:document.getElementById('adminTaskCurrency').value,status:document.getElementById('adminTaskStatus').value,content_url:document.getElementById('adminTaskUrl').value.trim()||null,max_submissions:limit?Number(limit):null,created_by:currentMember.id};
+ let title=document.getElementById('adminTaskTitle').value.trim();
+ if(category==='video'&&!new RegExp(videoPlatform,'i').test(title))title=(videoPlatform==='youtube'?'YouTube · ':'TikTok · ')+title;
+ const payload={title,category,description:document.getElementById('adminTaskDescription').value.trim(),instructions:document.getElementById('adminTaskInstructions').value.trim(),reward_amount:Number(document.getElementById('adminTaskReward').value||0),currency:document.getElementById('adminTaskCurrency').value,status:document.getElementById('adminTaskStatus').value,content_url:videoUrl||null,max_submissions:limit?Number(limit):null,created_by:currentMember.id};
  const {error}=await supabaseClient.from('tasks').insert(payload);
  b.disabled=false;b.textContent='Save activity';
  if(error){alert('Could not save activity: '+error.message);return;}
