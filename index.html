@@ -5229,6 +5229,7 @@ async function renderSpinAndWin(){
  }catch(error){activityListEl.innerHTML='<div class="activity-empty">Could not load Spin &amp; Win: '+escapeText(error.message||'Please retry.')+'</div>';}
 }
 function renderActivities(){
+ if(!currentActivitySearch.toLowerCase().includes('spotify')){stopMusicListenTimer();if(musicListenAudio&&!musicListenAudio.paused)musicListenAudio.pause();musicListenAudio=null;musicListenTaskId=null;}
  if(currentActivitySearch.toLowerCase().includes('spotify')){renderSpotifyMusic();return;}
  if(currentActivitySearch.toLowerCase().includes('tap')){renderTapEarnings();return;}
  if(currentActivitySearch.toLowerCase().includes('casino')||currentActivitySearch.toLowerCase().includes('spin')){renderSpinAndWin();return;}
