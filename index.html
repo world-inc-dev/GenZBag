@@ -4057,6 +4057,7 @@ body.activation-screen-open{overflow:hidden!important}
     <section class="card" style="max-width:780px;margin:0 auto;padding:20px">
       <div class="chat-header"><div><span class="global-chat-kicker">YOUR REFERRAL SUPPORT</span><h2>📨 Message Your Upline</h2><p>Send a private message to the member who referred you. Your upline can reply here.</p></div></div>
       <div class="global-chat-guideline" id="uplineChatInfo" role="status">Loading your upline…</div>
+      <section style="margin-top:14px"><h3 style="margin-bottom:8px">Inbox · Messages from your downline</h3><div id="uplineInboxList" class="gb-chat-people"><div class="activity-empty">Loading your inbox…</div></div></section>
       <div class="gb-chat-convo-head" style="margin-top:16px"><div><h3 id="uplinePartnerName">Your Upline</h3><p id="uplinePartnerMeta">Private one-to-one conversation</p></div><span class="global-chat-member-count" id="uplineLiveStatus">● Connecting</span></div>
       <div id="uplineChatHistory" class="gb-chat-history" style="min-height:260px;max-height:52vh" aria-live="polite"><div class="activity-empty">Loading messages…</div></div>
       <div class="chat-compose gb-chat-compose"><textarea id="uplineChatInput" maxlength="2000" rows="2" placeholder="Write a message to your upline…" aria-label="Message your upline" disabled></textarea><button class="chat-send" id="uplineChatSend" type="button" disabled>Send ➤</button></div>
@@ -5956,6 +5957,7 @@ function setupMemberLiveCounters(){
    if(currentPrivateConversation&&payload.new?.conversation_id===currentPrivateConversation){await renderPrivateMessages();await markMemberConversationRead(currentPrivateConversation);}
    else await loadMemberInboxCounters();
    await loadForeignChatProgress();
+   if(!document.getElementById('uplinePage')?.hidden)await loadUplineInbox();
   })
   .subscribe(status=>{if(status==='SUBSCRIBED')loadMemberInboxCounters();else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')console.warn('Live message/notification counters disconnected:',status);});
 }
@@ -6051,12 +6053,30 @@ document.getElementById('globalChatMessages').addEventListener('click',async e=>
 document.getElementById('gbChatBack').addEventListener('click',async()=>{currentPrivateConversation=null;currentChatPartner=null;if(memberConversationChannel){await supabaseClient.removeChannel(memberConversationChannel);memberConversationChannel=null;}document.getElementById('gbChatPartner').textContent='Your private conversations';document.getElementById('gbChatPartnerCountry').textContent='Choose an online member to start chatting.';document.getElementById('gbChatHistory').innerHTML='<div class="activity-empty">Choose another online member to start a private chat.</div>';chatInputEl.disabled=true;document.getElementById('globalChatSend').disabled=true;document.getElementById('gbChatBack').hidden=true;});
 document.getElementById('foreignChatClaim').addEventListener('click',async()=>{const b=document.getElementById('foreignChatClaim');b.disabled=true;b.textContent='Verifying…';const {data,error}=await supabaseClient.rpc('claim_foreign_chat_bonus');b.disabled=false;b.textContent='Claim UGX 10,000';if(error){document.getElementById('foreignChatRewardStatus').textContent='Claim could not be verified: '+error.message;return;}document.getElementById('foreignChatRewardStatus').textContent=data?.message||'Claim processed.';if(data?.success){b.hidden=true;if(typeof loadMemberWallet==='function')await loadMemberWallet();}else if(data?.already_claimed){b.hidden=true;}await loadForeignChatProgress();if(data?.success||data?.already_claimed){b.hidden=true;document.getElementById('foreignChatRewardStatus').textContent=data?.message||'Your bonus is already scheduled or credited.';}});
 let uplineConversationId=null,uplineConversationChannel=null,uplinePartnerId=null;
+async function loadUplineInbox(){
+ const box=document.getElementById('uplineInboxList');if(!box)return;
+ const member=await ensureMemberSession();if(!member){box.innerHTML='<div class="activity-empty">Sign in to view your inbox.</div>';return;}
+ const {data:convos,error}=await supabaseClient.from('member_conversations').select('id,member_a,member_b').or('member_a.eq.'+member.id+',member_b.eq.'+member.id);
+ if(error){box.innerHTML='<div class="activity-empty">Inbox could not load: '+escapeText(error.message)+'</div>';return;}
+ if(!convos?.length){box.innerHTML='<div class="activity-empty">No messages yet. Your downline can contact you when they open Text Upline.</div>';return;}
+ const ids=convos.map(c=>c.id),others=convos.map(c=>c.member_a===member.id?c.member_b:c.member_a);
+ const [{data:msgs,error:me},{data:profiles,error:pe}]=await Promise.all([
+  supabaseClient.from('member_messages').select('conversation_id,sender_id,body,created_at').in('conversation_id',ids).order('created_at',{ascending:false}).limit(300),
+  supabaseClient.from('member_directory').select('id,username,country').in('id',others)
+ ]);
+ if(me||pe){box.innerHTML='<div class="activity-empty">Inbox details could not load. Please refresh.</div>';return;}
+ const people=new Map((profiles||[]).map(p=>[p.id,p]));
+ const latest=new Map();for(const m of msgs||[])if(!latest.has(m.conversation_id))latest.set(m.conversation_id,m);
+ const rows=convos.map(c=>({c,other:c.member_a===member.id?c.member_b:c.member_a,p:people.get(c.member_a===member.id?c.member_b:c.member_a),m:latest.get(c.id)})).sort((a,b)=>new Date(b.m?.created_at||0)-new Date(a.m?.created_at||0));
+ box.innerHTML=rows.map(x=>'<button type="button" class="gb-chat-person" data-upline-conversation="'+escapeText(x.c.id)+'" data-upline-partner="'+escapeText(x.other)+'"><span class="gb-chat-avatar">💬</span><span class="gb-chat-person-copy"><strong>'+escapeText(x.p?.username||'GenZBag member')+'</strong><small>'+escapeText(x.m?.body||'Conversation started')+'</small></span><span class="gb-chat-online-dot">Open</span></button>').join('');
+}
 async function loadUplineConversation(){
  const info=document.getElementById('uplineChatInfo'),history=document.getElementById('uplineChatHistory'),input=document.getElementById('uplineChatInput'),send=document.getElementById('uplineChatSend');
  const member=await ensureMemberSession();
  uplineConversationId=null;uplinePartnerId=null;
  if(uplineConversationChannel){await supabaseClient.removeChannel(uplineConversationChannel);uplineConversationChannel=null;}
- if(!member){info.textContent='Please sign in to message your upline.';history.innerHTML='<div class="activity-empty">Sign in to continue.</div>';input.disabled=true;send.disabled=true;return;}
+ if(!member){info.textContent='Please sign in to message your upline.';history.innerHTML='<div class="activity-empty">Sign in to continue.</div>';input.disabled=true;send.disabled=true;await loadUplineInbox();return;}
+ await loadUplineInbox();
  info.textContent='Finding the member who referred you…';
  const {data:profile,error}=await supabaseClient.from('profiles').select('referred_by').eq('id',member.id).maybeSingle();
  if(error){info.textContent='Could not load your referral link: '+error.message;return;}
@@ -6089,6 +6109,19 @@ async function renderUplineMessages(){
  box.innerHTML=data.map(m=>'<article class="gb-chat-bubble '+(m.sender_id===member.id?'mine':'')+'"><p>'+escapeText(m.body)+'</p><small>'+(m.sender_id===member.id?'You':'Upline')+' · '+escapeText(chatTime(m.created_at))+'</small></article>').join('');
  box.scrollTop=box.scrollHeight;
 }
+document.getElementById('uplineInboxList').addEventListener('click',async e=>{
+ const b=e.target.closest('[data-upline-conversation]');if(!b)return;
+ const member=await ensureMemberSession();if(!member)return;
+ uplineConversationId=b.dataset.uplineConversation;uplinePartnerId=b.dataset.uplinePartner;
+ const {data:p}=await supabaseClient.from('member_directory').select('username,country').eq('id',uplinePartnerId).maybeSingle();
+ document.getElementById('uplinePartnerName').textContent=p?.username||'GenZBag member';
+ document.getElementById('uplinePartnerMeta').textContent=(p?.country||'Member')+' · Private conversation';
+ document.getElementById('uplineChatInfo').textContent='Replying in a private message thread.';
+ document.getElementById('uplineChatInput').disabled=false;document.getElementById('uplineChatSend').disabled=false;
+ await renderUplineMessages();await markMemberConversationRead(uplineConversationId);
+ if(uplineConversationChannel)await supabaseClient.removeChannel(uplineConversationChannel);
+ uplineConversationChannel=supabaseClient.channel('upline-inbox-thread-'+uplineConversationId).on('postgres_changes',{event:'INSERT',schema:'public',table:'member_messages',filter:'conversation_id=eq.'+uplineConversationId},async()=>{await renderUplineMessages();await markMemberConversationRead(uplineConversationId);await loadUplineInbox();}).subscribe(status=>{document.getElementById('uplineLiveStatus').textContent=status==='SUBSCRIBED'?'● LIVE':'● Reconnecting';});
+});
 document.getElementById('uplineChatSend').addEventListener('click',async()=>{
  const member=await ensureMemberSession(),input=document.getElementById('uplineChatInput'),button=document.getElementById('uplineChatSend'),body=input.value.trim();
  if(!member||!uplineConversationId||!body)return;
@@ -6096,7 +6129,7 @@ document.getElementById('uplineChatSend').addEventListener('click',async()=>{
  const {error}=await supabaseClient.from('member_messages').insert({conversation_id:uplineConversationId,sender_id:member.id,body});
  button.disabled=false;button.textContent='Send ➤';
  if(error){document.getElementById('uplineChatInfo').textContent='Message not sent: '+error.message;return;}
- input.value='';await renderUplineMessages();await markMemberConversationRead(uplineConversationId);await loadMemberInboxCounters();
+ input.value='';await renderUplineMessages();await markMemberConversationRead(uplineConversationId);await loadMemberInboxCounters();await loadUplineInbox();
 });
 document.getElementById('uplineChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('uplineChatSend').click();}});
 \nasync function loadAdminActivityTools(){
