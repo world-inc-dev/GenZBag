@@ -5088,10 +5088,10 @@ function genzbagScheduledDay(search,title,category){
  if(q.includes('foreign_chat')||q.includes('foreign chat'))return 1;
  if(q.includes('spotify')||q.includes('music')||c==='music')return 1;
  if(q.includes('tap')||q.includes('colour')||q.includes('color')||q.includes('tap earning'))return 2;
- if(q.includes('trivia')||q.includes('youtube')||c==='challenge')return 3;
- if(q.includes('tiktok'))return 4;
- if(q.includes('casino')||q.includes('spin'))return 5;
  if(q.includes('math'))return 6;
+ if(q.includes('casino')||q.includes('spin'))return 5;
+ if(q.includes('tiktok'))return 4;
+ if(q.includes('trivia')||q.includes('youtube')||c==='challenge')return 3;
  if(q.includes('ad task')||q.includes('sponsored')||c==='sponsored')return 0;
  if(c==='video')return q.includes('youtube')?3:(q.includes('tiktok')?4:null);
  return null;
@@ -5100,11 +5100,13 @@ function genzbagTodayIndex(){
  const day=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Kampala',weekday:'short'}).format(new Date());
  return ({Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6})[day]??0;
 }
-function genzbagScheduleAllowed(search,title,category){
+function genzbagScheduleIsAllowed(search,title,category){
  const required=genzbagScheduledDay(search,title,category);
- if(required===null)return true;
- const today=genzbagTodayIndex();
- if(today===required)return true;
+ return required===null||genzbagTodayIndex()===required;
+}
+function genzbagScheduleAllowed(search,title,category){
+ if(genzbagScheduleIsAllowed(search,title,category))return true;
+ const required=genzbagScheduledDay(search,title,category),today=genzbagTodayIndex();
  const names=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
  alert((title||'This task')+' is available on '+names[required]+' only. Today is '+names[today]+' (East Africa Time).');
  return false;
@@ -5132,6 +5134,23 @@ activityListEl.addEventListener('click',e=>{
   e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
  }
 },true);
+const genzbagScheduleObserver=new MutationObserver(()=>{
+ let locked=0;
+ activityListEl.querySelectorAll('[data-activity-id]').forEach(card=>{
+  const task=activityRows.find(x=>String(x.id)===String(card.dataset.activityId));
+  if(!task)return;
+  const isLocked=!genzbagScheduleIsAllowed(task.title,task.title,task.category);
+  card.hidden=isLocked;
+  if(isLocked)locked++;
+ });
+ let note=document.getElementById('weeklyScheduleLockNote');
+ if(locked){
+  if(!note){note=document.createElement('div');note.id='weeklyScheduleLockNote';note.className='activity-empty';activityListEl.prepend(note);}
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  note.textContent=locked+' task(s) are hidden because they are scheduled for another weekday. Today is '+days[genzbagTodayIndex()]+' (EAT). Check the Weekly Schedule for their days.';
+ }else if(note)note.remove();
+});
+genzbagScheduleObserver.observe(activityListEl,{childList:true,subtree:true});
 activityListEl.addEventListener('submit',e=>{
  const form=e.target.closest('[data-proof-form]');
  if(!form)return;
