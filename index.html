@@ -5203,10 +5203,11 @@ activityFiltersEl.addEventListener('click',e=>{
  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x===b));
  updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
 });
-document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListener('click',()=>{
+document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListener('click',async()=>{
  const f=a.dataset.activityCategory||'all';currentActivityFilter=f;
+ currentActivitySearch=a.dataset.activitySearch||'';
  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));
- renderActivities();
+ await loadActivities();
 }));
 activityListEl.addEventListener('click',async e=>{
  const adViewButton=e.target.closest('[data-ad-view]');
