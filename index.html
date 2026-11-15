@@ -6309,5 +6309,89 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 }
 </style>
 
+
+
+<style id="genzbag-withdrawal-short-layout-v16">
+/* Shorten only the withdrawal screen; keep its dashboard navigation and theme untouched. */
+#featureWorkspace.withdraw-mode{padding:10px!important;margin:8px 0!important}
+#featureWorkspace.withdraw-mode>.feature-icon,
+#featureWorkspace.withdraw-mode>.feature-workspace-head,
+#featureWorkspace.withdraw-mode>#featureDescription,
+#featureWorkspace.withdraw-mode>#featureNotice{display:none!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel{padding:0!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
+ margin:0 0 6px!important;padding:0 1px 5px!important;gap:7px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading h2{font-size:20px!important;line-height:1.15!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading p{font-size:10px!important;margin-top:3px!important;line-height:1.3!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-heading-icon{width:34px!important;height:34px!important;font-size:19px!important;border-radius:10px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning{
+ padding:8px 10px!important;margin:0 0 7px!important;gap:7px!important;border-radius:10px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning-icon{
+ width:20px!important;height:20px!important;flex-basis:20px!important;font-size:11px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning p{font-size:9px!important;line-height:1.35!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card{
+ padding:9px!important;margin:0 0 7px!important;border-radius:11px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-section-title{margin:0 0 5px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-section-title h3{font-size:12px!important;margin-top:2px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-eyebrow{font-size:7px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-live-pill{font-size:8px!important;padding:3px 6px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-amount-field{
+ min-height:35px!important;margin:0 0 5px!important;border-radius:8px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,select,textarea){
+ min-height:33px!important;padding:6px 8px!important;font-size:11px!important;border-radius:7px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .feature-field{
+ margin-top:5px!important;gap:3px!important;font-size:9px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row{gap:6px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote{
+ margin-top:6px!important;padding:5px 8px!important;border-radius:8px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote>div{
+ padding:3px 0!important;font-size:9px!important;line-height:1.2!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote strong{font-size:9px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote .withdraw-net strong{font-size:12px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-status-line{
+ margin:5px 0!important;font-size:9px!important;line-height:1.3!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification{
+ padding:6px 8px!important;margin:5px 0!important;border-radius:8px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification :is(span,strong,small){font-size:9px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(button,.activity-btn,#withdrawRequestButton){
+ min-height:34px!important;padding:7px 10px!important;font-size:10px!important;border-radius:8px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-small-note{
+ margin-top:5px!important;font-size:8px!important;line-height:1.35!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card{
+ padding:7px 9px!important;margin:0 0 5px!important;border-radius:9px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card>span{font-size:7px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card>strong{font-size:12px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{gap:6px!important;margin-bottom:5px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card{
+ padding:7px 9px!important;margin:0 0 5px!important;gap:7px!important;border-radius:9px!important
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card :is(h3,p){font-size:9px!important;line-height:1.35!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card{padding:9px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card p{font-size:9px!important;line-height:1.4!important;margin:4px 0!important}
+@media(max-width:600px){
+ #featureWorkspace.withdraw-mode{padding:7px!important;margin:6px 0!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row{grid-template-columns:1fr 1.1fr!important;gap:5px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card{padding:8px!important}
+}
+@media(max-width:350px){
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row{grid-template-columns:1fr!important}
+}
+</style>
+
 </body>
 </html>
