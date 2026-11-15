@@ -5257,13 +5257,13 @@ async function renderGlobalChat(){
   return;
  }
  const {data:messages,error}=await supabaseClient.from('global_chat_messages')
-  .select('id,user_id,message,created_at').order('created_at',{ascending:true}).limit(80);
+  .select('id,user_id,message,created_at').order('created_at',{ascending:false}).limit(80);
  if(error){
   chatMessagesEl.innerHTML='<div class="activity-empty">We could not load messages. Tap refresh to try again.</div>';
   chatStatusEl.textContent='Chat loading error: '+error.message;
   return;
  }
- const rows=messages||[],ids=[...new Set(rows.map(m=>m.user_id))];
+ const rows=(messages||[]).reverse(),ids=[...new Set(rows.map(m=>m.user_id))];
  let members=[];
  if(ids.length){
   const result=await supabaseClient.from('global_chat_members')
