@@ -3534,7 +3534,7 @@ body.activation-screen-open{overflow:hidden!important}
 <body>
 <div class="auth-gate hidden" id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle">
  <div class="auth-panel auth-panel-live">
-  <div class="auth-brand"><span class="auth-brand-mark auth-g-live">G</span><span>GenZBag</span><span class="auth-live-pill"><i></i> LIVE</span></div>
+  <div class="auth-brand"><span class="auth-brand-mark auth-g-live"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M7 11.5h18l-1.5 16h-15L7 11.5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.5 12V9a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12.5 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 15.5v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span>GenZBag</span><span class="auth-live-pill"><i></i> LIVE</span></div>
   <div class="auth-welcome-art" aria-hidden="true"><span class="auth-orbit orbit-one"></span><span class="auth-orbit orbit-two"></span><span class="auth-art-g">G</span><span class="auth-art-spark spark-one">✦</span><span class="auth-art-spark spark-two">✧</span></div>
   <h1 id="authTitle">Welcome to GenZBag</h1>
   <p class="auth-intro" id="authIntro">Sign in to continue your digital income journey.</p>
@@ -3621,8 +3621,8 @@ body.activation-screen-open{overflow:hidden!important}
     </button>
 
     <button class="brand-button">
-      <span class="brand-logo">G</span>
-      GenZBag
+      <span class="brand-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M7 11.5h18l-1.5 16h-15L7 11.5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.5 12V9a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12.5 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 15.5v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <span class="brand-wordmark">GenZBag</span>
     </button>
   </div>
 </header>
@@ -3630,7 +3630,7 @@ body.activation-screen-open{overflow:hidden!important}
 <div class="overlay" id="overlay"></div>
 
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-brand">GenZ<span>Bag</span> 👜</div>
+  <div class="sidebar-brand"><span class="sidebar-brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M7 11.5h18l-1.5 16h-15L7 11.5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.5 12V9a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12.5 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 15.5v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="sidebar-brand-name">GenZ<span>Bag</span></span></div>
   <a class="nav-link active" href="#dashboardPage"><span class="nav-icon">🏠</span>Dashboard</a>
 
   <div class="nav-label">ACCOUNT &amp; REWARDS</div>
@@ -4385,7 +4385,7 @@ body.activation-screen-open{overflow:hidden!important}
 <div class="genz-activation-gate" id="genzActivationGate" role="dialog" aria-modal="true" aria-labelledby="genzActivationTitle">
  <section class="genz-activation-card">
   <header class="genz-fast-topbar">
-   <div class="genz-fast-brand"><span class="genz-fast-logo">G</span><strong>GenZBag</strong></div>
+   <div class="genz-fast-brand"><span class="genz-fast-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M7 11.5h18l-1.5 16h-15L7 11.5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.5 12V9a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12.5 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 15.5v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><strong>GenZBag</strong></div>
    <span class="genz-activation-live-pill" aria-label="Live activation status"><i></i> LIVE</span>
    <div class="genz-fast-account"><span class="genz-fast-user" id="genzActivationUsername" aria-live="polite"></span><button type="button" class="genz-fast-logout" id="genzActivationLogout">Logout</button></div>
   </header>
@@ -7755,6 +7755,23 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
  .admin-console-panel>h2{font-size:16px}
  .admin-console-tabs{margin:6px 0 10px}
 }
+
+
+/* Unified GenZBag shopping-bag brand mark across the app */
+.brand-button{gap:9px}
+.brand-logo{border-radius:9px;width:30px;height:30px}
+.brand-logo svg{width:23px;height:23px;display:block}
+.brand-wordmark{font-weight:950;letter-spacing:-.25px}
+.sidebar-brand{display:flex;align-items:center;gap:10px;padding:8px 12px 22px;font-size:20px}
+.sidebar-brand-mark{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#fff,#dceaff);color:#0A2A6B;box-shadow:0 5px 14px #020d2b30}
+.sidebar-brand-mark svg{width:26px;height:26px}
+.sidebar-brand-name{font-weight:950;letter-spacing:-.55px;color:#fff}
+.sidebar-brand-name span{color:#ffb12e}
+.auth-brand-mark.auth-g-live{display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#fff,#dceaff);color:#0A2A6B}
+.auth-brand-mark.auth-g-live svg{width:34px;height:34px}
+.genz-fast-logo{display:grid;place-items:center}
+.genz-fast-logo svg{width:23px;height:23px}
+@media(max-width:380px){.sidebar-brand{font-size:19px}.sidebar-brand-mark{width:33px;height:33px;flex-basis:33px}}
 
 </style>
 
