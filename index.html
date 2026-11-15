@@ -3698,6 +3698,7 @@ body.activation-screen-open{overflow:hidden!important}
 
   <a class="nav-link" href="#adminPage" id="adminConsoleNav" hidden><span class="nav-icon">🛡️</span>Admin Control Centre</a>
   <div class="nav-label">SETTING</div>
+  <a class="nav-link" href="#notificationsPage" id="notificationsNav"><span class="nav-icon">🔔</span>Notifications</a>
   <a class="nav-link" href="#uplinePage" id="textUplineNav"><span class="nav-icon">📨</span>Text Upline</a>
   <a class="nav-link" href="#chatPage"><span class="nav-icon">✉️</span>Read Messages<span class="nav-count" id="sidebarMessageCount" hidden>0</span></a>
   <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>Profile</a>
@@ -4025,6 +4026,13 @@ body.activation-screen-open{overflow:hidden!important}
 
   </section>
 
+
+  <section class="page-view" id="notificationsPage" hidden>
+    <section class="card" style="max-width:780px;margin:0 auto;padding:20px">
+      <div class="chat-header"><div><span class="global-chat-kicker">YOUR ACCOUNT UPDATES</span><h2>🔔 Notifications</h2><p>Important updates and messages about your GenZBag account.</p></div><button type="button" id="markAllNotificationsRead" class="profile-save-button" style="width:auto;margin:0;padding:9px 12px">Mark all read</button></div>
+      <div id="notificationsList" class="gb-chat-people" aria-live="polite"><div class="activity-empty">Loading your notifications…</div></div>
+    </section>
+  </section>
 
   <section class="page-view" id="chatPage" hidden>
   <section class="card" id="globalChat">
@@ -4807,7 +4815,8 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
  const target=document.getElementById(targetId);
  if(!target){closeMenu();return;}if(targetId==='profile')loadMemberNetwork();
  if(targetId==='chatPage')loadGlobalChat();
-  if(targetId==='uplinePage')loadUplineConversation();
+ if(targetId==='notificationsPage')loadNotifications();
+ if(targetId==='uplinePage')loadUplineConversation();
  document.querySelectorAll('.page-view').forEach(page=>{page.hidden=page!==target;});
  if(targetId!=='featureWorkspace')document.getElementById('featureWorkspace').hidden=true;
  if(feature){
@@ -5938,6 +5947,25 @@ async function loadMemberInboxCounters(){
  const unread=(messagesResult.data||[]).filter(m=>!readMap.has(m.conversation_id)||new Date(m.created_at).getTime()>readMap.get(m.conversation_id)).length;
  setLiveBadge('messageCount',unread);setLiveBadge('sidebarMessageCount',unread);
 }
+async function loadNotifications(){
+ const box=document.getElementById('notificationsList');if(!box)return;
+ const member=await ensureMemberSession();
+ if(!member){box.innerHTML='<div class="activity-empty">Sign in to view your notifications.</div>';return;}
+ box.innerHTML='<div class="activity-empty">Loading your notifications…</div>';
+ const {data,error}=await supabaseClient.from('notifications').select('id,title,message,kind,read_at,created_at').eq('user_id',member.id).order('created_at',{ascending:false}).limit(100);
+ if(error){box.innerHTML='<div class="activity-empty">Could not load notifications: '+escapeText(error.message)+'</div>';return;}
+ if(!data?.length){box.innerHTML='<div class="activity-empty">You have no notifications yet.</div>';setLiveBadge('notificationCount',0);return;}
+ box.innerHTML=data.map(n=>'<article class="gb-chat-person" style="display:block;text-align:left;cursor:default;'+(n.read_at?'opacity:.72':'border-color:#2dd4bf')+'"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><strong style="color:inherit">'+escapeText(n.title||'GenZBag update')+'</strong><small>'+escapeText(n.read_at?'Read':'New')+'</small></div><p style="margin:7px 0 4px;white-space:pre-wrap">'+escapeText(n.message||'')+'</p><small>'+escapeText(new Date(n.created_at).toLocaleString())+'</small></article>').join('');
+ const unread=data.filter(n=>!n.read_at).map(n=>n.id);
+ if(unread.length){const {error:markError}=await supabaseClient.from('notifications').update({read_at:new Date().toISOString()}).in('id',unread).eq('user_id',member.id);if(markError)console.warn('Could not mark notifications read:',markError.message);}
+ await loadMemberInboxCounters();
+}
+document.getElementById('markAllNotificationsRead')?.addEventListener('click',async()=>{
+ const member=await ensureMemberSession();if(!member)return;
+ const {error}=await supabaseClient.from('notifications').update({read_at:new Date().toISOString()}).eq('user_id',member.id).is('read_at',null);
+ if(error){alert('Could not mark notifications read: '+error.message);return;}
+ await loadNotifications();
+});
 async function markMemberConversationRead(conversationId){
  const member=await ensureMemberSession();if(!member||!conversationId||!supabaseClient)return;
  const {error}=await supabaseClient.from('member_conversation_reads').upsert({user_id:member.id,conversation_id:conversationId,last_read_at:new Date().toISOString()},{onConflict:'user_id,conversation_id'});
@@ -6036,7 +6064,8 @@ async function loadGlobalChat(){
  });
  await loadForeignChatProgress();await loadMemberInboxCounters();
 }
-document.getElementById('messagesButton')?.addEventListener('click',()=>{location.hash='#chatPage';});
+document.getElementById('messagesButton')?.addEventListener('click',()=>{document.querySelector('.sidebar .nav-link[href="#chatPage"]')?.click();});
+document.getElementById('notificationsButton')?.addEventListener('click',()=>{document.getElementById('notificationsNav')?.click();});
 document.getElementById('globalChatSend').addEventListener('click',async()=>{
  if(globalChatSending||!currentPrivateConversation)return;
  const member=await ensureMemberSession(),message=chatInputEl.value.trim();if(!member)return;
