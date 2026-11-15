@@ -5067,15 +5067,23 @@ function stopMusicListenTimer(){if(musicListenTimer){clearInterval(musicListenTi
 function renderSpotifyMusic(){
  stopMusicListenTimer();musicListenSeconds=0;musicListenTaskId=null;musicListenAudio=null;
  const task=activityRows.find(t=>t.category==='music'&&/music listening/i.test(t.title))||activityRows.find(t=>t.category==='music');
- activityCountEl.textContent=task?'Music player ready':'Music unavailable';
- if(!task){activityListEl.innerHTML='<div class="activity-empty">The music player is being prepared. Please check again shortly.</div>';return;}
- const completed=activityAdCompleted.has(String(task.id));
- const audioUrl=String(task.content_url||'').trim();
- activityListEl.innerHTML='<article class="activity-card" data-music-card="'+escapeText(task.id)+'" style="padding:18px;border:1px solid #24415c;background:linear-gradient(145deg,#101d35,#142b3c);color:#effaff;border-radius:18px"><div class="activity-card-top"><div><span class="activity-tag">🎧 GENZBAG MUSIC</span><h3 style="margin:9px 0 4px;color:#fff">Classical Pop (Instrumental)</h3><p style="margin:0;color:#b9d3df;font-size:12px">CC0 music · Alex McCulloch</p></div><span class="activity-reward">UGX 150</span></div><p style="color:#d5e5ed;margin:14px 0">Listen to the track inside GenZBag. Keep it playing for 60 seconds to unlock your reward.</p><audio id="genzMusicAudio" controls preload="metadata" playsinline style="width:100%;margin:8px 0 14px"><source src="'+escapeText(audioUrl)+'" type="audio/mpeg">Your browser does not support audio playback.</audio><div class="ad-timer-track"><span id="genzMusicProgress" style="width:0%"></span></div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0;color:#b9d3df;font-size:12px"><span id="genzMusicTimer">0 / 60 seconds listened</span><span id="genzMusicStatus" aria-live="polite">'+(completed?'Reward already credited':'Ready to listen')+'</span></div><div class="activity-actions"><button class="activity-btn" type="button" data-music-start="'+escapeText(task.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ Already credited':'▶ Start listening')+'</button><button class="activity-btn" type="button" data-music-claim="'+escapeText(task.id)+'" hidden disabled>Claim UGX 150</button></div><p style="font-size:10px;color:#9bb7c6;margin:12px 0 0">Music source: <a href="https://opengameart.org/content/classical-pop-instrumental" target="_blank" rel="noopener noreferrer" style="color:#73e6d3">OpenGameArt · CC0</a> · Credit: Alex McCulloch.</p></article>';
+ const songs=[
+  {title:'As It Was',artist:'Harry Styles',id:'4Dvkj6JhhA12EX05fT7y2e'},
+  {title:'Sorry',artist:'Justin Bieber',id:'3ACnarSkTKiOTj4rsnFkgf'},
+  {title:'Starships',artist:'Nicki Minaj',id:'7yTZk1LMxRY9fdyk0DIls7'},
+  {title:'I Like It',artist:'Cardi B · Bad Bunny · J Balvin',id:'58q2HKrzhC3ozto2nDdN4z'},
+  {title:"God's Plan",artist:'Drake',id:'6DCZcSspjsKoFjzjrWoCdn'},
+  {title:'Beauty And A Beat',artist:'Justin Bieber · Nicki Minaj',id:'1k6iMLL8ozTbezUsZsywzk'}
+ ];
+ activityCountEl.textContent='6 Spotify songs';
+ const completed=task&&activityAdCompleted.has(String(task.id));
+ const audioUrl=String(task?.content_url||'').trim();
+ const spotifyCards=songs.map((song,i)=>'<article class="spotify-song-card"><div class="spotify-song-meta"><span class="spotify-song-number">'+String(i+1).padStart(2,'0')+'</span><div><h3>'+escapeText(song.title)+'</h3><p>'+escapeText(song.artist)+'</p></div></div><iframe title="Spotify player: '+escapeText(song.title)+' by '+escapeText(song.artist)+'" src="https://open.spotify.com/embed/track/'+song.id+'?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></article>').join('');
+ const rewardCard=task?'<article class="activity-card spotify-reward-card" data-music-card="'+escapeText(task.id)+'"><div class="activity-card-top"><div><span class="activity-tag">🎧 GENZBAG REWARD TRACK</span><h3 style="margin:9px 0 4px;color:#fff">Classical Pop (Instrumental)</h3><p style="margin:0;color:#b9d3df;font-size:12px">CC0 music · Alex McCulloch</p></div><span class="activity-reward">UGX 150</span></div><p style="color:#d5e5ed;margin:14px 0">This separate royalty-free track is the eligible 60-second listening reward. Spotify songs above are for enjoyment and do not earn streaming rewards.</p><audio id="genzMusicAudio" controls preload="metadata" playsinline style="width:100%;margin:8px 0 14px"><source src="'+escapeText(audioUrl)+'" type="audio/mpeg">Your browser does not support audio playback.</audio><div class="ad-timer-track"><span id="genzMusicProgress" style="width:0%"></span></div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0;color:#b9d3df;font-size:12px"><span id="genzMusicTimer">0 / 60 seconds listened</span><span id="genzMusicStatus" aria-live="polite">'+(completed?'Reward already credited':'Ready to listen')+'</span></div><div class="activity-actions"><button class="activity-btn" type="button" data-music-start="'+escapeText(task.id)+'" '+(completed?'disabled':'')+'>'+(completed?'✓ Already credited':'▶ Start listening')+'</button><button class="activity-btn" type="button" data-music-claim="'+escapeText(task.id)+'" hidden disabled>Claim UGX 150</button></div><p style="font-size:10px;color:#9bb7c6;margin:12px 0 0">Music source: <a href="https://opengameart.org/content/classical-pop-instrumental" target="_blank" rel="noopener noreferrer" style="color:#73e6d3">OpenGameArt · CC0</a> · Credit: Alex McCulloch.</p></article>':'<div class="activity-empty">The separate listening reward is currently unavailable. Spotify songs remain available above.</div>';
+ activityListEl.innerHTML='<section class="spotify-feature-panel"><div class="spotify-feature-heading"><span>GENZBAG · SPOTIFY</span><h2>Popular songs</h2><p>Six tracks selected from the artists you requested. Tap play in any Spotify player. Playback availability and full-track access are controlled by Spotify.</p></div><div class="spotify-song-grid">'+spotifyCards+'</div><div class="spotify-embed-note">Spotify embeds · Open Spotify for full playback where required.</div></section><section class="spotify-reward-section"><div class="spotify-reward-heading"><h2>🎁 Listening reward</h2><p>Reward activity is separate from Spotify streaming.</p></div>'+rewardCard+'</section>';
+ if(!task||completed)return;
  musicListenAudio=document.getElementById('genzMusicAudio');
- if(completed)return;
- const startButton=activityListEl.querySelector('[data-music-start]');
- const claimButton=activityListEl.querySelector('[data-music-claim]');
+ const startButton=activityListEl.querySelector('[data-music-start]'),claimButton=activityListEl.querySelector('[data-music-claim]');
  const timerLabel=document.getElementById('genzMusicTimer'),statusLabel=document.getElementById('genzMusicStatus'),progress=document.getElementById('genzMusicProgress');
  if(!musicListenAudio||!startButton||!claimButton)return;
  musicListenAudio.addEventListener('error',()=>{if(statusLabel)statusLabel.textContent='Track could not load. Please try again later.';});
@@ -5087,7 +5095,7 @@ function renderSpotifyMusic(){
   if(data.already_claimed){activityAdCompleted.add(String(task.id));startButton.textContent='✓ Already credited';if(statusLabel)statusLabel.textContent='UGX 150 was already credited.';return;}
   musicListenTaskId=String(task.id);musicListenSeconds=0;
   try{await musicListenAudio.play();}catch(err){startButton.disabled=false;startButton.textContent='▶ Start listening';if(statusLabel)statusLabel.textContent='Tap the audio player to allow playback, then press Start listening again.';return;}
-  startButton.textContent='Listening…';if(statusLabel)statusLabel.textContent='Timer counts only while audio is playing and this page is visible.';
+  startButton.textContent='Listening…';if(statusLabel)statusLabel.textContent='Timer counts only while the reward track is playing and this page is visible.';
   musicListenTimer=setInterval(()=>{
    if(!musicListenAudio||musicListenAudio.paused||musicListenAudio.ended||document.visibilityState!=='visible'||musicListenAudio.muted||musicListenAudio.volume<=0)return;
    const card=startButton.closest('[data-music-card]'),rect=card?.getBoundingClientRect();
@@ -7178,6 +7186,29 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
  #activityPage #activityList .sponsored-ad-image{height:175px!important}
  #activityPage #activityList .activity-card{border-radius:14px!important}
 }
+</style>
+
+<style id="genzbag-spotify-feature-v21">
+#activityPage #activityList .spotify-feature-panel,#activityPage #activityList .spotify-reward-section{grid-column:1/-1;min-width:0}
+#activityPage #activityList .spotify-feature-panel{padding:15px;border:1px solid #28566d;border-radius:18px;background:linear-gradient(145deg,#0b1c31,#12334b);box-shadow:0 12px 28px #02081735}
+#activityPage #activityList .spotify-feature-heading{margin:2px 2px 14px}
+#activityPage #activityList .spotify-feature-heading>span{color:#5eead4;font-size:9px;font-weight:950;letter-spacing:1.7px}
+#activityPage #activityList .spotify-feature-heading h2{margin:7px 0 5px;color:#f3fbff;font-size:20px;font-weight:950}
+#activityPage #activityList .spotify-feature-heading p,#activityPage #activityList .spotify-embed-note{color:#b8cedc;font-size:10px;line-height:1.6}
+#activityPage #activityList .spotify-song-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#activityPage #activityList .spotify-song-card{min-width:0;padding:10px;border:1px solid #31566e;border-radius:14px;background:linear-gradient(145deg,#173b56,#10283f);overflow:hidden}
+#activityPage #activityList .spotify-song-meta{display:flex;align-items:center;gap:9px;min-height:42px;margin-bottom:8px}
+#activityPage #activityList .spotify-song-number{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:9px;background:#0b4b50;color:#8ff4e2;font-size:10px;font-weight:950}
+#activityPage #activityList .spotify-song-meta h3{color:#f2fbff;font-size:12px;font-weight:900;line-height:1.3}
+#activityPage #activityList .spotify-song-meta p{margin-top:3px;color:#a9c3d2;font-size:9px;line-height:1.35}
+#activityPage #activityList .spotify-song-card iframe{display:block;width:100%;height:152px;border:0;border-radius:10px;background:#10243d}
+#activityPage #activityList .spotify-embed-note{margin:12px 2px 0}
+#activityPage #activityList .spotify-reward-section{padding:14px;border:1px solid #28566d;border-radius:17px;background:#0b2035}
+#activityPage #activityList .spotify-reward-heading{margin:0 2px 12px}
+#activityPage #activityList .spotify-reward-heading h2{color:#f1fbff;font-size:15px;font-weight:900}
+#activityPage #activityList .spotify-reward-heading p{margin-top:4px;color:#a9c3d2;font-size:10px}
+#activityPage #activityList .spotify-reward-card{margin:0!important}
+@media(max-width:520px){#activityPage #activityList .spotify-feature-panel{padding:11px}#activityPage #activityList .spotify-song-grid{grid-template-columns:minmax(0,1fr);gap:10px}#activityPage #activityList .spotify-song-card{padding:9px}#activityPage #activityList .spotify-song-card iframe{height:152px}}
 </style>
 </body>
 </html>
