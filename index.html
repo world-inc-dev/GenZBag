@@ -3477,6 +3477,10 @@ body.activation-screen-open{overflow:hidden!important}
 #globalChat .activity-empty{color:#b9cfdd}
 @media(max-width:480px){#globalChat .chat-header{align-items:flex-start;padding:13px}#globalChat .chat-header h2{font-size:15px}#globalChat .chat-header p{font-size:9px}#globalChat .global-chat-member-count{font-size:8px;padding:6px 7px}#globalChat .chat-messages{height:55vh;min-height:270px;padding:10px}#globalChat .chat-message{max-width:94%}#globalChat .chat-compose{gap:6px;padding:9px}#globalChat .chat-send{min-width:66px;padding:0 8px;font-size:10px}}
 </style>
+<style>
+.gb-chat-reward{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px;margin:16px 0;border:1px solid rgba(45,212,191,.25);border-radius:16px;background:linear-gradient(135deg,rgba(13,148,136,.16),rgba(15,23,42,.7))}
+.gb-chat-kicker{font-size:10px;letter-spacing:1.5px;color:#5eead4;font-weight:800}.gb-chat-reward h3{margin:5px 0;font-size:16px}.gb-chat-reward p,.gb-chat-section-head p{margin:0;color:var(--muted,#94a3b8);font-size:12px;line-height:1.5}.gb-chat-progress{display:flex;flex-direction:column;text-align:center;min-width:76px}.gb-chat-progress strong{font-size:22px;color:#5eead4}.gb-chat-progress span{font-size:10px;color:var(--muted,#94a3b8)}.gb-chat-claim{grid-column:1/-1;border:0;border-radius:10px;padding:12px;background:linear-gradient(90deg,#0d9488,#14b8a6);color:#fff;font-weight:800}.gb-chat-reward>small{grid-column:1/-1;color:var(--muted,#94a3b8);font-size:11px}.gb-chat-layout{display:grid;grid-template-columns:minmax(230px,.85fr) minmax(0,1.4fr);gap:14px}.gb-chat-directory,.gb-chat-conversation{min-width:0;border:1px solid var(--border,rgba(148,163,184,.18));border-radius:15px;padding:13px;background:rgba(15,23,42,.28)}.gb-chat-section-head,.gb-chat-convo-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.gb-chat-section-head h3,.gb-chat-convo-head h3{font-size:14px;margin:0 0 4px}.gb-chat-section-head>span{font-size:10px;color:#5eead4;white-space:nowrap}.gb-chat-people{display:grid;gap:8px}.gb-chat-person{display:flex;align-items:center;gap:9px;text-align:left;width:100%;padding:10px;border:1px solid var(--border,rgba(148,163,184,.18));border-radius:12px;background:rgba(15,23,42,.55);color:inherit}.gb-chat-avatar{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(20,184,166,.15);font-size:20px}.gb-chat-person-copy{display:grid;gap:3px;flex:1;min-width:0}.gb-chat-person-copy strong{font-size:12px;overflow:hidden;text-overflow:ellipsis}.gb-chat-person-copy small{font-size:10px;color:var(--muted,#94a3b8)}.gb-chat-online-dot{font-size:9px;color:#34d399;white-space:nowrap}.gb-chat-convo-head p{margin:0;color:var(--muted,#94a3b8);font-size:11px}.gb-chat-convo-head button{border:1px solid var(--border,rgba(148,163,184,.2));border-radius:8px;padding:7px 10px;background:transparent;color:inherit}.gb-chat-history{height:270px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:8px;background:rgba(2,6,23,.22);border-radius:12px}.gb-chat-bubble{align-self:flex-start;max-width:85%;padding:9px 11px;border-radius:12px 12px 12px 3px;background:rgba(100,116,139,.18);overflow-wrap:anywhere}.gb-chat-bubble.mine{align-self:flex-end;background:rgba(13,148,136,.22);border-radius:12px 12px 3px 12px}.gb-chat-bubble p{margin:0;font-size:12px;white-space:pre-wrap}.gb-chat-bubble small{display:block;text-align:right;margin-top:5px;font-size:9px;color:var(--muted,#94a3b8)}.gb-chat-compose{margin-top:10px}.gb-chat-compose textarea:disabled{opacity:.5}@media(max-width:700px){.gb-chat-layout{grid-template-columns:1fr}.gb-chat-history{height:240px}}
+</style>
 </head>
 
 <body>
@@ -3969,13 +3973,27 @@ body.activation-screen-open{overflow:hidden!important}
   <section class="page-view" id="chatPage" hidden>
   <section class="card" id="globalChat">
     <div class="chat-header">
-      <div><span class="global-chat-kicker">GENZBAG GLOBAL COMMUNITY</span><h2>🌍 Chat with Foreigners</h2><p>Connect and exchange friendly messages with activated members around the world.</p></div>
-      <div class="global-chat-head-actions"><span class="global-chat-member-count" id="globalChatMembersCount">🌐 Members</span><button type="button" id="globalChatRefresh" class="global-chat-refresh" aria-label="Refresh chat">↻</button></div>
+      <div><span class="global-chat-kicker">GENZBAG GLOBAL COMMUNITY</span><h2>🌍 Chat with Foreigners</h2><p>Meet and chat privately with real registered GenZBag members from other countries.</p></div>
+      <div class="global-chat-head-actions"><span class="global-chat-member-count" id="globalChatMembersCount">● Live members</span><button type="button" id="globalChatRefresh" class="global-chat-refresh" aria-label="Refresh online members">↻</button></div>
     </div>
-    <div class="global-chat-guideline">🤝 Be respectful. Never share passwords, verification codes, or private financial information.</div>
-    <div class="chat-messages" id="globalChatMessages" aria-live="polite"><div class="activity-empty">Sign in with an activated account to join the global lounge.</div></div>
-    <div class="chat-compose"><textarea id="globalChatInput" maxlength="600" rows="2" placeholder="Write a friendly message…" aria-label="Chat message"></textarea><button class="chat-send" id="globalChatSend" type="button">Send ➤</button></div>
-    <div class="chat-presence" id="globalChatStatus" role="status">Messages are shared with activated GenZBag members.</div>
+    <div class="global-chat-guideline">🤝 Be respectful. Never share passwords, verification codes, or private financial information. Only real registered members appear here.</div>
+    <section class="gb-chat-reward">
+      <div><span class="gb-chat-kicker">CHAT & EARN</span><h3>UGX 10,000 Foreign Chat Bonus</h3><p>Start and complete genuine conversations with five different members. Each person must reply.</p></div>
+      <div class="gb-chat-progress"><strong id="foreignChatProgress">0 / 5</strong><span>completed chats</span></div>
+      <button type="button" id="foreignChatClaim" class="gb-chat-claim" hidden>Claim UGX 10,000</button>
+      <small id="foreignChatRewardStatus" role="status">Your progress is checked securely. The bonus goes to Net Profits only.</small>
+    </section>
+    <div class="gb-chat-layout">
+      <section class="gb-chat-directory"><div class="gb-chat-section-head"><div><h3>🟢 Foreign members online</h3><p>Live registered members from other countries</p></div><span id="gbOnlineCount">0 online</span></div>
+        <div id="globalChatMessages" class="gb-chat-people" aria-live="polite"><div class="activity-empty">Connect to see members who are online.</div></div>
+      </section>
+      <section class="gb-chat-conversation">
+        <div class="gb-chat-convo-head"><div><h3 id="gbChatPartner">Your private conversations</h3><p id="gbChatPartnerCountry">Choose an online member to start chatting.</p></div><button type="button" id="gbChatBack" hidden>Back</button></div>
+        <div id="gbChatHistory" class="gb-chat-history"><div class="activity-empty">Your private messages will appear here.</div></div>
+        <div class="chat-compose gb-chat-compose"><textarea id="globalChatInput" maxlength="2000" rows="2" placeholder="Write a friendly message…" aria-label="Private chat message" disabled></textarea><button class="chat-send" id="globalChatSend" type="button" disabled>Send ➤</button></div>
+        <div class="chat-presence" id="globalChatStatus" role="status">Private messages are visible only to the two participants.</div>
+      </section>
+    </div>
   </section>
 </section>
 
@@ -5249,95 +5267,97 @@ async function loadMemberWallet(){
  renderWithdrawalEligibility();
 }
 function chatTime(v){return new Date(v).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
-async function renderGlobalChat(){
- const member=await ensureMemberSession();
- if(!supabaseClient||!member){
-  chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';
-  chatStatusEl.textContent='Your secure account session is required.';
-  return;
- }
- const {data:messages,error}=await supabaseClient.from('global_chat_messages')
-  .select('id,user_id,message,created_at').order('created_at',{ascending:false}).limit(80);
- if(error){
-  chatMessagesEl.innerHTML='<div class="activity-empty">We could not load messages. Tap refresh to try again.</div>';
-  chatStatusEl.textContent='Chat loading error: '+error.message;
-  return;
- }
- const rows=(messages||[]).reverse(),ids=[...new Set(rows.map(m=>m.user_id))];
- let members=[];
+let globalChatSending=false,globalChatPresence=null,memberConversationChannel=null,currentPrivateConversation=null,currentChatPartner=null,chatDirectoryProfiles=[];
+const gbCountryEmoji=(country)=>({Uganda:'🇺🇬',Nigeria:'🇳🇬',Kenya:'🇰🇪',Tanzania:'🇹🇿',Rwanda:'🇷🇼',Ghana:'🇬🇭','United States':'🇺🇸','United Kingdom':'🇬🇧',Canada:'🇨🇦',India:'🇮🇳',SouthAfrica:'🇿🇦','South Africa':'🇿🇦'}[country]||'🌐');
+async function loadForeignChatProgress(){
+ const member=await ensureMemberSession();if(!member)return;
+ const {data:convos,error}=await supabaseClient.from('member_conversations').select('id,member_a,member_b').eq('initiated_by',member.id);
+ if(error){console.warn('Chat reward progress:',error.message);return;}
+ const ids=(convos||[]).map(x=>x.id);let qualified=0;
  if(ids.length){
-  const result=await supabaseClient.from('global_chat_members')
-   .select('user_id,display_name,country').in('user_id',ids);
-  if(!result.error)members=result.data||[];
+  const {data:msgs,error:msgErr}=await supabaseClient.from('member_messages').select('conversation_id,sender_id').in('conversation_id',ids);
+  if(!msgErr){
+   const by=Object.groupBy?Object.groupBy(msgs||[],m=>m.conversation_id):(msgs||[]).reduce((o,m)=>((o[m.conversation_id]??=[]).push(m),o),{});
+   qualified=(convos||[]).filter(cv=>{const list=by[cv.id]||[],other=cv.member_a===member.id?cv.member_b:cv.member_a;return list.some(m=>m.sender_id===member.id)&&list.some(m=>m.sender_id===other);}).length;
+  }
  }
- const byId=Object.fromEntries(members.map(m=>[m.user_id,m]));
- if(!rows.length){
-  chatMessagesEl.innerHTML='<div class="activity-empty">🌍 Welcome to the global lounge! Be the first to say hello. Other countries will appear as their members join GenZBag.</div>';
- }else{
-  chatMessagesEl.innerHTML=rows.map(m=>{
-   const p=byId[m.user_id]||{},mine=m.user_id===member.id;
-   return '<article class="chat-message '+(mine?'mine':'')+'"><div class="chat-message-head"><strong>'+escapeText(p.display_name||'GenZBag member')+'</strong><span class="chat-country">🌐 '+escapeText(p.country||'Member')+'</span></div><div class="chat-message-text">'+escapeText(m.message)+'</div><div class="chat-message-foot"><span>'+escapeText(chatTime(m.created_at))+'</span>'+(mine?'':'<button class="chat-report" type="button" data-report-message="'+escapeText(m.id)+'">Report</button>')+'</div></article>';
-  }).join('');
+ qualified=Math.min(5,qualified);
+ const p=document.getElementById('foreignChatProgress'),claim=document.getElementById('foreignChatClaim'),status=document.getElementById('foreignChatRewardStatus');
+ if(p)p.textContent=qualified+' / 5';
+ if(claim)claim.hidden=qualified<5;
+ if(status)status.textContent=qualified>=5?'You have completed five conversations. Claim your UGX 10,000 bonus.':'Complete '+(5-qualified)+' more genuine conversation'+(5-qualified===1?'':'s')+' with different members. The bonus goes to Net Profits only.';
+}
+async function renderForeignDirectory(){
+ const member=await ensureMemberSession();if(!member||!globalChatPresence)return;
+ const state=globalChatPresence.presenceState(),online=[];
+ Object.values(state).flat().forEach(p=>{if(p.user_id&&p.user_id!==member.id)online.push(p);});
+ const own=(await supabaseClient.from('profiles').select('country').eq('id',member.id).maybeSingle()).data;
+ const ownCountry=(own?.country||'').trim().toLowerCase();
+ const unique=[...new Map(online.filter(p=>(p.country||'').trim().toLowerCase()!==ownCountry).map(p=>[p.user_id,p])).values()].slice(0,5);
+ const list=document.getElementById('globalChatMessages'),count=document.getElementById('gbOnlineCount'),badge=document.getElementById('globalChatMembersCount');
+ if(count)count.textContent=unique.length+' online';if(badge)badge.textContent='● '+unique.length+' online';
+ if(!unique.length){list.innerHTML='<div class="activity-empty">No foreign members are online right now. Check back shortly or invite friends in other countries to register.</div>';return;}
+ list.innerHTML=unique.map(p=>'<button type="button" class="gb-chat-person" data-chat-user="'+escapeText(p.user_id)+'"><span class="gb-chat-avatar">'+escapeText(p.avatar_emoji||'🌍')+'</span><span class="gb-chat-person-copy"><strong>'+escapeText(p.username||'GenZBag member')+'</strong><small>'+gbCountryEmoji(p.country)+' '+escapeText(p.country||'Country not set')+'</small></span><span class="gb-chat-online-dot">● Online</span></button>').join('');
+}
+async function openMemberConversation(otherId,otherName,otherCountry){
+ const member=await ensureMemberSession();if(!member||otherId===member.id)return;
+ const a=[member.id,otherId].sort()[0],b=[member.id,otherId].sort()[1];
+ let {data:cv,error}=await supabaseClient.from('member_conversations').select('id,member_a,member_b,initiated_by').eq('member_a',a).eq('member_b',b).maybeSingle();
+ if(error){chatStatusEl.textContent='Could not open conversation: '+error.message;return;}
+ if(!cv){
+  const ins=await supabaseClient.from('member_conversations').insert({member_a:a,member_b:b,initiated_by:member.id}).select('id,member_a,member_b,initiated_by').single();
+  cv=ins.data;error=ins.error;
+  if(error&&error.code==='23505'){const retry=await supabaseClient.from('member_conversations').select('id,member_a,member_b,initiated_by').eq('member_a',a).eq('member_b',b).maybeSingle();cv=retry.data;error=retry.error;}
  }
- chatMessagesEl.scrollTop=chatMessagesEl.scrollHeight;
- chatStatusEl.textContent=rows.length+' recent messages · Live community chat';
+ if(error||!cv){chatStatusEl.textContent='Could not start chat: '+(error?.message||'Please try again.');return;}
+ currentPrivateConversation=cv.id;currentChatPartner={id:otherId,name:otherName,country:otherCountry};
+ document.getElementById('gbChatPartner').textContent=otherName;
+ document.getElementById('gbChatPartnerCountry').textContent=gbCountryEmoji(otherCountry)+' '+otherCountry+' · Private conversation';
+ document.getElementById('globalChatInput').disabled=false;document.getElementById('globalChatSend').disabled=false;document.getElementById('gbChatBack').hidden=false;
+ await renderPrivateMessages();
+ if(memberConversationChannel)await supabaseClient.removeChannel(memberConversationChannel);
+ memberConversationChannel=supabaseClient.channel('member-chat-'+cv.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'member_messages',filter:'conversation_id=eq.'+cv.id},renderPrivateMessages).subscribe();
+}
+async function renderPrivateMessages(){
+ if(!currentPrivateConversation)return;
+ const member=await ensureMemberSession();if(!member)return;
+ const box=document.getElementById('gbChatHistory');
+ const {data,error}=await supabaseClient.from('member_messages').select('id,sender_id,body,created_at').eq('conversation_id',currentPrivateConversation).order('created_at',{ascending:true}).limit(150);
+ if(error){box.innerHTML='<div class="activity-empty">Messages could not load. '+escapeText(error.message)+'</div>';return;}
+ if(!data?.length){box.innerHTML='<div class="activity-empty">Say hello and start your conversation.</div>';return;}
+ box.innerHTML=data.map(m=>'<article class="gb-chat-bubble '+(m.sender_id===member.id?'mine':'')+'"><p>'+escapeText(m.body)+'</p><small>'+escapeText(chatTime(m.created_at))+'</small></article>').join('');
+ box.scrollTop=box.scrollHeight;
 }
 async function loadGlobalChat(){
  const member=await ensureMemberSession();
- if(!supabaseClient||!member){await renderGlobalChat();return;}
- chatStatusEl.textContent='Connecting to the global lounge…';
- const {data:profile,error:profileError}=await supabaseClient.from('profiles')
-  .select('username,country').eq('id',member.id).maybeSingle();
- if(profileError)console.warn('Global chat profile lookup:',profileError.message);
- const display=(profile?.username||member.user_metadata?.username||member.email?.split('@')[0]||'Member').slice(0,40);
- const country=(profile?.country||member.user_metadata?.country||'Unknown').slice(0,40);
- const {error:memberError}=await supabaseClient.from('global_chat_members')
-  .upsert({user_id:member.id,display_name:display,country,updated_at:new Date().toISOString()},{onConflict:'user_id'});
- if(memberError){
-  chatStatusEl.textContent='Could not create your chat profile: '+memberError.message;
-  chatMessagesEl.innerHTML='<div class="activity-empty">Your chat profile could not be registered. Please refresh or contact support.</div>';
-  return;
- }
- const countResult=await supabaseClient.from('global_chat_members').select('user_id',{count:'exact',head:true});
- const countEl=document.getElementById('globalChatMembersCount');
- if(countEl)countEl.textContent='🌐 '+(countResult.count??'—')+' members';
- await renderGlobalChat();
- if(globalChatChannel){await supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}
- globalChatChannel=supabaseClient.channel('genzbag-global-chat')
-  .on('postgres_changes',{event:'INSERT',schema:'public',table:'global_chat_messages'},()=>renderGlobalChat())
-  .subscribe((status,err)=>{
-   if(status==='SUBSCRIBED')chatStatusEl.textContent='● Live · '+country+' · New messages appear automatically';
-   else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')chatStatusEl.textContent='Live connection interrupted. Tap refresh to reconnect.'+(err?.message?' '+err.message:'');
-  });
+ if(!supabaseClient||!member){chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to chat with registered members.</div>';return;}
+ chatStatusEl.textContent='Connecting to live member presence…';
+ const {data:profile,error:profileError}=await supabaseClient.from('profiles').select('username,country').eq('id',member.id).maybeSingle();
+ if(profileError){chatStatusEl.textContent='Your chat profile could not load: '+profileError.message;return;}
+ const presencePayload={user_id:member.id,username:profile?.username||'GenZBag member',country:profile?.country||'Unknown',avatar_emoji:'🌍'};
+ if(globalChatPresence)await supabaseClient.removeChannel(globalChatPresence);
+ globalChatPresence=supabaseClient.channel('genzbag-registered-member-presence',{config:{presence:{key:member.id}}});
+ globalChatPresence.on('presence',{event:'sync'},renderForeignDirectory).subscribe(async status=>{
+  if(status==='SUBSCRIBED'){await globalChatPresence.track(presencePayload);chatStatusEl.textContent='● Connected · Showing real registered members who are online.';}
+  else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')chatStatusEl.textContent='Live connection interrupted. Tap refresh to reconnect.';
+ });
+ await loadForeignChatProgress();
 }
-let globalChatSending=false;
 document.getElementById('globalChatSend').addEventListener('click',async()=>{
- if(globalChatSending)return;
- const member=await ensureMemberSession();
- if(!member){chatStatusEl.textContent='Please sign in again to send a message.';return;}
- const message=chatInputEl.value.trim();
- if(!message){chatStatusEl.textContent='Write a message before sending.';chatInputEl.focus();return;}
- if(message.length>600){chatStatusEl.textContent='Messages must be 600 characters or fewer.';return;}
- const b=document.getElementById('globalChatSend');
- globalChatSending=true;b.disabled=true;b.textContent='Sending…';
- const {error}=await supabaseClient.from('global_chat_messages').insert({user_id:member.id,message});
+ if(globalChatSending||!currentPrivateConversation)return;
+ const member=await ensureMemberSession(),message=chatInputEl.value.trim();if(!member)return;
+ if(!message){chatInputEl.focus();return;}
+ const b=document.getElementById('globalChatSend');globalChatSending=true;b.disabled=true;b.textContent='Sending…';
+ const {error}=await supabaseClient.from('member_messages').insert({conversation_id:currentPrivateConversation,sender_id:member.id,body:message});
  globalChatSending=false;b.disabled=false;b.textContent='Send ➤';
  if(error){chatStatusEl.textContent='Message not sent: '+error.message;return;}
- chatInputEl.value='';await renderGlobalChat();
+ chatInputEl.value='';await renderPrivateMessages();await loadForeignChatProgress();
 });
-document.getElementById('globalChatRefresh').addEventListener('click',async()=>{
- const b=document.getElementById('globalChatRefresh');b.disabled=true;b.classList.add('spinning');
- await loadGlobalChat();
- b.disabled=false;b.classList.remove('spinning');
-});
+document.getElementById('globalChatRefresh').addEventListener('click',async()=>{const b=document.getElementById('globalChatRefresh');b.disabled=true;b.classList.add('spinning');await loadGlobalChat();b.disabled=false;b.classList.remove('spinning');});
 chatInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('globalChatSend').click();}});
-chatMessagesEl.addEventListener('click',async e=>{
- const b=e.target.closest('[data-report-message]');if(!b)return;
- const member=await ensureMemberSession();if(!member){chatStatusEl.textContent='Sign in again to report a message.';return;}
- const reason=prompt('Why are you reporting this message?');if(!reason||reason.trim().length<5)return;
- const {error}=await supabaseClient.from('global_chat_reports').insert({message_id:b.dataset.reportMessage,reporter_id:member.id,reason:reason.trim().slice(0,500)});
- alert(error?(error.code==='23505'?'You have already reported this message.':error.message):'Report sent to the GenZBag moderation team.');
-});
+document.getElementById('globalChatMessages').addEventListener('click',async e=>{const b=e.target.closest('[data-chat-user]');if(!b)return;const p=Object.values(globalChatPresence?.presenceState()||{}).flat().find(x=>x.user_id===b.dataset.chatUser);if(p)await openMemberConversation(p.user_id,p.username||'GenZBag member',p.country||'Unknown');});
+document.getElementById('gbChatBack').addEventListener('click',async()=>{currentPrivateConversation=null;currentChatPartner=null;if(memberConversationChannel){await supabaseClient.removeChannel(memberConversationChannel);memberConversationChannel=null;}document.getElementById('gbChatPartner').textContent='Your private conversations';document.getElementById('gbChatPartnerCountry').textContent='Choose an online member to start chatting.';document.getElementById('gbChatHistory').innerHTML='<div class="activity-empty">Choose another online member to start a private chat.</div>';chatInputEl.disabled=true;document.getElementById('globalChatSend').disabled=true;document.getElementById('gbChatBack').hidden=true;});
+document.getElementById('foreignChatClaim').addEventListener('click',async()=>{const b=document.getElementById('foreignChatClaim');b.disabled=true;b.textContent='Verifying…';const {data,error}=await supabaseClient.rpc('claim_foreign_chat_bonus');b.disabled=false;b.textContent='Claim UGX 10,000';if(error){document.getElementById('foreignChatRewardStatus').textContent='Claim could not be verified: '+error.message;return;}document.getElementById('foreignChatRewardStatus').textContent=data?.message||'Claim processed.';if(data?.success){b.hidden=true;if(typeof loadMemberWallet==='function')await loadMemberWallet();}await loadForeignChatProgress();});
 async function loadAdminActivityTools(){
  if(!currentMember||currentMember.app_metadata?.role!=='admin')return;
  adminPanelEl.classList.add('visible');
