@@ -5426,15 +5426,15 @@ async function creditSponsoredReward(taskId,button,statusLabel){
  if(!key)return false;
  if(activityAdCompleted.has(key)){if(button){button.disabled=true;button.textContent='✓ Already credited';}return true;}
  if(button){button.disabled=true;button.textContent='Crediting…';}
- const {error}=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:taskId});
+ const {data,error}=await supabaseClient.rpc('complete_sponsored_ad_view',{p_task_id:taskId});
  if(error){
   if(button){button.disabled=false;button.dataset.adClaim=key;button.textContent='Retry reward';}
   if(statusLabel)statusLabel.textContent=error.message||'Reward could not be credited. Please retry.';
   return false;
  }
  activityAdCompleted.add(key);activityAdViewed.add(key);
- if(button){button.disabled=true;button.textContent='✓ Already credited';delete button.dataset.adClaim;delete button.dataset.adView;}
- if(statusLabel)statusLabel.textContent=result.data?.credit?.credited?'UGX 150 has been added to your Net Profits.':'Task completed. Your UGX 150 reward will be credited on '+(result.data?.credit?.credit_day||'its scheduled weekday')+'.';
+ if(button){button.disabled=true;button.textContent=data?.credit?.credited?'✓ Credited':'✓ Completed · credit scheduled';delete button.dataset.adClaim;delete button.dataset.adView;}
+ if(statusLabel)statusLabel.textContent=data?.credit?.credited?'UGX 150 has been added to your Net Profits.':'Task completed. Your UGX 150 reward will be credited on '+(data?.credit?.credit_day||'its scheduled weekday')+'.';
  await loadMemberWallet();
  return true;
 }
@@ -5611,7 +5611,7 @@ activityListEl.addEventListener('click',async e=>{
  const tapClaim=e.target.closest('[data-tap-claim]');
  if(tapClaim){tapClaim.disabled=true;const {data,error}=await supabaseClient.rpc('claim_tap_earnings');if(error){alert(error.message||'Tap reward could not be recorded.');await renderTapEarnings();return;}await loadMemberWallet();await renderTapEarnings();alert(data?.message||'UGX 500 added to your Net Profits.');return;}
  const spinAction=e.target.closest('[data-spin-action]');
- if(spinAction){spinAction.disabled=true;const {data,error}=await supabaseClient.rpc('spin_and_win');if(error){alert(error.message||'Spin could not be completed.');await renderSpinAndWin();return;}const wheel=activityListEl.querySelector('[data-spin-wheel]'),result=activityListEl.querySelector('[data-spin-result]');if(!wheel||!result){await renderSpinAndWin();return;}const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const angle=(reduced?0:8*360)+(360-Number(data.segment_index||0)*60);requestAnimationFrame(()=>{wheel.style.transform='rotate('+angle+'deg)';});const finish=async()=>{if(result)result.textContent='🎉 UGX '+Number(data.amount).toLocaleString()+' added to your Net Profits!';if(spinAction)spinAction.textContent='Spin recorded';await loadMemberWallet();const status=await getDailyActivityStatus();const counter=activityListEl.querySelector('.tap-spin-counter');if(counter)counter.innerHTML='<strong>'+status.spin_used+'</strong> / 2 used';if(spinAction){spinAction.disabled=Number(status.spin_remaining)<=0;if(spinAction.disabled)spinAction.textContent='Daily limit reached';}};if(reduced){await finish();}else{setTimeout(finish,4450);}return;}
+ if(spinAction){spinAction.disabled=true;const {data,error}=await supabaseClient.rpc('spin_and_win');if(error){alert(error.message||'Spin could not be completed.');await renderSpinAndWin();return;}const wheel=activityListEl.querySelector('[data-spin-wheel]'),result=activityListEl.querySelector('[data-spin-result]');if(!wheel||!result){await renderSpinAndWin();return;}const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const angle=(reduced?0:8*360)+(360-Number(data.segment_index||0)*60);requestAnimationFrame(()=>{wheel.style.transform='rotate('+angle+'deg)';});const finish=async()=>{if(result)result.textContent=data.message||('🎉 UGX '+Number(data.amount).toLocaleString()+' reward recorded.');if(spinAction)spinAction.textContent='Spin recorded';await loadMemberWallet();const status=await getDailyActivityStatus();const counter=activityListEl.querySelector('.tap-spin-counter');if(counter)counter.innerHTML='<strong>'+status.spin_used+'</strong> / 2 used';if(spinAction){spinAction.disabled=Number(status.spin_remaining)<=0;if(spinAction.disabled)spinAction.textContent='Daily limit reached';}};if(reduced){await finish();}else{setTimeout(finish,4450);}return;}
  const retryChallenge=e.target.closest('[data-challenge-retry]');if(retryChallenge){await startBuiltInChallenge(retryChallenge.dataset.challengeRetry,retryChallenge.dataset.challengeRetry==='math'?'math-challenge':'colour-challenge');return;}
  const openMath=e.target.closest('[data-open-math-challenge]');if(openMath){openBuiltInChallenge('math');return;}
  const openColour=e.target.closest('[data-open-colour-challenge]');if(openColour){openBuiltInChallenge('colour');return;}
@@ -6021,7 +6021,7 @@ document.getElementById('adminSubmissionList').addEventListener('click',async e=
  b.disabled=true;
  const {data,error}=await supabaseClient.rpc('admin_review_task_submission',{p_submission_id:id,p_decision:b.dataset.review,p_review_note:note});
  if(error){alert('Review failed: '+error.message);b.disabled=false;return;}
- await loadAdminActivityTools();await loadActivities();await loadMemberWallet();
+ if(data?.credit&&!data.credit.credited)alert('Submission approved. The member’s reward is scheduled for '+data.credit.credit_day+'.');await loadAdminActivityTools();await loadActivities();await loadMemberWallet();
 });
 async function initialiseMemberFeatures(session){
  currentMember=session?.user||await ensureMemberSession()||null;
