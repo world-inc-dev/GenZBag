@@ -3720,7 +3720,7 @@ body.activation-screen-open{overflow:hidden!important}
   <a class="nav-link" href="#chatPage"><span class="nav-icon">💬</span>Foreign Chat</a>
   <a class="nav-link" href="#activityPage" data-activity-category="music" data-activity-search="spotify" data-activity-title="Earn With Spotify"><span class="nav-icon">🎧</span>Earn With Spotify</a>
   <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="tap" data-activity-title="Tap Earnings"><span class="nav-icon">👆</span>Tap Earnings</a>
-  <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="color colour" data-activity-title="Color Challenge"><span class="nav-icon">🎨</span>Color Challenge</a>
+  <a class="nav-link" href="#activityPage" data-activity-category="game" data-activity-search="colour" data-activity-title="Colour Challenge"><span class="nav-icon">🎨</span>Color Challenge</a>
   <a class="nav-link" href="#activityPage" data-activity-category="challenge" data-activity-search="trivia" data-activity-title="Trivia"><span class="nav-icon">🧠</span>Trivia</a>
   <a class="nav-link" href="#activityPage" data-activity-category="video" data-activity-search="youtube" data-activity-title="YouTube"><span class="nav-icon">▶️</span>YouTube</a>
   <a class="nav-link" href="#activityPage" data-activity-category="video" data-activity-search="tiktok" data-activity-title="TikTok"><span class="nav-icon">🎬</span>TikTok</a>
@@ -4746,7 +4746,7 @@ document.querySelectorAll('[data-voucher-tab]').forEach(btn=>btn.addEventListene
 
 bindDropdown('teamMenuToggle','teamSubmenu');
 [1,2,3].forEach(n=>bindDropdown('teamLevel'+n+'Toggle','teamLevel'+n+'Submenu'));
-document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>{
+document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',async e=>{
  if(a.id==='logoutButton')return;
  e.preventDefault();
  document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
@@ -4789,7 +4789,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',e=>
   currentActivitySearch=a.dataset.activitySearch||'';
   document.getElementById('activityPageTitle').textContent=a.dataset.activityTitle||a.textContent.trim();
   document.getElementById('activityPageDescription').textContent='Browse '+(a.dataset.activityTitle||'this activity')+' tasks, follow the instructions and submit proof for review.';
-  updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
+  await loadActivities();
  }
  closeMenu();target.scrollIntoView({behavior:'smooth',block:'start'});
 
@@ -5275,12 +5275,7 @@ activityFiltersEl.addEventListener('click',e=>{
  activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x===b));
  updateVideoPlatformIntro();updateDailyVideoLimit();renderActivities();
 });
-document.querySelectorAll('[data-activity-category]').forEach(a=>a.addEventListener('click',async()=>{
- const f=a.dataset.activityCategory||'all';currentActivityFilter=f;
- currentActivitySearch=a.dataset.activitySearch||'';
- activityFiltersEl.querySelectorAll('.activity-filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===f));
- await loadActivities();
-}));
+
 activityListEl.addEventListener('click',async e=>{
  const adViewButton=e.target.closest('[data-ad-view]');
  if(adViewButton){
