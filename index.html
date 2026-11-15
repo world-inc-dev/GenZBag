@@ -169,6 +169,8 @@ a {text-decoration:none;color:inherit}
   transition:.2s;
 }
 
+.nav-count{margin-left:auto;min-width:17px;height:17px;padding:0 5px;border-radius:20px;background:#ef4444;color:#fff;font-size:9px;font-weight:900;display:grid;place-items:center}.nav-count[hidden]{display:none!important}
+
 .nav-link:hover,.nav-link.active {
   background:#ffffff1c;
   color:#fff;
@@ -3697,7 +3699,7 @@ body.activation-screen-open{overflow:hidden!important}
   <a class="nav-link" href="#adminPage" id="adminConsoleNav" hidden><span class="nav-icon">🛡️</span>Admin Control Centre</a>
   <div class="nav-label">SETTING</div>
   <a class="nav-link" href="#referrals"><span class="nav-icon">📨</span>Text Upline</a>
-  <a class="nav-link" href="#chatPage"><span class="nav-icon">✉️</span>Read Messages</a>
+  <a class="nav-link" href="#chatPage"><span class="nav-icon">✉️</span>Read Messages<span class="nav-count" id="sidebarMessageCount" hidden>0</span></a>
   <a class="nav-link" href="#profile"><span class="nav-icon">👤</span>Profile</a>
   <a class="nav-link" href="#chatPage"><span class="nav-icon">☎️</span>Contact Us</a>
   <a class="nav-link" href="#chatPage"><span class="nav-icon">👥</span>Join community</a>
@@ -5915,7 +5917,7 @@ async function loadMemberInboxCounters(){
  const {data:convos,error:conversationError}=await supabaseClient.from('member_conversations').select('id').or('member_a.eq.'+member.id+',member_b.eq.'+member.id);
  if(conversationError){console.warn('Message conversations:',conversationError.message);return;}
  const ids=(convos||[]).map(c=>c.id);
- if(!ids.length){setLiveBadge('messageCount',0);return;}
+ if(!ids.length){setLiveBadge('messageCount',0);setLiveBadge('sidebarMessageCount',0);return;}
  const [readsResult,messagesResult]=await Promise.all([
   supabaseClient.from('member_conversation_reads').select('conversation_id,last_read_at').eq('user_id',member.id).in('conversation_id',ids),
   supabaseClient.from('member_messages').select('conversation_id,created_at').in('conversation_id',ids).neq('sender_id',member.id).order('created_at',{ascending:false}).limit(1000)
@@ -5923,7 +5925,7 @@ async function loadMemberInboxCounters(){
  if(readsResult.error||messagesResult.error){console.warn('Unread message counter:',readsResult.error||messagesResult.error);return;}
  const readMap=new Map((readsResult.data||[]).map(r=>[r.conversation_id,new Date(r.last_read_at).getTime()]));
  const unread=(messagesResult.data||[]).filter(m=>!readMap.has(m.conversation_id)||new Date(m.created_at).getTime()>readMap.get(m.conversation_id)).length;
- setLiveBadge('messageCount',unread);
+ setLiveBadge('messageCount',unread);setLiveBadge('sidebarMessageCount',unread);
 }
 async function markMemberConversationRead(conversationId){
  const member=await ensureMemberSession();if(!member||!conversationId||!supabaseClient)return;
@@ -6083,7 +6085,7 @@ document.getElementById('adminSubmissionList').addEventListener('click',async e=
 });
 async function initialiseMemberFeatures(session){
  currentMember=session?.user||await ensureMemberSession()||null;
- if(!currentMember){if(memberLiveChannel){supabaseClient.removeChannel(memberLiveChannel);memberLiveChannel=null;memberLiveChannelUser=null;}if(memberLiveRefreshTimer){clearInterval(memberLiveRefreshTimer);memberLiveRefreshTimer=null;}setLiveBadge('notificationCount',0);setLiveBadge('messageCount',0);activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';if(adminConsoleNav)adminConsoleNav.hidden=true;return;}
+ if(!currentMember){if(memberLiveChannel){supabaseClient.removeChannel(memberLiveChannel);memberLiveChannel=null;memberLiveChannelUser=null;}if(memberLiveRefreshTimer){clearInterval(memberLiveRefreshTimer);memberLiveRefreshTimer=null;}setLiveBadge('notificationCount',0);setLiveBadge('messageCount',0);setLiveBadge('sidebarMessageCount',0);activityRows=[];activitySubmissionMap={};setActivityMessage('Sign in with an activated account to view activities.');chatMessagesEl.innerHTML='<div class="activity-empty">Sign in with an activated account to join the global lounge.</div>';if(globalChatChannel){supabaseClient.removeChannel(globalChatChannel);globalChatChannel=null;}adminPanelEl.classList.remove('visible');adminPanelEl.hidden=true;adminPanelEl.style.display='none';if(adminConsoleNav)adminConsoleNav.hidden=true;return;}
  await refreshAdminRoleClaim();
  setupMemberLiveCounters();
  await Promise.all([loadActivities(),loadGlobalChat(),loadMemberWallet(),loadAdminActivityTools(),loadMemberInboxCounters()]);setupAdminConsole();
