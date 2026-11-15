@@ -6184,346 +6184,128 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 </style>
 
 
-<style id="genzbag-withdrawal-visible-white-red-cards-v9">
-/* Visible, clearly separated white cards throughout the withdrawal workspace. */
+
+
+<style id="genzbag-withdrawal-dashboard-theme-compact-v15">
+/* Restore the normal dashboard shell and its original navigation sizing. */
+.sidebar{width:260px!important;padding:22px 15px!important}
+.sidebar-brand{font-size:20px!important;padding:8px 12px 22px!important}
+.nav-label{font-size:10px!important;letter-spacing:1.5px!important;padding:15px 12px 8px!important}
+.nav-link,.nav-dropdown-toggle{font-size:13px!important;line-height:1.4!important;padding:12px!important;gap:12px!important;margin:3px 0!important;min-height:0!important}
+.nav-link .nav-icon,.nav-dropdown-toggle .nav-icon{width:22px!important;font-size:17px!important}
+.nav-submenu .nav-link{font-size:12px!important;padding:10px!important}
+.sidebar-footer{margin-top:25px!important;padding:15px 12px!important;font-size:11px!important}
+
+/* The withdrawal workspace uses the same light-blue page, white cards and navy text as the dashboard. */
 #featureWorkspace.withdraw-mode{
-  background:#fffafa!important;
-  background-image:none!important;
-  color:#9f1d2b!important;
+ position:relative!important;isolation:auto!important;overflow:visible!important;
+ margin:14px 0!important;padding:16px!important;
+ color:var(--text)!important;background:#fff!important;
+ border:1px solid #e5eaf2!important;border-radius:16px!important;
+ box-shadow:0 6px 18px #0a2a6b0a!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel,
-#featureWorkspace.withdraw-mode>.feature-detail-panel{
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
+#featureWorkspace.withdraw-mode:before{display:none!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel{
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ padding:0!important;margin:0!important;background:transparent!important;
+ color:var(--text)!important;box-sizing:border-box!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-history-item,
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel,
-#featureWorkspace.withdraw-mode #withdrawHistoryList .withdraw-history-item{
-  display:block;
-  box-sizing:border-box!important;
-  background:#fff!important;
-  background-image:none!important;
-  border:2px solid #e9a3aa!important;
-  border-radius:15px!important;
-  box-shadow:0 5px 16px rgba(159,29,43,.12)!important;
-  color:#9f1d2b!important;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
+ margin:0 0 10px!important;padding:3px 1px 8px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading :is(h2,p),
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(h2,h3,h4,p,label,small,span,strong,b,li){
+ color:var(--text)!important;-webkit-text-fill-color:var(--text)!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-kicker,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-eyebrow,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card>span,
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification>span{
+ color:var(--muted)!important;-webkit-text-fill-color:var(--muted)!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(
+ .withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,
+ .withdraw-quote,.withdraw-qualification,.withdraw-success-card
+){
+ background:#fff!important;background-image:none!important;
+ color:var(--text)!important;border:1px solid #e5eaf2!important;
+ border-radius:14px!important;box-shadow:var(--shadow)!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning{
+ background:#fff7dc!important;border:1px solid #f4df9c!important;
+ color:#70531c!important;border-radius:13px!important;
+ box-shadow:0 4px 14px #9873210c!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning :is(p,strong){
+ color:#70531c!important;-webkit-text-fill-color:#70531c!important;
 }
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card{
-  padding:16px!important;margin:0 0 13px!important;
+ padding:13px!important;margin:0 0 10px!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card{
-  padding:14px!important;margin:0 0 10px!important;min-width:0;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-section-title{margin-bottom:8px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-section-title h3{font-size:14px!important}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-amount-field{
+ min-height:43px!important;margin-bottom:8px!important;
+ background:#f7f9fc!important;border-color:#dfe6f0!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,select,textarea){
+ min-height:39px!important;padding:8px 10px!important;
+ background:#f8fbff!important;color:#172554!important;
+ -webkit-text-fill-color:#172554!important;border:1px solid #dbe4f0!important;
+ border-radius:9px!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification{
-  padding:13px!important;margin:0 0 11px!important;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .feature-field{
+ color:#334155!important;font-size:10px!important;margin-top:8px!important;
+}
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row{
+ display:grid!important;grid-template-columns:1fr 1.2fr!important;gap:8px!important;
 }
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote{
-  padding:12px 14px!important;margin:12px 0!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
-  background:transparent!important;border:0!important;box-shadow:none!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,.withdraw-qualification,.withdraw-warning,.withdraw-success-card,.withdraw-history-item) :where(h1,h2,h3,h4,p,span,strong,b,small,label,li){
-  color:#a31624!important;-webkit-text-fill-color:#a31624!important;text-shadow:none!important;opacity:1!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-section-title h3,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card strong,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification strong{
-  color:#8f1725!important;-webkit-text-fill-color:#8f1725!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(input,select,textarea){
-  background:#fff!important;color:#8f1725!important;-webkit-text-fill-color:#8f1725!important;
-  border:1px solid #df9ba3!important;border-radius:10px!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(button,.activity-btn,#withdrawRequestButton){
-  background:#a31624!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
-  border:1px solid #861321!important;border-radius:10px!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card[hidden],
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel [hidden]{display:none!important}
-@media(max-width:460px){
- #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{grid-template-columns:1fr 1fr!important}
- #featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,.withdraw-qualification,.withdraw-warning){padding:11px!important}
-}
-</style>
-
-
-<style id="genzbag-withdrawal-black-cards-v10">
-/* Black cards with high-contrast white wording on the withdrawal page. */
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-warning,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card,
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel,
-#featureWorkspace.withdraw-mode #withdrawHistoryList .withdraw-history-item{
-  background:#080b12!important;
-  background-image:linear-gradient(145deg,#111827,#05070c)!important;
-  border:1px solid #30394a!important;
-  border-radius:15px!important;
-  box-shadow:0 6px 18px rgba(0,0,0,.24)!important;
-  color:#fff!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,.withdraw-qualification,.withdraw-warning,.withdraw-success-card) :where(h1,h2,h3,h4,p,span,strong,b,small,label,li),
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel :where(h1,h2,h3,h4,p,span,strong,b,small,label){
-  color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important;text-shadow:none!important;
+ padding:8px 10px!important;margin-top:8px!important;background:#f5f8fd!important;
 }
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote>div{
-  border-bottom:1px solid #30394a!important;
+ padding:4px 0!important;font-size:10px!important;border-bottom:1px solid #e8eef5!important;
 }
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote strong{font-size:10px!important}
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote .withdraw-net,
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote .withdraw-net strong{
-  color:#86efac!important;-webkit-text-fill-color:#86efac!important;
+ color:#0A2A6B!important;-webkit-text-fill-color:#0A2A6B!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-eyebrow,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-kicker,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card span{
-  color:#fca5a5!important;-webkit-text-fill-color:#fca5a5!important;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-qualification{
+ padding:9px 11px!important;margin:8px 0!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(input,select,textarea){
-  background:#fff!important;color:#111827!important;-webkit-text-fill-color:#111827!important;
-  border:1px solid #94a3b8!important;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-card{
+ padding:10px 12px!important;margin:0 0 8px!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(input,textarea)::placeholder{
-  color:#64748b!important;-webkit-text-fill-color:#64748b!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :where(button,.activity-btn,#withdrawRequestButton){
-  background:#b91c1c!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
-  border:1px solid #991b1b!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
-  background:transparent!important;border:0!important;box-shadow:none!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card[hidden],
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel [hidden]{display:none!important}
-</style>
-
-
-<style id="genzbag-withdrawal-solid-black-interiors-v11">
-/* Solid black surfaces: the complete card and every element inside it. */
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(
-  .withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,
-  .withdraw-quote,.withdraw-qualification,.withdraw-warning,
-  .withdraw-success-card
-),
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel,
-#featureWorkspace.withdraw-mode #withdrawHistoryList .withdraw-history-item{
-  background:#000!important;
-  background-image:none!important;
-  border:1px solid #252525!important;
-  color:#fff!important;
-  box-shadow:none!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(
-  .withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,
-  .withdraw-quote,.withdraw-qualification,.withdraw-warning,
-  .withdraw-success-card
-) *,
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel *,
-#featureWorkspace.withdraw-mode #withdrawHistoryList .withdraw-history-item *{
-  background-color:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  box-shadow:none!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,select,textarea),
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,select,textarea):focus{
-  background:#000!important;
-  background-color:#000!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border:1px solid #555!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,textarea)::placeholder{
-  color:#aaa!important;-webkit-text-fill-color:#aaa!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(button,.activity-btn,#withdrawRequestButton){
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border:1px solid #666!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
-  background:transparent!important;border:0!important;box-shadow:none!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card[hidden],
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel [hidden]{display:none!important}
-</style>
-
-
-<style id="genzbag-withdraw-page-green-background-v12">
-/* Green belongs to the withdrawal page background only; inner cards stay black. */
-#featureWorkspace.withdraw-mode{
-  background:#008000!important;
-  background-image:none!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel{
-  background:#008000!important;
-  background-image:none!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
-  background:transparent!important;
-}
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel{
-  background:#000!important;
-  background-image:none!important;
-}
-</style>
-
-
-<style id="genzbag-withdraw-green-harmony-v13">
-/* Refined green/black withdrawal theme with cards sized to the available page. */
-#featureWorkspace.withdraw-mode,
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel{
-  background:#008000!important;
-  background-image:none!important;
-  box-sizing:border-box!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel{
-  width:100%!important;max-width:100%!important;min-width:0!important;
-  padding:12px!important;border-radius:16px!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel *,
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel *,
-#featureWorkspace.withdraw-mode #withdrawHistoryList *{
-  box-sizing:border-box!important;min-width:0;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(
- .withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,
- .withdraw-quote,.withdraw-qualification,.withdraw-warning,.withdraw-success-card
-),
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel,
-#featureWorkspace.withdraw-mode #withdrawHistoryList .withdraw-history-item{
-  width:100%!important;max-width:100%!important;
-  background:#050b07!important;background-image:none!important;
-  border:1px solid #39a85a!important;border-radius:14px!important;
-  color:#fff!important;box-shadow:0 3px 12px rgba(0,35,8,.22)!important;
-  overflow-wrap:anywhere;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(
- .withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,
- .withdraw-quote,.withdraw-qualification,.withdraw-warning,.withdraw-success-card
-) *,
-#featureWorkspace.withdraw-mode #withdrawHistoryPanel *,
-#featureWorkspace.withdraw-mode #withdrawHistoryList .withdraw-history-item *{
-  color:#f4fff6!important;-webkit-text-fill-color:#f4fff6!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(
- .withdraw-eyebrow,.withdraw-page-kicker,.withdraw-live-pill,
- .withdraw-info-card>span,.withdraw-qualification>span
-){
-  color:#86efac!important;-webkit-text-fill-color:#86efac!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote :is(span,strong){
-  color:#f4fff6!important;-webkit-text-fill-color:#f4fff6!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote .withdraw-net :is(span,strong),
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote .withdraw-net{
-  color:#86efac!important;-webkit-text-fill-color:#86efac!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,select,textarea),
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,select,textarea):focus{
-  width:100%!important;max-width:100%!important;
-  background:#07150b!important;background-color:#07150b!important;
-  color:#fff!important;-webkit-text-fill-color:#fff!important;
-  border:1px solid #31964c!important;border-radius:9px!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(input,textarea)::placeholder{
-  color:#b8d8bf!important;-webkit-text-fill-color:#b8d8bf!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(button,.activity-btn,#withdrawRequestButton){
-  max-width:100%!important;background:#087a2c!important;background-image:none!important;
-  color:#fff!important;-webkit-text-fill-color:#fff!important;
-  border:1px solid #54c878!important;border-radius:10px!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row,
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{
-  width:100%!important;min-width:0!important;
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:8px!important;margin-bottom:8px!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{
-  padding:4px 2px 12px!important;background:transparent!important;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-safety-card{
+ padding:10px 12px!important;margin:0 0 8px!important;
 }
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading :is(h2,p){
-  color:#fff!important;-webkit-text-fill-color:#fff!important;
-}
-#featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading .withdraw-page-kicker{
-  color:#d1fae5!important;-webkit-text-fill-color:#d1fae5!important;
+#featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(button,.activity-btn,#withdrawRequestButton){
+ min-height:40px!important;padding:9px 13px!important;
+ background:var(--blue)!important;color:#fff!important;
+ -webkit-text-fill-color:#fff!important;border:1px solid var(--blue)!important;
+ border-radius:10px!important;
 }
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-success-card[hidden],
 #featureWorkspace.withdraw-mode #withdrawalRulesPanel [hidden]{display:none!important}
-@media(max-width:520px){
- #featureWorkspace.withdraw-mode #withdrawalRulesPanel{padding:8px!important}
- #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
- #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row{grid-template-columns:1fr!important;gap:8px!important}
- #featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,.withdraw-qualification,.withdraw-warning,.withdraw-success-card){padding:11px!important;margin-bottom:10px!important}
-}
-</style>
-
-
-
-<style id="genzbag-compact-navigation-layout-v14">
-/* Compact dashboard spacing so members reach key actions with less scrolling. */
-#dashboardPage,.page-view{scroll-margin-top:68px}
-.main{padding-top:12px!important;padding-bottom:20px!important}
-.section-heading{margin:12px 0 8px!important;gap:6px!important}
-.section-heading h2{font-size:17px!important;line-height:1.2!important}
-.section-heading small{font-size:10px!important}
-.card{margin-bottom:10px!important;border-radius:14px!important}
-.network-card,.welcome-top,.profit-box,.expenses-card{padding-top:12px!important;padding-bottom:12px!important}
-.balance-grid{gap:8px!important;margin:10px 0!important}
-.balance-card{min-height:92px!important;padding:10px!important;border-radius:12px!important}
-.balance-card strong{font-size:clamp(13px,3.8vw,17px)!important}
-.balance-card small{font-size:9px!important;line-height:1.25!important}
-.task-list,.profile-details,.wallet-body,.ref-body{padding-top:8px!important;padding-bottom:8px!important}
-.task-row,.schedule-row{padding-top:8px!important;padding-bottom:8px!important}
-.sidebar{padding:12px 10px!important}
-.sidebar-brand{padding:5px 10px 12px!important;font-size:18px!important}
-.nav-label{padding:10px 10px 5px!important;font-size:9px!important;letter-spacing:1px!important}
-.nav-link,.nav-dropdown-toggle{padding:9px 10px!important;gap:9px!important;margin:2px 0!important;border-radius:9px!important;font-size:12px!important;line-height:1.25!important;min-height:36px!important}
-.nav-link .nav-icon,.nav-dropdown-toggle .nav-icon{width:19px!important;font-size:15px!important}
-.nav-submenu .nav-link{padding:7px 9px!important;font-size:11px!important;min-height:31px!important}
-.sidebar-footer{margin-top:12px!important;padding:10px!important;font-size:10px!important}
-#featureWorkspace{padding:10px!important;margin-top:10px!important}
-#featureWorkspace>.feature-detail-panel{padding:12px!important}
-#featureWorkspace :where(h1,h2){line-height:1.2}
-#featureWorkspace :where(.feature-stat-grid,.admin-metric-grid){gap:8px!important;margin:10px 0!important}
-#featureWorkspace :where(.feature-stat-grid>div,.admin-metric){padding:10px!important;border-radius:11px!important}
-#featureWorkspace :where(.feature-stat-grid strong,.admin-metric strong){font-size:16px!important}
+#featureWorkspace.withdraw-mode :is(.feature-workspace-head h2,h2,h3){color:#14284f!important}
+#featureWorkspace.withdraw-mode :is(.feature-workspace-head p,#featureDescription,#featureNotice){color:#64748b!important}
 @media(max-width:600px){
- .main{padding:9px 8px 18px!important}
- .section-heading{margin:9px 0 6px!important}
- .section-heading h2{font-size:15px!important}
- .card{margin-bottom:8px!important}
- .network-card,.welcome-top,.profit-box,.expenses-card{padding:10px!important}
- .balance-grid{gap:7px!important;margin:8px 0!important}
- .balance-card{min-height:82px!important;padding:9px!important}
- .task-row,.schedule-row{padding:7px 0!important}
- #featureWorkspace{padding:7px!important;margin-top:7px!important}
- #featureWorkspace>.feature-detail-panel{padding:9px!important}
- .sidebar{padding:10px 8px!important}
- .nav-link,.nav-dropdown-toggle{font-size:11px!important;padding:8px!important;min-height:33px!important}
+ #featureWorkspace.withdraw-mode{margin:9px 0!important;padding:10px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-page-heading{margin-bottom:7px!important;padding-bottom:5px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-form-card{padding:10px!important;margin-bottom:8px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row{grid-template-columns:1fr 1.1fr!important;gap:7px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-quote{padding:7px 9px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel :is(.withdraw-info-card,.withdraw-safety-card,.withdraw-qualification){padding:9px!important;margin-bottom:7px!important}
 }
-@media(min-width:1100px){
- .sidebar{width:230px!important;padding:12px 10px!important}
- .main,#dashboard{width:calc(100% - 230px)!important;margin-left:230px!important}
+@media(max-width:350px){
+ #featureWorkspace.withdraw-mode #withdrawalRulesPanel .withdraw-input-row{grid-template-columns:1fr!important}
 }
 </style>
 
