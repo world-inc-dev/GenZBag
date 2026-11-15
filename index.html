@@ -4711,7 +4711,24 @@ document.querySelectorAll('[data-voucher-tab]').forEach(btn=>btn.addEventListene
 
 bindDropdown('teamMenuToggle','teamSubmenu');
 [1,2,3].forEach(n=>bindDropdown('teamLevel'+n+'Toggle','teamLevel'+n+'Submenu'));
-// Dedicated challenge navigation: intercept Math/Colour before the general activity loader.
+// Keep both sidebar links and challenge-directory buttons on the dedicated built-in challenge screens.
+function openBuiltInChallenge(challenge){
+ const key=challenge==='colour'?'colour':'math';
+ currentActivityChallenge=key;
+ currentActivityFilter='game';
+ currentActivitySearch=key;
+ activityLoadSequence++;
+ stopMathTimer();stopColourTimer();
+ mathState=null;colourState=null;
+ activityRows=[];activitySubmissionMap={};
+ const title=key==='math'?'Math Challenge':'Colour Challenge';
+ document.getElementById('activityPageTitle').textContent=title;
+ document.getElementById('activityPageDescription').textContent=key==='math'
+  ?'Answer 10 timed maths questions. Score a perfect 10/10 to qualify for UGX 1,000.'
+  :'Identify the colour shown in each of 10 timed rounds. Score 10/10 to qualify for UGX 1,000.';
+ activityCountEl.textContent=key==='math'?'Math challenge ready':'Colour challenge ready';
+ if(key==='math')renderMathChallenge();else renderColourChallenge();
+}
 document.addEventListener('click',e=>{
  const link=e.target.closest('a[data-activity-search]');
  if(!link)return;
@@ -4722,19 +4739,7 @@ document.addEventListener('click',e=>{
  document.querySelectorAll('.nav-link').forEach(x=>x.classList.toggle('active',x===link));
  document.querySelectorAll('.page-view').forEach(page=>{page.hidden=page.id!=='activityPage';});
  const featureWorkspace=document.getElementById('featureWorkspace');if(featureWorkspace)featureWorkspace.hidden=true;
- currentActivityFilter=link.dataset.activityCategory||'game';
- currentActivitySearch=search;
- currentActivityChallenge=challenge;
- if(typeof activityLoadSequence!=='undefined')activityLoadSequence++;
- if(typeof stopMathTimer==='function')stopMathTimer();
- if(typeof stopColourTimer==='function')stopColourTimer();
- mathState=null;
- activityRows=[];activitySubmissionMap={};
- const title=challenge==='math'?'Math Challenge':'Colour Challenge';
- document.getElementById('activityPageTitle').textContent=title;
- document.getElementById('activityPageDescription').textContent=challenge==='math'?'Answer 10 timed maths questions. Score a perfect 10/10 to qualify for UGX 1,000.':'Identify the colour shown in each of 10 timed rounds. Score 10/10 to qualify for UGX 1,000.';
- activityCountEl.textContent=challenge==='math'?'Math challenge ready':'Colour challenge ready';
- if(challenge==='math')renderMathChallenge();else renderColourChallenge();
+ openBuiltInChallenge(challenge);
  closeMenu();
  document.getElementById('activityPage').scrollIntoView({behavior:'smooth',block:'start'});
 },true);
@@ -5533,8 +5538,8 @@ activityListEl.addEventListener('click',async e=>{
  if(tapClaim){tapClaim.disabled=true;const {data,error}=await supabaseClient.rpc('claim_tap_earnings');if(error){alert(error.message||'Tap reward could not be recorded.');await renderTapEarnings();return;}await loadMemberWallet();await renderTapEarnings();alert(data?.message||'UGX 500 added to your Net Profits.');return;}
  const spinAction=e.target.closest('[data-spin-action]');
  if(spinAction){spinAction.disabled=true;const {data,error}=await supabaseClient.rpc('spin_and_win');if(error){alert(error.message||'Spin could not be completed.');await renderSpinAndWin();return;}const wheel=activityListEl.querySelector('[data-spin-wheel]'),result=activityListEl.querySelector('[data-spin-result]');if(!wheel||!result){await renderSpinAndWin();return;}const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const angle=(reduced?0:8*360)+(360-Number(data.segment_index||0)*60);requestAnimationFrame(()=>{wheel.style.transform='rotate('+angle+'deg)';});const finish=async()=>{if(result)result.textContent='🎉 UGX '+Number(data.amount).toLocaleString()+' added to your Net Profits!';if(spinAction)spinAction.textContent='Spin recorded';await loadMemberWallet();const status=await getDailyActivityStatus();const counter=activityListEl.querySelector('.tap-spin-counter');if(counter)counter.innerHTML='<strong>'+status.spin_used+'</strong> / 2 used';if(spinAction){spinAction.disabled=Number(status.spin_remaining)<=0;if(spinAction.disabled)spinAction.textContent='Daily limit reached';}};if(reduced){await finish();}else{setTimeout(finish,4450);}return;}
- const openMath=e.target.closest('[data-open-math-challenge]');if(openMath){renderMathChallenge();return;}
- const openColour=e.target.closest('[data-open-colour-challenge]');if(openColour){renderColourChallenge();return;}
+ const openMath=e.target.closest('[data-open-math-challenge]');if(openMath){openBuiltInChallenge('math');return;}
+ const openColour=e.target.closest('[data-open-colour-challenge]');if(openColour){openBuiltInChallenge('colour');return;}
  const colourStart=e.target.closest('[data-colour-start]');if(colourStart){if(!currentMember){alert('Please sign in to play the Colour Challenge.');return;}colourStart.disabled=true;const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:'colour'});if(error||!data){colourStart.disabled=false;alert(error?.message||'Unable to start challenge.');return;}colourState={taskId:colourStart.dataset.colourStart,sessionId:data.session_id,questions:data.questions.map(q=>({name:'',hex:q.display_hex,o:q.options,question_key:q.question_key})),index:0,score:0,selected:null,seconds:15,answers:[]};renderColourQuestion();startColourTimer();return;}
  const colourAnswer=e.target.closest('[data-colour-answer]');if(colourAnswer&&colourState&&colourState.selected===null){stopColourTimer();const chosen=Number(colourAnswer.dataset.colourAnswer),q=colourState.questions[colourState.index];colourState.selected=chosen;colourState.answers[colourState.index]=chosen;renderColourQuestion();return;}
  if(e.target.closest('[data-colour-next]')){if(!colourState)return;if(colourState.index>=9){finishColourChallenge();return;}colourState.index++;colourState.selected=null;renderColourQuestion();startColourTimer();return;}
