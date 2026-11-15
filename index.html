@@ -5147,7 +5147,8 @@ const genzbagScheduleObserver=new MutationObserver(()=>{
  if(locked){
   if(!note){note=document.createElement('div');note.id='weeklyScheduleLockNote';note.className='activity-empty';activityListEl.prepend(note);}
   const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  note.textContent=locked+' task(s) are hidden because they are scheduled for another weekday. Today is '+days[genzbagTodayIndex()]+' (EAT). Check the Weekly Schedule for their days.';
+  const message=locked+' task(s) are hidden because they are scheduled for another weekday. Today is '+days[genzbagTodayIndex()]+' (EAT). Check the Weekly Schedule for their days.';
+  if(note.textContent!==message)note.textContent=message;
  }else if(note)note.remove();
 });
 genzbagScheduleObserver.observe(activityListEl,{childList:true,subtree:true});
