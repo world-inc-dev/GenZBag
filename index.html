@@ -4741,7 +4741,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
   const featureNotice=document.getElementById('featureNotice');
   featureNotice.textContent=feature.notice;
   featureNotice.hidden=featureKey==='leaderboard';
-  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':(featureKey==='pay-client'?'LIVE CLIENT PAYMENTS':(featureKey==='withdraw-balance'?'LIVE WITHDRAWAL REQUESTS':'PREVIEW · SETUP REQUIRED')));
+  document.getElementById('featureStatus').textContent=featureKey==='leaderboard'?'LIVE WEEKLY TOURNAMENT':(featureKey==='welcome-bonus'?'LIVE REFERRAL BONUS':(['voucher-buy','voucher-activate','voucher-history'].includes(featureKey)?'LIVE VOUCHER SYSTEM':(featureKey==='pay-client'?'LIVE CLIENT PAYMENTS':(featureKey==='withdraw-balance'?'LIVE WITHDRAWAL REQUESTS':'PREVIEW · SETUP REQUIRED'))));
   document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
   const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel','welcome-bonus':'referralBonusPanel'};
   const isVoucherFeature=['voucher-buy','voucher-activate','voucher-history'].includes(featureKey);
