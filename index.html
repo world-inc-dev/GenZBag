@@ -6309,9 +6309,10 @@ async function loadAdminFinancials(){
   ['Verified activation income',d.activation_income,'income','Money received from verified, paid mobile-money activations.'],
   ['Referral commissions credited',d.referral_commissions_credited,'owed','Total referral commission credits ever issued.'],  ['Referral commissions still owed',d.referral_commissions_outstanding,'owed','Net referral balance remaining after recorded ledger debits.'],
   ['Other rewards still owed',d.other_rewards_outstanding,'owed','Outstanding task rewards and ledger adjustments.'],
+  ['Scheduled rewards pending',d.scheduled_rewards_pending,'owed','Rewards earned but awaiting their scheduled credit date.'],
   ['Withdrawals reserved',d.withdrawals_reserved,'owed','Pending, under-review and approved requests; included in member liabilities above.'],
   ['Platform unallocated referral income',d.platform_unallocated_referral_income,'owned','Level commissions with no eligible upline, retained by GenZBag.'],
-  ['Platform retained before expenses',d.platform_retained_before_expenses,'owned','Activation income less member rewards credited; before operating expenses.']
+  ['Platform retained before expenses',d.platform_retained_before_expenses,'owned','Activation income less recorded reward credits and scheduled reward commitments; before operating expenses.']
  ];
  host.innerHTML=cards.map(([label,value,kind,caption])=>'<article class="admin-finance-card '+kind+'"><small>'+adminSafe(label)+'</small><strong>'+adminSafe(money(value))+'</strong><span class="finance-caption">'+adminSafe(caption)+'</span></article>').join('');
  const openCount=Number(d.open_withdrawal_count||0),paidCount=Number(d.paid_withdrawal_count||0);
