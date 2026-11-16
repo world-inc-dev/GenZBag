@@ -3817,22 +3817,14 @@ body.activation-screen-open{overflow:hidden!important}
 
       <div class="welcome-info">
         <h2>Hi Bridan</h2>
-        <p>Welcome back! Your digital income journey continues here.</p><p class="welcome-tagline">A home of Digital Income.</p>
+        <p class="welcome-greeting-line">Welcome back!</p>
         <span class="rank-badge welcome-rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span>
       </div>
 
       <span class="active-badge status-error" id="accountActivationBadge">Checking status</span>
     </div>
 
-    <div class="profit-box">
-      <small>NET PROFITS</small>
-      <strong>UGX 0</strong>
-    </div>
-  </section>
-
-  <!-- GROW YOUR NETWORK -->
-
-  <section class="card network-card">
+    <div class="welcome-network-summary">
     <div class="network-top">
       <div>
         <h2>Grow Your Network</h2>
@@ -3847,6 +3839,12 @@ body.activation-screen-open{overflow:hidden!important}
     <div class="network-stats"><span class="network-stat">Total referrals: <strong id="totalReferralCount">0</strong></span><span class="network-stat">Qualified: <strong id="qualifiedReferralCount">0</strong></span></div>
     <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite"><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
     <p id="dailyReferralTargetNote" style="margin:10px 0 0;color:#9fb4ce;font-size:11px">Daily target progress syncs with Supabase · resets at midnight EAT.</p>
+  </div>
+
+    <div class="profit-box">
+      <small>NET PROFITS</small>
+      <strong>UGX 0</strong>
+    </div>
   </section>
 
   <section class="activation-access-note" id="activationAccessNote" aria-live="polite">
@@ -7949,6 +7947,43 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 .genz-fast-logo{display:grid;place-items:center}
 .genz-fast-logo svg{width:23px;height:23px}
 @media(max-width:380px){.sidebar-brand{font-size:19px}.sidebar-brand-mark{width:33px;height:33px;flex-basis:33px}}
+
+
+/* Single compact welcome panel: network details are integrated without growing the card. */
+.welcome-card{overflow:hidden}
+.welcome-card .welcome-top{padding:10px 13px 7px;gap:9px}
+.welcome-card .avatar{width:36px;height:36px;font-size:16px}
+.welcome-card .welcome-info h2{font-size:16px;line-height:1.1}
+.welcome-card .welcome-greeting-line{font-size:10px;margin-top:3px;color:#d5e2ff}
+.welcome-card .welcome-rank-badge{margin-top:3px;padding:2px 7px}
+.welcome-card .active-badge{font-size:8px;padding:4px 6px}
+.welcome-network-summary{margin:0 12px 7px;padding:7px 9px;border:1px solid #ffffff25;border-radius:10px;background:#ffffff12;color:#fff}
+.welcome-network-summary .network-top{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.welcome-network-summary .network-top h2{font-size:11px;line-height:1.1;font-weight:900}
+.welcome-network-summary .network-top .subtitle{display:none}
+.welcome-network-summary .progress-circle{width:30px;height:30px;border-width:2px}
+.welcome-network-summary .progress-circle strong{font-size:10px}
+.welcome-network-summary .progress-circle small{font-size:6px;margin-top:0}
+.welcome-network-summary .network-message{font-size:8px;line-height:1.2;margin:3px 0 0}
+.welcome-network-summary .network-signin-button{font-size:8px;padding:3px 6px;margin-top:3px;border-radius:6px}
+.welcome-network-summary .network-stats{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px}
+.welcome-network-summary .network-stat{font-size:7px;padding:2px 5px;border-radius:10px}
+.welcome-network-summary .network-stat strong{font-size:8px}
+.welcome-network-summary .exchange-rate{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:3px;padding:0;background:transparent;border:0;box-shadow:none}
+.welcome-network-summary .exchange-rate .rate-label{font-size:7px}
+.welcome-network-summary .exchange-rate strong{font-size:8px}
+.welcome-network-summary .exchange-rate small{font-size:7px}
+.welcome-network-summary #dailyReferralTargetNote{margin:2px 0 0!important;font-size:7px!important;line-height:1.15;color:#d5e2ff!important}
+.welcome-card .profit-box{padding:7px 13px}
+.welcome-card .profit-box small{font-size:8px}
+.welcome-card .profit-box strong{font-size:15px}
+@media(max-width:420px){
+ .welcome-card .welcome-top{padding:9px 11px 6px;gap:7px}
+ .welcome-card .avatar{width:33px;height:33px}
+ .welcome-network-summary{margin:0 10px 6px;padding:6px 8px}
+ .welcome-network-summary .network-top h2{font-size:10px}
+ .welcome-card .active-badge{font-size:7px;padding:3px 5px}
+}
 
 </style>
 
