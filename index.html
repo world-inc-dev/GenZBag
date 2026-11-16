@@ -5571,7 +5571,7 @@ function updateDailyVideoLimit(){
  box.style.display=platformPage?'block':'none';
  if(!platformPage){box.innerHTML='';return;}
  const left=Math.max(0,5-activityDailyVideoCount);
- box.innerHTML='<strong>Daily video limit</strong><br>'+activityDailyVideoCount+' of 5 video activities submitted today · '+left+' remaining. Watch YouTube or TikTok videos inside GenZBag. Each completed 60-second view unlocks UGX 150; maximum 5 video rewards per Uganda day.';
+ box.innerHTML='<strong>Daily video limit</strong><br>'+activityDailyVideoCount+' of 5 video activities started today · '+left+' remaining. Watch YouTube or TikTok videos inside GenZBag. Each completed 60-second view unlocks UGX 150; maximum 5 video rewards per Uganda day.';
 }
 let activityLoadSequence=0;
 async function loadActivities(){
@@ -5620,6 +5620,7 @@ activityListEl.addEventListener('click',async e=>{
   if(error){adViewButton.disabled=false;adViewButton.textContent='Try again · Start 60 seconds';const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent=error.message||'Could not start this activity.';return;}
   if(data?.already_claimed){activityAdCompleted.add(String(taskId));activityAdViewed.add(String(taskId));adViewButton.textContent='✓ Already credited';adViewButton.disabled=true;const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');if(status)status.textContent='UGX 150 was already credited for this ad.';return;}
   activityAdViewed.add(String(taskId));
+  if(task.category==='video'){activityDailyVideoCount=Math.min(5,activityDailyVideoCount+1);updateDailyVideoLimit();if(activityDailyVideoCount>=5){activityListEl.querySelectorAll('[data-ad-view]').forEach(btn=>{if(!activityAdViewed.has(String(btn.dataset.adView))){btn.disabled=true;btn.textContent='Daily limit reached';}});}}
   const startedAtMs=Date.parse(data?.started_at||new Date().toISOString());
   let remaining=Math.max(0,60-Math.floor((Date.now()-startedAtMs)/1000));
   if(remaining===0){const status=activityListEl.querySelector('[data-ad-status="'+taskId+'"]');await creditSponsoredReward(taskId,adViewButton,status);return;}
