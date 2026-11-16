@@ -5910,7 +5910,7 @@ async function loadMemberWallet(){
  updateTaskEarningsFromLedger(rows);
  renderDashboardWalletInsights(rows);
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
- const availableRows=ugx.filter(x=>['referral_commission','direct_referral_bonus','withdrawal_debit','withdrawal_reversal','voucher_purchase','client_activation_debit'].includes(x.entry_type));
+ const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal','voucher_purchase','client_activation_debit'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
  const withdrawRows=availableRows;
  currentWithdrawableBalance=Math.max(0,signed(withdrawRows));
