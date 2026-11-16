@@ -2,6 +2,7 @@ name: GenZBag JavaScript syntax check
 on:
   push:
     branches:
+      - main
       - stateflix-style-dashboard
   pull_request:
     branches:
@@ -14,6 +15,37 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Check profile markup and unique IDs
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from collections import Counter
+          from pathlib import Path
+
+          class IdCheck(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids = []
+              def handle_starttag(self, tag, attrs):
+                  for key, value in attrs:
+                      if key == "id" and value:
+                          self.ids.append(value)
+
+          parser = IdCheck()
+          parser.feed(Path("index.html").read_text(encoding="utf-8"))
+          duplicates = [name for name, count in Counter(parser.ids).items() if count > 1]
+          if duplicates:
+              raise SystemExit("Duplicate HTML IDs: " + ", ".join(duplicates))
+          required = {
+              "profileRefreshButton", "profileActivationCard", "profileReferralLink",
+              "profileTotalReferrals", "profileActiveReferrals", "profileInactiveReferrals",
+              "profileWhatsAppForm", "profilePasswordForm"
+          }
+          missing = sorted(required - set(parser.ids))
+          if missing:
+              raise SystemExit("Missing Accounts/Profile elements: " + ", ".join(missing))
+          print("Accounts/Profile markup checks passed.")
+          PY
       - name: Check embedded module script
         run: |
           python3 - <<'PY'
