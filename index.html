@@ -1,4 +1,4 @@
-<\nif(!window.__genzbagFxRefresh){window.__genzbagFxRefresh=true;setInterval(loadExchangeRate,15*60*1000);}!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -3843,7 +3843,7 @@ body.activation-screen-open{overflow:hidden!important}
 
     <div class="welcome-financials">
       <div class="profit-box"><small>NET PROFITS</small><strong>UGX 0</strong></div>
-      <div class="expenses-card" aria-live="polite"><small class="expenses-title">TOTAL EXPENSES</small><strong class="expenses-value" id="dashboardExpensesValue">UGX 0</strong></div>
+      <div class="expenses-card" aria-live="polite"><small class="expenses-title">ACTIVATION FEES</small><strong class="expenses-value" id="dashboardExpensesValue">UGX 0</strong></div>
     </div>
   </section>
 
@@ -6097,8 +6097,8 @@ async function loadMemberWallet(){
  if(strong[3])strong[3].textContent=money(teamEarnings);
  if(strong[4])strong[4].textContent=money(welcomeBonus);const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent=money(balance);
  const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
- const expenseRows=ugx.filter(x=>x.direction==='debit'&&!['withdrawal_debit'].includes(x.entry_type));
- const totalExpenses=expenseRows.reduce((n,x)=>n+Number(x.amount||0),0);
+ const activationFeeRows=ugx.filter(x=>x.direction==='debit'&&['client_activation_debit','activation_fee','activation_fee_debit'].includes(x.entry_type));
+ const totalExpenses=activationFeeRows.reduce((n,x)=>n+Number(x.amount||0),0);
  const expensesValue=document.getElementById('dashboardExpensesValue');if(expensesValue)expensesValue.textContent=money(totalExpenses);
  const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
  if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
@@ -8011,6 +8011,11 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 .welcome-card .profit-box strong,.welcome-card .expenses-value{font-size:13px;color:#fff;font-weight:900}
 @media(max-width:420px){.welcome-network-summary{margin:0 9px 5px;padding:6px 7px}.welcome-financials .profit-box,.welcome-financials .expenses-card{padding:7px 9px}.welcome-card .profit-box strong,.welcome-card .expenses-value{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.welcome-card:before,.welcome-card:after,.welcome-network-summary .rate-dot{animation:none}}
+
+/* Rotating member badge */
+.welcome-top .avatar{transform-style:preserve-3d;animation:memberBadgeTurn 7s linear infinite;box-shadow:0 0 0 3px #ffffff12,0 0 20px #5eead455;}
+@keyframes memberBadgeTurn{0%{transform:perspective(500px) rotateY(0deg)}100%{transform:perspective(500px) rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){.welcome-top .avatar{animation:none}}
 </style>
 
 </body>
