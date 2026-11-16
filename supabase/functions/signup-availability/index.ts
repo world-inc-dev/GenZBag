@@ -30,7 +30,7 @@ Deno.serve(async (req: Request) => {
     }
 
     const forwarded = req.headers.get("x-forwarded-for") || "";
-    const ip = forwarded.split(",")[0].trim() || req.headers.get("x-real-ip") || "unknown";
+    const ip = req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") || forwarded.split(",").pop()?.trim() || "unknown";
     const bytes = new TextEncoder().encode(ip + ":" + serviceKey);
     const digest = await crypto.subtle.digest("SHA-256", bytes);
     const ipHash = Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
