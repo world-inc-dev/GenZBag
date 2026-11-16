@@ -4991,6 +4991,9 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
   currentActivitySearch=a.dataset.activitySearch||'';
   const activityTitle=a.dataset.activityTitle||a.textContent.trim();
   currentActivityChallenge=/^math challenge$/i.test(activityTitle)?'math':(/^colou?r challenge$/i.test(activityTitle)?'colour':'');
+  // Switching activity pages must cancel every previous challenge timer/state.
+  stopTriviaTimer();stopMathTimer();stopColourTimer();
+  triviaState=null;mathState=null;colourState=null;
   document.getElementById('activityPageTitle').textContent=activityTitle;
   document.getElementById('activityPageDescription').textContent=currentActivityChallenge==='math'?'Answer 10 timed maths questions. Score a perfect 10/10 to qualify for UGX 1,000.':(currentActivityChallenge==='colour'?'Identify the colour shown in each of 10 timed rounds. Score 10/10 to qualify for UGX 1,000.':'Browse '+activityTitle+' tasks, follow the instructions and submit proof for review.');
   if(currentActivityChallenge){
@@ -5812,7 +5815,7 @@ activityListEl.addEventListener('click',async e=>{
  const mathAnswer=e.target.closest('[data-math-answer]');if(mathAnswer&&mathState&&mathState.selected===null){stopMathTimer();const chosen=Number(mathAnswer.dataset.mathAnswer),q=mathState.questions[mathState.index];mathState.selected=chosen;mathState.answers[mathState.index]=chosen;renderMathQuestion();return;} if(e.target.closest('[data-math-next]')){if(!mathState)return;if(mathState.index>=9){finishMathChallenge();return;}mathState.index++;mathState.selected=null;renderMathQuestion();startMathTimer();return;}
  if(e.target.closest('[data-math-exit]')){stopMathTimer();mathState=null;renderMathChallenge();return;}
  if(e.target.closest('[data-math-retry]')){mathState=null;renderMathChallenge();return;}
- const start=e.target.closest('[data-trivia-start]');if(start){if(!currentMember){alert('Please sign in to play Trivia.');return;}start.disabled=true;const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:'trivia'});if(error||!data){start.disabled=false;alert(error?.message||'Unable to start Trivia Challenge.');return;}triviaState={taskId:start.dataset.triviaStart,sessionId:data.session_id,questions:data.questions,index:0,selected:null,seconds:15,answers:[]};renderTriviaQuestion();startTriviaTimer();return;}
+ const start=e.target.closest('[data-trivia-start]');if(start){if(!currentMember){alert('Please sign in to play Trivia.');return;}stopMathTimer();stopColourTimer();mathState=null;colourState=null;stopTriviaTimer();start.disabled=true;const {data,error}=await supabaseClient.rpc('start_secure_challenge',{p_challenge_key:'trivia'});if(error||!data){start.disabled=false;alert(error?.message||'Unable to start Trivia Challenge.');return;}triviaState={taskId:start.dataset.triviaStart,sessionId:data.session_id,questions:data.questions,index:0,selected:null,seconds:15,answers:[]};renderTriviaQuestion();startTriviaTimer();return;}
  const answer=e.target.closest('[data-trivia-answer]');if(answer&&triviaState&&triviaState.selected===null){stopTriviaTimer();const chosen=Number(answer.dataset.triviaAnswer);triviaState.selected=chosen;triviaState.answers[triviaState.index]=chosen;renderTriviaQuestion();return;}
  if(e.target.closest('[data-trivia-next]')){if(!triviaState)return;if(triviaState.index>=9){finishTriviaChallenge();return;}triviaState.index++;triviaState.selected=null;renderTriviaQuestion();startTriviaTimer();return;}
  if(e.target.closest('[data-trivia-exit]')){stopTriviaTimer();triviaState=null;renderTriviaChallenge();return;}
