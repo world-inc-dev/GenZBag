@@ -6,6 +6,7 @@ on:
       - stateflix-style-dashboard
   pull_request:
     branches:
+      - main
       - stateflix-style-dashboard
 jobs:
   syntax:
