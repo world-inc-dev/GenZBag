@@ -115,6 +115,8 @@ GenZBag is an active software project, not yet a verified profitable business or
 
 ## Sale handover
 
+See [`SALE_HANDOVER.md`](SALE_HANDOVER.md) for the point-in-time technical inventory, database activity snapshot, money-movement limitations, security status and buyer due-diligence checklist.
+
 A complete transfer should include the GitHub repository and Pages configuration, Supabase project ownership, full database migration/export, Edge Function source, Auth/redirect/email configuration, domain or DNS assets if any, third-party content licences, financial reconciliation, and a written list of known limitations. Transfer secrets directly to the buyer using a secure method; never put them in this repository.
 
 A buyer should independently verify the source, database, user permissions, financial records, third-party licences and legal obligations before accepting the platform.
