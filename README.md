@@ -16,6 +16,7 @@ GenZBag is a mobile-first activities and rewards platform built for Uganda, Nige
 - Static single-page frontend in `index.html`.
 - Supabase Auth for registration, email/password sign-in, username sign-in and password reset.
 - PostgreSQL tables and database functions for member profiles, referrals, activities, task submissions, reward ledger, withdrawals, messaging, notifications, vouchers and administrator audit records.
+- Edge Function source is versioned under `supabase/functions/`, with deployment settings in `supabase/config.toml`.
 - Edge Functions:
   - `username-signin` — resolves a username to its account email and authenticates with Supabase Auth.
   - `signup-availability` — performs registration availability checks behind a server-side IP rate limit.
