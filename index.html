@@ -6098,10 +6098,11 @@ async function loadMemberWallet(){
  if(strong[3])strong[3].textContent=money(teamEarnings);
  if(strong[4])strong[4].textContent=money(welcomeBonus);const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent=money(balance);
  const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
- // Activation fees are actual client-activation debits recorded in this member's Supabase reward ledger.
- const activationFeeRows=ugx.filter(x=>x.direction==='debit'&&x.entry_type==='client_activation_debit');
- const totalExpenses=activationFeeRows.reduce((n,x)=>n+Number(x.amount||0),0);
- const expensesValue=document.getElementById('dashboardExpensesValue');if(expensesValue)expensesValue.textContent=money(totalExpenses);
+ // Activation fee paid by this member: use verified payment submissions stored in Supabase.
+ const {data:activationPayments,error:activationPaymentsError}=await supabaseClient.from('activation_payment_submissions').select('amount,currency,status').eq('user_id',member.id).eq('status','verified');
+ const expensesValue=document.getElementById('dashboardExpensesValue');
+ if(!activationPaymentsError){const totalExpenses=(activationPayments||[]).filter(x=>x.currency==='UGX').reduce((n,x)=>n+Number(x.amount||0),0);if(expensesValue)expensesValue.textContent=money(totalExpenses);}
+ else{console.warn('Dashboard activation fee:',activationPaymentsError);if(expensesValue)expensesValue.textContent='Unavailable';}
  let withdrawals=[],withdrawalError=null,withdrawalOffset=0;while(true){const page=await supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at').eq('user_id',member.id).order('created_at',{ascending:false}).range(withdrawalOffset,withdrawalOffset+999);if(page.error){withdrawalError=page.error;break;}const batch=page.data||[];withdrawals.push(...batch);if(batch.length<1000)break;withdrawalOffset+=1000;}
  if(!withdrawalError){const pending=withdrawals.filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount||0),0);const paid=withdrawals.filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount||0),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}else{console.warn('Dashboard withdrawals:',withdrawalError);if(strong[1])strong[1].textContent='Unavailable';if(strong[2])strong[2].textContent='Unavailable';}
  const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
