@@ -1080,6 +1080,99 @@ footer {
  #profile .profile-row strong{max-width:60%;text-align:right}
 }
 
+/* Accounts/Profile module: responsive account overview and management */
+#profile .profile-page-topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+#profile .profile-page-brand{padding:2px 0;color:#f4f8ff;min-width:0}
+#profile .profile-brand-mark{flex:0 0 43px}
+#profile .profile-refresh-button{flex:0 0 auto;border:1px solid #3b698b;border-radius:11px;padding:10px 12px;background:#102c4b;color:#dff8ff;font-size:10px;font-weight:850}
+#profile .profile-refresh-button:disabled{opacity:.6}
+#profile .profile-page-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 13px;padding:19px;border:1px solid #ffffff20;border-radius:17px;background:linear-gradient(115deg,#123e70,#087d8a);box-shadow:inset 0 1px #ffffff20,0 10px 22px #020b1c28}
+#profile .profile-eyebrow,#profile .profile-card-eyebrow{display:block;color:#77e7df;font-size:8px;font-weight:950;letter-spacing:1.25px;margin-bottom:7px}
+#profile .profile-page-intro h1{color:#fff;font-size:clamp(23px,4vw,29px);letter-spacing:-.6px}
+#profile .profile-page-intro p{max-width:460px;color:#d2eaff;font-size:11px;line-height:1.55;margin-top:5px}
+#profile .profile-intro-meta{display:flex;align-items:center;gap:7px;color:#d5f8f3;font-size:9px;font-weight:750}
+#profile .profile-live-dot{width:7px;height:7px;border-radius:50%;background:#62e8bd;box-shadow:0 0 0 4px #62e8bd20}
+#profile .profile-member-card{gap:13px;margin:0 0 13px;padding:16px;border:1px solid #4bd6d04d;border-radius:17px;background:linear-gradient(110deg,#0c3b68,#087b83);box-shadow:0 10px 24px #020b1c35}
+#profile .profile-member-avatar{width:54px;height:54px;background:#ffffff20;border-color:#9aeee7;font-size:22px}
+#profile .profile-member-copy{flex:1;min-width:0}
+#profile .profile-member-kicker{display:block;margin-bottom:4px;color:#9debe4;font-size:8px;font-weight:950;letter-spacing:1px}
+#profile .profile-member-copy h2{color:#fff;font-size:17px}
+#profile .profile-member-copy p{color:#d1f2ef;font-size:10px}
+#profile .profile-member-card .active-badge{flex:0 0 auto;padding:6px 9px;border:1px solid #b7fff04a;border-radius:20px;background:#d4fff21f;color:#eafffb;font-size:9px;white-space:normal;text-align:center}
+#profile .profile-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0 0 13px}
+#profile .profile-stat-card{padding:13px 12px;border:1px solid #ffffff1b;border-radius:15px;background:linear-gradient(150deg,#17385e,#102946);box-shadow:0 8px 18px #020b1c30}
+#profile .profile-stat-card span{color:#b0c7e2;font-size:9px}
+#profile .profile-stat-card strong{display:block;margin-top:7px;color:#54d8d1;font-size:clamp(20px,4vw,26px);font-variant-numeric:tabular-nums}
+#profile .profile-stat-card small{display:block;margin-top:4px;color:#91abc8;font-size:8px;line-height:1.4}
+#profile>section.card:not(.profile-member-card){margin:0 0 13px;border:1px solid #ffffff1b;border-radius:16px;background:linear-gradient(150deg,#142f50,#0e2541);box-shadow:0 8px 22px #020b1c30;color:#edf5ff;overflow:hidden}
+#profile .profile-section-head{padding:15px 17px 8px}
+#profile .profile-section-head h2{color:#f3f8ff;font-size:14px}
+#profile .profile-section-head p{color:#a4bdd9;font-size:10px;line-height:1.5}
+#profile .profile-section-head .profile-card-eyebrow{margin-bottom:5px}
+#profile .profile-activation-body{display:flex;align-items:flex-start;gap:12px;padding:9px 17px 16px}
+#profile .profile-activation-mark{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border:1px solid #4bd6d055;border-radius:12px;background:#0b414b;color:#7af0d9;font-size:20px;font-weight:950}
+#profile .profile-activation-copy{min-width:0}
+#profile .profile-activation-copy strong{display:block;color:#f4fbff;font-size:12px}
+#profile .profile-activation-copy p{margin-top:5px;color:#c0d3e8;font-size:10px;line-height:1.55}
+#profile .profile-activation-copy small{display:block;margin-top:7px;color:#88a9c8;font-size:9px}
+#profile .profile-activation-card[data-state="pending"] .profile-activation-mark{background:#4b3514;color:#ffd27a;border-color:#d7a84a55}
+#profile .profile-activation-card[data-state="rejected"],#profile .profile-activation-card[data-state="inactive"] .profile-activation-mark{background:#4a2436;color:#ffb0bf;border-color:#ff9eb455}
+#profile .profile-activation-card[data-state="unavailable"] .profile-activation-mark{background:#3c3447;color:#d6c5ff;border-color:#c4a8ff55}
+#profile .profile-referral-progress{padding:5px 17px 14px}
+#profile .profile-referral-progress-copy{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+#profile .profile-referral-progress-copy>div{display:grid;gap:3px}
+#profile .profile-referral-progress-copy strong{color:#70e8dc;font-size:19px;font-variant-numeric:tabular-nums}
+#profile .profile-referral-progress-copy span{color:#e8f4ff;font-size:10px;font-weight:800}
+#profile .profile-referral-progress-copy small{color:#8eabc8;font-size:8px;text-align:right}
+#profile .profile-progress-track{height:8px;margin-top:10px;overflow:hidden;border-radius:20px;background:#ffffff17}
+#profile .profile-progress-track span{display:block;width:0;height:100%;border-radius:20px;background:linear-gradient(90deg,#12b9b8,#67e8b5);transition:width .25s ease}
+#profile .profile-referral-progress>p{margin-top:8px;color:#9eb8d2;font-size:9px;line-height:1.5}
+#profile .profile-referral-link-block{padding:13px 17px 15px;border-top:1px solid #ffffff13}
+#profile .profile-referral-link-block label{display:block;margin-bottom:7px;color:#c7d9eb;font-size:9px;font-weight:850}
+#profile .profile-referral-link-row{display:flex;gap:7px;min-width:0}
+#profile .profile-referral-link-row input{box-sizing:border-box;flex:1;min-width:0;border:1px solid #315273;border-radius:10px;background:#091d36;color:#e7f5ff;padding:10px;font-size:10px}
+#profile .profile-referral-link-row button{flex:0 0 auto;border:1px solid #62e0db55;border-radius:10px;background:linear-gradient(100deg,#087f91,#145fb4);color:#fff;padding:0 13px;font-size:10px;font-weight:900}
+#profile .profile-details{padding:7px 15px 15px}
+#profile .profile-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#profile .profile-info-grid .profile-row{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:6px;min-width:0;padding:11px;border:1px solid #ffffff12;border-radius:11px;background:#091f39;font-size:9px}
+#profile .profile-info-grid .profile-row span:first-child{color:#8faac7;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.45px}
+#profile .profile-info-grid .profile-row strong{max-width:100%;color:#f1f8ff;text-align:left;font-size:10px;line-height:1.45;overflow-wrap:anywhere}
+#profile .profile-form{gap:10px;padding:12px 17px 17px}
+#profile .profile-form label{color:#c1d3e7;font-size:10px}
+#profile .profile-form input,#profile #adminProfileSearch{box-sizing:border-box;width:100%;border:1px solid #315273;border-radius:11px;background:#091d36;color:#f5faff;padding:12px 13px;font-size:13px}
+#profile .profile-form input::placeholder,#profile #adminProfileSearch::placeholder{color:#7892b0}
+#profile .profile-form input:focus,#profile #adminProfileSearch:focus{outline:none;border-color:#31c7c2;box-shadow:0 0 0 3px #31c7c222}
+#profile .profile-form small{color:#9cb5d1;font-size:9px;line-height:1.5}
+#profile .profile-save-button{border:1px solid #62e0db55;border-radius:11px;background:linear-gradient(100deg,#087f91,#145fb4);color:#fff;padding:13px;font-size:11px;font-weight:900;box-shadow:0 7px 16px #020b1c35}
+#profile .profile-save-button:disabled{opacity:.6}
+#profile .profile-form-message{min-height:14px;color:#72e5bd;font-size:10px;line-height:1.5}
+#profile .profile-form-message.error{color:#ff9eaa}
+#profile #adminProfileDirectoryList .team-member-row{border-color:#294968;background:#0a2039}
+#profile #adminProfileDirectoryList .team-member-row strong{color:#f3f8ff}
+#profile #adminProfileDirectoryList .team-member-row small{color:#a6bdd8}
+@media(max-width:480px){
+ #profile{padding:10px;border-radius:16px}
+ #profile .profile-page-topbar{align-items:flex-start}
+ #profile .profile-page-brand{gap:8px}
+ #profile .profile-brand-mark{width:39px;height:39px;flex-basis:39px}
+ #profile .profile-page-brand strong{font-size:16px}
+ #profile .profile-refresh-button{padding:9px 10px;font-size:9px}
+ #profile .profile-page-intro{padding:15px}
+ #profile .profile-member-card{gap:9px;padding:12px}
+ #profile .profile-member-avatar{width:44px;height:44px;font-size:18px}
+ #profile .profile-member-copy h2{font-size:14px}
+ #profile .profile-member-card .active-badge{max-width:105px;padding:5px 7px;font-size:8px}
+ #profile .profile-stat-grid{gap:6px}
+ #profile .profile-stat-card{padding:11px 8px}
+ #profile .profile-stat-card span{font-size:8px}
+ #profile .profile-stat-card strong{font-size:19px}
+ #profile .profile-stat-card small{font-size:7px}
+ #profile .profile-info-grid{grid-template-columns:1fr}
+ #profile .profile-referral-progress-copy{align-items:flex-start;flex-direction:column}
+ #profile .profile-referral-progress-copy small{text-align:left}
+ #profile .profile-referral-link-row button{padding:0 10px}
+}
+
 /* Weekly recruiter tournament leaderboard */
 .leaderboard-panel{margin-top:15px;display:grid;gap:13px}
 .leaderboard-panel[hidden]{display:none!important}
@@ -4119,57 +4212,95 @@ body.activation-screen-open{overflow:hidden!important}
 
   <!-- FULL MEMBER PROFILE -->
   <section class="page-view" id="profile" hidden>
-    <div class="profile-page-brand"><span class="profile-brand-mark">💰</span><div><strong>GenZBag</strong><small>A home of Digital Income.</small></div></div>
-    <div class="profile-page-intro"><h1>My Profile</h1><p>Your personal account information and referral summary</p></div>
-    <div class="profile-stat-grid">
-      <article class="profile-stat-card"><span>Total Referrals</span><strong id="profileTotalReferrals">0</strong></article>
-      <article class="profile-stat-card"><span>Active Referrals</span><strong id="profileActiveReferrals">0</strong></article>
-      <article class="profile-stat-card"><span>Inactive Referrals</span><strong id="profileInactiveReferrals">0</strong></article>
+    <div class="profile-page-topbar">
+      <div class="profile-page-brand"><span class="profile-brand-mark">💰</span><div><strong>GenZBag</strong><small>Member account centre</small></div></div>
+      <button class="profile-refresh-button" id="profileRefreshButton" type="button">↻ Refresh account</button>
     </div>
+
+    <header class="profile-page-intro">
+      <div class="profile-intro-copy">
+        <span class="profile-eyebrow">MEMBER ACCOUNT</span>
+        <h1>Account centre</h1>
+        <p>Your account information, activation status and referral activity in one place.</p>
+      </div>
+      <div class="profile-intro-meta"><span class="profile-live-dot"></span><span id="profileLastUpdated">Waiting for account data</span></div>
+    </header>
+
     <section class="card profile-member-card">
       <div class="profile-member-avatar" id="profileMemberAvatar">G</div>
-      <div class="profile-member-copy"><h2 id="profileMemberName">Member</h2><p id="profileMemberRole">GenZBag Member · Uganda</p></div>
-      <span class="active-badge" id="profileAccountStatus">Member</span>
+      <div class="profile-member-copy"><span class="profile-member-kicker">GENZBAG MEMBER</span><h2 id="profileMemberName">Member</h2><p id="profileMemberRole">Country not set</p></div>
+      <span class="active-badge status-pending" id="profileAccountStatus">Checking status</span>
     </section>
-    <section class="card">
-      <div class="profile-section-head"><h2>Personal Information</h2><p>Your account details</p></div>
-      <div class="profile-details">
-        <div class="profile-row"><span>Email</span><strong id="profileEmail">—</strong></div>
-        <div class="profile-row"><span>Phone</span><strong id="profilePhone">—</strong></div>
-        <div class="profile-row"><span>Country</span><strong id="profileCountry">—</strong></div>
-        <div class="profile-row"><span>Joining Date</span><strong id="profileJoiningDate">—</strong></div>
-        <div class="profile-row"><span>Member for</span><strong id="profileMembershipDuration">—</strong></div>
-        <div class="profile-row"><span>Upline</span><strong id="profileUpline">null</strong></div>
-        <div class="profile-row"><span>WhatsApp</span><strong id="profileWhatsAppDisplay">—</strong></div>
-        <div class="profile-row"><span>Account Balance</span><strong id="profileAccountBalance">UGX 0</strong></div>
+
+    <div class="profile-stat-grid" aria-label="Referral statistics">
+      <article class="profile-stat-card"><span>Total referrals</span><strong id="profileTotalReferrals">0</strong><small>All direct registrations</small></article>
+      <article class="profile-stat-card"><span>Active referrals</span><strong id="profileActiveReferrals">0</strong><small>Qualified direct referrals</small></article>
+      <article class="profile-stat-card"><span>Inactive referrals</span><strong id="profileInactiveReferrals">0</strong><small>Not yet qualified</small></article>
+    </div>
+
+    <section class="card profile-activation-card" id="profileActivationCard" data-state="checking">
+      <div class="profile-section-head"><div><span class="profile-card-eyebrow">ACCOUNT ACCESS</span><h2>Activation status</h2><p>Latest activation submission recorded for this account</p></div></div>
+      <div class="profile-activation-body">
+        <div class="profile-activation-mark" id="profileActivationIcon" aria-hidden="true">◷</div>
+        <div class="profile-activation-copy"><strong id="profileActivationTitle">Checking activation</strong><p id="profileActivationMessage">Your latest activation status will appear here.</p><small id="profileActivationDate">Checking latest submission…</small></div>
       </div>
     </section>
+
+    <section class="card profile-referral-card">
+      <div class="profile-section-head"><span class="profile-card-eyebrow">GROW YOUR NETWORK</span><h2>Referral overview</h2><p>Your direct referral totals and personal invite link</p></div>
+      <div class="profile-referral-progress">
+        <div class="profile-referral-progress-copy"><div><strong id="profileReferralProgressValue">0 / 3</strong><span>Active direct referrals</span></div><small>Existing withdrawal referral requirement</small></div>
+        <div class="profile-progress-track" role="progressbar" aria-label="Active direct referrals toward the three-referral requirement" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" id="profileReferralProgressTrack"><span id="profileReferralProgressBar"></span></div>
+        <p id="profileReferralProgressNote">Referral count is shown separately from your available balance and other withdrawal checks.</p>
+      </div>
+      <div class="profile-referral-link-block">
+        <label for="profileReferralLink">Your unique referral link</label>
+        <div class="profile-referral-link-row"><input id="profileReferralLink" type="text" readonly value="Sign in to load your referral link"><button type="button" id="profileCopyReferralButton">Copy link</button></div>
+        <p id="profileReferralFeedback" class="profile-form-message" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="card profile-info-card">
+      <div class="profile-section-head"><span class="profile-card-eyebrow">ACCOUNT DETAILS</span><h2>Personal information</h2><p>Information currently saved on your GenZBag account</p></div>
+      <div class="profile-details profile-info-grid">
+        <div class="profile-row"><span>Email address</span><strong id="profileEmail">—</strong></div>
+        <div class="profile-row"><span>Phone number</span><strong id="profilePhone">—</strong></div>
+        <div class="profile-row"><span>Country</span><strong id="profileCountry">—</strong></div>
+        <div class="profile-row"><span>Joining date</span><strong id="profileJoiningDate">—</strong></div>
+        <div class="profile-row"><span>Member for</span><strong id="profileMembershipDuration">—</strong></div>
+        <div class="profile-row"><span>Upline</span><strong id="profileUpline">No upline</strong></div>
+        <div class="profile-row"><span>WhatsApp contact</span><strong id="profileWhatsAppDisplay">—</strong></div>
+        <div class="profile-row"><span>Available balance</span><strong id="profileAccountBalance">UGX 0</strong></div>
+      </div>
+    </section>
+
     <section class="card profile-whatsapp-card">
-      <div class="profile-section-head"><h2>Update Contact Details</h2><p>Keep your sign-in email and WhatsApp contact number up to date.</p></div>
+      <div class="profile-section-head"><span class="profile-card-eyebrow">PROFILE MANAGEMENT</span><h2>Update contact details</h2><p>Keep your contact email and WhatsApp number current</p></div>
       <form id="profileWhatsAppForm" class="profile-form">
-        <label for="profileEmailInput">Email address used to sign in</label>
+        <label for="profileEmailInput">Email address used for account contact</label>
         <input id="profileEmailInput" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
-        <small>Changing your email sends a confirmation link. Your sign-in email changes after you confirm it.</small>
+        <small>If you change your sign-in email, Supabase sends a confirmation link. The sign-in email changes only after confirmation.</small>
         <label for="profileWhatsAppInput">WhatsApp / phone number (with country code)</label>
         <input id="profileWhatsAppInput" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="+256771234567" required>
         <small>Include your country code, for example +256771234567.</small>
-        <button type="submit" class="profile-save-button" id="profileWhatsAppSave">Save Contact Details</button>
+        <button type="submit" class="profile-save-button" id="profileWhatsAppSave">Save contact details</button>
         <p id="profileWhatsAppMessage" class="profile-form-message" aria-live="polite"></p>
       </form>
     </section>
 
     <section class="card profile-whatsapp-card">
-      <div class="profile-section-head"><h2>Security &amp; Password</h2><p>Change your sign-in password securely.</p></div>
+      <div class="profile-section-head"><span class="profile-card-eyebrow">ACCOUNT SECURITY</span><h2>Change password</h2><p>Update the password used to sign in to GenZBag</p></div>
       <form id="profilePasswordForm" class="profile-form">
         <label for="profileNewPassword">New password</label>
         <input id="profileNewPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="At least 8 characters" required>
         <label for="profileConfirmPassword">Confirm new password</label>
         <input id="profileConfirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="Re-enter your new password" required>
         <small>Use a strong password you do not use on other websites.</small>
-        <button type="submit" class="profile-save-button" id="profilePasswordSave">Update Password</button>
+        <button type="submit" class="profile-save-button" id="profilePasswordSave">Update password</button>
         <p id="profilePasswordMessage" class="profile-form-message" aria-live="polite"></p>
       </form>
     </section>
+
     <section class="card" id="adminProfileDirectory" hidden>
       <div class="profile-section-head"><h2>Admin · Member Contact Directory</h2><p>Latest email and phone details saved by members.</p></div>
       <div style="padding:0 16px 16px">
@@ -4907,6 +5038,7 @@ document.getElementById('copyButton').addEventListener('click',copyReferralLink)
 document.getElementById('whatsappButton').addEventListener('click',()=>window.open('https://wa.me/?text='+encodeURIComponent('Join me on GenZBag! A home of Digital Income. '+referralInput.value),'_blank','noopener,noreferrer'));
 document.getElementById('shareButton').addEventListener('click',async()=>{const d={title:'GenZBag',text:'Join me on GenZBag! A home of Digital Income.',url:referralInput.value};if(navigator.share){try{await navigator.share(d);}catch(e){if(e.name!=='AbortError')feedback.textContent='Sharing was not completed.';}}else await copyReferralLink();});
 document.getElementById('dashboardCopyButton').addEventListener('click',()=>copyReferralValue(dashboardReferralInput,dashboardReferralFeedback));
+document.getElementById('profileCopyReferralButton')?.addEventListener('click',()=>copyReferralValue(document.getElementById('profileReferralLink'),document.getElementById('profileReferralFeedback')));
 document.getElementById('dashboardWhatsappButton').addEventListener('click',()=>window.open('https://wa.me/?text='+encodeURIComponent('Join me on GenZBag! A home of Digital Income. '+dashboardReferralInput.value),'_blank','noopener,noreferrer'));
 document.getElementById('dashboardShareButton').addEventListener('click',async()=>{const d={title:'GenZBag',text:'Join me on GenZBag! A home of Digital Income.',url:dashboardReferralInput.value};if(navigator.share){try{await navigator.share(d);}catch(e){if(e.name!=='AbortError')dashboardReferralFeedback.textContent='Sharing was not completed.';}}else await copyReferralValue(dashboardReferralInput,dashboardReferralFeedback);});
 const RANKS=[{name:'STARTER',min:0,symbol:'🌱'},{name:'BRONZE',min:5,symbol:'🥉'},{name:'SILVER',min:15,symbol:'🥈'},{name:'GOLD',min:30,symbol:'🥇'},{name:'PLATINUM',min:50,symbol:'💠'},{name:'DIAMOND',min:100,symbol:'💎'}];
@@ -4916,33 +5048,51 @@ function renderAccountActivationStatus(record,error){
  const badge=document.getElementById('accountActivationBadge');
  const profileBadge=document.getElementById('profileAccountStatus');
  const note=document.getElementById('activationAccessNote');
- const setStatus=(label,className)=>{if(badge){badge.textContent=label;badge.className='active-badge '+className;}if(profileBadge){profileBadge.textContent=label;profileBadge.className='active-badge '+className;}};
  const title=document.getElementById('activationAccessTitle');
  const message=document.getElementById('activationAccessMessage');
  const detail=document.getElementById('activationAccessDetail');
+ const profileCard=document.getElementById('profileActivationCard');
+ const profileTitle=document.getElementById('profileActivationTitle');
+ const profileMessage=document.getElementById('profileActivationMessage');
+ const profileDate=document.getElementById('profileActivationDate');
+ const profileIcon=document.getElementById('profileActivationIcon');
+ const setStatus=(label,className)=>{if(badge){badge.textContent=label;badge.className='active-badge '+className;}if(profileBadge){profileBadge.textContent=label;profileBadge.className='active-badge '+className;}};
+ const setProfileState=(state,headline,description,icon,dateLabel)=>{
+  if(profileCard)profileCard.dataset.state=state;
+  if(profileTitle)profileTitle.textContent=headline;
+  if(profileMessage)profileMessage.textContent=description;
+  if(profileIcon)profileIcon.textContent=icon;
+  if(profileDate)profileDate.textContent=dateLabel;
+ };
+ const submittedAt=record?.created_at?new Date(record.created_at).toLocaleString('en-GB',{timeZone:'Africa/Kampala',dateStyle:'medium',timeStyle:'short'})+' EAT':'No activation submission recorded';
  if(error){
   setStatus('Status unavailable','status-error');
   if(note){note.classList.add('visible');title.textContent='Activation status could not be verified';message.textContent='Your dashboard remains locked until the activation status can be confirmed.';detail.textContent='Reconnect and refresh to check your latest status.';}
+  setProfileState('unavailable','Activation status unavailable','We could not retrieve your latest activation record. Refresh your account details to try again.','?','The activation record could not be loaded.');
   return;
  }
  const status=String(record?.status||'not_submitted').toLowerCase();
  if(status==='verified'){
   setStatus('Active','');
   if(note)note.classList.remove('visible');
+  setProfileState('verified','Account activated','Your activation payment has been verified.','✓',record?.created_at?'Verified submission recorded '+submittedAt: 'Activation verified.');
   return;
  }
  if(status==='pending'){
   setStatus('Payment under review','status-pending');
   if(note){note.classList.add('visible');title.textContent='Activation payment is under review';message.textContent='Your dashboard will open automatically after an administrator approves your payment.';detail.textContent='You can return to this page to check the latest status.';}
+  setProfileState('pending','Payment under review','Your activation submission is awaiting administrator review.','◷','Submitted '+submittedAt);
   return;
  }
  if(status==='rejected'){
   setStatus('Activation needs attention','status-inactive');
   if(note){note.classList.add('visible');title.textContent='Activation needs attention';message.textContent='Your activation payment was not approved. Your dashboard remains locked.';detail.textContent='Review the administrator note on the activation page and submit the correct reference.';}
+  setProfileState('rejected','Activation needs attention','Your latest activation submission was not approved. Review the activation instructions before submitting again.','!','Last submission '+submittedAt);
   return;
  }
  setStatus('Not activated','status-inactive');
  if(note){note.classList.add('visible');title.textContent='Account activation required';message.textContent='Your account is created, but the dashboard is locked until your activation payment is approved.';detail.textContent='Submit your mobile money transaction reference on the activation page.';}
+ setProfileState('inactive','Activation required','Your account is registered, but no verified activation is recorded yet.','○',submittedAt);
 }
 function setMemberName(name){const first=(name||'Member').split(/[._\\s-]/)[0],initial=first.charAt(0).toUpperCase();const w=document.querySelector('.welcome-info h2'),p=document.querySelector('#profile .profile-header h2'),a=document.querySelector('.welcome-top .avatar'),b=document.querySelector('#profile .profile-header .avatar'),dn=document.getElementById('dashboardProfileName'),da=document.getElementById('dashboardProfileAvatar');if(w)w.textContent='Hi '+first;if(p)p.textContent=name||'Member';if(a)a.textContent=initial;if(b)b.textContent=initial;if(dn)dn.textContent=name||'Member';if(da)da.textContent=initial;}
 
@@ -5012,7 +5162,7 @@ function refreshMemberTenureCounters(){
  document.querySelectorAll('[data-member-joined]').forEach(el=>{el.textContent=formatMemberTenure(el.dataset.memberJoined);});
  if(!window.memberTenureTimer)window.memberTenureTimer=setInterval(()=>document.querySelectorAll('[data-member-joined]').forEach(el=>{el.textContent=formatMemberTenure(el.dataset.memberJoined);}),60000);
 }
-async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');const signInButton=document.getElementById('networkSignInButton');try{const user=await ensureMemberSession();if(!user){renderNetwork(0,0);const dashboardIsOpen=authGate?.classList.contains('hidden');if(currentMember?.id||dashboardIsOpen){msg.textContent='Your dashboard is open, but the secure Supabase session is reconnecting. Your network data will reload automatically.';signInButton?.classList.remove('visible');if(!networkSessionRetryTimer)networkSessionRetryTimer=setTimeout(()=>{networkSessionRetryTimer=null;loadMemberNetwork();},4000);}else{msg.textContent='Your member information is private. Sign in to view your network results.';signInButton?.classList.add('visible');}return;}signInButton?.classList.remove('visible');currentMember=user;const [p,t,q,uplineResult,activationResult]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,contact_email,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified'),supabaseClient.rpc('get_my_upline_username'),supabaseClient.from('activation_payment_submissions').select('status,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1).maybeSingle()]);renderAccountActivationStatus(activationResult.data,activationResult.error);const profile=p.error?{}:(p.data||{}),total=t.error?0:(t.count||0),qualified=q.error?0:(q.count||0),joinedAt=user.created_at||profile.created_at;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};const joinedLabel=joinedAt?new Date(joinedAt).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';put('profileEmail',profile.contact_email||user.email||'—');put('profilePhone',profile.phone||user.user_metadata?.phone||'—');put('profileCountry',profile.country||'Country not set');put('profileUpline',uplineResult?.data||'No upline');put('profileWhatsAppDisplay',profile.phone||user.user_metadata?.phone||'Not set');put('profileJoiningDate',joinedLabel);const tenure=document.getElementById('profileMembershipDuration');if(tenure){tenure.dataset.memberJoined=joinedAt||'';tenure.textContent=formatMemberTenure(joinedAt);}put('profileTotalReferrals',total.toLocaleString());put('profileActiveReferrals',qualified.toLocaleString());put('profileInactiveReferrals',Math.max(0,total-qualified).toLocaleString());put('profileMemberName',profile.username||(user.email?user.email.split('@')[0]:'Member'));put('profileMemberAvatar',(profile.username||(user.email||'G')).charAt(0).toUpperCase());put('profileMemberRole','GenZBag Member · '+(profile.country||'Country not set'));const wa=document.getElementById('profileWhatsAppInput');if(wa)wa.value='+'+String(profile.phone||user.user_metadata?.phone||'').replace(/[^0-9]/g,'');const emailInput=document.getElementById('profileEmailInput');if(emailInput)emailInput.value=profile.contact_email||user.email||'';const de=document.getElementById('dashboardProfileEmail'),dp=document.getElementById('dashboardProfilePhone'),dc=document.getElementById('dashboardProfileCountry'),ds=document.getElementById('dashboardProfileSince'),dr=document.getElementById('dashboardProfileReferrals');if(de)de.textContent=user.email||'—';if(dp)dp.textContent=profile.phone||'—';if(dc)dc.textContent=profile.country||'Country not set';if(ds)ds.textContent=joinedAt?new Date(joinedAt).toLocaleDateString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';if(dr)dr.textContent=total.toLocaleString();if(profile.username||profile.referral_code){const u=new URL(location.origin+location.pathname);u.searchParams.set('ref',profile.username||profile.referral_code);syncReferralLinks(u.toString());}const issues=[];if(p.error)issues.push('profile: '+p.error.message);if(t.error)issues.push('referrals: '+t.error.message);if(q.error)issues.push('qualified referrals: '+q.error.message);msg.textContent=issues.length?'You are signed in, but some network data could not be loaded. '+issues.join(' · '):'Your network data is up to date.';if(user.app_metadata?.role==='admin')await loadAdminProfileDirectory();else{const adminDirectory=document.getElementById('adminProfileDirectory');if(adminDirectory)adminDirectory.hidden=true;}refreshMemberTenureCounters();await loadMemberWallet();if(issues.length)console.warn('Partial member network data:',issues);}catch(e){console.warn('Member network data is temporarily unavailable:',e);if(msg)msg.textContent='Your account is signed in, but some member details could not load. '+(e?.message||'Please retry shortly.');signInButton?.classList.remove('visible');}}
+async function loadMemberNetwork(){if(!supabaseClient)return;const msg=document.getElementById('networkMessage');const signInButton=document.getElementById('networkSignInButton');try{const user=await ensureMemberSession();if(!user){renderNetwork(0,0);const dashboardIsOpen=authGate?.classList.contains('hidden');if(currentMember?.id||dashboardIsOpen){msg.textContent='Your dashboard is open, but the secure Supabase session is reconnecting. Your network data will reload automatically.';signInButton?.classList.remove('visible');if(!networkSessionRetryTimer)networkSessionRetryTimer=setTimeout(()=>{networkSessionRetryTimer=null;loadMemberNetwork();},4000);}else{msg.textContent='Your member information is private. Sign in to view your network results.';signInButton?.classList.add('visible');}return;}signInButton?.classList.remove('visible');currentMember=user;const [p,t,q,uplineResult,activationResult]=await Promise.all([supabaseClient.from('profiles').select('username,referral_code,phone,contact_email,country,created_at').eq('id',user.id).maybeSingle(),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id),supabaseClient.from('referrals').select('id',{count:'exact',head:true}).eq('referrer_id',user.id).eq('status','qualified'),supabaseClient.rpc('get_my_upline_username'),supabaseClient.from('activation_payment_submissions').select('status,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1).maybeSingle()]);renderAccountActivationStatus(activationResult.data,activationResult.error);const profile=p.error?{}:(p.data||{}),total=t.error?0:(t.count||0),qualified=q.error?0:(q.count||0),joinedAt=user.created_at||profile.created_at;currentDirectActiveReferrals=qualified;renderNetwork(total,qualified);renderWithdrawalEligibility();setMemberName(profile.username||(user.email?user.email.split('@')[0]:'Member'));const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};const joinedLabel=joinedAt?new Date(joinedAt).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';put('profileEmail',profile.contact_email||user.email||'—');put('profilePhone',profile.phone||user.user_metadata?.phone||'—');put('profileCountry',profile.country||'Country not set');put('profileUpline',uplineResult?.data||'No upline');put('profileWhatsAppDisplay',profile.phone||user.user_metadata?.phone||'Not set');put('profileJoiningDate',joinedLabel);const tenure=document.getElementById('profileMembershipDuration');if(tenure){tenure.dataset.memberJoined=joinedAt||'';tenure.textContent=formatMemberTenure(joinedAt);}put('profileTotalReferrals',total.toLocaleString());put('profileActiveReferrals',qualified.toLocaleString());put('profileInactiveReferrals',Math.max(0,total-qualified).toLocaleString());const referralProgress=Math.min(3,qualified),progressValue=document.getElementById('profileReferralProgressValue'),progressBar=document.getElementById('profileReferralProgressBar'),progressTrack=document.getElementById('profileReferralProgressTrack'),progressNote=document.getElementById('profileReferralProgressNote');if(progressValue)progressValue.textContent=qualified+' / 3';if(progressBar)progressBar.style.width=(referralProgress/3*100)+'%';if(progressTrack)progressTrack.setAttribute('aria-valuenow',String(referralProgress));if(progressNote)progressNote.textContent=qualified>=3?'The existing three-active-referral count is met. Available balance and all other withdrawal checks still apply.':'You need '+(3-qualified)+' more active direct referral'+(3-qualified===1?'':'s')+' to meet the existing referral-count requirement.';put('profileMemberName',profile.username||(user.email?user.email.split('@')[0]:'Member'));put('profileMemberAvatar',(profile.username||(user.email||'G')).charAt(0).toUpperCase());put('profileMemberRole','GenZBag Member · '+(profile.country||'Country not set'));const wa=document.getElementById('profileWhatsAppInput');if(wa)wa.value='+'+String(profile.phone||user.user_metadata?.phone||'').replace(/[^0-9]/g,'');const emailInput=document.getElementById('profileEmailInput');if(emailInput)emailInput.value=profile.contact_email||user.email||'';const de=document.getElementById('dashboardProfileEmail'),dp=document.getElementById('dashboardProfilePhone'),dc=document.getElementById('dashboardProfileCountry'),ds=document.getElementById('dashboardProfileSince'),dr=document.getElementById('dashboardProfileReferrals');if(de)de.textContent=user.email||'—';if(dp)dp.textContent=profile.phone||'—';if(dc)dc.textContent=profile.country||'Country not set';if(ds)ds.textContent=joinedAt?new Date(joinedAt).toLocaleDateString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable';if(dr)dr.textContent=total.toLocaleString();if(profile.username||profile.referral_code){const u=new URL(location.origin+location.pathname);u.searchParams.set('ref',profile.username||profile.referral_code);syncReferralLinks(u.toString());const profileReferralLink=document.getElementById('profileReferralLink');if(profileReferralLink)profileReferralLink.value=u.toString();}const issues=[];if(p.error)issues.push('profile: '+p.error.message);if(t.error)issues.push('referrals: '+t.error.message);if(q.error)issues.push('qualified referrals: '+q.error.message);msg.textContent=issues.length?'You are signed in, but some network data could not be loaded. '+issues.join(' · '):'Your network data is up to date.';if(user.app_metadata?.role==='admin')await loadAdminProfileDirectory();else{const adminDirectory=document.getElementById('adminProfileDirectory');if(adminDirectory)adminDirectory.hidden=true;}refreshMemberTenureCounters();await loadMemberWallet();const profileUpdated=document.getElementById('profileLastUpdated');if(profileUpdated)profileUpdated.textContent='Updated '+new Date().toLocaleTimeString('en-GB',{timeZone:'Africa/Kampala',hour:'2-digit',minute:'2-digit'})+' EAT';if(issues.length)console.warn('Partial member network data:',issues);}catch(e){console.warn('Member network data is temporarily unavailable:',e);if(msg)msg.textContent='Your account is signed in, but some member details could not load. '+(e?.message||'Please retry shortly.');const profileUpdated=document.getElementById('profileLastUpdated');if(profileUpdated)profileUpdated.textContent='Could not refresh · try again';signInButton?.classList.remove('visible');}}
 
 let dashboardFxRates={UGX:1},dashboardFxUpdated=null,dashboardCurrencyRenderBusy=false;
 const dashboardCurrencySelect=document.getElementById('dashboardCurrency'),dashboardOriginalMoneyNodes=new WeakMap();
@@ -5833,6 +5983,14 @@ async function saveProfileWhatsApp(event){
  finally{button.disabled=false;button.textContent='Save Contact Details';}
 }
 document.getElementById('profileWhatsAppForm')?.addEventListener('submit',saveProfileWhatsApp);
+document.getElementById('profileRefreshButton')?.addEventListener('click',async()=>{
+ const button=document.getElementById('profileRefreshButton'),stamp=document.getElementById('profileLastUpdated');
+ if(!button)return;
+ button.disabled=true;button.textContent='Refreshing…';
+ if(stamp)stamp.textContent='Refreshing account data…';
+ try{await loadMemberNetwork();}
+ finally{button.disabled=false;button.textContent='↻ Refresh account';}
+});
 
 async function saveProfilePassword(event){
  event.preventDefault();
