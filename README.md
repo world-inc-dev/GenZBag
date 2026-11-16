@@ -101,7 +101,7 @@ Confirm email delivery, password reset and signup redirects after any environmen
 ## Known production-readiness requirements
 
 GenZBag is an active software project, not yet a verified profitable business or a fully production-certified financial service. Before operating at scale or completing a sale, the owner/buyer should:
-1. Enable Supabase leaked-password protection and review the remaining Auth security settings.
+1. Enable Supabase leaked-password protection under Authentication → Sign In / Providers → Email → Prevent use of leaked passwords, if the project plan supports it (Supabase Pro and above), and review the remaining Auth security settings.
 2. Complete a function-by-function review of the authenticated SECURITY DEFINER functions. They are used by member workflows and must not be indiscriminately revoked.
 3. Run end-to-end tests with separate member and administrator accounts, including signup, referrals, challenges, task approvals, wallet reconciliation, voucher purchases, withdrawal rejection/refund and manual payout recording.
 4. Configure a real email sender and test delivery.
