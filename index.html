@@ -1291,14 +1291,7 @@ footer {
 .network-card .network-stats{gap:6px;margin-top:7px}
 .network-card .network-stat{font-size:9px;padding:5px 8px}
 .network-card .network-stat strong{font-size:10px}
-.network-live-rate{margin-top:12px;padding:11px 12px;border:1px solid #ffffff55;border-radius:13px;background:linear-gradient(120deg,#ffffff25,#ffffff12);box-shadow:inset 0 1px #ffffff20;display:grid;gap:5px}
-.network-live-rate-heading{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:9px;font-weight:950;letter-spacing:.65px;color:#fff}
-.network-live-rate-heading b{margin-left:auto;font-size:8px;letter-spacing:.35px;color:#fff9}
-.network-live-dot{width:7px;height:7px;border-radius:50%;background:#b7ffcf;box-shadow:0 0 0 3px #b7ffcf30;animation:networkRatePulse 1.7s infinite}
-.network-live-rate>strong{font-size:19px;font-weight:950;line-height:1.2;color:#fff}
-.network-live-rate>small{font-size:9px;color:#fffde0;opacity:.9}
-@keyframes networkRatePulse{50%{opacity:.45;box-shadow:0 0 0 5px #b7ffcf16}}
-@media(max-width:420px){.network-live-rate{padding:10px}.network-live-rate-heading{font-size:8px}.network-live-rate-heading b{font-size:7px}.network-live-rate>strong{font-size:17px}}
+.network-card .exchange-rate{margin-top:9px;align-self:flex-start}
 .welcome-rank-badge{margin-top:7px;padding:4px 9px;background:#ffffff24;border-color:#ffffff55;font-size:9px}
 .welcome-rank-badge .rank-symbol{width:20px;height:20px;font-size:13px}
 .welcome-rank-badge strong{font-size:9px}
@@ -3700,8 +3693,7 @@ body.activation-screen-open{overflow:hidden!important}
       </svg>
     </button>
     <label class="currency-picker" title="Display dashboard amounts in"><span>Currency</span><select id="dashboardCurrency" aria-label="Dashboard display currency"><option value="UGX">UGX 🇺🇬</option><option value="USD">USD 🇺🇸</option><option value="KES">KES 🇰🇪</option><option value="TZS">TZS 🇹🇿</option><option value="RWF">RWF 🇷🇼</option><option value="BIF">BIF 🇧🇮</option><option value="CDF">CDF 🇨🇩</option><option value="SSP">SSP 🇸🇸</option><option value="ETB">ETB 🇪🇹</option><option value="NGN">NGN 🇳🇬</option><option value="ZAR">ZAR 🇿🇦</option><option value="GHS">GHS 🇬🇭</option><option value="EUR">EUR 🇪🇺</option><option value="GBP">GBP 🇬🇧</option><option value="AED">AED 🇦🇪</option><option value="SAR">SAR 🇸🇦</option><option value="INR">INR 🇮🇳</option><option value="CNY">CNY 🇨🇳</option><option value="JPY">JPY 🇯🇵</option><option value="CAD">CAD 🇨🇦</option><option value="AUD">AUD 🇦🇺</option></select></label>
-    <button class="icon-btn exchange-toggle" id="exchangeRateToggle" type="button" aria-label="Show live currency rate" aria-expanded="false" aria-controls="exchangeRatePanel" title="Live currency rate">💱</button>
-    <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite" hidden><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
+    
   </div>
 
   <div class="header-right">
@@ -3831,11 +3823,7 @@ body.activation-screen-open{overflow:hidden!important}
     <p class="network-message" id="networkMessage">Sign in to view your network results.</p>
     <button class="network-signin-button" id="networkSignInButton" type="button">Sign in to view your account →</button>
     <div class="network-stats"><span class="network-stat">Total referrals: <strong id="totalReferralCount">0</strong></span><span class="network-stat">Qualified: <strong id="qualifiedReferralCount">0</strong></span></div>
-    <div class="network-live-rate" aria-live="polite">
-      <div class="network-live-rate-heading"><span class="network-live-dot"></span><span>LIVE UGX → USD</span><b>WHAT'S HAPPENING IN YOUR DASHBOARD TODAY</b></div>
-      <strong id="networkFxRateValue">Loading live rate…</strong>
-      <small id="networkFxRateUpdated">Updating exchange rate</small>
-    </div>
+    <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite"><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
     <p id="dailyReferralTargetNote" style="margin:10px 0 0;color:#9fb4ce;font-size:11px">Daily target progress syncs with Supabase · resets at midnight EAT.</p>
   </section>
 
@@ -5194,7 +5182,28 @@ const dashboardMoneyObserver=new MutationObserver(records=>{if(dashboardCurrency
 dashboardMoneyObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
 dashboardCurrencySelect?.addEventListener('change',async()=>{try{localStorage.setItem('genzbag:display-currency',getDashboardCurrency());}catch(e){}refreshDashboardCurrency();if(getDashboardCurrency()!=='UGX'&&!dashboardFxRates[getDashboardCurrency()]){await loadExchangeRate();}refreshDashboardCurrency();});
 try{const savedCurrency=localStorage.getItem('genzbag:display-currency');if(savedCurrency&&dashboardCurrencySelect?.querySelector('option[value="'+savedCurrency+'"]'))dashboardCurrencySelect.value=savedCurrency;}catch(e){}
-async function loadExchangeRate(){const v=document.getElementById('exchangeRateValue'),u=document.getElementById('exchangeRateUpdated'),networkValue=document.getElementById('networkFxRateValue'),networkUpdated=document.getElementById('networkFxRateUpdated');try{const r=await fetch('https://open.er-api.com/v6/latest/UGX',{cache:'no-store'});if(!r.ok)throw Error('Rate API '+r.status);const d=await r.json(),rates=d?.rates||{},rate=Number(rates.USD);if(!Number.isFinite(rate)||rate<=0)throw Error('Invalid rate');dashboardFxRates={UGX:1,...rates};dashboardFxUpdated=d.time_last_update_utc||new Date().toISOString();const amountText='1,000 UGX ≈ async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('The sign-in service did not load. Refresh and try again.','error');return;}const signingUp=authMode==='signup',email=(signingUp?document.getElementById('authEmail'):document.getElementById('authLoginEmail')).value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.innerHTML=signingUp?'Creating your account…':'Signing you in…';showAuthMessage('Please wait…');try{if(signingUp){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value,phoneDigits=document.getElementById('authPhone').value.replace(/\D/g,''),phoneCode=document.getElementById('authPhoneCode').value;if(!/^[a-z0-9]{4,20}$/.test(username))throw Error('Username must contain only letters and numbers (4–20 characters).');if(!email||!/^\S+@\S+\.\S+$/.test(email))throw Error('Enter a valid email address.');if(phoneDigits.length<7||phoneDigits.length>15)throw Error('Enter a valid mobile number.');if(password.length<8)throw Error('For better account security, your password must be at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');if(!document.getElementById('authTerms').checked)throw Error('Please accept the Terms & Conditions to continue.');try{const availability=await checkSignupAvailabilityNow();if(availability.username_available===false)throw Error('That username is already taken. Please choose another.');if(availability.email_available===false)throw Error('That email address is already registered. Please sign in or use another email.');if(availability.phone_available===false)throw Error('That phone number is already registered. Please use another number.');}catch(checkError){if(checkError.message?.includes('already'))throw checkError;console.warn('Final availability check unavailable; Supabase will enforce account uniqueness:',checkError);}const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:phoneCode+phoneDigits,country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(!data?.user?.id)throw Error('Supabase did not confirm account creation. Please try again.');const successModal=document.getElementById('signupSuccessModal');if(successModal){successModal.classList.add('open');successModal.setAttribute('aria-hidden','false');}launchSignupCelebration();if(data.session){markSessionAlive(data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(data.session);}setTimeout(()=>{successModal?.classList.remove('open');successModal?.setAttribute('aria-hidden','true');if(!data.session){authForm.reset();setAuthMode('login');document.getElementById('authLoginEmail').value=email;document.getElementById('authPassword').value='';requireAuth();document.getElementById('authLoginEmail').focus();showAuthMessage('Your account was created. Check your email if confirmation is required, then sign in.','success');}},3600);}else{const identifier=document.getElementById('authLoginEmail').value.trim();let data,error;if(identifier.includes('@')){({data,error}=await supabaseClient.auth.signInWithPassword({email:identifier.toLowerCase(),password}));}else{const result=await supabaseClient.functions.invoke('username-signin',{body:{username:identifier.toLowerCase(),password}});error=result.error;data=result.data;if(!error&&data?.session){const restored=await supabaseClient.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});error=restored.error;data=restored.data;}}if(error)throw error;if(!data?.session)throw Error('Invalid username/email or password. Please try again.');markSessionAlive(data.session);showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.innerHTML=authMode==='signup'?'Create my account <span>→</span>':'Sign in <span>→</span>';}}
+async function loadExchangeRate(){
+ const value=document.getElementById('exchangeRateValue');
+ const updated=document.getElementById('exchangeRateUpdated');
+ try{
+  const response=await fetch('https://open.er-api.com/v6/latest/UGX',{cache:'no-store'});
+  if(!response.ok) throw Error('Rate API '+response.status);
+  const data=await response.json();
+  const rates=data?.rates||{};
+  const usdRate=Number(rates.USD);
+  if(!Number.isFinite(usdRate)||usdRate<=0) throw Error('Invalid exchange rate');
+  dashboardFxRates={UGX:1,...rates};
+  dashboardFxUpdated=data.time_last_update_utc||new Date().toISOString();
+  if(value) value.textContent='1,000 UGX ≈ '+new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:3}).format(1000*usdRate);
+  if(updated) updated.innerHTML='<span class="rate-dot"></span>LIVE · '+new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Africa/Kampala'})+' EAT';
+  if(typeof updateDashboardCurrencyDisplays==='function') updateDashboardCurrencyDisplays();
+ }catch(error){
+  console.warn('Live exchange rate unavailable:',error);
+  if(value&&(!value.textContent||value.textContent==='Loading rate…')) value.textContent='Rate temporarily unavailable';
+  if(updated) updated.innerHTML='<span class="rate-dot"></span>Retrying live rate';
+ }
+}
+async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('The sign-in service did not load. Refresh and try again.','error');return;}const signingUp=authMode==='signup',email=(signingUp?document.getElementById('authEmail'):document.getElementById('authLoginEmail')).value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.innerHTML=signingUp?'Creating your account…':'Signing you in…';showAuthMessage('Please wait…');try{if(signingUp){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value,phoneDigits=document.getElementById('authPhone').value.replace(/\D/g,''),phoneCode=document.getElementById('authPhoneCode').value;if(!/^[a-z0-9]{4,20}$/.test(username))throw Error('Username must contain only letters and numbers (4–20 characters).');if(!email||!/^\S+@\S+\.\S+$/.test(email))throw Error('Enter a valid email address.');if(phoneDigits.length<7||phoneDigits.length>15)throw Error('Enter a valid mobile number.');if(password.length<8)throw Error('For better account security, your password must be at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');if(!document.getElementById('authTerms').checked)throw Error('Please accept the Terms & Conditions to continue.');try{const availability=await checkSignupAvailabilityNow();if(availability.username_available===false)throw Error('That username is already taken. Please choose another.');if(availability.email_available===false)throw Error('That email address is already registered. Please sign in or use another email.');if(availability.phone_available===false)throw Error('That phone number is already registered. Please use another number.');}catch(checkError){if(checkError.message?.includes('already'))throw checkError;console.warn('Final availability check unavailable; Supabase will enforce account uniqueness:',checkError);}const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:phoneCode+phoneDigits,country:document.getElementById('authCountry').value,preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(!data?.user?.id)throw Error('Supabase did not confirm account creation. Please try again.');const successModal=document.getElementById('signupSuccessModal');if(successModal){successModal.classList.add('open');successModal.setAttribute('aria-hidden','false');}launchSignupCelebration();if(data.session){markSessionAlive(data.session);showDashboard();await loadMemberNetwork();await initialiseMemberFeatures(data.session);}setTimeout(()=>{successModal?.classList.remove('open');successModal?.setAttribute('aria-hidden','true');if(!data.session){authForm.reset();setAuthMode('login');document.getElementById('authLoginEmail').value=email;document.getElementById('authPassword').value='';requireAuth();document.getElementById('authLoginEmail').focus();showAuthMessage('Your account was created. Check your email if confirmation is required, then sign in.','success');}},3600);}else{const identifier=document.getElementById('authLoginEmail').value.trim();let data,error;if(identifier.includes('@')){({data,error}=await supabaseClient.auth.signInWithPassword({email:identifier.toLowerCase(),password}));}else{const result=await supabaseClient.functions.invoke('username-signin',{body:{username:identifier.toLowerCase(),password}});error=result.error;data=result.data;if(!error&&data?.session){const restored=await supabaseClient.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});error=restored.error;data=restored.data;}}if(error)throw error;if(!data?.session)throw Error('Invalid username/email or password. Please try again.');markSessionAlive(data.session);showDashboard();await loadMemberNetwork();}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.innerHTML=authMode==='signup'?'Create my account <span>→</span>':'Sign in <span>→</span>';}}
 document.getElementById('forgotPassword').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.remove('auth-hidden-field');document.getElementById('newPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.add('auth-hidden-field');document.getElementById('authSwitchLine').classList.add('auth-hidden-field');document.getElementById('forgotPassword').classList.add('auth-hidden-field');document.getElementById('resetEmail').value=document.getElementById('authLoginEmail').value.trim();showAuthMessage('');});
 document.getElementById('backToSignIn').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.remove('auth-hidden-field');document.getElementById('authSwitchLine').classList.remove('auth-hidden-field');document.getElementById('forgotPassword').classList.remove('auth-hidden-field');showAuthMessage('');});
 document.getElementById('sendResetLink').addEventListener('click',async()=>{const email=document.getElementById('resetEmail').value.trim().toLowerCase(),button=document.getElementById('sendResetLink');if(!/^\S+@\S+\.\S+$/.test(email)){showAuthMessage('Enter a valid email address.','error');return;}button.disabled=true;button.textContent='Sending…';try{const redirectTo=location.origin+location.pathname;const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});if(error)throw error;showAuthMessage('If an account exists for that email, a password reset link has been sent. Check your inbox and spam folder.','success');}catch(err){showAuthMessage(err.message||'Could not send the reset link. Please try again.','error');}finally{button.disabled=false;button.textContent='Send reset link';}});
@@ -5274,12 +5283,6 @@ function updateWeeklyScheduleLive(){
 }
 updateWeeklyScheduleLive();setInterval(updateWeeklyScheduleLive,1000);
 document.getElementById('dashboardAppButton').addEventListener('click',()=>{const a=document.querySelector('.nav-link[href="#app"]');if(a)a.click();});
-const exchangeRateToggle=document.getElementById('exchangeRateToggle'),exchangeRatePanel=document.getElementById('exchangeRatePanel');
-exchangeRateToggle?.addEventListener('click',()=>{
- const opening=exchangeRatePanel.hidden; exchangeRatePanel.hidden=!opening;
- exchangeRateToggle.setAttribute('aria-expanded',String(opening));
- exchangeRateToggle.setAttribute('aria-label',opening?'Hide live currency rate':'Show live currency rate');
-});
 loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
 
 /* GENZBAG ACTIVITIES + GLOBAL CHAT */
@@ -8029,12 +8032,6 @@ function updateWeeklyScheduleLive(){
 }
 updateWeeklyScheduleLive();setInterval(updateWeeklyScheduleLive,1000);
 document.getElementById('dashboardAppButton').addEventListener('click',()=>{const a=document.querySelector('.nav-link[href="#app"]');if(a)a.click();});
-const exchangeRateToggle=document.getElementById('exchangeRateToggle'),exchangeRatePanel=document.getElementById('exchangeRatePanel');
-exchangeRateToggle?.addEventListener('click',()=>{
- const opening=exchangeRatePanel.hidden; exchangeRatePanel.hidden=!opening;
- exchangeRateToggle.setAttribute('aria-expanded',String(opening));
- exchangeRateToggle.setAttribute('aria-label',opening?'Hide live currency rate':'Show live currency rate');
-});
 loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
 
 /* GENZBAG ACTIVITIES + GLOBAL CHAT */
@@ -10784,12 +10781,6 @@ function updateWeeklyScheduleLive(){
 }
 updateWeeklyScheduleLive();setInterval(updateWeeklyScheduleLive,1000);
 document.getElementById('dashboardAppButton').addEventListener('click',()=>{const a=document.querySelector('.nav-link[href="#app"]');if(a)a.click();});
-const exchangeRateToggle=document.getElementById('exchangeRateToggle'),exchangeRatePanel=document.getElementById('exchangeRatePanel');
-exchangeRateToggle?.addEventListener('click',()=>{
- const opening=exchangeRatePanel.hidden; exchangeRatePanel.hidden=!opening;
- exchangeRateToggle.setAttribute('aria-expanded',String(opening));
- exchangeRateToggle.setAttribute('aria-label',opening?'Hide live currency rate':'Show live currency rate');
-});
 loadExchangeRate();setInterval(loadExchangeRate,30*60*1000);
 
 /* GENZBAG ACTIVITIES + GLOBAL CHAT */
