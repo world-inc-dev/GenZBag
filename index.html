@@ -5529,8 +5529,7 @@ async function finishTriviaChallenge(){
  const {data,error}=await supabaseClient.rpc('submit_secure_challenge',{p_session_id:state.sessionId,p_answers:answers});
  triviaState=null;
  if(error||!data?.success){activityListEl.innerHTML='<div class="trivia-shell"><h2>Result not submitted</h2><p>'+escapeText(error?.message||'Your answers could not be verified.')+'</p><button class="trivia-secondary" type="button" data-trivia-retry>Back to Trivia</button></div>';return;}
- activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Trivia challenge finished!</h2><div class="trivia-result-score"><strong>'+data.score+'/10</strong><span>'+data.points+'/100 points</span></div><p>'+(data.qualified?'Perfect score! You qualify for UGX 3,000, subject to administrator approval.':'You do not qualify for the UGX 3,000 reward. A perfect 10/10 is required.')+'</p><p>'+(data.qualified?'Your server-verified result has been sent for administrator review.':'This attempt was closed automatically. No reward is due; you can try again.')+'</p></div>';
- await loadActivities();
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Trivia challenge finished!</h2><div class="trivia-result-score"><strong>'+data.score+'/10</strong><span>'+data.points+'/100 points</span></div><p>'+(data.qualified?'Perfect score! You qualify for UGX 3,000, subject to administrator approval.':'You do not qualify for the UGX 3,000 reward. A perfect 10/10 is required.')+'</p><p>'+(data.qualified?'Your server-verified result has been sent for administrator review.':'This attempt was closed automatically. No reward is due; you can try again.')+'</p><button class="trivia-primary" type="button" data-trivia-retry>Back to Trivia</button></div>';
 }
 
 function renderChallengeDirectory(){
@@ -5560,8 +5559,7 @@ async function finishMathChallenge(){
  const {data,error}=await supabaseClient.rpc('submit_secure_challenge',{p_session_id:state.sessionId,p_answers:answers});
  mathState=null;
  if(error||!data?.success){activityListEl.innerHTML='<div class="trivia-shell"><h2>Result not submitted</h2><p>'+escapeText(error?.message||'Your answers could not be verified.')+'</p><button class="trivia-secondary" type="button" data-math-retry>Back to Math Challenge</button></div>';return;}
- activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Math challenge finished!</h2><div class="trivia-result-score"><strong>'+data.score+'/10</strong><span>'+data.points+'/100 points</span></div><p>'+(data.qualified?'Perfect score! You qualify for UGX 1,000, subject to administrator approval.':'You do not qualify for the UGX 1,000 reward. A perfect 10/10 is required.')+'</p><p>'+(data.qualified?'Your server-verified result has been sent for administrator review.':'This attempt was closed automatically. No reward is due; you can try again.')+'</p></div>';
- await loadActivities();
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Math challenge finished!</h2><div class="trivia-result-score"><strong>'+data.score+'/10</strong><span>'+data.points+'/100 points</span></div><p>'+(data.qualified?'Perfect score! You qualify for UGX 1,000, subject to administrator approval.':'You do not qualify for the UGX 1,000 reward. A perfect 10/10 is required.')+'</p><p>'+(data.qualified?'Your server-verified result has been sent for administrator review.':'This attempt was closed automatically. No reward is due; you can try again.')+'</p><button class="trivia-primary" type="button" data-math-retry>Back to Math Challenge</button></div>';
 }
 
 function renderColourChallenge(){
@@ -5586,8 +5584,7 @@ async function finishColourChallenge(){
  const {data,error}=await supabaseClient.rpc('submit_secure_challenge',{p_session_id:state.sessionId,p_answers:answers});
  colourState=null;
  if(error||!data?.success){activityListEl.innerHTML='<div class="trivia-shell"><h2>Result not submitted</h2><p>'+escapeText(error?.message||'Your answers could not be verified.')+'</p><button class="trivia-secondary" type="button" data-colour-retry>Back to Colour Challenge</button></div>';return;}
- activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Colour challenge finished!</h2><div class="trivia-result-score"><strong>'+data.score+'/10</strong><span>'+data.points+'/100 points</span></div><p>'+(data.qualified?'Perfect score! You qualify for UGX 1,000, subject to administrator approval.':'You do not qualify for the UGX 1,000 reward. A perfect 10/10 is required.')+'</p><p>'+(data.qualified?'Your server-verified result has been sent for administrator review.':'This attempt was closed automatically. No reward is due; you can try again.')+'</p></div>';
- await loadActivities();
+ activityListEl.innerHTML='<div class="trivia-shell"><div class="trivia-kicker">CHALLENGE COMPLETE</div><h2>Colour challenge finished!</h2><div class="trivia-result-score"><strong>'+data.score+'/10</strong><span>'+data.points+'/100 points</span></div><p>'+(data.qualified?'Perfect score! You qualify for UGX 1,000, subject to administrator approval.':'You do not qualify for the UGX 1,000 reward. A perfect 10/10 is required.')+'</p><p>'+(data.qualified?'Your server-verified result has been sent for administrator review.':'This attempt was closed automatically. No reward is due; you can try again.')+'</p><button class="trivia-primary" type="button" data-colour-retry>Back to Colour Challenge</button></div>';
 }
 
 
