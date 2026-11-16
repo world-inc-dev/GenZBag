@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<\nif(!window.__genzbagFxRefresh){window.__genzbagFxRefresh=true;setInterval(loadExchangeRate,15*60*1000);}!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -3817,7 +3817,7 @@ body.activation-screen-open{overflow:hidden!important}
 
       <div class="welcome-info">
         <h2>Hi Bridan</h2>
-        <p class="welcome-greeting-line">Welcome back!</p>
+        <p class="welcome-greeting-line">Your progress, earnings and activity at a glance.</p>
         <span class="rank-badge welcome-rank-badge" id="memberRankBadge" aria-label="Current member rank: Starter"><span class="rank-symbol" id="rankSymbol" aria-hidden="true">🌱</span><strong id="memberRank">STARTER</strong></span>
       </div>
 
@@ -3827,7 +3827,7 @@ body.activation-screen-open{overflow:hidden!important}
     <div class="welcome-network-summary">
     <div class="network-top">
       <div>
-        <h2>Grow Your Network</h2>
+        <h2>NETWORK PERFORMANCE</h2>
         <p class="subtitle"></p>
       </div>
 
@@ -3836,14 +3836,14 @@ body.activation-screen-open{overflow:hidden!important}
     
     <p class="network-message" id="networkMessage">Sign in to view your network results.</p>
     <button class="network-signin-button" id="networkSignInButton" type="button">Sign in to view your account →</button>
-    <div class="network-stats"><span class="network-stat">Total referrals: <strong id="totalReferralCount">0</strong></span><span class="network-stat">Qualified: <strong id="qualifiedReferralCount">0</strong></span></div>
-    <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite"><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
-    <p id="dailyReferralTargetNote" style="margin:10px 0 0;color:#9fb4ce;font-size:11px">Daily target progress syncs with Supabase · resets at midnight EAT.</p>
+    <span id="totalReferralCount" hidden>0</span><span id="qualifiedReferralCount" hidden>0</span>
+    <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite"><span class="rate-label">LIVE MARKET RATE · UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting to live market data</small></div>
+    <p id="dailyReferralTargetNote" style="margin:10px 0 0;color:#9fb4ce;font-size:11px">Daily progress updates automatically · resets at midnight EAT.</p>
   </div>
 
-    <div class="profit-box">
-      <small>NET PROFITS</small>
-      <strong>UGX 0</strong>
+    <div class="welcome-financials">
+      <div class="profit-box"><small>NET PROFITS</small><strong>UGX 0</strong></div>
+      <div class="expenses-card" aria-live="polite"><small class="expenses-title">TOTAL EXPENSES</small><strong class="expenses-value" id="dashboardExpensesValue">UGX 0</strong></div>
     </div>
   </section>
 
@@ -5194,7 +5194,7 @@ async function loadExchangeRate(){
   dashboardFxRates={UGX:1,...rates};
   dashboardFxUpdated=data.time_last_update_utc||new Date().toISOString();
   if(value) value.textContent='1,000 UGX ≈ '+new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:3}).format(1000*usdRate);
-  if(updated) updated.innerHTML='<span class="rate-dot"></span>LIVE · '+new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Africa/Kampala'})+' EAT';
+  if(updated) updated.innerHTML='<span class="rate-dot"></span>LIVE MARKET DATA · Updated '+new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Africa/Kampala'})+' EAT · refreshes every 15 min';
   if(typeof updateDashboardCurrencyDisplays==='function') updateDashboardCurrencyDisplays();
  }catch(error){
   console.warn('Live exchange rate unavailable:',error);
@@ -6097,6 +6097,9 @@ async function loadMemberWallet(){
  if(strong[3])strong[3].textContent=money(teamEarnings);
  if(strong[4])strong[4].textContent=money(welcomeBonus);const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent=money(balance);
  const profit=document.querySelector('.profit-box strong');if(profit)profit.textContent=money(earned);
+ const expenseRows=ugx.filter(x=>x.direction==='debit'&&!['withdrawal_debit'].includes(x.entry_type));
+ const totalExpenses=expenseRows.reduce((n,x)=>n+Number(x.amount||0),0);
+ const expensesValue=document.getElementById('dashboardExpensesValue');if(expensesValue)expensesValue.textContent=money(totalExpenses);
  const {data:withdrawals,error:we}=await supabaseClient.from('withdrawal_requests').select('amount,currency,status').eq('user_id',currentMember.id);
  if(!we){const pending=(withdrawals||[]).filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount),0);const paid=(withdrawals||[]).filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}
  const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
@@ -7985,6 +7988,29 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
  .welcome-card .active-badge{font-size:7px;padding:3px 5px}
 }
 
+
+/* Polished live dashboard welcome panel */
+.welcome-card{position:relative;background:linear-gradient(125deg,#071b49 0%,#0b347d 48%,#075b78 100%);box-shadow:0 12px 30px #061b4933;isolation:isolate}
+.welcome-card:before{content:"";position:absolute;inset:-45% -20%;z-index:-1;background:linear-gradient(110deg,transparent 35%,#ffffff0c 48%,#5eead422 53%,transparent 66%);transform:translateX(-65%);animation:welcomeSheen 8s ease-in-out infinite}
+.welcome-card:after{content:"";position:absolute;right:-45px;top:-75px;width:180px;height:180px;border:1px solid #ffffff18;border-radius:50%;box-shadow:0 0 0 18px #ffffff08,0 0 0 38px #ffffff05;z-index:-1;animation:welcomeOrbit 18s linear infinite}
+@keyframes welcomeSheen{0%,20%{transform:translateX(-65%)}65%,100%{transform:translateX(65%)}}
+@keyframes welcomeOrbit{to{transform:rotate(360deg)}}
+.welcome-network-summary{margin:0 12px 7px;padding:7px 9px;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;position:relative}
+.welcome-network-summary .network-top h2{font-size:10px;letter-spacing:1.25px;color:#9de9e1}
+.welcome-network-summary .network-message{font-size:9px;color:#f0f7ff}
+.welcome-network-summary .network-signin-button{background:#ffffff18;border:1px solid #ffffff35;color:#fff}
+.welcome-network-summary .exchange-rate{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:5px;padding:5px 0 0;border-top:1px solid #ffffff20;background:transparent}
+.welcome-network-summary .rate-label{font-size:7px;letter-spacing:.8px;color:#9de9e1;font-weight:900}
+.welcome-network-summary .exchange-rate strong{font-size:10px;color:#fff}
+.welcome-network-summary .exchange-rate small{font-size:7px;color:#b8d7e8}
+.welcome-network-summary .rate-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#48f0b4;box-shadow:0 0 0 0 #48f0b477;animation:livePulse 1.8s infinite}
+@keyframes livePulse{70%{box-shadow:0 0 0 6px #48f0b400}100%{box-shadow:0 0 0 0 #48f0b400}}
+.welcome-financials{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#ffffff20;border-top:1px solid #ffffff20}
+.welcome-card .profit-box,.welcome-card .expenses-card{min-width:0;margin:0;padding:8px 13px;background:#ffffff0c;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.welcome-card .profit-box small,.welcome-card .expenses-title{font-size:8px;letter-spacing:.8px;color:#b8d7e8;font-weight:900}
+.welcome-card .profit-box strong,.welcome-card .expenses-value{font-size:13px;color:#fff;font-weight:900}
+@media(max-width:420px){.welcome-network-summary{margin:0 9px 5px;padding:6px 7px}.welcome-financials .profit-box,.welcome-financials .expenses-card{padding:7px 9px}.welcome-card .profit-box strong,.welcome-card .expenses-value{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.welcome-card:before,.welcome-card:after,.welcome-network-summary .rate-dot{animation:none}}
 </style>
 
 </body>
