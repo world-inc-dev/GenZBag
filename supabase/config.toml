@@ -1,0 +1,10 @@
+project_id = "pihesnxftmrzmsoikvfz"
+
+[functions.username-signin]
+verify_jwt = false
+
+[functions.admin-management]
+verify_jwt = true
+
+[functions.signup-availability]
+verify_jwt = false
