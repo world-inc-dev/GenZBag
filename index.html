@@ -5579,10 +5579,7 @@ async function loadActivities(){
  const member=await ensureMemberSession();
  if(loadSequence!==activityLoadSequence)return;
  if(!supabaseClient||!member){setActivityMessage('Activities are waiting for your secure session. Reconnect or sign in if the session has expired.');return;}
- // Math and Colour are built-in challenge screens; do not make their display wait for the published-task, submission, or ad-status requests.
- if(currentActivityChallenge||(currentActivityFilter==='challenge'&&!/trivia/i.test(currentActivitySearch))||/math|colou?r/i.test(currentActivitySearch)){
-  activityRows=[];activitySubmissionMap={};activityCountEl.textContent='2 challenges available';renderActivities();return;
- }
+ // The challenge screen itself opens immediately; when it refreshes after submission, load published tasks and submissions so the saved result is shown and duplicate attempts are blocked.
  activityListEl.innerHTML='<div class="activity-empty">Loading published activities…</div>';
  const [tasksRes,subsRes,adStatusRes]=await Promise.all([
   supabaseClient.from('tasks').select('id,title,description,category,instructions,reward_amount,currency,content_url,image_url,status,starts_at,ends_at,created_at').eq('status','published').order('created_at',{ascending:false}),
