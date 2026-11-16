@@ -1281,17 +1281,18 @@ footer {
 .withdraw-meta strong{color:#14284f}
 
 /* Compact network card; member rank now lives with the welcome greeting. */
-.network-card{padding:13px 15px}
+.network-card{padding:9px 12px;margin-bottom:11px}
 .network-card h2{font-size:15px}
 .network-card .subtitle{font-size:10px;margin-top:2px}
-.network-card .progress-circle{width:49px;height:49px;border-width:4px}
-.network-card .progress-circle strong{font-size:14px}
-.network-card .progress-circle small{font-size:8px;margin-top:2px}
-.network-card .network-message{font-size:11px;margin-top:8px;line-height:1.4}
-.network-card .network-stats{gap:6px;margin-top:7px}
-.network-card .network-stat{font-size:9px;padding:5px 8px}
+.network-card .progress-circle{width:42px;height:42px;border-width:3px}
+.network-card .progress-circle strong{font-size:12px}
+.network-card .progress-circle small{font-size:7px;margin-top:1px}
+.network-card .network-message{font-size:10px;margin-top:5px;line-height:1.3}
+.network-card .network-stats{gap:5px;margin-top:5px}
+.network-card .network-stat{font-size:8px;padding:4px 7px}
 .network-card .network-stat strong{font-size:10px}
-.network-card .exchange-rate{margin-top:9px;align-self:flex-start}
+.network-card .exchange-rate{margin-top:6px;padding:5px 7px;align-self:flex-start}
+.network-card #dailyReferralTargetNote{margin-top:5px!important;font-size:9px!important;line-height:1.25}
 .welcome-rank-badge{margin-top:7px;padding:4px 9px;background:#ffffff24;border-color:#ffffff55;font-size:9px}
 .welcome-rank-badge .rank-symbol{width:20px;height:20px;font-size:13px}
 .welcome-rank-badge strong{font-size:9px}
@@ -3808,25 +3809,6 @@ body.activation-screen-open{overflow:hidden!important}
 <main class="main" id="dashboard">
   <section class="page-view" id="dashboardPage">
 
-  <!-- GROW YOUR NETWORK -->
-
-  <section class="card network-card">
-    <div class="network-top">
-      <div>
-        <h2>Grow Your Network</h2>
-        <p class="subtitle"></p>
-      </div>
-
-      <div class="progress-circle" aria-label="Daily activated direct referral target"><strong id="rankProgressCount">0</strong><small id="rankProgressTarget">of 5</small></div>
-    </div>
-    
-    <p class="network-message" id="networkMessage">Sign in to view your network results.</p>
-    <button class="network-signin-button" id="networkSignInButton" type="button">Sign in to view your account →</button>
-    <div class="network-stats"><span class="network-stat">Total referrals: <strong id="totalReferralCount">0</strong></span><span class="network-stat">Qualified: <strong id="qualifiedReferralCount">0</strong></span></div>
-    <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite"><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
-    <p id="dailyReferralTargetNote" style="margin:10px 0 0;color:#9fb4ce;font-size:11px">Daily target progress syncs with Supabase · resets at midnight EAT.</p>
-  </section>
-
   <!-- WELCOME AND PROFIT -->
 
   <section class="card welcome-card">
@@ -3846,6 +3828,25 @@ body.activation-screen-open{overflow:hidden!important}
       <small>NET PROFITS</small>
       <strong>UGX 0</strong>
     </div>
+  </section>
+
+  <!-- GROW YOUR NETWORK -->
+
+  <section class="card network-card">
+    <div class="network-top">
+      <div>
+        <h2>Grow Your Network</h2>
+        <p class="subtitle"></p>
+      </div>
+
+      <div class="progress-circle" aria-label="Daily activated direct referral target"><strong id="rankProgressCount">0</strong><small id="rankProgressTarget">of 5</small></div>
+    </div>
+    
+    <p class="network-message" id="networkMessage">Sign in to view your network results.</p>
+    <button class="network-signin-button" id="networkSignInButton" type="button">Sign in to view your account →</button>
+    <div class="network-stats"><span class="network-stat">Total referrals: <strong id="totalReferralCount">0</strong></span><span class="network-stat">Qualified: <strong id="qualifiedReferralCount">0</strong></span></div>
+    <div class="exchange-rate" id="exchangeRatePanel" aria-live="polite"><span class="rate-label">LIVE UGX → USD</span><strong id="exchangeRateValue">Loading rate…</strong><small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting</small></div>
+    <p id="dailyReferralTargetNote" style="margin:10px 0 0;color:#9fb4ce;font-size:11px">Daily target progress syncs with Supabase · resets at midnight EAT.</p>
   </section>
 
   <section class="activation-access-note" id="activationAccessNote" aria-live="polite">
