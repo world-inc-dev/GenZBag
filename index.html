@@ -4978,6 +4978,7 @@ body.activation-screen-open{overflow:hidden!important}
   <p class="genz-offline-hint">Your account information will appear once your connection is restored.</p>
  </div>
 </div>
+<script>if(!navigator.onLine){document.getElementById('genzOfflineScreen')?.classList.add('is-visible');}</script>
 <div class="auth-gate hidden" id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle">
  <div class="auth-panel auth-panel-live">
   <div class="auth-brand"><span class="auth-brand-mark auth-g-live">💰</span><span>GenZBag</span><span class="auth-live-pill"><i></i> LIVE</span></div>
