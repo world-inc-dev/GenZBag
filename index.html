@@ -4924,6 +4924,33 @@ body.activation-screen-open{overflow:hidden!important}
 @media(max-width:420px){.welcome-network-summary{margin:0 9px 5px;padding:6px 7px}.welcome-financials .profit-box,.welcome-financials .expenses-card{padding:7px 9px}.welcome-card .profit-box strong,.welcome-card .expenses-value{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.welcome-card:before,.welcome-card:after,.welcome-network-summary .rate-dot{animation:none}}
 
+/* Slightly improve readability across every text area in the welcome card */
+.welcome-card .welcome-info h2{font-size:19px}
+.welcome-card .welcome-greeting-line{font-size:12px;line-height:1.35}
+.welcome-card .welcome-rank-badge{font-size:10px}
+.welcome-card .active-badge{font-size:9px}
+.welcome-network-summary .network-top h2{font-size:11px}
+.welcome-network-summary .network-message{font-size:10px;line-height:1.35}
+.welcome-network-summary .network-signin-button{font-size:9px}
+.welcome-network-summary .network-stat{font-size:8px}
+.welcome-network-summary .network-stat strong{font-size:9px}
+.welcome-network-summary .progress-circle strong{font-size:11px}
+.welcome-network-summary .progress-circle small{font-size:7px}
+.welcome-network-summary .rate-label{font-size:8px}
+.welcome-network-summary .exchange-rate strong{font-size:11px}
+.welcome-network-summary .exchange-rate small{font-size:8px}
+.welcome-network-summary #dailyReferralTargetNote{font-size:8px!important}
+.welcome-card .profit-box small,.welcome-card .expenses-title{font-size:9px}
+.welcome-card .profit-box strong,.welcome-card .expenses-value{font-size:14px}
+@media(max-width:420px){
+ .welcome-card .welcome-info h2{font-size:18px}
+ .welcome-card .welcome-greeting-line{font-size:11px}
+ .welcome-card .active-badge{font-size:8px}
+ .welcome-network-summary .network-top h2{font-size:11px}
+ .welcome-network-summary .network-message{font-size:9px}
+ .welcome-card .profit-box strong,.welcome-card .expenses-value{font-size:12px}
+}
+
 /* Rotating member badge */
 .welcome-top .avatar{transform-style:preserve-3d;animation:memberBadgeTurn 7s linear infinite;box-shadow:0 0 0 3px #ffffff12,0 0 20px #5eead455;}
 @keyframes memberBadgeTurn{0%{transform:perspective(500px) rotateY(0deg)}100%{transform:perspective(500px) rotateY(360deg)}}
