@@ -6441,7 +6441,7 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
       <span class="count" id="messageCount" hidden>0</span>
     </button>
     <button class="brand-button">
-      <span class="brand-logo">💰</span>
+      <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><path d="M11 13.5h18l-1.5 20h-15L11 13.5Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M15 14V10a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M25.5 19.5c-1.2-1.4-3.2-2.1-5.4-1.8-2.4.3-4 1.7-4 3.5 0 2 1.8 2.8 4.1 3.1l1.5.2c2.2.3 3.7 1.1 3.7 2.9 0 1.9-1.9 3.3-4.5 3.3-2.1 0-4-.8-5.2-2.2" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></span>
       <span class="brand-wordmark">GenZBag</span>
     </button>
     <a class="topbar-profile" href="#profile" aria-label="Open my profile" title="My profile">
@@ -6453,7 +6453,7 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 <div class="overlay" id="overlay"></div>
 
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-brand"><span class="sidebar-brand-mark">💰</span><span class="sidebar-brand-name">GenZ<span>Bag</span></span></div>
+  <div class="sidebar-brand"><span class="sidebar-brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><path d="M11 13.5h18l-1.5 20h-15L11 13.5Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M15 14V10a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M25.5 19.5c-1.2-1.4-3.2-2.1-5.4-1.8-2.4.3-4 1.7-4 3.5 0 2 1.8 2.8 4.1 3.1l1.5.2c2.2.3 3.7 1.1 3.7 2.9 0 1.9-1.9 3.3-4.5 3.3-2.1 0-4-.8-5.2-2.2" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></span><span class="sidebar-brand-name">GenZ<span>Bag</span></span></div>
   <a class="nav-link active" href="#dashboardPage"><span class="nav-icon">🏠</span>Dashboard</a>
 
   <div class="nav-label">ACCOUNT &amp; REWARDS</div>
@@ -10288,5 +10288,23 @@ html body #dashboardPage .welcome-financials>.expenses-card{
 </style>
 
 
+
+<style id="genzbag-professional-brand-mark-v1">
+/* Replace emoji branding with a consistent, vector-drawn GenZBag mark. */
+html body .brand-logo{
+ display:grid!important;place-items:center!important;
+ width:32px!important;height:32px!important;flex:0 0 32px!important;
+ border-radius:9px!important;background:linear-gradient(145deg,#d8bd72,#b18a36)!important;
+ color:#103a2c!important;font-size:0!important;line-height:0!important;
+}
+html body .brand-logo svg{display:block!important;width:25px!important;height:25px!important}
+html body .sidebar-brand-mark{
+ display:grid!important;place-items:center!important;
+ width:36px!important;height:36px!important;flex:0 0 36px!important;
+ border-radius:10px!important;background:linear-gradient(145deg,#d8bd72,#b18a36)!important;
+ color:#103a2c!important;font-size:0!important;line-height:0!important;
+}
+html body .sidebar-brand-mark svg{display:block!important;width:29px!important;height:29px!important}
+</style>
 </body>
 </html>
