@@ -5742,7 +5742,31 @@ a{color:#5146df}
 }
 @media(prefers-reduced-motion:reduce){.icon-btn,.header-search-result{transition:none!important}}
 </style>
-</head>
+<style id="genzbag-financial-analytics-style">
+.dashboard-insights-card{position:relative}
+.financial-period-controls{display:flex;justify-content:flex-end;gap:6px;margin:12px 0 10px}
+.financial-period-button{padding:7px 13px!important;border-radius:20px!important;background:rgba(255,255,255,.72)!important;color:#62697a!important;border:1px solid rgba(255,255,255,.96)!important;box-shadow:none!important;font:600 11px Inter,sans-serif!important}
+.financial-period-button.active{background:#5146df!important;color:#fff!important;box-shadow:0 5px 13px rgba(81,70,223,.18)!important}
+.financial-kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0 0 12px}
+.financial-kpi{min-width:0;padding:12px 13px;border:1px solid rgba(255,255,255,.95);border-radius:15px;background:rgba(255,255,255,.58);box-shadow:inset 0 1px rgba(255,255,255,.9)}
+.financial-kpi span,.financial-kpi small{display:block;color:#73798a;font-size:10px}
+.financial-kpi strong{display:block;margin:6px 0 4px;color:#202433;font-size:clamp(13px,1.5vw,18px);font-weight:800;overflow-wrap:anywhere}
+.financial-kpi strong.negative{color:#bd4358}
+.financial-chart-legend{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:8px 2px;color:#62697a;font-size:10px}
+.financial-chart-legend span{display:flex;align-items:center;gap:5px}
+.financial-chart-legend i{display:inline-block;width:8px;height:8px;border-radius:3px}
+.legend-credit{background:#5146df}.legend-debit{background:#e58b9a}
+.financial-chart-legend small{margin-left:auto;color:#8a90a0}
+.dashboard-week-chart{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:7px!important;align-items:end!important;min-height:160px!important;padding:13px 10px 8px!important;border:1px solid rgba(255,255,255,.88)!important;border-radius:16px!important;background:rgba(255,255,255,.37)!important}
+.dashboard-week-chart:has(.financial-chart-day:nth-child(8)){grid-template-columns:repeat(10,minmax(0,1fr))!important;gap:5px!important}
+.financial-chart-day{display:flex;min-width:0;height:100%;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px}
+.financial-chart-bars{width:100%;height:125px;display:flex;align-items:flex-end;justify-content:center;gap:3px;border-bottom:1px solid rgba(112,119,143,.16)}
+.financial-chart-bar{display:block;width:min(38%,13px);min-height:2px;border-radius:5px 5px 2px 2px}
+.financial-chart-bar.credit{background:linear-gradient(180deg,#827af2,#5146df)}
+.financial-chart-bar.debit{background:linear-gradient(180deg,#f1b2bd,#df788b)}
+.financial-chart-day small{color:#747b8d;font-size:9px;white-space:nowrap}
+@media(max-width:600px){.financial-kpi-grid{gap:6px}.financial-kpi{padding:10px 8px}.financial-kpi span,.financial-kpi small{font-size:9px}.financial-kpi strong{font-size:12px}.financial-chart-legend{gap:9px}.financial-chart-legend small{width:100%;margin-left:0}.dashboard-week-chart{min-height:140px!important;gap:3px!important;padding:10px 5px 7px!important}.financial-chart-bars{height:105px}.financial-chart-day small{font-size:8px}}
+</style></head>
 
 <body>
 <div id="genzOfflineScreen" role="alert" aria-live="assertive">
@@ -6052,6 +6076,16 @@ a{color:#5146df}
 
   <section class="card dashboard-insights-card" aria-labelledby="dashboardInsightsTitle">
     <div class="dashboard-insights-head"><div><h2 id="dashboardInsightsTitle">Wallet activity</h2><p>Real ledger activity from your account</p></div><span class="insights-period">LAST 7 DAYS</span></div>
+    <div class="financial-period-controls" role="group" aria-label="Financial analytics period">
+      <button type="button" class="financial-period-button active" data-financial-period="7">7 days</button>
+      <button type="button" class="financial-period-button" data-financial-period="30">30 days</button>
+    </div>
+    <div class="financial-kpi-grid" id="genzbag-financial-analytics" aria-live="polite">
+      <article class="financial-kpi"><span>Money in</span><strong id="financialInflow">UGX 0</strong><small>Ledger credits</small></article>
+      <article class="financial-kpi"><span>Money out</span><strong id="financialOutflow">UGX 0</strong><small>Ledger debits</small></article>
+      <article class="financial-kpi"><span>Net movement</span><strong id="financialNet">UGX 0</strong><small>Credits less debits</small></article>
+    </div>
+    <div class="financial-chart-legend"><span><i class="legend-credit"></i> Money in</span><span><i class="legend-debit"></i> Money out</span><small id="financialChartCaption">Daily ledger activity · UGX</small></div>
     <div class="dashboard-week-chart" id="dashboardWeekChart" aria-label="Wallet credits over the last seven days"><p class="dashboard-insights-empty">Your weekly activity will appear here when wallet entries are recorded.</p></div>
     <div class="dashboard-recent-head"><strong>Recent transactions</strong><span id="dashboardRecentCount">0 entries</span></div>
     <div class="dashboard-recent-list" id="dashboardRecentList"><p class="dashboard-insights-empty">No wallet activity to display yet.</p></div>
@@ -8225,16 +8259,45 @@ document.getElementById('adminProfileRefresh')?.addEventListener('click',loadAdm
 function renderDashboardWalletInsights(ledgerRows){
  const chart=document.getElementById('dashboardWeekChart'),list=document.getElementById('dashboardRecentList'),count=document.getElementById('dashboardRecentCount');
  if(!chart||!list)return;
- const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),days=[];
- for(let i=6;i>=0;i--){const d=new Date(today);d.setDate(today.getDate()-i);days.push(d);}
- const dayTotals=days.map(d=>(ledgerRows||[]).filter(x=>x.currency==='UGX'&&x.direction==='credit'&&x.created_at&&new Date(x.created_at)>=d&&new Date(x.created_at)<new Date(d.getFullYear(),d.getMonth(),d.getDate()+1)).reduce((n,x)=>n+Number(x.amount||0),0));
- const max=Math.max(0,...dayTotals);
- chart.innerHTML=days.map((d,i)=>'<div class="dashboard-week-day"><div class="dashboard-week-track" title="UGX '+dayTotals[i].toLocaleString()+' credited"><div class="dashboard-week-bar" style="height:'+ (max?Math.max(5,dayTotals[i]/max*100):4)+'%"></div></div><small>'+d.toLocaleDateString('en-GB',{weekday:'short',timeZone:'Africa/Kampala'}).slice(0,2)+'</small></div>').join('');
- const recent=(ledgerRows||[]).filter(x=>x.created_at).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+ const rows=(Array.isArray(ledgerRows)?ledgerRows:[]).filter(x=>x&&x.currency==='UGX'&&x.created_at&&Number.isFinite(Number(x.amount)));
+ const period=Math.max(7,Math.min(30,Number(window.genzbagFinancialPeriod)||7));
+ const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),start=new Date(today);start.setDate(start.getDate()-(period-1));
+ const buckets=[];
+ for(let i=0;i<period;i++){const d=new Date(start);d.setDate(start.getDate()+i);buckets.push({date:d,credit:0,debit:0});}
+ let inflow=0,outflow=0;
+ rows.forEach(x=>{
+  const d=new Date(x.created_at);if(Number.isNaN(d.getTime())||d<start||d>=new Date(today.getFullYear(),today.getMonth(),today.getDate()+1))return;
+  const index=Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-start)/86400000);
+  if(index<0||index>=buckets.length)return;
+  const amount=Math.max(0,Number(x.amount)||0);
+  if(x.direction==='credit'){buckets[index].credit+=amount;inflow+=amount;}
+  else if(x.direction==='debit'){buckets[index].debit+=amount;outflow+=amount;}
+ });
+ const money=n=>'UGX '+Math.round(n).toLocaleString('en-UG');
+ const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+ put('financialInflow',money(inflow));put('financialOutflow',money(outflow));put('financialNet',(inflow<outflow?'−':'')+money(Math.abs(inflow-outflow)));
+ const netEl=document.getElementById('financialNet');if(netEl)netEl.classList.toggle('negative',inflow<outflow);
+ const caption=document.getElementById('financialChartCaption');if(caption)caption.textContent='Daily ledger activity · UGX';
+ document.querySelectorAll('[data-financial-period]').forEach(button=>button.classList.toggle('active',Number(button.dataset.financialPeriod)===period));
+ const max=Math.max(1,...buckets.flatMap(x=>[x.credit,x.debit]));
+ chart.innerHTML=buckets.map(b=>{
+  const label=period===7?b.date.toLocaleDateString('en-GB',{weekday:'short',timeZone:'Africa/Kampala'}).slice(0,2):b.date.toLocaleDateString('en-GB',{day:'2-digit',month:'short',timeZone:'Africa/Kampala'});
+  const credit=Math.max(2,b.credit/max*100),debit=Math.max(2,b.debit/max*100);
+  return '<div class="financial-chart-day" title="'+escapeText(label)+': in '+money(b.credit)+', out '+money(b.debit)+'"><div class="financial-chart-bars"><span class="financial-chart-bar credit" style="height:'+credit+'%"></span><span class="financial-chart-bar debit" style="height:'+debit+'%"></span></div><small>'+escapeText(label)+'</small></div>';
+ }).join('');
+ chart.setAttribute('aria-label',period+' day wallet ledger chart. Money in '+money(inflow)+', money out '+money(outflow)+'.');
+ const recent=rows.slice().sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
  if(count)count.textContent=recent.length+' entr'+(recent.length===1?'y':'ies');
- if(!recent.length){list.innerHTML='<p class="dashboard-insights-empty">No wallet activity to display yet. Your approved rewards and wallet entries will appear here.</p>';return;}
- list.innerHTML=recent.map(x=>{const debit=x.direction==='debit',label=String(x.note||x.entry_type||'Wallet entry').replace(/[_-]+/g,' '),amount=Number(x.amount||0),when=new Date(x.created_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Africa/Kampala'});return '<div class="dashboard-recent-row"><span class="dashboard-recent-icon '+(debit?'debit':'')+'">'+(debit?'−':'+')+'</span><div class="dashboard-recent-info"><strong>'+escapeText(label)+'</strong><small>'+escapeText(when)+' · '+escapeText(String(x.entry_type||'').replace(/_/g,' '))+'</small></div><span class="dashboard-recent-amount '+(debit?'debit':'')+'">'+(debit?'−':'+')+' UGX '+amount.toLocaleString(undefined,{maximumFractionDigits:2})+'</span></div>';}).join('');
+ if(!recent.length){list.innerHTML='<p class="dashboard-insights-empty">No wallet activity to display yet. Approved rewards and wallet entries will appear here.</p>';return;}
+ list.innerHTML=recent.map(x=>{
+  const debit=x.direction==='debit',label=String(x.note||x.entry_type||'Wallet entry').replace(/[_-]+/g,' '),amount=Number(x.amount||0),when=new Date(x.created_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Africa/Kampala'});
+  return '<div class="dashboard-recent-row"><span class="dashboard-recent-icon '+(debit?'debit':'')+'">'+(debit?'−':'+')+'</span><div class="dashboard-recent-info"><strong>'+escapeText(label)+'</strong><small>'+escapeText(when)+' · '+escapeText(String(x.entry_type||'').replace(/_/g,' '))+'</small></div><span class="dashboard-recent-amount '+(debit?'debit':'')+'">'+(debit?'−':'+')+' UGX '+amount.toLocaleString(undefined,{maximumFractionDigits:2})+'</span></div>';
+ }).join('');
 }
+document.querySelectorAll('[data-financial-period]').forEach(button=>button.addEventListener('click',()=>{
+ window.genzbagFinancialPeriod=Number(button.dataset.financialPeriod)||7;
+ if(Array.isArray(window.genzbagLatestLedgerRows))renderDashboardWalletInsights(window.genzbagLatestLedgerRows);
+}));
 function restoreCachedWalletSnapshot(memberId){
  if(!memberId)return false;
  try{
@@ -8272,7 +8335,7 @@ async function loadMemberWallet(member=currentMember){
  if(ledgerError){console.warn('Wallet ledger:',ledgerError);document.querySelectorAll('.balance-grid .balance-card strong,.welcome-financials strong,#tasks .task-amount').forEach(el=>el.textContent='Unavailable');const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent='Unavailable';return;}
  const ugx=rows.filter(x=>x.currency==='UGX');
  updateTaskEarningsFromLedger(rows);
- renderDashboardWalletInsights(rows);
+ window.genzbagLatestLedgerRows=rows;\n renderDashboardWalletInsights(rows);
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
  const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal','voucher_purchase','client_activation_debit'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
