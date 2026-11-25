@@ -6,7 +6,7 @@
 <rect width="512" height="512" rx="104" fill="#050806"/>
 <path d="M139 172h234l-19 254H158z" fill="url(#green)" stroke="#d8b34f" stroke-width="10" stroke-linejoin="round"/>
 <path d="M190 174v-45a66 66 0 0 1 132 0v45" fill="none" stroke="url(#gold)" stroke-width="23" stroke-linecap="round"/>
-<path d="M323 235c-17-19-45-28-75-23-34 5-57 25-57 52 0 30 26 42 59 47l22 4c31 5 52 16 52 42 0 28-27 47-65 47-30 0-57-12-74-32" fill="none" stroke="url(#gold)" stroke-width="24" stroke-linecap="round"/>
+<path d="M350 213C335 171 301 147 256 147C194 147 151 193 151 256C151 319 194 365 256 365C307 365 344 333 354 284H270V256H385V280C376 351 325 394 256 394C177 394 122 336 122 256C122 176 178 118 256 118C313 118 357 151 378 202" fill="none" stroke="url(#gold)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M56 375c62 74 250 87 392-78" fill="none" stroke="url(#gold)" stroke-width="19" stroke-linecap="round"/>
 <path d="M369 264l84 7-40 71" fill="none" stroke="#18d75c" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
