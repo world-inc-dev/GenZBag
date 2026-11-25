@@ -6307,6 +6307,45 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 .page-view:not(#dashboardPage):not(#adminPage) :is([hidden]),
 .feature-workspace :is([hidden]){display:none!important}
 </style>
+
+<style id="genzbag-dark-feature-panel-contrast">
+/* Correct contrast for dark feature headers such as Global Community chat. */
+#globalChat .chat-header{
+ background:linear-gradient(125deg,#102d43 0%,#123b52 55%,#12445a 100%)!important;
+ color:#f7fbff!important;
+}
+#globalChat .chat-header h1,
+#globalChat .chat-header h2,
+#globalChat .chat-header h3,
+#globalChat .chat-header strong{
+ color:#f7fbff!important;
+}
+#globalChat .chat-header p{
+ color:#d7e6f2!important;
+}
+#globalChat .chat-header .global-chat-kicker{
+ color:#78e2d7!important;
+}
+#globalChat .chat-header .global-chat-member-count{
+ color:#c9fff1!important;
+ background:rgba(23,167,143,.22)!important;
+ border-color:rgba(120,226,215,.45)!important;
+}
+#globalChat .chat-header .global-chat-refresh{
+ color:#fff!important;
+}
+#globalChat .gb-chat-reward,
+#globalChat .gb-chat-reward *{
+ color:#202432!important;
+}
+#globalChat .gb-chat-reward .gb-chat-progress strong{
+ color:#28cdbb!important;
+}
+#globalChat .gb-chat-reward .gb-chat-progress span,
+#globalChat .gb-chat-reward small{
+ color:#354253!important;
+}
+</style>
 </head>
 
 <body>
