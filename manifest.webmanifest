@@ -6,14 +6,21 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "portrait",
-  "background_color": "#07152f",
-  "theme_color": "#0A2A6B",
-  "categories": ["finance", "social", "productivity"],
+  "background_color": "#050806",
+  "theme_color": "#07150c",
+  "categories": [
+    "finance",
+    "social",
+    "productivity"
+  ],
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "./app-icon.svg?v=2",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
