@@ -10235,5 +10235,23 @@ html body #dashboardPage section.balance-grid>.genzbank-balance-card{
 }
 </style>
 
+
+<style id="genzbag-hide-withdrawal-workspace-unless-open-v1">
+/* Keep the withdrawal workspace out of the dashboard until the user opens Withdraw Balance. */
+html body #featureWorkspace[hidden],
+html body #featureWorkspace #withdrawalRulesPanel[hidden]{
+  display:none!important;
+  visibility:hidden!important;
+}
+html body #featureWorkspace:not(.withdraw-mode) #withdrawalRulesPanel{
+  display:none!important;
+  visibility:hidden!important;
+}
+html body #featureWorkspace.withdraw-mode #withdrawalRulesPanel:not([hidden]){
+  display:block!important;
+  visibility:visible!important;
+}
+</style>
+
 </body>
 </html>
