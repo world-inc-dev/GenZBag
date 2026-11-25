@@ -6590,10 +6590,21 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 
   <section class="balance-grid">
 
-    <article class="balance-card green">
+    <article class="balance-card green genzbank-balance-card">
       <span class="balance-icon">💳</span>
       <small>AVAILABLE BALANCE</small>
       <strong>—</strong>
+      <div class="genzbank-account-details">
+        <div class="genzbank-number-wrap">
+          <span class="genzbank-field-label">CARD NUMBER</span>
+          <b class="genzbank-card-number">•••• &nbsp;•••• &nbsp;•••• &nbsp;••••</b>
+        </div>
+        <div class="genzbank-card-meta">
+          <div><span> CARDHOLDER </span><b id="genzbankCardholder">GENZBAG MEMBER</b></div>
+          <div><span> EXPIRY </span><b>••/••</b></div>
+          <div><span> CVV </span><b>•••</b></div>
+        </div>
+      </div>
     </article>
 
     <article class="balance-card purple">
@@ -10059,6 +10070,36 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
 
 
 
+
+<style id="genzbag-real-bank-card-balance-v1">
+/* Extra account details only; the card inherits the exact Team Earnings card design. */
+.balance-grid > .genzbank-balance-card{
+  display:flex!important;flex-direction:column!important;
+}
+.genzbank-account-details{position:relative;z-index:2;margin-top:13px}
+.genzbank-field-label,.genzbank-card-meta span{
+  display:block;font-size:8px;font-weight:800;letter-spacing:1px;opacity:.82;
+}
+.genzbank-card-number{display:block;margin-top:4px;font-size:12px;font-weight:900;letter-spacing:1.25px;color:inherit}
+.genzbank-card-meta{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-top:10px}
+.genzbank-card-meta>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.genzbank-card-meta b{font-size:9px;font-weight:900;letter-spacing:.5px;overflow-wrap:anywhere}
+.genzbank-card-meta>div:first-child{flex:1 1 90px}
+</style>
+
+<script id="genzbag-cardholder-details-v1">
+(function(){
+ const holder=document.getElementById('genzbankCardholder');
+ function syncCardholder(){
+  const profileName=document.getElementById('profileMemberName')?.textContent?.trim();
+  if(holder)holder.textContent=String(profileName||'GENZBAG MEMBER').replace(/\s+/g,' ').slice(0,28).toUpperCase();
+ }
+ syncCardholder();
+ const profileNameEl=document.getElementById('profileMemberName');
+ if(profileNameEl)new MutationObserver(syncCardholder).observe(profileNameEl,{childList:true,characterData:true,subtree:true});
+ document.addEventListener('genzbag:member-updated',syncCardholder);
+})();
+</script>
 
 </body>
 </html>
