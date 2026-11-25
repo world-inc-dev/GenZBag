@@ -6035,6 +6035,55 @@ td{border-color:rgba(110,119,140,.13)!important}
  .welcome-card .dashboard-action-icon{width:43px!important;height:43px!important}
 }
 </style>
+
+<style id="genzbag-compact-dashboard">
+/* Compact dashboard density; other pages, navigation and features are unaffected. */
+#dashboardPage{font-size:14px!important}
+#dashboardPage>.welcome-card{
+ max-width:100%!important;border-radius:22px!important;margin:0 0 12px!important;
+}
+#dashboardPage .welcome-top{padding:12px 15px 10px!important;gap:9px!important}
+#dashboardPage .welcome-card .avatar{width:34px!important;height:34px!important;font-size:14px!important}
+#dashboardPage .welcome-info h2{font-size:18px!important;line-height:1.12!important}
+#dashboardPage .welcome-info p,#dashboardPage .welcome-info .welcome-tagline{font-size:11px!important;line-height:1.3!important;margin-top:3px!important}
+#dashboardPage .welcome-card .welcome-rank-badge{margin-top:4px!important;padding:3px 8px!important;font-size:9px!important}
+#dashboardPage .welcome-card .active-badge{font-size:9px!important;padding:5px 8px!important}
+#dashboardPage .welcome-financials{padding:0 12px 12px!important}
+#dashboardPage .welcome-financials .profit-box,
+#dashboardPage .welcome-financials .expenses-card{min-height:70px!important;padding:10px 12px!important}
+#dashboardPage .welcome-financials .profit-box small,
+#dashboardPage .welcome-financials .expenses-title{font-size:9px!important}
+#dashboardPage .welcome-financials .profit-box strong,
+#dashboardPage .welcome-financials .expenses-value{font-size:clamp(15px,3.4vw,21px)!important;margin-top:6px!important}
+#dashboardPage>.balance-grid{gap:8px!important;margin:0 0 12px!important}
+#dashboardPage .balance-card{min-height:100px!important;padding:12px!important;border-radius:16px!important}
+#dashboardPage .balance-card small{font-size:9px!important;letter-spacing:.4px!important}
+#dashboardPage .balance-card strong{font-size:clamp(15px,3.5vw,20px)!important;margin-top:8px!important}
+#dashboardPage>.card{border-radius:17px!important;margin-bottom:12px!important}
+#dashboardPage .dashboard-insights-head{padding:13px 14px 9px!important}
+#dashboardPage .dashboard-week-chart{min-height:84px!important;padding:9px 12px!important}
+#dashboardPage .dashboard-recent-list{padding:8px 12px!important}
+#dashboardPage #tasks{padding:13px!important}
+#dashboardPage #tasks .task-row{min-height:43px!important;padding:8px 10px!important;margin-bottom:6px!important}
+#dashboardPage #tasks .task-icon{width:30px!important;height:30px!important}
+#dashboardPage #tasks .task-name{font-size:11px!important}
+#dashboardPage #tasks .task-amount{font-size:11px!important}
+#dashboardPage .section-heading{padding:11px 13px!important}
+@media(max-width:600px){
+ #dashboardPage>.welcome-card{margin-bottom:10px!important}
+ #dashboardPage .welcome-top{padding:10px 12px 8px!important}
+ #dashboardPage .welcome-card .avatar{width:31px!important;height:31px!important}
+ #dashboardPage .welcome-info h2{font-size:16px!important}
+ #dashboardPage .welcome-info p,#dashboardPage .welcome-info .welcome-tagline{font-size:10px!important}
+ #dashboardPage .welcome-financials{padding:0 10px 10px!important}
+ #dashboardPage .welcome-financials .profit-box,
+ #dashboardPage .welcome-financials .expenses-card{min-height:64px!important;padding:9px 10px!important}
+ #dashboardPage>.balance-grid{gap:7px!important}
+ #dashboardPage .balance-card{min-height:88px!important;padding:10px!important}
+ #dashboardPage .balance-card strong{font-size:15px!important}
+ #dashboardPage #tasks{padding:10px!important}
+}
+</style>
 </head>
 
 <body>
@@ -6269,12 +6318,7 @@ td{border-color:rgba(110,119,140,.13)!important}
       <div class="profit-box"><small>NET PROFITS</small><strong>—</strong></div>
       <div class="expenses-card" aria-live="polite"><small class="expenses-title">ACTIVATION FEES</small><strong class="expenses-value" id="dashboardExpensesValue">UGX 19,500</strong></div>
     </div>
-    <section class="dashboard-quick-actions" aria-label="Quick actions">
-    <a class="dashboard-action" href="#featureWorkspace" data-feature="withdraw-balance"><span class="dashboard-action-icon">↗</span><strong>Withdraw</strong><small>Request a payout</small></a>
-    <a class="dashboard-action" href="#featureWorkspace" data-feature="deposit"><span class="dashboard-action-icon">＋</span><strong>Deposit</strong><small>Add funds</small></a>
-    <a class="dashboard-action" href="#chatPage"><span class="dashboard-action-icon">◉</span><strong>Live Chat</strong><small>Get assistance</small></a>
-    <a class="dashboard-action" href="#wallet"><span class="dashboard-action-icon">▣</span><strong>Wallet</strong><small>View transactions</small></a>
-    </section>
+
   </section>
 
   <section class="activation-access-note" id="activationAccessNote" aria-live="polite">
