@@ -5955,6 +5955,86 @@ td{border-color:rgba(110,119,140,.13)!important}
  .currency-picker{min-height:38px!important;padding:6px 10px!important}
 }
 </style>
+
+<style id="genzbag-lofthela-top-panel">
+/* Lofthela-inspired dashboard header: greeting, split financial summary and four shortcut actions. */
+.welcome-card{
+ overflow:hidden!important;padding:0!important;border-radius:30px!important;
+ background:linear-gradient(112deg,#bfe8f5 0%,#d5d9fa 48%,#f1efbd 100%)!important;
+ border:1px solid rgba(255,255,255,.92)!important;
+ box-shadow:0 13px 30px rgba(75,115,155,.13),inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+.welcome-top{
+ display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;
+ align-items:center!important;gap:12px!important;padding:22px 22px 17px!important;
+}
+.welcome-card .avatar{width:42px!important;height:42px!important;font-size:17px!important;background:linear-gradient(145deg,#2d83df,#154a9b)!important;color:#fff!important}
+.welcome-info h2{font-size:clamp(20px,4vw,26px)!important;font-weight:850!important;letter-spacing:-.4px!important;color:#102b55!important}
+.welcome-info p,.welcome-info .welcome-tagline{font-size:13px!important;line-height:1.45!important;color:#29476d!important;margin-top:5px!important}
+.welcome-card .active-badge{align-self:start!important;background:#ddf8e8!important;color:#16834b!important}
+.welcome-card .welcome-rank-badge{display:inline-flex!important;margin-top:7px!important;padding:5px 10px!important;border-radius:18px!important;background:rgba(255,255,255,.72)!important;color:#245b9d!important;border:1px solid rgba(255,255,255,.9)!important}
+.welcome-financials{
+ display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;
+ padding:0 18px!important;margin:0!important;
+}
+.welcome-financials .profit-box,.welcome-financials .expenses-card{
+ min-width:0!important;min-height:100px!important;display:flex!important;
+ flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;
+ padding:16px 17px!important;border:0!important;box-shadow:none!important;
+}
+.welcome-financials .profit-box{
+ background:linear-gradient(110deg,#287fe0,#123e91)!important;
+ border-radius:24px 0 0 24px!important;
+}
+.welcome-financials .profit-box small,.welcome-financials .profit-box strong{color:#fff!important}
+.welcome-financials .expenses-card{
+ background:rgba(255,255,255,.94)!important;border-radius:0 24px 24px 0!important;
+}
+.welcome-financials .expenses-title{color:#2873bd!important}
+.welcome-financials .expenses-value{color:#172d52!important}
+.welcome-financials .profit-box small,.welcome-financials .expenses-title{
+ font-size:11px!important;font-weight:800!important;letter-spacing:.25px!important;
+}
+.welcome-financials .profit-box strong,.welcome-financials .expenses-value{
+ font-size:clamp(18px,3.7vw,25px)!important;font-weight:850!important;
+ margin-top:9px!important;overflow-wrap:anywhere!important;
+}
+.welcome-card>.dashboard-quick-actions{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:3px!important;margin:0!important;padding:17px 13px 19px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.welcome-card .dashboard-action{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;gap:6px!important;padding:5px 2px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.welcome-card .dashboard-action-icon{
+ width:49px!important;height:49px!important;border-radius:50%!important;
+ display:grid!important;place-items:center!important;
+ background:rgba(255,255,255,.94)!important;color:#2675c3!important;
+ box-shadow:0 5px 13px rgba(57,102,151,.1)!important;
+}
+.welcome-card .dashboard-action:nth-child(2) .dashboard-action-icon{color:#279a72!important}
+.welcome-card .dashboard-action:nth-child(3) .dashboard-action-icon{color:#2697a5!important}
+.welcome-card .dashboard-action:nth-child(4) .dashboard-action-icon{color:#d59a42!important}
+.welcome-card .dashboard-action strong{font-size:clamp(10px,2.7vw,14px)!important;font-weight:800!important;color:#102b55!important}
+.welcome-card .dashboard-action small{display:none!important}
+@media(max-width:600px){
+ .welcome-card{border-radius:25px!important}
+ .welcome-top{grid-template-columns:auto minmax(0,1fr)!important;padding:17px 15px 15px!important;gap:10px!important}
+ .welcome-card .active-badge{grid-column:2!important;grid-row:2!important;justify-self:start!important;margin-top:0!important}
+ .welcome-card .avatar{width:38px!important;height:38px!important}
+ .welcome-info h2{font-size:20px!important}
+ .welcome-info p,.welcome-info .welcome-tagline{font-size:12px!important}
+ .welcome-financials{padding:0 12px!important}
+ .welcome-financials .profit-box,.welcome-financials .expenses-card{min-height:87px!important;padding:12px!important}
+ .welcome-financials .profit-box{border-radius:21px 0 0 21px!important}
+ .welcome-financials .expenses-card{border-radius:0 21px 21px 0!important}
+ .welcome-card>.dashboard-quick-actions{padding:13px 7px 15px!important}
+ .welcome-card .dashboard-action-icon{width:43px!important;height:43px!important}
+}
+</style>
 </head>
 
 <body>
@@ -6176,12 +6256,9 @@ td{border-color:rgba(110,119,140,.13)!important}
       <span class="active-badge status-error" id="accountActivationBadge">Checking status</span>
     </div>
 
-    <div class="currency-conversion-strip" id="exchangeRatePanel" aria-live="polite">
-      <div class="conversion-heading"><span class="conversion-live-dot"></span><span>LIVE CURRENCY CONVERSION</span></div>
-      <div class="conversion-main"><span class="conversion-currency">UGX 🇺🇬</span><span class="conversion-arrow">→</span><span class="conversion-currency conversion-target">USD 🇺🇸</span><strong id="exchangeRateValue">Loading rate…</strong></div>
-      <small id="exchangeRateUpdated"><span class="rate-dot"></span>Connecting to live market data</small>
-    </div>
     <div hidden aria-hidden="true">
+      <strong id="exchangeRateValue">Loading rate…</strong>
+      <small id="exchangeRateUpdated"></small>
       <strong id="rankProgressCount">0</strong><small id="rankProgressTarget">of 5</small>
       <p id="networkMessage"></p><button id="networkSignInButton" type="button"></button>
       <span id="totalReferralCount">0</span><span id="qualifiedReferralCount">0</span>
