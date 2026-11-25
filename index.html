@@ -10125,5 +10125,52 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
 }
 </style>
 
+
+<style id="genzbag-responsive-layout-repair-v1">
+/* Keep navigation collapsed by default at every viewport size. */
+#sidebar{
+  transform:translateX(-110%)!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:transform .25s ease,visibility .25s ease!important;
+  z-index:120!important;
+}
+#sidebar.open{
+  transform:translateX(0)!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+.overlay{display:none!important;z-index:110!important}
+.overlay.show{display:block!important}
+.main,#dashboard{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+@media(min-width:900px){
+  .main,#dashboard{padding-left:clamp(16px,3vw,34px)!important;padding-right:clamp(16px,3vw,34px)!important}
+}
+@media(max-width:899px){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  .main,#dashboard{width:100%!important;max-width:100%!important;margin:0!important;padding:14px 12px 30px!important}
+  #dashboardPage,.page-view{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+  .dashboard-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .welcome-financials{grid-template-columns:minmax(0,1fr)!important}
+  .admin-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .balance-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .card,.balance-card,.dashboard-insights-card,.profile-info-card{min-width:0!important;max-width:100%!important}
+  .section-heading,.admin-console-head,.activity-card-top{flex-wrap:wrap!important}
+  table{display:block!important;width:100%!important;max-width:100%!important;overflow-x:auto!important}
+}
+@media(max-width:420px){
+  .main,#dashboard{padding:12px 9px 26px!important}
+  .dashboard-quick-actions{gap:8px!important}
+  .dashboard-action{min-width:0!important;padding:11px 5px!important}
+  .admin-metric-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
+
 </body>
 </html>
