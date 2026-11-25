@@ -6414,42 +6414,33 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
  </section>
 </div>
 
-<header class="topbar">
+<header class="topbar genzbag-topbar-polished">
   <div class="header-left">
-    <button class="icon-btn" id="menuButton" aria-label="Open menu" aria-expanded="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-        <path d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
+    <button class="icon-btn topbar-action menu-action" id="menuButton" aria-label="Open menu" aria-expanded="false" title="Main menu">
+      <span aria-hidden="true">☰</span><small>Menu</small>
     </button>
-    <label class="currency-picker" title="Display dashboard amounts in"><span>Currency</span><select id="dashboardCurrency" aria-label="Dashboard display currency"><option value="UGX">UGX 🇺🇬</option><option value="USD">USD 🇺🇸</option><option value="KES">KES 🇰🇪</option><option value="TZS">TZS 🇹🇿</option><option value="RWF">RWF 🇷🇼</option><option value="BIF">BIF 🇧🇮</option><option value="CDF">CDF 🇨🇩</option><option value="SSP">SSP 🇸🇸</option><option value="ETB">ETB 🇪🇹</option><option value="NGN">NGN 🇳🇬</option><option value="ZAR">ZAR 🇿🇦</option><option value="GHS">GHS 🇬🇭</option><option value="EUR">EUR 🇪🇺</option><option value="GBP">GBP 🇬🇧</option><option value="AED">AED 🇦🇪</option><option value="SAR">SAR 🇸🇦</option><option value="INR">INR 🇮🇳</option><option value="CNY">CNY 🇨🇳</option><option value="JPY">JPY 🇯🇵</option><option value="CAD">CAD 🇨🇦</option><option value="AUD">AUD 🇦🇺</option></select></label>
-    
-  </div>
-
-
-
-  <div class="header-right">
-    <button class="icon-btn" id="notificationsButton" type="button" aria-label="Notifications" title="Notifications">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-        <path d="M10 21h4"/>
-      </svg>
-      <span class="count" id="notificationCount" hidden>0</span>
-    </button>
-
-    <button class="icon-btn" id="messagesButton" type="button" aria-label="Messages" title="Messages">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.3A8.5 8.5 0 1 1 21 11.5Z"/>
-        <path d="M8 11h8M8 14h5"/>
-      </svg>
-      <span class="count" id="messageCount" hidden>0</span>
-    </button>
-
-    <button class="brand-button">
-      <span class="brand-logo">💰</span>
+    <button class="brand-button topbar-brand" type="button" aria-label="GenZBag home">
+      <span class="brand-logo" aria-hidden="true">💼</span>
       <span class="brand-wordmark">GenZBag</span>
     </button>
-    <a class="topbar-profile" href="#profile" aria-label="Open my profile" title="My profile">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.8 20c.8-3.2 3.3-5 7.2-5s6.4 1.8 7.2 5"></path></svg>
+  </div>
+  <div class="header-right">
+    <label class="currency-picker topbar-currency" title="Display dashboard amounts in">
+      <span aria-hidden="true">💱</span>
+      <select id="dashboardCurrency" aria-label="Dashboard display currency">
+        <option value="UGX">🇺🇬 UGX</option><option value="USD">🇺🇸 USD</option><option value="KES">🇰🇪 KES</option><option value="TZS">🇹🇿 TZS</option><option value="RWF">🇷🇼 RWF</option><option value="BIF">🇧🇮 BIF</option><option value="CDF">🇨🇩 CDF</option><option value="SSP">🇸🇸 SSP</option><option value="ETB">🇪🇹 ETB</option><option value="NGN">🇳🇬 NGN</option><option value="ZAR">🇿🇦 ZAR</option><option value="GHS">🇬🇭 GHS</option><option value="EUR">🇪🇺 EUR</option><option value="GBP">🇬🇧 GBP</option><option value="AED">🇦🇪 AED</option><option value="SAR">🇸🇦 SAR</option><option value="INR">🇮🇳 INR</option><option value="CNY">🇨🇳 CNY</option><option value="JPY">🇯🇵 JPY</option><option value="CAD">🇨🇦 CAD</option><option value="AUD">🇦🇺 AUD</option>
+      </select>
+    </label>
+    <button class="icon-btn topbar-action" id="notificationsButton" type="button" aria-label="Notifications" title="🔔 Notifications">
+      <span aria-hidden="true">🔔</span><small>Alerts</small>
+      <span class="count" id="notificationCount" hidden>0</span>
+    </button>
+    <button class="icon-btn topbar-action" id="messagesButton" type="button" aria-label="Messages" title="💬 Messages">
+      <span aria-hidden="true">💬</span><small>Messages</small>
+      <span class="count" id="messageCount" hidden>0</span>
+    </button>
+    <a class="topbar-profile topbar-action" href="#profile" aria-label="Open my profile" title="👤 My profile">
+      <span aria-hidden="true">👤</span><small>Profile</small>
     </a>
   </div>
 </header>
@@ -10288,6 +10279,34 @@ html body #dashboardPage .welcome-financials>.expenses-card{
  html body #dashboardPage .welcome-financials>.expenses-card{padding:9px!important}
  html body #dashboardPage .welcome-financials .profit-box strong,
  html body #dashboardPage .welcome-financials .expenses-value{font-size:12px!important}
+}
+</style>
+
+<style id="genzbag-topbar-polished-emoji-v1">
+html body .genzbag-topbar-polished{height:auto;min-height:70px;padding:9px 15px;gap:12px;align-items:center;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #e8edf4;box-shadow:0 5px 20px rgba(15,35,65,.07)}
+html body .genzbag-topbar-polished .header-left,html body .genzbag-topbar-polished .header-right{display:flex;align-items:center;gap:10px;min-width:0}
+html body .genzbag-topbar-polished .header-right{margin-left:auto}
+html body .genzbag-topbar-polished .topbar-action{width:auto;min-width:48px;height:46px;padding:5px 9px;border:1px solid #e6ebf2;border-radius:13px;background:linear-gradient(145deg,#fff,#f5f8fc);color:#172b46;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;box-shadow:0 3px 9px rgba(15,35,65,.05);text-decoration:none}
+html body .genzbag-topbar-polished .topbar-action>span:first-child{font-size:17px;line-height:19px}
+html body .genzbag-topbar-polished .topbar-action small{font-size:8px;line-height:10px;font-weight:850;letter-spacing:.15px;color:#53647b}
+html body .genzbag-topbar-polished .topbar-brand{display:flex;flex-direction:row;gap:7px;align-items:center;justify-content:center;height:44px;padding:0 5px;border:0;background:transparent;box-shadow:none;color:#102b4c}
+html body .genzbag-topbar-polished .topbar-brand .brand-logo{font-size:22px}
+html body .genzbag-topbar-polished .topbar-brand .brand-wordmark{font-size:16px;font-weight:950;letter-spacing:-.4px}
+html body .genzbag-topbar-polished .topbar-currency{height:46px;min-width:76px;max-width:105px;padding:4px 7px;border:1px solid #e2e9f2;border-radius:13px;background:#f7f9fc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+html body .genzbag-topbar-polished .topbar-currency>span{font-size:14px;line-height:16px}
+html body .genzbag-topbar-polished .topbar-currency select{width:100%;max-width:100%;border:0;background:transparent;color:#263c59;font-size:10px;font-weight:900;text-align:center;outline:none;padding:0}
+html body .genzbag-topbar-polished .topbar-action .count{top:-5px;right:-5px}
+@media(max-width:420px){
+ html body .genzbag-topbar-polished{padding:7px 8px;gap:5px;min-height:64px}
+ html body .genzbag-topbar-polished .header-left,html body .genzbag-topbar-polished .header-right{gap:5px}
+ html body .genzbag-topbar-polished .topbar-action{min-width:38px;height:42px;padding:4px 5px;border-radius:11px}
+ html body .genzbag-topbar-polished .topbar-action small{font-size:7px}
+ html body .genzbag-topbar-polished .topbar-action>span:first-child{font-size:15px}
+ html body .genzbag-topbar-polished .topbar-brand{gap:3px;padding:0 2px}
+ html body .genzbag-topbar-polished .topbar-brand .brand-logo{font-size:18px}
+ html body .genzbag-topbar-polished .topbar-brand .brand-wordmark{font-size:12px}
+ html body .genzbag-topbar-polished .topbar-currency{min-width:65px;max-width:72px;height:42px;padding:3px}
+ html body .genzbag-topbar-polished .topbar-currency select{font-size:9px}
 }
 </style>
 </body>
