@@ -6590,7 +6590,7 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 
   <section class="balance-grid">
 
-    <article class="balance-card blue genzbank-balance-card">
+    <article class="balance-card green genzbank-balance-card" style="background:linear-gradient(135deg,#25C66A 0%,#087B3B 100%)!important;">
       <div class="genzbank-card-top">
         <span class="genzbank-brand-mark">G</span>
         <span class="genzbank-brand-name">GENZBAG <small>DIGITAL ACCOUNT</small></span>
@@ -10131,5 +10131,15 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
  setInterval(syncCardholder,2500);
 })();
 </script>
+
+<style id="genzbank-match-team-earnings-final">
+/* Keep the Available Balance card identical to the Team Earnings green finish. */
+.balance-grid > article.genzbank-balance-card,
+.balance-grid > article.genzbank-balance-card.green,
+.balance-grid > article.genzbank-balance-card.blue{
+  background:linear-gradient(135deg,#25C66A 0%,#087B3B 100%)!important;
+  background-color:#087B3B!important;
+}
+</style>
 </body>
 </html>
