@@ -5415,6 +5415,137 @@ a{color:#75f5a6}
 }
 @media(prefers-reduced-motion:reduce){button,.btn,.action-btn,.wallet-btn,.activity-btn{transition:none!important}}
 </style>
+<style id="genzbag-reference-frosted-dashboard">
+/* Reference-led frosted glass dashboard. Inter is already loaded in the document head. */
+:root{
+ --ref-bg:#e9ebf1;--ref-panel:rgba(244,246,251,.68);--ref-panel-strong:rgba(250,251,254,.84);
+ --ref-line:rgba(255,255,255,.88);--ref-ink:#171923;--ref-muted:#687080;
+ --ref-primary:#5146df;--ref-primary-dark:#3830b5;--ref-shadow:0 18px 44px rgba(43,48,76,.13);
+}
+html,body{background:linear-gradient(135deg,#e8eaf0 0%,#dfe2eb 50%,#eef0f5 100%)!important;color:var(--ref-ink)!important}
+body{font-family:Inter,"Segoe UI",Arial,sans-serif!important;background-attachment:fixed!important}
+.topbar,.header,.navbar,.top-nav{
+ background:rgba(245,247,251,.76)!important;color:var(--ref-ink)!important;
+ border:1px solid rgba(255,255,255,.8)!important;border-bottom-color:rgba(182,188,204,.55)!important;
+ box-shadow:0 8px 28px rgba(48,53,79,.09)!important;
+ backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important
+}
+.topbar a,.topbar button,.header a,.header button{color:var(--ref-ink)!important}
+.main{color:var(--ref-ink)!important}
+.welcome-card,.card,.dashboard-card,.balance-card,.dashboard-insights-card,
+#activityPage #activityPageContent,#notificationsPage .notifications-panel,
+#adminPage,.profile-member-card,.profile-stat-card,.team-member-row,
+.feature-workspace,.leaderboard-stat,.dashboard-action{
+ background:linear-gradient(145deg,rgba(249,250,253,.79),rgba(222,226,237,.67))!important;
+ color:var(--ref-ink)!important;border:1px solid var(--ref-line)!important;
+ border-radius:22px!important;box-shadow:var(--ref-shadow),inset 0 1px 0 rgba(255,255,255,.92)!important;
+ backdrop-filter:blur(22px) saturate(150%)!important;
+ -webkit-backdrop-filter:blur(22px) saturate(150%)!important
+}
+.welcome-card{overflow:hidden;position:relative}
+.welcome-card:before,.balance-card:before{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+ background:linear-gradient(125deg,rgba(255,255,255,.34),transparent 42%,rgba(107,100,226,.06))
+}
+.welcome-top,.welcome-financials,.dashboard-quick-actions,.balance-grid{position:relative;z-index:1}
+.welcome-info h2,.welcome-info p,.welcome-info .welcome-tagline,
+.section-heading h2,.section-heading small,.task-name,.task-amount,
+.dashboard-insights-head h2,.dashboard-recent-head strong,
+.profile-member-copy h2,.profile-section-head h2,.feature-workspace-head h2,
+#adminPage h1,#adminPage h2,#notificationsPage h2{
+ color:var(--ref-ink)!important
+}
+.welcome-info p,.welcome-info .welcome-tagline,.dashboard-recent-info small,
+.dashboard-insights-head p{color:var(--ref-muted)!important}
+.avatar,.welcome-card .avatar{
+ background:linear-gradient(135deg,#6b63e9,#4e45c9)!important;color:#fff!important;
+ border:2px solid rgba(255,255,255,.95)!important;box-shadow:0 7px 18px rgba(81,70,223,.2)!important
+}
+.welcome-rank-badge,.currency-picker,.currency-picker select,.welcome-network-summary,
+.profit-box,.expenses-card{
+ background:rgba(255,255,255,.68)!important;color:var(--ref-ink)!important;
+ border:1px solid rgba(255,255,255,.94)!important;border-radius:15px!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.95)!important
+}
+.profit-box strong,.expenses-value,.profit-box small,.expenses-title{color:var(--ref-ink)!important}
+.dashboard-action{background:rgba(255,255,255,.66)!important}
+.dashboard-action-icon,.task-icon,.dashboard-recent-icon,.profile-brand-mark{
+ background:linear-gradient(145deg,#e4e8ff,#d7f0f3)!important;color:#5146df!important;
+ border:1px solid rgba(255,255,255,.96)!important
+}
+.dashboard-action strong,.dashboard-recent-info strong{color:var(--ref-ink)!important}
+.balance-card,.balance-card.blue,.balance-card.purple,.balance-card.red,
+.balance-card.green,.balance-card.orange{
+ color:var(--ref-ink)!important;border:1px solid rgba(255,255,255,.92)!important;
+ box-shadow:0 12px 28px rgba(63,69,105,.12),inset 0 1px 0 rgba(255,255,255,.8)!important
+}
+.balance-card.blue{background:linear-gradient(125deg,#b8e9f7,#c9c5fb,#f3c8ed)!important}
+.balance-card.purple{background:linear-gradient(125deg,#c9c4ff,#b9dafa,#d6c8fa)!important}
+.balance-card.red{background:linear-gradient(125deg,#ffd7df,#f4c9e2,#e5d6fa)!important}
+.balance-card.green{background:linear-gradient(125deg,#b9f0dc,#c9e9e9,#d8f1cf)!important}
+.balance-card.orange{background:linear-gradient(125deg,#ffe1b9,#f6d2e9,#d6d8ff)!important}
+.balance-card small,.balance-card strong{color:#171923!important;opacity:1!important}
+.balance-icon{color:#fff!important;opacity:.42!important}
+.wave{opacity:.08!important}
+.section-heading,.ref-header,#adminPage .admin-console-head,#adminPage .admin-console-tabs{
+ background:rgba(242,244,250,.78)!important;color:var(--ref-ink)!important;
+ border-color:rgba(255,255,255,.9)!important;backdrop-filter:blur(18px)!important
+}
+.section-heading h2,.section-heading small,.ref-header h2,.ref-header p{color:var(--ref-ink)!important}
+.task-list{background:transparent!important}
+.task-row,.dashboard-recent-row,.team-member-row,
+#activityPage #activityList .activity-card,
+#notificationsPage .notification-item{
+ background:rgba(255,255,255,.57)!important;color:var(--ref-ink)!important;
+ border:1px solid rgba(255,255,255,.94)!important;border-radius:16px!important;
+ box-shadow:0 5px 16px rgba(51,58,87,.055)!important
+}
+.task-name,.dashboard-recent-info strong,#activityPage #activityList .activity-card h3,
+#activityPage #activityList .activity-card p,#notificationsPage .notification-item p{
+ color:var(--ref-ink)!important
+}
+.task-amount,.dashboard-recent-amount{color:#5146df!important}
+button:not(:disabled),.btn,.action-btn,.wallet-btn,.activity-btn,
+#adminPage .admin-action,#notificationsPage .notifications-mark-read{
+ background:linear-gradient(135deg,#6259ec,#453bc6)!important;color:#fff!important;
+ border:1px solid rgba(255,255,255,.72)!important;border-radius:13px!important;
+ box-shadow:0 7px 17px rgba(81,70,223,.2)!important
+}
+button:not(:disabled):hover,.btn:hover,.action-btn:hover,.wallet-btn:hover,.activity-btn:hover{
+ transform:translateY(-1px);box-shadow:0 10px 22px rgba(81,70,223,.25)!important
+}
+input,select,textarea,#adminPage input,#adminPage select,#adminPage textarea{
+ background:rgba(255,255,255,.76)!important;color:var(--ref-ink)!important;
+ border:1px solid rgba(255,255,255,.98)!important;border-radius:12px!important;
+ box-shadow:inset 0 1px 3px rgba(44,50,77,.045)!important
+}
+input::placeholder,textarea::placeholder{color:#858b9a!important}
+a{color:#5146df}
+#adminPage .admin-metric,#adminPage .admin-console-panel,
+#adminPage .admin-console-tabs button,#notificationsPage .notifications-heading,
+#notificationsPage .notification-item.is-unread,#activityPage #activityList .activity-empty{
+ background:rgba(255,255,255,.66)!important;color:var(--ref-ink)!important;
+ border:1px solid rgba(255,255,255,.94)!important
+}
+#adminPage .admin-metric small,#adminPage .admin-metric strong,
+#adminPage .admin-console-panel h2,#notificationsPage .notifications-heading h2,
+#notificationsPage .notification-item-top strong{color:var(--ref-ink)!important}
+#adminPage .admin-console-tabs button.active{background:#5146df!important;color:#fff!important}
+#activityPage .activity-filter{background:rgba(255,255,255,.7)!important;color:#303342!important;border:1px solid #fff!important}
+#activityPage .activity-filter.active{background:#5146df!important;color:#fff!important}
+#activityPage #activityList .activity-tag,#activityPage #activityList .activity-reward,
+#notificationsPage .notification-state{
+ background:rgba(226,229,250,.82)!important;color:#4942bd!important;border:1px solid #fff!important
+}
+@media(max-width:600px){
+ html,body{background:linear-gradient(150deg,#e8eaf0,#dfe2eb 58%,#eef0f5)!important}
+ .main{padding-left:12px!important;padding-right:12px!important}
+ .welcome-card,.balance-card,.card{border-radius:19px!important}
+ .balance-grid{gap:11px!important}
+ .dashboard-action{padding:10px 4px!important}
+}
+@media(prefers-reduced-motion:reduce){button,.btn,.action-btn,.wallet-btn,.activity-btn{transition:none!important}}
+</style>
 </head>
 
 <body>
