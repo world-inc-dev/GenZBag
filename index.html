@@ -10172,5 +10172,38 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
 }
 </style>
 
+
+
+<style id="genzbag-sidebar-hidden-until-menu-v2">
+/* The navigation drawer must not occupy or cover dashboard space until requested. */
+html body #sidebar:not(.open){
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  transform:translateX(-110%)!important;
+}
+html body #sidebar.open{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  transform:translateX(0)!important;
+  position:fixed!important;
+  z-index:1200!important;
+}
+html body #overlay:not(.show){
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+html body #overlay.show{
+  display:block!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  z-index:1100!important;
+}
+</style>
+
 </body>
 </html>
