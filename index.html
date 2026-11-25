@@ -9716,5 +9716,59 @@ html body :is(button,.btn,.activity-btn,.action-btn,.download-btn){
  text-shadow:none!important;
 }
 </style>
+
+<style id="genzbag-admin-page-black-text">
+/* Admin Control Centre is a light glass surface: make every text element black. */
+html body #adminPage,
+html body #adminPage *,
+html body #adminPage *::before,
+html body #adminPage *::after{
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+ text-shadow:none!important;
+ opacity:1!important;
+}
+html body #adminPage :is(h1,h2,h3,h4,h5,h6,strong,b,small,p,span,label,td,th,li,a,button){
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+ font-weight:700!important;
+}
+html body #adminPage #adminConsoleMessage{
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+ font-weight:700!important;
+}
+html body #adminPage .admin-console-head,
+html body #adminPage .admin-console-badge,
+html body #adminPage .admin-console-kicker{
+ background:rgba(255,255,255,.42)!important;
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+}
+html body #adminPage .admin-metric{
+ background:rgba(255,255,255,.86)!important;
+}
+html body #adminPage .admin-metric small,
+html body #adminPage .admin-metric strong{
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+}
+html body #adminPage .admin-console-tabs button,
+html body #adminPage .admin-console-tabs button.active,
+html body #adminPage .admin-action,
+html body #adminPage .admin-action.secondary,
+html body #adminPage .admin-action.danger{
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+}
+html body #adminPage input,
+html body #adminPage select,
+html body #adminPage textarea,
+html body #adminPage input::placeholder,
+html body #adminPage textarea::placeholder{
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+}
+</style>
 </body>
 </html>
