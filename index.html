@@ -5845,6 +5845,77 @@ td{border-color:rgba(110,119,140,.13)!important}
  .balance-card:after{left:13px;bottom:13px}
 }
 </style>
+
+<style id="genzbag-lofthela-welcome-layout">
+/* Welcome, network, financial summary and existing shortcuts share one Lofthela-inspired panel. */
+.welcome-card{
+ overflow:hidden!important;padding:0!important;border-radius:28px!important;
+ background:linear-gradient(112deg,rgba(202,235,249,.96) 0%,rgba(218,221,255,.95) 48%,rgba(246,244,204,.94) 100%)!important;
+ border:1px solid rgba(255,255,255,.94)!important;
+ box-shadow:0 16px 34px rgba(73,107,151,.12),inset 0 1px 0 #fff!important;
+}
+.welcome-top{padding:22px 22px 13px!important;align-items:center!important}
+.welcome-info h2{font-size:clamp(20px,4vw,27px)!important;font-weight:800!important;color:#172b4d!important}
+.welcome-info p,.welcome-info .welcome-tagline{font-size:13px!important;line-height:1.45!important;color:#52657f!important}
+.welcome-card .avatar{background:linear-gradient(145deg,#2878df,#123f91)!important;color:#fff!important;box-shadow:0 7px 18px rgba(32,91,177,.2)!important}
+.welcome-card .active-badge{background:#dcf8e8!important;color:#16834b!important;border-radius:30px!important;padding:7px 12px!important}
+.welcome-network-summary{
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;
+ gap:5px 12px!important;margin:0 18px 13px!important;padding:10px 14px!important;
+ border:1px solid rgba(255,255,255,.8)!important;border-radius:15px!important;
+ background:rgba(255,255,255,.43)!important;box-shadow:none!important;
+}
+.welcome-network-summary .network-top{display:contents!important}
+.welcome-network-summary .network-top>div:first-child{grid-column:1!important;grid-row:1!important}
+.welcome-network-summary .network-top h2{font-size:10px!important;letter-spacing:.7px!important;color:#315477!important}
+.welcome-network-summary .progress-circle{grid-column:2!important;grid-row:1 / span 2!important;width:44px!important;height:44px!important;background:rgba(255,255,255,.65)!important;border-color:#8fc8ad!important}
+.welcome-network-summary .network-message{grid-column:1!important;grid-row:2!important;margin:0!important;font-size:11px!important;color:#52657f!important}
+.welcome-network-summary .network-signin-button{grid-column:1 / -1!important}
+.welcome-network-summary .exchange-rate{grid-column:1 / -1!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:3px 8px!important;padding:5px 0 0!important;background:transparent!important}
+.welcome-network-summary .rate-label{font-size:8px!important;color:#4b6d91!important}
+.welcome-network-summary #exchangeRateValue{font-size:13px!important;color:#173b67!important}
+.welcome-network-summary #exchangeRateUpdated{font-size:9px!important;color:#62758d!important}
+.welcome-network-summary #dailyReferralTargetNote{grid-column:1 / -1!important;font-size:8px!important;color:#667a91!important;margin:0!important}
+.welcome-financials{display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;padding:0 18px!important}
+.welcome-financials .profit-box,.welcome-financials .expenses-card{
+ min-height:102px!important;display:flex!important;flex-direction:column!important;
+ justify-content:center!important;align-items:flex-start!important;padding:15px 17px!important;
+ border-radius:0!important;border:0!important;box-shadow:none!important;
+}
+.welcome-financials .profit-box{background:linear-gradient(115deg,#287ee0,#123f91)!important;border-radius:23px 0 0 23px!important}
+.welcome-financials .profit-box small,.welcome-financials .profit-box strong{color:#fff!important}
+.welcome-financials .expenses-card{background:rgba(255,255,255,.92)!important;border-radius:0 23px 23px 0!important}
+.welcome-financials .expenses-title{color:#3171bd!important}
+.welcome-financials .expenses-value{color:#172b4d!important}
+.welcome-financials .profit-box small,.welcome-financials .expenses-title{font-size:11px!important;font-weight:750!important;letter-spacing:.25px!important}
+.welcome-financials .profit-box strong,.welcome-financials .expenses-value{font-size:clamp(17px,3.5vw,25px)!important;font-weight:850!important;margin-top:9px!important;overflow-wrap:anywhere!important}
+.welcome-card>.dashboard-quick-actions{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:4px!important;margin:0!important;padding:12px 14px 16px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.welcome-card .dashboard-action{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;gap:5px!important;padding:7px 3px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.welcome-card .dashboard-action-icon{
+ width:48px!important;height:48px!important;border-radius:50%!important;
+ background:rgba(255,255,255,.9)!important;color:#2775c6!important;
+ box-shadow:0 5px 14px rgba(65,105,151,.1)!important;
+}
+.welcome-card .dashboard-action strong{font-size:clamp(10px,2.5vw,14px)!important;color:#172b4d!important}
+.welcome-card .dashboard-action small{display:none!important}
+@media(max-width:600px){
+ .welcome-card{border-radius:25px!important}
+ .welcome-top{padding:17px 16px 11px!important}
+ .welcome-network-summary{margin:0 12px 11px!important;padding:9px 11px!important}
+ .welcome-financials{padding:0 12px!important}
+ .welcome-financials .profit-box,.welcome-financials .expenses-card{min-height:88px!important;padding:12px!important}
+ .welcome-card>.dashboard-quick-actions{padding:9px 8px 13px!important}
+ .welcome-card .dashboard-action-icon{width:42px!important;height:42px!important}
+}
+</style>
 </head>
 
 <body>
@@ -6087,13 +6158,12 @@ td{border-color:rgba(110,119,140,.13)!important}
       <div class="profit-box"><small>NET PROFITS</small><strong>—</strong></div>
       <div class="expenses-card" aria-live="polite"><small class="expenses-title">ACTIVATION FEES</small><strong class="expenses-value" id="dashboardExpensesValue">UGX 19,500</strong></div>
     </div>
-  </section>
-
-  <section class="dashboard-quick-actions" aria-label="Quick actions">
+    <section class="dashboard-quick-actions" aria-label="Quick actions">
     <a class="dashboard-action" href="#featureWorkspace" data-feature="withdraw-balance"><span class="dashboard-action-icon">↗</span><strong>Withdraw</strong><small>Request a payout</small></a>
     <a class="dashboard-action" href="#featureWorkspace" data-feature="deposit"><span class="dashboard-action-icon">＋</span><strong>Deposit</strong><small>Add funds</small></a>
     <a class="dashboard-action" href="#chatPage"><span class="dashboard-action-icon">◉</span><strong>Live Chat</strong><small>Get assistance</small></a>
     <a class="dashboard-action" href="#wallet"><span class="dashboard-action-icon">▣</span><strong>Wallet</strong><small>View transactions</small></a>
+    </section>
   </section>
 
   <section class="activation-access-note" id="activationAccessNote" aria-live="polite">
