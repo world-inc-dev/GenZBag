@@ -5203,6 +5203,79 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
  #activityPage #activityList .activity-card:hover,#activityPage #activityList .activity-btn:hover,#activityPage .activity-filter:hover{transform:none!important}
 }
 </style>
+<style id="genzbag-dashboard-mobile-refresh">
+/* Mobile-first dashboard visual refinement. Keeps all existing values and actions intact. */
+body{background:#f3f6f4!important;color:#172c23!important}
+.main{max-width:1200px!important}
+.welcome-card{background:linear-gradient(118deg,#edf5ef 0%,#f8f8f1 58%,#f1f5ed 100%)!important;color:#173b2d!important;border:1px solid #e0e9e0!important;border-radius:23px!important;box-shadow:0 10px 26px rgba(22,55,42,.055)!important;overflow:hidden}
+.welcome-info h2{color:#173b2d!important;font-size:clamp(19px,2.4vw,25px)!important}
+.welcome-info p{color:#66786d!important}
+.welcome-info .welcome-tagline{color:#7d8a80!important}
+.welcome-card .avatar{background:#174b39!important;color:#e7ce83!important;border:3px solid #fff!important}
+.welcome-rank-badge{background:#fff!important;color:#286347!important;border:1px solid #dce8dd!important}
+.currency-picker{background:#fff!important;border:1px solid #dfe9e0!important;border-radius:30px!important}
+.currency-picker select{color:#174b39!important}
+.welcome-network-summary{background:rgba(255,255,255,.82)!important;border:1px solid #e1eae1!important;border-radius:17px!important;color:#214331!important}
+.welcome-financials{gap:10px!important}
+.profit-box,.expenses-card{background:#fff!important;border:1px solid #e2ebe3!important;border-radius:16px!important;box-shadow:none!important}
+.profit-box{color:#174b39!important}
+.profit-box small,.expenses-title{color:#718078!important}
+.profit-box strong,.expenses-value{color:#173b2d!important}
+.dashboard-quick-actions{gap:10px!important}
+.dashboard-action{background:#fff!important;border:1px solid #e4ece5!important;border-radius:17px!important;box-shadow:0 5px 16px rgba(24,55,43,.04)!important}
+.dashboard-action-icon{background:#edf5ef!important;color:#174b39!important}
+.dashboard-action strong{color:#1b382b!important}
+.balance-grid{gap:12px!important}
+.balance-card{min-height:122px!important;border:1px solid rgba(255,255,255,.65)!important;border-radius:19px!important;padding:17px!important;box-shadow:0 7px 19px rgba(24,55,43,.07)!important;color:#173b2d!important}
+.balance-card.blue{background:linear-gradient(120deg,#e3f3e8,#cce9d7)!important}
+.balance-card.purple{background:linear-gradient(120deg,#e4f2f5,#cce8ed)!important}
+.balance-card.red{background:linear-gradient(120deg,#fbe9e8,#f5d8d7)!important}
+.balance-card.green{background:linear-gradient(120deg,#fbf0d9,#f4e2bd)!important}
+.balance-card.orange{background:linear-gradient(120deg,#e6effb,#d3e2f7)!important}
+.balance-card small{color:#385c49!important;opacity:1!important;letter-spacing:.65px!important}
+.balance-card strong{color:#173b2d!important;font-size:clamp(18px,2.1vw,23px)!important}
+.balance-icon{font-size:25px!important;opacity:.22!important;right:17px!important;top:15px!important}
+.balance-card .wave{opacity:.08!important}
+.dashboard-insights-card,.card{border-color:#e4ece5!important;box-shadow:0 8px 24px rgba(22,55,42,.045)!important}
+.dashboard-insights-head h2,.dashboard-recent-head strong{color:#173b2d!important}
+.dashboard-week-bar{background:linear-gradient(180deg,#d5b75f,#287052)!important}
+.section-heading{background:linear-gradient(110deg,#174b39,#286448)!important;color:#fff!important;border-radius:17px 17px 0 0!important}
+.section-heading h2{color:#fff!important}
+.section-heading small{color:#e8dfc2!important}
+.task-list{padding:9px 13px 13px!important}
+.task-row{margin:7px 0!important;padding:10px 11px!important;border:1px solid #e2eae3!important;border-radius:14px!important;background:#fff!important;box-shadow:0 3px 10px rgba(24,55,43,.025)!important}
+.task-row:last-child{border-bottom:1px solid #e2eae3!important}
+.task-name{color:#263d30!important;font-size:12px!important}
+.task-amount{color:#286347!important;font-weight:850!important}
+.task-icon{border-radius:12px!important}
+@media(min-width:700px){
+ .balance-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .welcome-card{padding-bottom:2px}
+}
+@media(max-width:560px){
+ body{background:#f3f6f4!important}
+ .main{padding:13px 11px 30px!important}
+ .welcome-card{border-radius:20px!important}
+ .welcome-top{padding:17px 15px 13px!important;gap:10px!important;flex-wrap:wrap}
+ .welcome-info{min-width:130px}
+ .welcome-info h2{font-size:19px!important}
+ .welcome-financials{padding:0 12px 13px!important;gap:8px!important}
+ .profit-box,.expenses-card{padding:12px!important;min-height:70px!important}
+ .profit-box strong,.expenses-value{font-size:16px!important}
+ .dashboard-quick-actions{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
+ .dashboard-action{padding:11px 4px!important;align-items:center!important;text-align:center!important}
+ .dashboard-action-icon{width:33px!important;height:33px!important}
+ .dashboard-action strong{font-size:9px!important}
+ .dashboard-action small{display:none!important}
+ .balance-grid{grid-template-columns:1fr!important;gap:10px!important}
+ .balance-card{min-height:105px!important;padding:15px!important}
+ .balance-card strong{margin-top:9px!important}
+ .section-heading{padding:14px 15px!important}
+ .task-list{padding:7px 10px 10px!important}
+ .task-row{gap:10px!important;padding:9px!important;margin:6px 0!important}
+}
+@media(prefers-reduced-motion:reduce){.dashboard-action,.task-row{transition:none!important}}
+</style>
 </head>
 
 <body>
