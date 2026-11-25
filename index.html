@@ -7745,7 +7745,7 @@ document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',asy
    learningPanel.querySelector('#genzPipCalculate').addEventListener('click',calc);
   }
 
-  const panelMap=mentById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
+  document.getElementById('withdrawalRulesPanel').hidden=featureKey!=='withdraw-balance';
   const panelMap={'leaderboard':'leaderboardPanel','pay-client':'payClientPanel','voucher-buy':'voucherBuyPanel','voucher-activate':'voucherActivatePanel','voucher-history':'voucherHistoryPanel','withdraw-history':'withdrawHistoryPanel','welcome-bonus':'referralBonusPanel'};
   const isVoucherFeature=['voucher-buy','voucher-activate','voucher-history'].includes(featureKey);
   document.getElementById('voucherTabs').hidden=!isVoucherFeature;
