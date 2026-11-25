@@ -5636,6 +5636,112 @@ a{color:#5146df}
  #dashboardPage .dashboard-profile-card .profile-details{grid-template-columns:1fr!important}
 }
 </style>
+<style id="genzbag-reference-topbar-polish">
+/* Frosted-glass header, search and navigation system */
+.topbar{
+ height:76px!important;padding:0 clamp(12px,2.4vw,30px)!important;gap:18px!important;
+ background:rgba(246,247,251,.78)!important;border:1px solid rgba(255,255,255,.9)!important;
+ border-radius:0 0 22px 22px!important;box-shadow:0 10px 34px rgba(44,50,77,.09)!important;
+ backdrop-filter:blur(26px) saturate(155%)!important;-webkit-backdrop-filter:blur(26px) saturate(155%)!important
+}
+.header-left,.header-right{gap:10px!important;flex:0 0 auto!important}
+.icon-btn{
+ width:42px!important;height:42px!important;border-radius:14px!important;
+ background:rgba(255,255,255,.72)!important;color:#34384a!important;
+ border:1px solid rgba(255,255,255,.96)!important;box-shadow:0 5px 15px rgba(45,51,78,.07)!important
+}
+.icon-btn:hover{background:#fff!important;transform:translateY(-1px)}
+.currency-picker{
+ display:flex!important;align-items:center!important;gap:7px!important;padding:8px 12px!important;
+ border-radius:13px!important;background:rgba(255,255,255,.66)!important;
+ border:1px solid rgba(255,255,255,.96)!important;color:#707687!important;font-size:11px!important
+}
+.currency-picker select{border:0!important;background:transparent!important;color:#252938!important;font-weight:750!important;max-width:105px!important;box-shadow:none!important}
+.header-search-wrap{position:relative;flex:1 1 430px;max-width:470px;min-width:150px;margin:0 auto}
+.header-search{
+ display:flex!important;align-items:center!important;gap:10px!important;height:46px!important;
+ padding:0 14px!important;border-radius:28px!important;
+ background:rgba(255,255,255,.72)!important;border:1px solid rgba(255,255,255,.98)!important;
+ box-shadow:inset 0 1px 3px rgba(48,54,80,.045),0 5px 16px rgba(48,54,80,.045)!important;
+ color:#73798a!important
+}
+.header-search svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;flex:0 0 auto}
+.header-search input{min-width:0!important;width:100%!important;height:100%!important;padding:0!important;border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;color:#202433!important;font:500 13px Inter,"Segoe UI",sans-serif!important}
+.header-search input::placeholder{color:#858b9a!important}
+.header-search kbd{flex:0 0 auto;padding:3px 6px;border:1px solid #e0e2eb;border-radius:6px;background:#f5f6fa;color:#83899a;font:600 10px Inter, sans-serif}
+.header-search:focus-within{border-color:#aaa5f4!important;box-shadow:0 0 0 3px rgba(81,70,223,.09),0 8px 22px rgba(48,54,80,.07)!important}
+.header-search-results{
+ position:absolute;top:calc(100% + 9px);left:0;right:0;z-index:150;
+ padding:7px;background:rgba(250,251,254,.94);border:1px solid #fff;border-radius:17px;
+ box-shadow:0 18px 44px rgba(38,43,69,.17);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)
+}
+.header-search-results[hidden]{display:none!important}
+.header-search-result{
+ display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:0!important;
+ border-radius:11px!important;background:transparent!important;color:#252938!important;
+ text-align:left;font:600 12px Inter,"Segoe UI",sans-serif!important;box-shadow:none!important
+}
+.header-search-result:hover,.header-search-result:focus-visible{background:#eeeffb!important;color:#443bc1!important;transform:none!important}
+.header-search-result .result-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#e9e8ff;color:#5146df}
+.header-search-empty{padding:14px;color:#777e8f;font:500 12px Inter,sans-serif;text-align:center}
+.topbar-profile{
+ display:grid;place-items:center;width:42px;height:42px;border-radius:50%;
+ background:linear-gradient(145deg,#fff,#e7e9f2);border:2px solid rgba(255,255,255,.98);
+ color:#5146df!important;box-shadow:0 6px 17px rgba(49,55,85,.12)
+}
+.topbar-profile svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.brand-button{
+ border-radius:24px!important;padding:6px 11px 6px 7px!important;
+ background:rgba(255,255,255,.7)!important;color:#202433!important;
+ border:1px solid rgba(255,255,255,.98)!important;box-shadow:0 5px 15px rgba(45,51,78,.06)!important
+}
+.brand-logo{background:linear-gradient(145deg,#6259ec,#453bc6)!important;color:#fff!important;border-radius:50%!important}
+.brand-wordmark{color:#202433!important;font-weight:800!important;letter-spacing:-.2px}
+.sidebar{
+ top:86px!important;width:278px!important;padding:20px 16px!important;
+ background:rgba(244,246,251,.91)!important;color:#252938!important;
+ border:1px solid rgba(255,255,255,.95)!important;border-left:0!important;
+ border-radius:0 22px 22px 0!important;box-shadow:15px 15px 40px rgba(43,48,76,.12)!important;
+ backdrop-filter:blur(26px) saturate(155%)!important;-webkit-backdrop-filter:blur(26px) saturate(155%)!important
+}
+.sidebar-brand{color:#202433!important;font-size:19px!important;padding:9px 12px 20px!important}
+.sidebar-brand-name{color:#202433!important}
+.sidebar-brand-name span{color:#5146df!important}
+.sidebar-brand-mark{display:inline-grid;place-items:center;width:34px;height:34px;margin-right:8px;border-radius:11px;background:linear-gradient(145deg,#6259ec,#453bc6);color:#fff}
+.nav-label{color:#9298a8!important;font-size:9px!important;letter-spacing:1.4px!important}
+.sidebar .nav-link,.sidebar .nav-dropdown-toggle{color:#53596b!important;border-radius:12px!important}
+.sidebar .nav-link:hover,.sidebar .nav-dropdown-toggle:hover{background:rgba(81,70,223,.07)!important;color:#453bc6!important}
+.sidebar .nav-link.active{background:linear-gradient(100deg,rgba(81,70,223,.14),rgba(81,70,223,.045))!important;color:#453bc6!important;border-left:3px solid #5146df!important}
+.sidebar .nav-link .nav-icon,.sidebar .nav-dropdown-toggle .nav-icon{color:#6860d9!important}
+.sidebar .nav-submenu{border-left-color:#dcdaf6!important}
+.sidebar-footer{border-top:1px solid #e1e3eb!important;color:#858b9a!important}
+.overlay{top:76px!important;background:rgba(38,43,65,.13)!important;backdrop-filter:blur(3px)}
+@media(max-width:900px){
+ .topbar{gap:10px!important}
+ .header-search-wrap{max-width:340px}
+ .header-search kbd{display:none}
+}
+@media(max-width:640px){
+ .topbar{height:68px!important;padding:0 10px!important;gap:7px!important;border-radius:0 0 17px 17px!important}
+ .header-left,.header-right{gap:6px!important}
+ .icon-btn,.topbar-profile{width:37px!important;height:37px!important}
+ .header-search-wrap{flex:1 1 90px;min-width:72px}
+ .header-search{height:39px!important;padding:0 9px!important;gap:6px!important}
+ .header-search input{font-size:11px!important}
+ .header-search input::placeholder{font-size:10px}
+ .header-search svg{width:15px;height:15px}
+ .currency-picker{padding:6px 7px!important}
+ .currency-picker>span{display:none!important}
+ .currency-picker select{max-width:66px!important;font-size:10px!important}
+ .brand-button{padding:4px!important}
+ .brand-wordmark{display:none!important}
+ .brand-logo{width:27px!important;height:27px!important}
+ .topbar-profile{display:none!important}
+ .sidebar{top:76px!important;width:min(84vw,300px)!important}
+ .overlay{top:68px!important}
+}
+@media(prefers-reduced-motion:reduce){.icon-btn,.header-search-result{transition:none!important}}
+</style>
 </head>
 
 <body>
@@ -5718,6 +5824,15 @@ a{color:#5146df}
     
   </div>
 
+  <div class="header-search-wrap">
+    <label class="header-search" for="genzbagQuickSearch">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+      <input id="genzbagQuickSearch" type="search" autocomplete="off" placeholder="Find a page or feature..." aria-label="Search dashboard pages and features" aria-controls="genzbagSearchResults" aria-expanded="false">
+      <kbd>⌘ K</kbd>
+    </label>
+    <div class="header-search-results" id="genzbagSearchResults" role="listbox" aria-label="Dashboard search results" hidden></div>
+  </div>
+
   <div class="header-right">
     <button class="icon-btn" id="notificationsButton" type="button" aria-label="Notifications" title="Notifications">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -5739,6 +5854,9 @@ a{color:#5146df}
       <span class="brand-logo">💰</span>
       <span class="brand-wordmark">GenZBag</span>
     </button>
+    <a class="topbar-profile" href="#profile" aria-label="Open my profile" title="My profile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.8 20c.8-3.2 3.3-5 7.2-5s6.4 1.8 7.2 5"></path></svg>
+    </a>
   </div>
 </header>
 
@@ -8789,5 +8907,39 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 </script>
 
 
+<script id="genzbag-dashboard-quick-search">
+(()=>{
+ const input=document.getElementById('genzbagQuickSearch');
+ const panel=document.getElementById('genzbagSearchResults');
+ if(!input||!panel)return;
+ const getLinks=()=>Array.from(document.querySelectorAll('#sidebar a.nav-link'));
+ const close=()=>{panel.hidden=true;input.setAttribute('aria-expanded','false')};
+ const open=()=>{panel.hidden=false;input.setAttribute('aria-expanded','true')};
+ const render=()=>{
+  const q=input.value.trim().toLowerCase();
+  panel.replaceChildren();
+  if(!q){close();return}
+  const matches=getLinks().filter(a=>a.textContent.trim().toLowerCase().includes(q)).slice(0,7);
+  if(!matches.length){const empty=document.createElement('div');empty.className='header-search-empty';empty.textContent='No matching pages or features';panel.append(empty);open();return}
+  matches.forEach(link=>{
+   const button=document.createElement('button');button.type='button';button.className='header-search-result';button.setAttribute('role','option');
+   const icon=document.createElement('span');icon.className='result-icon';icon.textContent=(link.querySelector('.nav-icon')?.textContent||'↗').trim();
+   const label=document.createElement('span');label.textContent=link.textContent.trim();
+   button.append(icon,label);button.addEventListener('click',()=>{close();input.value='';link.click();input.blur()});panel.append(button)
+  });
+  open()
+ };
+ input.addEventListener('input',render);
+ input.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){close();input.value='';input.blur()}
+  if(e.key==='Enter'){const first=panel.querySelector('button');if(first){e.preventDefault();first.click()}}
+  if(e.key==='ArrowDown'){const first=panel.querySelector('button');if(first){e.preventDefault();first.focus()}}
+ });
+ document.addEventListener('click',e=>{if(!e.target.closest('.header-search-wrap'))close()});
+ document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();input.focus();input.select()}
+ });
+})();
+</script>
 </body>
 </html>
