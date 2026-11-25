@@ -6269,43 +6269,40 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 </style>
 
 <style id="genzbag-feature-text-contrast-fix">
-/* Improve readability on feature pages without changing their layout or gradient. */
-.page-view:not(#dashboardPage):not(#adminPage),
-.page-view:not(#dashboardPage):not(#adminPage) * ,
-.feature-workspace,
-.feature-workspace *{
+/* Readable typography only on light gradient feature surfaces.
+   Dark feature areas such as Global Chat keep their own light-on-dark palette. */
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-workspace,
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-detail-panel,
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-notice,
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-stat-grid>div{
  color:#202432!important;
  text-shadow:none!important;
- opacity:1;
 }
-.page-view:not(#dashboardPage):not(#adminPage) :is(p,small,span,label,li,td,th,.muted,.hint,.description,.subtitle,.eyebrow),
-.feature-workspace :is(p,small,span,label,li,td,th,.muted,.hint,.description,.subtitle,.eyebrow){
- color:#354253!important;
- opacity:1!important;
-}
-.page-view:not(#dashboardPage):not(#adminPage) :is(h1,h2,h3,h4,h5,strong,b),
-.feature-workspace :is(h1,h2,h3,h4,h5,strong,b){
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-workspace :is(h1,h2,h3,h4,h5,strong,b),
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-detail-panel :is(h1,h2,h3,h4,h5,strong,b),
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-notice :is(h1,h2,h3,h4,h5,strong,b),
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-stat-grid>div :is(h1,h2,h3,h4,h5,strong,b){
  color:#172334!important;
  font-weight:800!important;
 }
-.page-view:not(#dashboardPage):not(#adminPage) :is(button,.btn,.activity-btn,.action-btn),
-.feature-workspace :is(button,.btn,.activity-btn,.action-btn){
- color:#fff!important;
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-workspace :is(p,small,span,label,li,td,th),
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-detail-panel :is(p,small,span,label,li,td,th),
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-notice :is(p,small,span,label,li,td,th),
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-stat-grid>div :is(p,small,span,label,li,td,th){
+ color:#354253!important;
+ opacity:1!important;
 }
-.page-view:not(#dashboardPage):not(#adminPage) :is(input,select,textarea),
-.feature-workspace :is(input,select,textarea){
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) :is(input,select,textarea){
  color:#202432!important;
- background:rgba(255,255,255,.88)!important;
+ background:rgba(255,255,255,.9)!important;
 }
-.page-view:not(#dashboardPage):not(#adminPage) :is(input,select,textarea)::placeholder,
-.feature-workspace :is(input,select,textarea)::placeholder{
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) :is(input,select,textarea)::placeholder{
  color:#687386!important;
  opacity:1!important;
 }
-.page-view:not(#dashboardPage):not(#adminPage) a,
-.feature-workspace a{color:#3547a8!important}
-.page-view:not(#dashboardPage):not(#adminPage) :is([hidden]),
-.feature-workspace :is([hidden]){display:none!important}
+.page-view:not(#dashboardPage):not(#adminPage):not(#chatPage) .feature-workspace :is(button,.btn,.activity-btn,.action-btn){
+ color:#fff!important;
+}
 </style>
 
 <style id="genzbag-dark-feature-panel-contrast">
