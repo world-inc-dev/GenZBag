@@ -6590,13 +6590,16 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 
   <section class="balance-grid">
 
-    <article class="balance-card blue">
-      <span class="balance-icon">💳</span>
-      <small>AVAILABLE BALANCE</small>
+    <article class="balance-card blue genzbank-balance-card">
+      <div class="genzbank-card-top">
+        <span class="genzbank-brand-mark">G</span>
+        <span class="genzbank-brand-name">GENZBAG <small>DIGITAL ACCOUNT</small></span>
+        <span class="genzbank-contactless" aria-hidden="true">)))</span>
+      </div>
+      <div class="genzbank-chip" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="genzbank-balance-label">AVAILABLE BALANCE</div>
       <strong>—</strong>
-      <svg class="wave" viewBox="0 0 300 45" preserveAspectRatio="none">
-        <path d="M0 28 Q45 0 90 25 T180 25 T300 18 L300 45 L0 45Z" fill="white"/>
-      </svg>
+      <div class="genzbank-card-footer"><span>ACCOUNT HOLDER</span><b>GENZBAG MEMBER</b><span class="genzbank-card-type">VIRTUAL</span></div>
     </article>
 
     <article class="balance-card purple">
@@ -10058,6 +10061,39 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
  background:rgba(255,255,255,.48)!important;
  border-color:rgba(255,255,255,.72)!important;
 }
+</style>
+
+<style id="genzbag-real-bank-card-balance-v1">
+/* Premium bank-card treatment for the Available Balance card only. */
+.balance-grid>.genzbank-balance-card{
+  isolation:isolate;display:flex;flex-direction:column;justify-content:flex-start;
+  min-height:188px;padding:17px 18px 14px!important;overflow:hidden;
+  border:1px solid rgba(218,190,120,.58)!important;border-radius:19px!important;
+  color:#fff!important;
+  background:
+    radial-gradient(ellipse at 88% 12%,rgba(69,112,145,.34),transparent 42%),
+    radial-gradient(ellipse at 8% 100%,rgba(174,139,70,.18),transparent 48%),
+    linear-gradient(132deg,#101b2a 0%,#172b3d 48%,#09131f 100%)!important;
+  box-shadow:0 14px 30px rgba(8,20,34,.24),inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
+.genzbank-balance-card:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.23;
+  background:repeating-linear-gradient(132deg,transparent 0 15px,rgba(255,255,255,.075) 16px,transparent 17px 31px);
+}
+.genzbank-card-top{display:flex;align-items:center;gap:9px;position:relative;z-index:2}
+.genzbank-brand-mark{width:27px;height:27px;display:grid;place-items:center;border:1px solid #d8bd7a;border-radius:8px;color:#f1d99b;font-size:16px;font-weight:900}
+.genzbank-brand-name{display:flex;flex-direction:column;color:#fff;font-size:12px;letter-spacing:1.4px;font-weight:900;line-height:1.15}
+.genzbank-brand-name small{font-size:7px;letter-spacing:1.7px;color:#c9d0d8;margin-top:3px}
+.genzbank-contactless{margin-left:auto;color:#e6d5a8;font-size:21px;letter-spacing:-5px;transform:rotate(90deg);padding-right:5px}
+.genzbank-chip{width:34px;height:26px;margin-top:14px;border-radius:6px;border:1px solid #d9c28a;background:linear-gradient(135deg,#f4e2ad,#b99a55 55%,#e9d49b);display:grid;grid-template-columns:1fr 1fr;gap:1px;padding:4px;box-shadow:inset 0 0 0 1px rgba(70,55,25,.22)}
+.genzbank-chip i{border:1px solid rgba(91,72,35,.48);border-radius:2px}
+.genzbank-balance-card .genzbank-balance-label{margin-top:11px;color:#d4dbe3!important;font-size:9px;font-weight:800;letter-spacing:1.8px}
+.genzbank-balance-card>strong{margin-top:3px!important;font-size:clamp(19px,4.8vw,25px)!important;letter-spacing:.3px;color:#fff!important;text-shadow:0 1px 10px rgba(255,255,255,.12)}
+.genzbank-card-footer{display:flex;align-items:flex-end;gap:7px;margin-top:auto;padding-top:8px;color:#c3ccd5;font-size:7px;letter-spacing:1.1px}
+.genzbank-card-footer b{color:#fff;font-size:8px;letter-spacing:1px}
+.genzbank-card-type{margin-left:auto;color:#e5d19b;font-weight:900;letter-spacing:1.5px}
+.genzbank-balance-card .balance-icon,.genzbank-balance-card .wave{display:none!important}
+@media(max-width:380px){.balance-grid>.genzbank-balance-card{min-height:180px;padding:14px!important}.genzbank-card-footer{font-size:6px}}
 </style>
 </body>
 </html>
