@@ -9599,5 +9599,32 @@ html body #chatPage #globalChat .gb-chat-reward .gb-chat-progress span{
  opacity:1!important;
 }
 </style>
+
+<style id="genzbag-private-conversation-text-fix">
+/* Explicit contrast for the private-conversation empty state. */
+html body #chatPage #globalChat .gb-chat-conversation .gb-chat-convo-head{
+ background:#10243d!important;
+ color:#f8fbff!important;
+}
+html body #chatPage #globalChat #gbChatPartner,
+html body #chatPage #globalChat #gbChatPartner *{
+ color:#ffffff!important;
+ -webkit-text-fill-color:#ffffff!important;
+ opacity:1!important;
+ font-weight:800!important;
+}
+html body #chatPage #globalChat #gbChatPartnerCountry,
+html body #chatPage #globalChat #gbChatPartnerCountry *{
+ color:#dbeafe!important;
+ -webkit-text-fill-color:#dbeafe!important;
+ opacity:1!important;
+ font-weight:600!important;
+}
+html body #chatPage #globalChat #gbChatHistory .activity-empty{
+ color:#dbeafe!important;
+ -webkit-text-fill-color:#dbeafe!important;
+ opacity:1!important;
+}
+</style>
 </body>
 </html>
