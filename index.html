@@ -9626,5 +9626,95 @@ html body #chatPage #globalChat #gbChatHistory .activity-empty{
  opacity:1!important;
 }
 </style>
+
+<style id="genzbag-background-aware-text-contrast">
+/* Platform text contrast: dark text on light surfaces, white text on dark surfaces. */
+html body{
+ color:#111827!important;
+}
+html body :is(.card,.dashboard-profile-card,.dashboard-app-promo,.feature-detail-panel,
+.feature-notice,.feature-stat-grid>div,.activity-card,.notifications-panel,
+.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,
+.withdraw-qualification,.withdraw-history-item,.withdraw-success-card,
+.withdraw-page-heading,.withdraw-state,.admin-console-table-wrap,
+.admin-submission,.admin-task-form,.gb-chat-reward){
+ color:#111827!important;
+}
+html body :is(.card,.dashboard-profile-card,.dashboard-app-promo,.feature-detail-panel,
+.feature-notice,.feature-stat-grid>div,.activity-card,.notifications-panel,
+.withdraw-form-card,.withdraw-info-card,.withdraw-safety-card,.withdraw-quote,
+.withdraw-qualification,.withdraw-history-item,.withdraw-success-card,
+.withdraw-page-heading,.withdraw-state,.admin-console-table-wrap,
+.admin-submission,.admin-task-form,.gb-chat-reward)
+:is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,b,li,td,th){
+ color:#111827!important;
+ -webkit-text-fill-color:#111827!important;
+}
+/* Explicit dark-background areas across member, feature, chat and admin pages. */
+html body :is(#globalChat .chat-header,#globalChat .gb-chat-directory,
+#globalChat .gb-chat-conversation,#globalChat .gb-chat-history,
+#globalChat .gb-chat-compose,#globalChat .gb-chat-person,
+#globalChat .gb-chat-bubble,#activityPage .activity-filter.active,
+#activityPage #activityList .genz-inline-video,
+#activityPage #activityList .genz-native-video,
+#activityPage #activityList .spotify-reward-section,
+#activityPage #activityList .genz-video-player-wrap,
+#notificationsPage .notification-state,
+.admin-console .admin-console-table-wrap,.admin-console th,
+.admin-console .admin-submission,.admin-console-tabs button,
+#genzActivationGate .genz-fast-hero,#genzActivationGate #genzActivationTitle,
+#genzActivationGate .genz-activation-status,
+#genzActivationGate .genz-fast-method,#genzActivationGate .genz-fast-amount,
+#genzActivationGate .genz-fast-instruction,#genzActivationGate .genz-fast-confirm,
+#genzActivationGate .genz-fast-input-wrap input){
+ color:#fff!important;
+}
+html body :is(#globalChat .chat-header,#globalChat .gb-chat-directory,
+#globalChat .gb-chat-conversation,#globalChat .gb-chat-history,
+#globalChat .gb-chat-compose,#globalChat .gb-chat-person,
+#globalChat .gb-chat-bubble,#activityPage .activity-filter.active,
+#activityPage #activityList .genz-inline-video,
+#activityPage #activityList .genz-native-video,
+#activityPage #activityList .spotify-reward-section,
+#activityPage #activityList .genz-video-player-wrap,
+#notificationsPage .notification-state,
+.admin-console .admin-console-table-wrap,.admin-console th,
+.admin-console .admin-submission,.admin-console-tabs button,
+#genzActivationGate .genz-fast-hero,#genzActivationGate #genzActivationTitle,
+#genzActivationGate .genz-activation-status,
+#genzActivationGate .genz-fast-method,#genzActivationGate .genz-fast-amount,
+#genzActivationGate .genz-fast-instruction,#genzActivationGate .genz-fast-confirm){
+ color:#fff!important;
+}
+html body :is(#globalChat .chat-header,#globalChat .gb-chat-directory,
+#globalChat .gb-chat-conversation,#globalChat .gb-chat-history,
+#globalChat .gb-chat-compose,#globalChat .gb-chat-person,
+#globalChat .gb-chat-bubble,#activityPage .activity-filter.active,
+#notificationsPage .notification-state,.admin-console .admin-console-table-wrap,
+.admin-console th,.admin-console .admin-submission,.admin-console-tabs button,
+#genzActivationGate .genz-fast-hero,#genzActivationGate #genzActivationTitle,
+#genzActivationGate .genz-activation-status,#genzActivationGate .genz-fast-method,
+#genzActivationGate .genz-fast-amount,#genzActivationGate .genz-fast-instruction,
+#genzActivationGate .genz-fast-confirm)
+:is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,b,li,td,th){
+ color:#fff!important;
+ -webkit-text-fill-color:#fff!important;
+}
+/* Inputs keep a light field and dark typed text, even inside dark panels. */
+html body :is(input,select,textarea){
+ background:#fff!important;
+ color:#111827!important;
+ -webkit-text-fill-color:#111827!important;
+}
+html body :is(input,select,textarea)::placeholder{
+ color:#596579!important;
+ -webkit-text-fill-color:#596579!important;
+ opacity:1!important;
+}
+/* Preserve white labels on filled primary/dark buttons. */
+html body :is(button,.btn,.activity-btn,.action-btn,.download-btn){
+ text-shadow:none!important;
+}
+</style>
 </body>
 </html>
