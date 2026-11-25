@@ -6597,9 +6597,14 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
         <span class="genzbank-contactless" aria-hidden="true">)))</span>
       </div>
       <div class="genzbank-chip" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="genzbank-card-number" aria-label="Masked virtual card number">•••• &nbsp;•••• &nbsp;•••• &nbsp;<b id="genzbankCardLast4">••••</b></div>
       <div class="genzbank-balance-label">AVAILABLE BALANCE</div>
       <strong>—</strong>
-      <div class="genzbank-card-footer"><span>ACCOUNT HOLDER</span><b>GENZBAG MEMBER</b><span class="genzbank-card-type">VIRTUAL</span></div>
+      <div class="genzbank-card-footer">
+        <div class="genzbank-holder"><span>CARDHOLDER</span><b id="genzbankCardholder">GENZBAG MEMBER</b></div>
+        <div class="genzbank-expiry"><span>VALID THRU</span><b>••/••</b></div>
+        <span class="genzbank-card-type">VIRTUAL</span>
+      </div>
     </article>
 
     <article class="balance-card purple">
@@ -10087,11 +10092,35 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
 .genzbank-chip i{border:1px solid rgba(20,100,55,.38);border-radius:2px}
 .genzbank-balance-card .genzbank-balance-label{margin-top:11px;color:#d4dbe3!important;font-size:9px;font-weight:800;letter-spacing:1.8px}
 .genzbank-balance-card>strong{margin-top:3px!important;font-size:clamp(19px,4.8vw,25px)!important;letter-spacing:.3px;color:#fff!important;text-shadow:0 1px 10px rgba(255,255,255,.12)}
-.genzbank-card-footer{display:flex;align-items:flex-end;gap:7px;margin-top:auto;padding-top:8px;color:#c3ccd5;font-size:7px;letter-spacing:1.1px}
+.genzbank-card-number{margin-top:12px;color:#fff;font-size:clamp(12px,3.2vw,15px);font-weight:800;letter-spacing:1.6px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
+.genzbank-card-number b{font-weight:900}
+.genzbank-card-footer{display:flex;align-items:flex-end;gap:12px;margin-top:auto;padding-top:10px;color:#fff;font-size:7px;letter-spacing:1px}
+.genzbank-holder,.genzbank-expiry{display:flex;flex-direction:column;gap:3px;min-width:0}
+.genzbank-holder b,.genzbank-expiry b{color:#fff;font-size:8px;letter-spacing:.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:135px}
 .genzbank-card-footer b{color:#fff;font-size:8px;letter-spacing:1px}
 .genzbank-card-type{margin-left:auto;color:#fff;font-weight:900;letter-spacing:1.5px}
 .genzbank-balance-card .balance-icon,.genzbank-balance-card .wave{display:none!important}
 @media(max-width:380px){.balance-grid>.genzbank-balance-card{min-height:180px;padding:14px!important}.genzbank-card-footer{font-size:6px}}
 </style>
+
+<script id="genzbag-cardholder-details-v1">
+(function(){
+ const holder=document.getElementById('genzbankCardholder');
+ const last4=document.getElementById('genzbankCardLast4');
+ function syncCardholder(){
+  const profileName=document.getElementById('profileMemberName')?.textContent?.trim();
+  const meta=window.currentMember?.user_metadata||{};
+  const name=meta.full_name||meta.fullName||meta.name||profileName||'GENZBAG MEMBER';
+  if(holder)holder.textContent=String(name).replace(/\\s+/g,' ').slice(0,28).toUpperCase();
+  const uid=window.currentMember?.id||'';
+  if(last4&&uid)last4.textContent=uid.replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase().padStart(4,'0');
+ }
+ syncCardholder();
+ const profileNameEl=document.getElementById('profileMemberName');
+ if(profileNameEl)new MutationObserver(syncCardholder).observe(profileNameEl,{childList:true,characterData:true,subtree:true});
+ document.addEventListener('genzbag:member-updated',syncCardholder);
+ setInterval(syncCardholder,2500);
+})();
+</script>
 </body>
 </html>
