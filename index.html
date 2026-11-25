@@ -10206,26 +10206,31 @@ html body #overlay.show{
 </style>
 
 
-<style id="genzbag-balance-cards-vertical-list-v1">
-/* Show every dashboard balance card as a full-width, individually listed row. */
-#dashboardPage>.balance-grid{
-  display:grid!important;grid-template-columns:minmax(0,1fr)!important;
-  grid-auto-flow:row!important;gap:14px!important;width:100%!important;align-items:stretch!important;
+<style id="genzbag-balance-cards-vertical-list-v2">
+/* Force the dashboard balance cards into one full-width vertical list. */
+html body #dashboardPage section.balance-grid{
+  display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;
+  align-items:stretch!important;justify-content:flex-start!important;
+  gap:15px!important;width:100%!important;max-width:100%!important;
 }
-#dashboardPage>.balance-grid>.balance-card{
-  display:block!important;width:100%!important;min-width:0!important;
-  min-height:150px!important;height:auto!important;box-sizing:border-box!important;
+html body #dashboardPage section.balance-grid>.balance-card{
+  display:block!important;flex:0 0 auto!important;flex-shrink:0!important;
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  min-height:155px!important;height:auto!important;box-sizing:border-box!important;
   padding:22px!important;border-radius:20px!important;
 }
-#dashboardPage>.balance-grid>.genzbank-balance-card{
+html body #dashboardPage section.balance-grid>.genzbank-balance-card{
   min-height:165px!important;height:165px!important;max-height:165px!important;
   overflow:hidden!important;padding:15px 18px!important;
 }
 @media(max-width:600px){
-  #dashboardPage>.balance-grid{grid-template-columns:minmax(0,1fr)!important;gap:13px!important}
-  #dashboardPage>.balance-grid>.balance-card{width:100%!important;min-height:145px!important;padding:19px!important}
-  #dashboardPage>.balance-grid>.genzbank-balance-card{
-    min-height:155px!important;height:155px!important;max-height:155px!important;padding:13px 15px!important;
+  html body #dashboardPage section.balance-grid{gap:14px!important}
+  html body #dashboardPage section.balance-grid>.balance-card{
+    min-height:150px!important;padding:20px!important;
+  }
+  html body #dashboardPage section.balance-grid>.genzbank-balance-card{
+    min-height:160px!important;height:160px!important;max-height:160px!important;
+    padding:13px 15px!important;
   }
 }
 </style>
