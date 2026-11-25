@@ -8891,7 +8891,15 @@ async function loadMemberWallet(member=currentMember){
  const phoneInput=document.getElementById('withdrawMobileNumber');if(phoneInput&&!phoneInput.value&&savedPhone)phoneInput.value=savedPhone;
  let rows=[],ledgerError=null,ledgerOffset=0;const ledgerPageSize=1000;
  while(true){const page=await supabaseClient.from('reward_ledger').select('amount,currency,direction,entry_type,note,created_at').eq('user_id',member.id).order('created_at',{ascending:false}).range(ledgerOffset,ledgerOffset+ledgerPageSize-1);if(page.error){ledgerError=page.error;break;}const batch=page.data||[];rows.push(...batch);if(batch.length<ledgerPageSize)break;ledgerOffset+=ledgerPageSize;}
- if(ledgerError){console.warn('Wallet ledger:',ledgerError);document.querySelectorAll('.balance-grid .balance-card strong,.welcome-financials strong,#tasks .task-amount').forEach(el=>el.textContent='Unavailable');const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent='Unavailable';return;}
+ if(ledgerError){
+  console.warn('Wallet ledger refresh failed; keeping the last confirmed dashboard figures:',ledgerError);
+  // Keep cached figures visible and retry in the background when the connection recovers.
+  if(!window.genzbagWalletRetryTimer)window.genzbagWalletRetryTimer=setTimeout(()=>{
+   window.genzbagWalletRetryTimer=null;
+   if(currentMember?.id===member.id)loadMemberWallet(member).catch(error=>console.warn('Wallet retry:',error));
+  },5000);
+  return;
+ }
  const ugx=rows.filter(x=>x.currency==='UGX');
  updateTaskEarningsFromLedger(rows);
  window.genzbagLatestLedgerRows=rows;
@@ -8915,7 +8923,7 @@ async function loadMemberWallet(member=currentMember){
  const expensesValue=document.getElementById('dashboardExpensesValue');
  if(expensesValue)expensesValue.textContent=money(19500);
  let withdrawals=[],withdrawalError=null,withdrawalOffset=0;while(true){const page=await supabaseClient.from('withdrawal_requests').select('amount,currency,status,created_at').eq('user_id',member.id).order('created_at',{ascending:false}).range(withdrawalOffset,withdrawalOffset+999);if(page.error){withdrawalError=page.error;break;}const batch=page.data||[];withdrawals.push(...batch);if(batch.length<1000)break;withdrawalOffset+=1000;}
- if(!withdrawalError){const pending=withdrawals.filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount||0),0);const paid=withdrawals.filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount||0),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}else{console.warn('Dashboard withdrawals:',withdrawalError);if(strong[1])strong[1].textContent='Unavailable';if(strong[2])strong[2].textContent='Unavailable';}
+ if(!withdrawalError){const pending=withdrawals.filter(x=>x.currency==='UGX'&&['pending','under_review','approved'].includes(x.status)).reduce((n,x)=>n+Number(x.amount||0),0);const paid=withdrawals.filter(x=>x.currency==='UGX'&&x.status==='paid').reduce((n,x)=>n+Number(x.amount||0),0);if(strong[1])strong[1].textContent=money(paid);if(strong[2])strong[2].textContent=money(pending);}else{console.warn('Dashboard withdrawals refresh failed; retaining the last confirmed withdrawal figures:',withdrawalError);}
  const deposit=document.querySelector('#wallet .deposit-box strong');if(deposit)deposit.textContent=money(0);
  renderWithdrawalEligibility();
  try{
@@ -10100,6 +10108,22 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
  document.addEventListener('genzbag:member-updated',syncCardholder);
 })();
 </script>
+
+<style id="genzbag-stable-dashboard-refresh-v1">
+/* Keep the dashboard compact and prevent account details from stretching the cards. */
+#dashboardPage>.balance-grid{align-items:stretch!important;grid-auto-rows:1fr!important}
+#dashboardPage>.balance-grid>.balance-card{box-sizing:border-box!important;min-height:125px!important;height:100%!important;min-width:0!important}
+#dashboardPage>.balance-grid>.genzbank-balance-card{min-height:150px!important;padding-bottom:12px!important}
+#dashboardPage .genzbank-account-details{margin-top:8px!important}
+#dashboardPage .genzbank-field-label,#dashboardPage .genzbank-card-meta span{font-size:7px!important;line-height:1.1!important}
+#dashboardPage .genzbank-card-number{font-size:10px!important;margin-top:2px!important;line-height:1.15!important}
+#dashboardPage .genzbank-card-meta{gap:8px!important;margin-top:5px!important}
+#dashboardPage .genzbank-card-meta b{font-size:8px!important;line-height:1.1!important}
+@media(max-width:600px){
+ #dashboardPage>.balance-grid>.balance-card{min-height:112px!important}
+ #dashboardPage>.balance-grid>.genzbank-balance-card{min-height:140px!important}
+}
+</style>
 
 </body>
 </html>
