@@ -8,9 +8,7 @@
 <circle cx="256" cy="248" r="210" fill="#0b1c12" opacity=".55"/>
 <path d="M112 174h288l-24 270H136z" fill="url(#bag)" stroke="url(#gold)" stroke-width="12" stroke-linejoin="round"/>
 <path d="M176 176v-53a80 80 0 0 1 160 0v53" fill="none" stroke="url(#gold)" stroke-width="25" stroke-linecap="round"/>
-<circle cx="250" cy="278" r="88" fill="none" stroke="url(#gold)" stroke-width="27"/>
-<path d="M267 176h120v91H267z" fill="url(#bag)"/>
-<path d="M250 278h94v47" fill="none" stroke="url(#gold)" stroke-width="27" stroke-linecap="square" stroke-linejoin="round"/>
+<path d="M365 190 A125 125 0 1 0 380 278 H285" fill="none" stroke="url(#gold)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M48 379c77 87 280 91 420-87" fill="none" stroke="url(#gold)" stroke-width="20" stroke-linecap="round"/>
 <path d="M392 267l76 5-37 66" fill="none" stroke="#20d76a" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
