@@ -6425,14 +6425,7 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
     
   </div>
 
-  <div class="header-search-wrap">
-    <label class="header-search" for="genzbagQuickSearch">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
-      <input id="genzbagQuickSearch" type="search" autocomplete="off" placeholder="Find a page or feature..." aria-label="Search dashboard pages and features" aria-controls="genzbagSearchResults" aria-expanded="false">
-      <kbd>⌘ K</kbd>
-    </label>
-    <div class="header-search-results" id="genzbagSearchResults" role="listbox" aria-label="Dashboard search results" hidden></div>
-  </div>
+
 
   <div class="header-right">
     <button class="icon-btn" id="notificationsButton" type="button" aria-label="Notifications" title="Notifications">
@@ -10276,5 +10269,26 @@ html body #featureWorkspace.withdraw-mode #withdrawalRulesPanel:not([hidden]){
 }
 </style>
 
+
+<style id="genzbag-welcome-financials-two-column-v1">
+/* Keep Net Profits and Activation Fees balanced side by side. */
+html body #dashboardPage .welcome-financials{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ align-items:stretch!important;
+ gap:10px!important;
+}
+html body #dashboardPage .welcome-financials>.profit-box,
+html body #dashboardPage .welcome-financials>.expenses-card{
+ min-width:0!important;width:100%!important;box-sizing:border-box!important;
+}
+@media(max-width:360px){
+ html body #dashboardPage .welcome-financials{gap:7px!important}
+ html body #dashboardPage .welcome-financials>.profit-box,
+ html body #dashboardPage .welcome-financials>.expenses-card{padding:9px!important}
+ html body #dashboardPage .welcome-financials .profit-box strong,
+ html body #dashboardPage .welcome-financials .expenses-value{font-size:12px!important}
+}
+</style>
 </body>
 </html>
