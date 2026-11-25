@@ -10023,38 +10023,17 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
 }
 </style>
 
-<style id="genzbag-sidebar-black-text-v1">
-/* Black typography with a light sidebar surface for clear contrast */
-#sidebar{
- background:linear-gradient(180deg,#ffffff 0%,#f5f8f6 100%)!important;
- border-right:1px solid #dce5df!important;
- box-shadow:8px 0 28px rgba(12,35,25,.08)!important;
-}
-#sidebar .sidebar-brand-name{color:#111827!important}
-#sidebar .sidebar-brand-name span{color:#111827!important}
-#sidebar .nav-label{color:#374151!important;border-bottom-color:#e2e8e4!important}
-#sidebar .nav-link,#sidebar .nav-dropdown-toggle{
- color:#111827!important;
-}
-#sidebar .nav-link:hover,#sidebar .nav-dropdown-toggle:hover{
- background:#eaf1ed!important;border-color:#d6e2da!important;color:#000!important;
-}
-#sidebar .nav-link.active{
- background:linear-gradient(100deg,#e8f0eb,#f8faf9)!important;
- border-color:#c9d9ce!important;border-left-color:#c49a32!important;
+
+<style id="genzbag-sidebar-text-only-black-v2">
+/* Keep the original green sidebar, smooth navigation effects and scrolling.
+   Change only the navigation text colour. */
+#sidebar{background:#102f26!important;overflow-y:auto!important;overscroll-behavior:contain}
+#sidebar .nav-link,#sidebar .nav-dropdown-toggle,
+#sidebar .nav-submenu .nav-link,#sidebar .team-level-toggle{
  color:#000!important;
 }
-#sidebar .nav-link .nav-icon,#sidebar .nav-dropdown-toggle .nav-icon{
- background:#edf2ef!important;border:1px solid #dce5df!important;
-}
-#sidebar .nav-link.active .nav-icon{
- background:#f6edcf!important;border-color:#e6d39a!important;
-}
-#sidebar .nav-chevron{color:#9a741c!important}
-#sidebar .nav-submenu{border-left-color:#d6c17e!important}
-#sidebar .nav-submenu .nav-link{color:#26332b!important}
-#sidebar .team-level-toggle{color:#26332b!important}
-#sidebar .sidebar-footer{color:#4b5563!important;border-top-color:#dce5df!important}
+#sidebar .nav-link:hover,#sidebar .nav-link.active,
+#sidebar .nav-dropdown-toggle:hover{color:#000!important}
 </style>
 </body>
 </html>
