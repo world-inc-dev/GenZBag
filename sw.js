@@ -1,10 +1,10 @@
-const CACHE_NAME = 'genzbag-shell-v31';
+const CACHE_NAME = 'genzbag-shell-v32';
 const BASE_URL = new URL('./', self.location.href);
 const SHELL_URLS = [
   BASE_URL.href,
   new URL('index.html', BASE_URL).href,
   new URL('manifest.webmanifest', BASE_URL).href,
-  new URL('app-icon.svg?v=5', BASE_URL).href
+  new URL('app-icon.svg?v=6', BASE_URL).href
 ];
 
 self.addEventListener('install', event => {
