@@ -6159,6 +6159,71 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
   font-weight:800!important;
 }
 </style>
+
+<style id="genzbag-balance-card-section-colors">
+/* Reuse the Available Balance holographic pastel gradient on the requested sections. */
+:root{
+ --genzbag-balance-gradient:linear-gradient(125deg,rgba(87,198,235,.94) 0%,rgba(154,143,244,.93) 34%,rgba(255,172,207,.92) 57%,rgba(255,238,190,.94) 78%,rgba(118,225,216,.94) 100%);
+}
+#tasks,
+.dashboard-referral-card,
+.dashboard-schedule-card,
+.dashboard-profile-card,
+.dashboard-app-promo{
+ background:var(--genzbag-balance-gradient)!important;
+ color:#202432!important;
+ border:1px solid rgba(255,255,255,.9)!important;
+ box-shadow:0 12px 26px rgba(85,91,137,.16),inset 0 1px 0 rgba(255,255,255,.8)!important;
+}
+#tasks .section-heading,
+.dashboard-referral-card .ref-header,
+.dashboard-schedule-card .schedule-header,
+.dashboard-profile-card .profile-header{
+ background:var(--genzbag-balance-gradient)!important;
+ color:#202432!important;
+ border-bottom:1px solid rgba(255,255,255,.7)!important;
+}
+#tasks .section-heading h2,
+#tasks .section-heading small,
+.dashboard-referral-card .ref-header h2,
+.dashboard-referral-card .ref-header p,
+.dashboard-schedule-card .schedule-header h2,
+.dashboard-schedule-card .schedule-header p,
+.dashboard-profile-card .profile-header h2,
+.dashboard-profile-card .profile-header p,
+.dashboard-app-promo h2,
+.dashboard-app-promo p{
+ color:#202432!important;
+}
+#tasks .task-list,
+.dashboard-referral-card .ref-body,
+.dashboard-schedule-card .schedule-list,
+.dashboard-profile-card .profile-details{
+ background:transparent!important;
+}
+.dashboard-profile-card .profile-row,
+#tasks .task-row,
+.dashboard-schedule-card .schedule-row{
+ border-bottom-color:rgba(55,67,92,.13)!important;
+}
+.dashboard-profile-card .profile-row span,
+.dashboard-profile-card .profile-row strong,
+#tasks .task-name,
+#tasks .task-amount,
+.dashboard-schedule-card .schedule-live strong,
+.dashboard-schedule-card .schedule-live span:not(.schedule-live-dot),
+.dashboard-schedule-card .day{
+ color:#202432!important;
+}
+.dashboard-app-promo .app-icon{
+ background:rgba(255,255,255,.42)!important;
+ color:#35394a!important;
+}
+.dashboard-app-promo .download-btn{
+ background:linear-gradient(135deg,#6554e8,#4c3bd0)!important;
+ color:#fff!important;
+}
+</style>
 </head>
 
 <body>
