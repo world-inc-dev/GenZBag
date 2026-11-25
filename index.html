@@ -6590,26 +6590,21 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 
   <section class="balance-grid">
 
-    <article class="balance-card green genzbank-balance-card" style="background:linear-gradient(135deg,#25C66A 0%,#087B3B 100%)!important;">
-      <div class="genzbank-card-top">
-        <span class="genzbank-brand-mark">G</span>
-        <span class="genzbank-brand-name">GENZBAG <small>DIGITAL ACCOUNT</small></span>
-        <span class="genzbank-contactless" aria-hidden="true">)))</span>
-      </div>
-      <div class="genzbank-chip" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <div class="genzbank-number-wrap">
-        <span class="genzbank-field-label">CARD NUMBER · DEMO ONLY</span>
-        <div class="genzbank-card-number" aria-label="Masked demo card number">•••• &nbsp;•••• &nbsp;•••• &nbsp;<b id="genzbankCardLast4">••••</b></div>
-      </div>
-      <div class="genzbank-balance-label">AVAILABLE BALANCE</div>
+    <article class="balance-card green genzbank-balance-card">
+      <span class="balance-icon">💳</span>
+      <small>AVAILABLE BALANCE</small>
       <strong>—</strong>
-      <div class="genzbank-card-footer">
-        <div class="genzbank-holder"><span>CARDHOLDER</span><b id="genzbankCardholder">GENZBAG MEMBER</b></div>
-        <div class="genzbank-expiry"><span>EXPIRY</span><b>••/••</b></div>
-        <div class="genzbank-cvv"><span>CVV</span><b>•••</b></div>
-        <span class="genzbank-card-type">DEMO</span>
+      <div class="genzbank-account-details">
+        <div class="genzbank-number-wrap">
+          <span class="genzbank-field-label">CARD NUMBER</span>
+          <b class="genzbank-card-number">•••• &nbsp;•••• &nbsp;•••• &nbsp;••••</b>
+        </div>
+        <div class="genzbank-card-meta">
+          <div><span> CARDHOLDER </span><b id="genzbankCardholder">GENZBAG MEMBER</b></div>
+          <div><span> EXPIRY </span><b>••/••</b></div>
+          <div><span> CVV </span><b>•••</b></div>
+        </div>
       </div>
-      <div class="genzbank-demo-note">DISPLAY CARD · NOT VALID FOR PAYMENTS</div>
     </article>
 
     <article class="balance-card purple">
@@ -10074,72 +10069,35 @@ html body #activityPage .tap-spin-panel .tap-spin-action{
 </style>
 
 <style id="genzbag-real-bank-card-balance-v1">
-/* Premium bank-card treatment for the Available Balance card only. */
-.balance-grid>.genzbank-balance-card{
-  isolation:isolate;display:flex;flex-direction:column;justify-content:flex-start;
-  min-height:218px;padding:17px 18px 12px!important;overflow:hidden;
-  border:1px solid rgba(255,255,255,.28)!important;border-radius:19px!important;
-  color:#fff!important;
-  background:
-    linear-gradient(135deg,#25C66A 0%,#087B3B 100%)!important;
-  box-shadow:0 5px 14px rgba(10,42,107,.12),inset 0 1px 0 rgba(255,255,255,.22)!important;
+/* Extra account details only; the card inherits the exact Team Earnings card design. */
+.balance-grid > .genzbank-balance-card{
+  display:flex!important;flex-direction:column!important;
 }
-.genzbank-balance-card:before{
-  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.12;
-  background:repeating-linear-gradient(132deg,transparent 0 15px,rgba(255,255,255,.075) 16px,transparent 17px 31px);
+.genzbank-account-details{position:relative;z-index:2;margin-top:13px}
+.genzbank-field-label,.genzbank-card-meta span{
+  display:block;font-size:8px;font-weight:800;letter-spacing:1px;opacity:.82;
 }
-.genzbank-card-top{display:flex;align-items:center;gap:9px;position:relative;z-index:2}
-.genzbank-brand-mark{width:27px;height:27px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.75);border-radius:8px;color:#fff;font-size:16px;font-weight:900}
-.genzbank-brand-name{display:flex;flex-direction:column;color:#fff;font-size:12px;letter-spacing:1.4px;font-weight:900;line-height:1.15}
-.genzbank-brand-name small{font-size:7px;letter-spacing:1.7px;color:#c9d0d8;margin-top:3px}
-.genzbank-contactless{margin-left:auto;color:rgba(255,255,255,.88);font-size:21px;letter-spacing:-5px;transform:rotate(90deg);padding-right:5px}
-.genzbank-chip{width:34px;height:26px;margin-top:14px;border-radius:6px;border:1px solid rgba(255,255,255,.8);background:linear-gradient(135deg,#e8f8ee,#9ee4b8 55%,#d7f5e2);display:grid;grid-template-columns:1fr 1fr;gap:1px;padding:4px;box-shadow:inset 0 0 0 1px rgba(70,55,25,.22)}
-.genzbank-chip i{border:1px solid rgba(20,100,55,.38);border-radius:2px}
-.genzbank-balance-card .genzbank-balance-label{margin-top:11px;color:#d4dbe3!important;font-size:9px;font-weight:800;letter-spacing:1.8px}
-.genzbank-balance-card>strong{margin-top:3px!important;font-size:clamp(19px,4.8vw,25px)!important;letter-spacing:.3px;color:#fff!important;text-shadow:0 1px 10px rgba(255,255,255,.12)}
-.genzbank-card-number{margin-top:12px;color:#fff;font-size:clamp(12px,3.2vw,15px);font-weight:800;letter-spacing:1.6px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
-.genzbank-number-wrap{margin-top:9px}
-.genzbank-field-label,.genzbank-demo-note{display:block;color:rgba(255,255,255,.78);font-size:7px;font-weight:800;letter-spacing:1.35px}
-.genzbank-number-wrap .genzbank-card-number{margin-top:4px}
-.genzbank-card-number b{font-weight:900}
-.genzbank-card-footer{display:flex;align-items:flex-end;gap:12px;margin-top:auto;padding-top:9px;color:#fff;font-size:7px;letter-spacing:1px}
-.genzbank-holder,.genzbank-expiry,.genzbank-cvv{display:flex;flex-direction:column;gap:3px;min-width:0}
-.genzbank-holder b,.genzbank-expiry b,.genzbank-cvv b{color:#fff;font-size:8px;letter-spacing:.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:135px}
-.genzbank-card-footer b{color:#fff;font-size:8px;letter-spacing:1px}
-.genzbank-card-type{margin-left:auto;color:#fff;font-weight:900;letter-spacing:1.5px}
-.genzbank-demo-note{margin-top:7px;font-size:6px;letter-spacing:1.1px;opacity:.82}
-.genzbank-balance-card .balance-icon,.genzbank-balance-card .wave{display:none!important}
-@media(max-width:380px){.balance-grid>.genzbank-balance-card{min-height:210px;padding:14px!important}.genzbank-card-footer{font-size:6px;gap:8px}.genzbank-holder b{max-width:100px}}
+.genzbank-card-number{display:block;margin-top:4px;font-size:12px;font-weight:900;letter-spacing:1.25px;color:inherit}
+.genzbank-card-meta{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-top:10px}
+.genzbank-card-meta>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.genzbank-card-meta b{font-size:9px;font-weight:900;letter-spacing:.5px;overflow-wrap:anywhere}
+.genzbank-card-meta>div:first-child{flex:1 1 90px}
 </style>
 
 <script id="genzbag-cardholder-details-v1">
 (function(){
  const holder=document.getElementById('genzbankCardholder');
- const last4=document.getElementById('genzbankCardLast4');
  function syncCardholder(){
   const profileName=document.getElementById('profileMemberName')?.textContent?.trim();
-  const meta=window.currentMember?.user_metadata||{};
-  const name=meta.full_name||meta.fullName||meta.name||profileName||'GENZBAG MEMBER';
-  if(holder)holder.textContent=String(name).replace(/\\s+/g,' ').slice(0,28).toUpperCase();
-  const uid=window.currentMember?.id||'';
-  if(last4&&uid)last4.textContent=uid.replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase().padStart(4,'0');
+  if(holder)holder.textContent=String(profileName||'GENZBAG MEMBER').replace(/\s+/g,' ').slice(0,28).toUpperCase();
  }
  syncCardholder();
  const profileNameEl=document.getElementById('profileMemberName');
  if(profileNameEl)new MutationObserver(syncCardholder).observe(profileNameEl,{childList:true,characterData:true,subtree:true});
  document.addEventListener('genzbag:member-updated',syncCardholder);
- setInterval(syncCardholder,2500);
 })();
 </script>
 
-<style id="genzbank-match-team-earnings-final">
-/* Keep the Available Balance card identical to the Team Earnings green finish. */
-.balance-grid > article.genzbank-balance-card,
-.balance-grid > article.genzbank-balance-card.green,
-.balance-grid > article.genzbank-balance-card.blue{
-  background:linear-gradient(135deg,#25C66A 0%,#087B3B 100%)!important;
-  background-color:#087B3B!important;
-}
-</style>
+
 </body>
 </html>
