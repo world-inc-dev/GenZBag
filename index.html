@@ -5758,7 +5758,7 @@ a{color:#5146df}
 .legend-credit{background:#5146df}.legend-debit{background:#e58b9a}
 .financial-chart-legend small{margin-left:auto;color:#8a90a0}
 .dashboard-week-chart{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:7px!important;align-items:end!important;min-height:160px!important;padding:13px 10px 8px!important;border:1px solid rgba(255,255,255,.88)!important;border-radius:16px!important;background:rgba(255,255,255,.37)!important}
-.dashboard-week-chart:has(.financial-chart-day:nth-child(8)){grid-template-columns:repeat(10,minmax(0,1fr))!important;gap:5px!important}
+.dashboard-week-chart{grid-template-columns:repeat(10,minmax(0,1fr))!important;gap:5px!important}
 .financial-chart-day{display:flex;min-width:0;height:100%;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px}
 .financial-chart-bars{width:100%;height:125px;display:flex;align-items:flex-end;justify-content:center;gap:3px;border-bottom:1px solid rgba(112,119,143,.16)}
 .financial-chart-bar{display:block;width:min(38%,13px);min-height:2px;border-radius:5px 5px 2px 2px}
@@ -8279,8 +8279,12 @@ function renderDashboardWalletInsights(ledgerRows){
  const netEl=document.getElementById('financialNet');if(netEl)netEl.classList.toggle('negative',inflow<outflow);
  const caption=document.getElementById('financialChartCaption');if(caption)caption.textContent='Daily ledger activity · UGX';
  document.querySelectorAll('[data-financial-period]').forEach(button=>button.classList.toggle('active',Number(button.dataset.financialPeriod)===period));
- const max=Math.max(1,...buckets.flatMap(x=>[x.credit,x.debit]));
- chart.innerHTML=buckets.map(b=>{
+ const chartBuckets=period===30?Array.from({length:10},(_,i)=>{
+  const group=buckets.slice(i*3,i*3+3);
+  return {date:group[0].date,credit:group.reduce((n,x)=>n+x.credit,0),debit:group.reduce((n,x)=>n+x.debit,0)};
+ }):buckets;
+ const max=Math.max(1,...chartBuckets.flatMap(x=>[x.credit,x.debit]));
+ chart.innerHTML=chartBuckets.map((b,i)=>{
   const label=period===7?b.date.toLocaleDateString('en-GB',{weekday:'short',timeZone:'Africa/Kampala'}).slice(0,2):b.date.toLocaleDateString('en-GB',{day:'2-digit',month:'short',timeZone:'Africa/Kampala'});
   const credit=Math.max(2,b.credit/max*100),debit=Math.max(2,b.debit/max*100);
   return '<div class="financial-chart-day" title="'+escapeText(label)+': in '+money(b.credit)+', out '+money(b.debit)+'"><div class="financial-chart-bars"><span class="financial-chart-bar credit" style="height:'+credit+'%"></span><span class="financial-chart-bar debit" style="height:'+debit+'%"></span></div><small>'+escapeText(label)+'</small></div>';
@@ -8335,7 +8339,8 @@ async function loadMemberWallet(member=currentMember){
  if(ledgerError){console.warn('Wallet ledger:',ledgerError);document.querySelectorAll('.balance-grid .balance-card strong,.welcome-financials strong,#tasks .task-amount').forEach(el=>el.textContent='Unavailable');const profileBalance=document.getElementById('profileAccountBalance');if(profileBalance)profileBalance.textContent='Unavailable';return;}
  const ugx=rows.filter(x=>x.currency==='UGX');
  updateTaskEarningsFromLedger(rows);
- window.genzbagLatestLedgerRows=rows;\n renderDashboardWalletInsights(rows);
+ window.genzbagLatestLedgerRows=rows;
+ renderDashboardWalletInsights(rows);
  const signed=items=>items.reduce((n,x)=>n+(x.direction==='credit'?1:-1)*Number(x.amount),0);
  const availableRows=ugx.filter(x=>['referral_commission','withdrawal_debit','withdrawal_reversal','voucher_purchase','client_activation_debit'].includes(x.entry_type));
  const referralRows=ugx.filter(x=>x.entry_type==='referral_commission');
