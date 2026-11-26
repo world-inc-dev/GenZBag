@@ -1,0 +1,54 @@
+name: GenZBag admin portal checks
+on:
+  push:
+    branches:
+      - main
+      - feature/separate-admin-portal
+  pull_request:
+    branches:
+      - main
+jobs:
+  admin-portal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate admin page markup and IDs
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from collections import Counter
+          from pathlib import Path
+          class Check(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids = []
+              def handle_starttag(self, tag, attrs):
+                  for key, value in attrs:
+                      if key == "id" and value:
+                          self.ids.append(value)
+          parser = Check()
+          parser.feed(Path("admin.html").read_text(encoding="utf-8"))
+          duplicates = [k for k, n in Counter(parser.ids).items() if n > 1]
+          if duplicates:
+              raise SystemExit("Duplicate admin page IDs: " + ", ".join(duplicates))
+          required = {"loginView", "loginForm", "appView", "page-overview", "page-members", "page-activations", "page-withdrawals", "page-referrals", "page-ledger", "page-finance", "page-audit"}
+          missing = sorted(required - set(parser.ids))
+          if missing:
+              raise SystemExit("Missing admin page elements: " + ", ".join(missing))
+          print("Admin portal markup and unique IDs passed.")
+          PY
+      - name: Check admin page JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path("admin.html").read_text(encoding="utf-8")
+          scripts = [s for s in re.findall(r'<script[^>]*>(.*?)</script>', html, re.S | re.I) if s.strip()]
+          if len(scripts) != 1:
+              raise SystemExit(f"Expected one inline admin script, found {len(scripts)}")
+          Path("/tmp/genzbag-admin.js").write_text(scripts[0], encoding="utf-8")
+          PY
+          node --check /tmp/genzbag-admin.js

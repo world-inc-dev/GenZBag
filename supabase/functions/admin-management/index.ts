@@ -157,6 +157,45 @@ Deno.serve(async (req: Request) => {
       return json({ ok: true, message: "Member details updated." });
     }
 
+    if (action === "list_member_access") {
+      const userIds = Array.isArray(body.user_ids) ? [...new Set(body.user_ids.map((v: unknown) => String(v || "")))].filter((v: string) => /^[0-9a-f-]{36}$/i.test(v)).slice(0, 500) : [];
+      if (!userIds.length) return json({ ok: true, members: [] });
+      const results = await Promise.all(userIds.map(async (userId: string) => {
+        const { data, error } = await admin.auth.admin.getUserById(userId);
+        if (error || !data?.user) return { user_id: userId, found: false, suspended: null, banned_until: null };
+        const bannedUntil = data.user.banned_until || null;
+        const suspended = !!bannedUntil && new Date(bannedUntil).getTime() > Date.now();
+        return { user_id: userId, found: true, suspended, banned_until: bannedUntil };
+      }));
+      return json({ ok: true, members: results });
+    }
+
+    if (action === "set_member_access") {
+      const userId = String(body.user_id || "");
+      const suspended = body.suspended === true;
+      const note = String(body.note || "").trim().slice(0, 500);
+      if (!/^[0-9a-f-]{36}$/i.test(userId)) return json({ error: "A valid member account is required." }, 400);
+      if (note.length < 5) return json({ error: "Provide an audit reason of at least 5 characters." }, 400);
+      if (userId === caller.id) return json({ error: "You cannot suspend your own administrator account." }, 400);
+      const { data: target, error: targetError } = await admin.auth.admin.getUserById(userId);
+      if (targetError || !target?.user) return json({ error: "Member account not found." }, 404);
+      if (target.user.app_metadata?.role === "admin") return json({ error: "Administrator accounts cannot be suspended from member management." }, 403);
+      const { data: changed, error: changeError } = await admin.auth.admin.updateUserById(userId, {
+        ban_duration: suspended ? "876000h" : "none",
+      });
+      if (changeError || !changed?.user) return json({ error: "Account access could not be updated: " + (changeError?.message || "Unknown error"), }, 400);
+      const bannedUntil = changed.user.banned_until || null;
+      const isSuspended = !!bannedUntil && new Date(bannedUntil).getTime() > Date.now();
+      await admin.from("admin_audit_logs").insert({
+        admin_id: caller.id,
+        action: isSuspended ? "member_access_suspended" : "member_access_restored",
+        target_type: "user",
+        target_id: userId,
+        details: { note, banned_until: bannedUntil },
+      });
+      return json({ ok: true, suspended: isSuspended, banned_until: bannedUntil, message: isSuspended ? "Member sign-in access suspended." : "Member sign-in access restored." });
+    }
+
     if (action === "review_withdrawal") {
       const id = String(body.id || "");
       const status = String(body.status || "");

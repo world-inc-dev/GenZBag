@@ -47,15 +47,35 @@ jobs:
               raise SystemExit("Missing Accounts/Profile elements: " + ", ".join(missing))
           print("Accounts/Profile markup checks passed.")
           PY
-      - name: Check inline application script
+      - name: Check inline application scripts
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
-          html = Path("index.html").read_text(encoding="utf-8")
-          scripts = re.findall(r'<script\b(?![^>]*\bsrc=)[^>]*>(.*?)</script>', html, re.S | re.I)
-          if len(scripts) != 1:
-              raise SystemExit(f"Expected one inline application script, found {len(scripts)}")
-          Path("/tmp/genzbag-app.js").write_text(scripts[0], encoding="utf-8")
+          from html.parser import HTMLParser
+          class Scripts(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.items = []
+                  self.current = None
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() == "script":
+                      attrs = dict(attrs)
+                      if "src" not in attrs and attrs.get("type", "").lower() not in ("application/json", "application/ld+json"):
+                          self.current = []
+              def handle_data(self, data):
+                  if self.current is not None:
+                      self.current.append(data)
+              def handle_endtag(self, tag):
+                  if tag.lower() == "script" and self.current is not None:
+                      self.items.append("".join(self.current))
+                      self.current = None
+          parser = Scripts()
+          parser.feed(Path("index.html").read_text(encoding="utf-8"))
+          scripts = [s for s in parser.items if s.strip()]
+          if not scripts:
+              raise SystemExit("No inline application scripts found")
+          for i, script in enumerate(scripts):
+              Path(f"/tmp/genzbag-app-{i}.js").write_text(script, encoding="utf-8")
+          print(f"Extracted {len(scripts)} inline application scripts.")
           PY
-          node --check /tmp/genzbag-app.js
+          for script in /tmp/genzbag-app-*.js; do node --check "$script"; done
