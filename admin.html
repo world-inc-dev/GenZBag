@@ -52,7 +52,7 @@
     show('Verifying administrator credentials…');
     try{
       if(!window.supabase?.createClient)throw Error('The sign-in library did not load. Check your internet connection and refresh the page.');
-      const client=window.supabase.createClient('https://pihesnxftmrzmsoikvfz.supabase.co','sb_publishable_r14npkqDg7b8nthhvljX3A_HugjXL1S',{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce',storageKey:'genzbag-admin-auth-v1'}});
+      const client=window.__genzbagAdminClient||(window.__genzbagAdminClient=window.supabase.createClient('https://pihesnxftmrzmsoikvfz.supabase.co','sb_publishable_r14npkqDg7b8nthhvljX3A_HugjXL1S',{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce',storageKey:'genzbag-admin-auth-v1'}}));
       let session=null,user=null;
       if(identifier.includes('@')){
         const {data,error}=await client.auth.signInWithPassword({email:identifier,password});
@@ -67,7 +67,7 @@
       }
       if(!session||user?.app_metadata?.role!=='admin'){await client.auth.signOut();throw Error('This account is not authorised for administrator access.');}
       show('Administrator verified. Opening the dashboard…');
-      window.location.reload();
+      window.dispatchEvent(new CustomEvent('genzbag-admin-authenticated',{detail:{session}}));
     }catch(error){
       field.value=identifier;passwordField.value=password;
       show(error?.message||'Sign in failed. Your details have been kept; please try again.',true);
@@ -80,10 +80,12 @@
 'use strict';
 const SUPABASE_URL='https://pihesnxftmrzmsoikvfz.supabase.co';
 const SUPABASE_KEY='sb_publishable_r14npkqDg7b8nthhvljX3A_HugjXL1S';
-let supabase=null,supabaseInitError=null;
+let supabase=window.__genzbagAdminClient||null,supabaseInitError=null;
 try{
-  if(!window.supabase?.createClient)throw Error('The Supabase sign-in library did not load.');
-  supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce',storageKey:'genzbag-admin-auth-v1'}});
+  if(!supabase){
+    if(!window.supabase?.createClient)throw Error('The Supabase sign-in library did not load.');
+    supabase=window.__genzbagAdminClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce',storageKey:'genzbag-admin-auth-v1'}});
+  }
 }catch(initError){
   supabaseInitError=initError?.message||'The sign-in service could not initialise.';
   console.error('GenZBag admin Supabase initialisation failed:',initError);
@@ -121,7 +123,8 @@ $('cancelEdit').addEventListener('click',()=>$('editModal').hidden=true);
 $('editForm').addEventListener('submit',async e=>{e.preventDefault();const b=$('saveEdit');b.disabled=true;try{const r=await adminAction({action:'update_member',user_id:$('editId').value,username:$('editUsername').value.trim(),email:$('editEmail').value.trim(),phone:$('editPhone').value.trim()});setMsg('editMessage',r.message||'Member updated.');await loadMembers();setTimeout(()=>$('editModal').hidden=true,700);}catch(err){setMsg('editMessage',err.message,true);}finally{b.disabled=false;}});
 $('activationTable').addEventListener('click',async e=>{const b=e.target.closest('[data-activation-action]');if(!b)return;const row=b.closest('[data-activation]'),decision=b.dataset.activationAction;if(!confirm('Confirm '+(decision==='verified'?'approval':'rejection')+' of this activation?'))return;const note=prompt('Optional administrator note:');if(note===null)return;b.disabled=true;try{const r=await adminAction({action:'review_activation',id:row.dataset.activation,status:decision,note});alert(r.message||'Activation decision saved.');await loadActivations();await loadOverview();}catch(err){alert(err.message);b.disabled=false;}});
 $('withdrawalTable').addEventListener('click',async e=>{const b=e.target.closest('[data-withdraw-action]');if(!b)return;const row=b.closest('[data-withdrawal]'),decision=b.dataset.withdrawAction;if(!confirm('Confirm '+decision.replace('_',' ')+' for this withdrawal?'))return;let provider_reference='';if(decision==='paid'){provider_reference=String(prompt('Enter the genuine mobile-money transaction reference:')||'').trim();if(provider_reference.length<5){alert('A valid transaction reference is required.');return;}}const note=prompt('Optional administrator note:');if(note===null)return;b.disabled=true;try{const r=await adminAction({action:'review_withdrawal',id:row.dataset.withdrawal,status:decision,note,provider_reference});alert(r.message||'Withdrawal decision saved.');await loadWithdrawals();await loadOverview();}catch(err){alert(err.message);b.disabled=false;}});
-if(supabase){supabase.auth.getSession().then(({data,error})=>{if(error){showLogin();return;}if(data.session)requireAdmin(data.session);else showLogin();});supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT')showLogin();else if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session&&adminUser?.id!==session.user.id)requireAdmin(session);});}else{showLogin();setMsg('loginMessage',supabaseInitError||'Sign-in service did not load. Check your connection and try again; your details will stay on this page.',true);}
+if(supabase){supabase.auth.getSession().then(({data,error})=>{if(error){showLogin();return;}if(data.session)requireAdmin(data.session);else showLogin();});supabase.auth.onAuthStateChange((event)=>{if(event==='SIGNED_OUT')showLogin();});
+  window.addEventListener('genzbag-admin-authenticated',event=>{const session=event.detail?.session;if(session)requireAdmin(session).catch(error=>{showLogin();setMsg('loginMessage','Dashboard could not open: '+(error?.message||'Please try again.'),true);});});}else{showLogin();setMsg('loginMessage',supabaseInitError||'Sign-in service did not load. Check your connection and try again; your details will stay on this page.',true);}
 </script>
 </body>
 </html>
