@@ -8875,21 +8875,38 @@ document.getElementById('profilePasswordForm')?.addEventListener('submit',savePr
 
 async function loadAdminProfileDirectory(){
  const panel=document.getElementById('adminProfileDirectory'),list=document.getElementById('adminProfileDirectoryList');
- if(!panel||!list||currentMember?.app_metadata?.role!=='admin')return;
- panel.hidden=false;list.innerHTML='<p class="activity-empty">Loading member contacts…</p>';
- const {data,error}=await supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(500);
- if(error){list.innerHTML='<p class="activity-empty">Could not load member contacts: '+escapeText(error.message)+'</p>';return;}
- const rows=data||[];
- const render=()=>{
-  const q=String(document.getElementById('adminProfileSearch')?.value||'').trim().toLowerCase();
-  const filtered=rows.filter(x=>[x.username,x.contact_email,x.phone,x.country].some(v=>String(v||'').toLowerCase().includes(q)));
-  if(!filtered.length){list.innerHTML='<p class="activity-empty">No matching members found.</p>';return;}
-  list.innerHTML=filtered.map(x=>'<article class="team-member-row"><div style="min-width:0"><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small style="display:block;overflow-wrap:anywhere">'+escapeText(x.contact_email||'Email not set')+'<br>'+escapeText(x.phone||'Phone not set')+'<br>Country: '+escapeText(x.country||'Country not set')+'<br>Joined: '+escapeText(x.created_at?new Date(x.created_at).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable')+'<br>Member for: <span data-member-joined="'+escapeText(x.created_at||'')+'">'+escapeText(formatMemberTenure(x.created_at))+'</span></small></div></article>').join('');
+ if(!panel||!list||currentMember?.app_metadata?.role!=='admin'||!supabaseClient)return;
+ panel.hidden=false;
+ const search=document.getElementById('adminProfileSearch');
+ let searchTimer=null,requestNumber=0;
+ const renderRows=rows=>{
+  if(!rows.length){list.innerHTML='<p class="activity-empty">No matching members found. Try a different name, username or phone number.</p>';return;}
+  list.innerHTML=rows.map(x=>'<article class="team-member-row"><div style="min-width:0"><strong>'+escapeText(x.username||'GenZBag member')+'</strong><small style="display:block;overflow-wrap:anywhere">'+escapeText(x.contact_email||'Email not set')+'<br>'+escapeText(x.phone||'Phone not set')+'<br>Country: '+escapeText(x.country||'Country not set')+'<br>Joined: '+escapeText(x.created_at?new Date(x.created_at).toLocaleString('en-GB',{timeZone:'Africa/Kampala'}):'Joining date unavailable')+'<br>Member for: <span data-member-joined="'+escapeText(x.created_at||'')+'">'+escapeText(formatMemberTenure(x.created_at))+'</span></small></div></article>').join('');
   refreshMemberTenureCounters();
  };
- render();
- const search=document.getElementById('adminProfileSearch');
- if(search&&!search.dataset.bound){search.addEventListener('input',render);search.dataset.bound='1';}
+ const runSearch=async()=>{
+  const term=String(search?.value||'').trim();
+  const thisRequest=++requestNumber;
+  list.innerHTML='<p class="activity-empty">Searching member records…</p>';
+  let query=supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(100);
+  if(term){
+   const safe=term.replace(/[,%()\\\\]/g,' ').replace(/\\s+/g,' ').trim();
+   if(!safe){list.innerHTML='<p class="activity-empty">Enter a name, username or phone number to search.</p>';return;}
+   query=query.or('username.ilike.%'+safe+'%,contact_email.ilike.%'+safe+'%,phone.ilike.%'+safe+'%,country.ilike.%'+safe+'%');
+  }
+  const {data,error}=await query;
+  if(thisRequest!==requestNumber)return;
+  if(error){list.innerHTML='<p class="activity-empty">Could not search member records: '+escapeText(error.message)+'</p>';return;}
+  renderRows(data||[]);
+ };
+ if(search&&!search.dataset.liveSearchBound){
+  search.addEventListener('input',()=>{
+   clearTimeout(searchTimer);
+   searchTimer=setTimeout(runSearch,220);
+  });
+  search.dataset.liveSearchBound='1';
+ }
+ await runSearch();
 }
 document.getElementById('adminProfileRefresh')?.addEventListener('click',loadAdminProfileDirectory);
 function renderDashboardWalletInsights(ledgerRows){
