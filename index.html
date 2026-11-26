@@ -11045,5 +11045,19 @@ html body #adminPage {
   display: none !important;
 }
 </style>
+
+<style id="genzbag-referral-invite-after-create-button-v2">
+/* The auth form uses explicit flex/grid ordering; keep the referral notice after the submit button. */
+#authGate #signupReferralInvite{
+  order:22!important;
+  position:static!important;
+  display:block!important;
+  width:100%!important;
+  flex:0 0 100%!important;
+  grid-column:1 / -1!important;
+  margin:10px 0 0!important;
+}
+#authGate #signupReferralInvite[hidden]{display:none!important}
+</style>
 </body>
 </html>
