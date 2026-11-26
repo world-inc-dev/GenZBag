@@ -22,6 +22,25 @@ Deno.serve(async (req: Request) => {
     const url = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const ip = req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") ||
+      (req.headers.get("x-forwarded-for") || "unknown").split(",")[0].trim() || "unknown";
+    const hashKey = async (value: string) => {
+      const bytes = new TextEncoder().encode(value + ":" + serviceKey);
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+    };
+    const limiter = createClient(url, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
+    const [ipAllowed, accountAllowed] = await Promise.all([
+      limiter.rpc("consume_edge_rate_limit", { p_key_hash: await hashKey("username-signin-ip:" + ip), p_limit: 60, p_window_seconds: 900 }),
+      limiter.rpc("consume_edge_rate_limit", { p_key_hash: await hashKey("username-signin-account:" + ip + ":" + normalized), p_limit: 8, p_window_seconds: 900 }),
+    ]);
+    if (ipAllowed.error || accountAllowed.error) {
+      console.error("Username sign-in rate limit failed:", ipAllowed.error?.message || accountAllowed.error?.message);
+      return new Response(JSON.stringify({ error: "Sign-in is temporarily unavailable. Please try again shortly." }), { status: 503, headers });
+    }
+    if (ipAllowed.data !== true || accountAllowed.data !== true) {
+      return new Response(JSON.stringify({ error: "Too many sign-in attempts. Please wait 15 minutes before trying again." }), { status: 429, headers });
+    }
     const admin = createClient(url, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
     const { data: profile, error: profileError } = await admin
       .from("profiles").select("id").eq("username", normalized).maybeSingle();
