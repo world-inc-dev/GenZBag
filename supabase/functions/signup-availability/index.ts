@@ -23,10 +23,18 @@ Deno.serve(async (req: Request) => {
     const email = String(body?.email || "").trim().toLowerCase();
     const phone = String(body?.phone || "").trim();
     const phoneDigits = phone.replace(/[^0-9]/g, "");
-    if (!/^[a-z0-9]{4,20}$/.test(username) ||
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-        phoneDigits.length < 9 || phoneDigits.length > 16) {
-      return json({ error: "Enter valid registration details before checking availability." }, 400);
+    // Availability is checked independently as each signup field is entered.
+    // Empty sibling fields are expected; validate only values supplied by the browser.
+    const hasUsername = username.length > 0;
+    const hasEmail = email.length > 0;
+    const hasPhone = phone.length > 0;
+    if (!hasUsername && !hasEmail && !hasPhone) {
+      return json({ error: "Enter a username, email or phone number to check." }, 400);
+    }
+    if ((hasUsername && !/^[a-z0-9]{4,20}$/.test(username)) ||
+        (hasEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) ||
+        (hasPhone && (phoneDigits.length < 9 || phoneDigits.length > 16))) {
+      return json({ error: "Enter a valid value before checking availability." }, 400);
     }
 
     const forwarded = req.headers.get("x-forwarded-for") || "";
