@@ -11251,32 +11251,47 @@ html body #authGate .auth-brand .auth-live-pill{
 </style>
 
 <style id="genzbag-launch-countdown-style-v1">
-#genzbag-launch-countdown-v1{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:28px 18px;background:radial-gradient(ellipse at 50% 0%,rgba(255,112,170,.22),transparent 48%),linear-gradient(145deg,#fff7fb 0%,#ffe8f1 48%,#fff 100%);color:#29202a;font-family:inherit}
+#genzbag-launch-countdown-v1{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:clamp(22px,5vh,54px) 18px 36px;background:radial-gradient(ellipse at 50% -5%,rgba(255,105,165,.2),transparent 42%),linear-gradient(145deg,#fff9fc 0%,#ffedf4 52%,#fff 100%);color:#2b2028;font-family:inherit}
 #genzbag-launch-countdown-v1[hidden]{display:none}
-#genzbag-launch-countdown-v1 .launch-shell{width:min(100%,680px);text-align:center;margin:auto}
-#genzbag-launch-countdown-v1 .launch-mark{width:76px;height:76px;margin:0 auto 16px;border-radius:24px;display:grid;place-items:center;background:linear-gradient(145deg,#ff6fa8,#e83e83);color:#fff;font-weight:900;font-size:31px;box-shadow:0 14px 35px rgba(232,62,131,.25);animation:gbLaunchFloat 3s ease-in-out infinite}
-#genzbag-launch-countdown-v1 .launch-brand{font-size:clamp(27px,6vw,40px);font-weight:900;letter-spacing:-1.4px;margin:0;color:#271b26}
-#genzbag-launch-countdown-v1 .launch-kicker{display:inline-flex;margin:22px auto 12px;padding:8px 14px;border:1px solid #f5b4cf;border-radius:999px;background:rgba(255,255,255,.7);color:#c02f70;font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}
-#genzbag-launch-countdown-v1 h1{font-size:clamp(30px,7vw,54px);line-height:1.06;letter-spacing:-1.8px;margin:8px auto 14px;max-width:620px}
-#genzbag-launch-countdown-v1 .launch-copy{max-width:500px;margin:0 auto;color:#725e6b;font-size:clamp(14px,2.8vw,17px);line-height:1.7}
-#genzbag-launch-countdown-v1 .launch-timer{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:32px auto 20px;max-width:560px}
-#genzbag-launch-countdown-v1 .launch-time-unit{padding:18px 8px 15px;border:1px solid rgba(233,119,164,.3);border-radius:18px;background:rgba(255,255,255,.78);box-shadow:0 12px 30px rgba(145,66,99,.08);backdrop-filter:blur(12px)}
-#genzbag-launch-countdown-v1 .launch-number{display:block;font-variant-numeric:tabular-nums;font-size:clamp(28px,7vw,48px);line-height:1.1;font-weight:900;color:#d83f80}
-#genzbag-launch-countdown-v1 .launch-unit-label{display:block;margin-top:8px;color:#8d7180;font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
-#genzbag-launch-countdown-v1 .launch-date{margin:18px 0 0;color:#5e4a57;font-weight:750;font-size:14px}
-#genzbag-launch-countdown-v1 .launch-tagline{margin:28px 0 0;color:#a23b6c;font-weight:750;font-size:13px;letter-spacing:.3px}
-#genzbag-launch-countdown-v1 .launch-footer{margin-top:34px;color:#9a8792;font-size:11px}
-@keyframes gbLaunchFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
-@media(max-width:420px){#genzbag-launch-countdown-v1{padding:22px 14px}#genzbag-launch-countdown-v1 .launch-timer{gap:7px;margin-top:26px}#genzbag-launch-countdown-v1 .launch-time-unit{padding:15px 4px 13px;border-radius:14px}#genzbag-launch-countdown-v1 .launch-unit-label{font-size:9px;letter-spacing:1px}}
+#genzbag-launch-countdown-v1 *{box-sizing:border-box}
+#genzbag-launch-countdown-v1 .launch-shell{width:min(100%,900px);margin:auto;text-align:center}
+#genzbag-launch-countdown-v1 .launch-topline{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 28px;color:#765b6a;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#genzbag-launch-countdown-v1 .launch-topline:before,#genzbag-launch-countdown-v1 .launch-topline:after{content:"";width:28px;height:1px;background:#e9b4ca}
+#genzbag-launch-countdown-v1 .launch-mark{width:68px;height:68px;margin:0 auto 12px;border-radius:21px;display:grid;place-items:center;background:linear-gradient(145deg,#ff79ad,#df367d);color:#fff;font-weight:900;font-size:29px;box-shadow:0 13px 32px rgba(218,55,122,.22);animation:gbLaunchFloat 3.5s ease-in-out infinite}
+#genzbag-launch-countdown-v1 .launch-brand{font-size:clamp(29px,6vw,40px);font-weight:900;letter-spacing:-1.5px;margin:0;color:#281d25}
+#genzbag-launch-countdown-v1 .launch-kicker{display:inline-flex;margin:22px auto 12px;padding:8px 14px;border:1px solid #f0bfd2;border-radius:999px;background:rgba(255,255,255,.78);color:#bd3674;font-size:10px;font-weight:850;letter-spacing:1.55px;text-transform:uppercase}
+#genzbag-launch-countdown-v1 h1{font-size:clamp(32px,7vw,58px);line-height:1.04;letter-spacing:-2px;margin:8px auto 15px;max-width:720px;color:#291e27}
+#genzbag-launch-countdown-v1 .launch-copy{max-width:620px;margin:0 auto;color:#735f6b;font-size:clamp(14px,2.5vw,17px);line-height:1.75}
+#genzbag-launch-countdown-v1 .launch-timer{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:30px auto 16px;max-width:620px}
+#genzbag-launch-countdown-v1 .launch-time-unit{padding:20px 8px 17px;border:1px solid rgba(226,126,166,.27);border-radius:19px;background:rgba(255,255,255,.84);box-shadow:0 12px 30px rgba(117,55,83,.065);backdrop-filter:blur(12px)}
+#genzbag-launch-countdown-v1 .launch-number{display:block;font-variant-numeric:tabular-nums;font-size:clamp(29px,7vw,49px);line-height:1.05;font-weight:900;color:#d83f80}
+#genzbag-launch-countdown-v1 .launch-unit-label{display:block;margin-top:9px;color:#8b7480;font-size:10px;font-weight:850;letter-spacing:1.3px;text-transform:uppercase}
+#genzbag-launch-countdown-v1 .launch-date{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 0;padding:10px 15px;border-radius:12px;background:#fff;border:1px solid #f3d5e1;color:#5d4653;font-weight:800;font-size:13px}
+#genzbag-launch-countdown-v1 .launch-date:before{content:"";width:7px;height:7px;border-radius:50%;background:#df4383;box-shadow:0 0 0 4px #fde5ef}
+#genzbag-launch-countdown-v1 .launch-tagline{margin:17px 0 0;color:#b23b72;font-weight:850;font-size:13px;letter-spacing:.35px}
+#genzbag-launch-countdown-v1 .launch-divider{height:1px;width:min(100%,720px);margin:32px auto 25px;background:linear-gradient(90deg,transparent,#edc5d6,transparent)}
+#genzbag-launch-countdown-v1 .launch-section-title{margin:0 0 7px;color:#342631;font-size:clamp(18px,3vw,22px);font-weight:850;letter-spacing:-.4px}
+#genzbag-launch-countdown-v1 .launch-section-copy{margin:0 auto 18px;color:#826e79;font-size:13px;line-height:1.6;max-width:560px}
+#genzbag-launch-countdown-v1 .launch-highlights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;text-align:left}
+#genzbag-launch-countdown-v1 .launch-card{padding:18px 17px;border:1px solid #f0d9e3;border-radius:17px;background:rgba(255,255,255,.78);box-shadow:0 8px 24px rgba(117,55,83,.035)}
+#genzbag-launch-countdown-v1 .launch-card-icon{width:34px;height:34px;display:grid;place-items:center;margin-bottom:12px;border-radius:11px;background:#fff0f6;color:#c43c79;font-size:16px;font-weight:900}
+#genzbag-launch-countdown-v1 .launch-card h2{margin:0 0 6px;color:#382a34;font-size:14px;font-weight:850}
+#genzbag-launch-countdown-v1 .launch-card p{margin:0;color:#806d78;font-size:12px;line-height:1.6}
+#genzbag-launch-countdown-v1 .launch-note{max-width:690px;margin:22px auto 0;padding:13px 16px;border-radius:13px;background:rgba(255,255,255,.65);color:#806d78;font-size:11px;line-height:1.65;border:1px solid rgba(240,217,227,.8)}
+#genzbag-launch-countdown-v1 .launch-footer{margin-top:25px;color:#9a8792;font-size:11px;line-height:1.7}
+@keyframes gbLaunchFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+@media(max-width:620px){#genzbag-launch-countdown-v1 .launch-highlights{grid-template-columns:1fr;gap:9px}#genzbag-launch-countdown-v1 .launch-card{display:grid;grid-template-columns:36px 1fr;column-gap:12px;align-items:start;padding:14px}#genzbag-launch-countdown-v1 .launch-card-icon{grid-row:span 2;margin:0}#genzbag-launch-countdown-v1 .launch-card h2{align-self:end}#genzbag-launch-countdown-v1 .launch-card p{grid-column:2}}
+@media(max-width:420px){#genzbag-launch-countdown-v1{padding:20px 13px 28px}#genzbag-launch-countdown-v1 .launch-topline{margin-bottom:21px;font-size:9px}#genzbag-launch-countdown-v1 .launch-timer{gap:7px;margin-top:24px}#genzbag-launch-countdown-v1 .launch-time-unit{padding:15px 4px 13px;border-radius:14px}#genzbag-launch-countdown-v1 .launch-unit-label{font-size:8px;letter-spacing:.8px}#genzbag-launch-countdown-v1 .launch-date{font-size:11px;padding:9px 11px}}
 @media(prefers-reduced-motion:reduce){#genzbag-launch-countdown-v1 .launch-mark{animation:none}}
 </style>
 <div id="genzbag-launch-countdown-v1" role="dialog" aria-modal="true" aria-labelledby="genzbag-launch-title" aria-live="polite">
  <main class="launch-shell">
+  <p class="launch-topline">A new experience is on its way</p>
   <div class="launch-mark" aria-hidden="true">G</div>
   <p class="launch-brand">GenZBag</p>
   <span class="launch-kicker">Official launch countdown</span>
-  <h1 id="genzbag-launch-title">Something exciting is coming.</h1>
-  <p class="launch-copy">We're getting everything ready for you. The next chapter of GenZBag begins soon. Be ready to take your smaller steps toward bigger wins.</p>
+  <h1 id="genzbag-launch-title">Your next chapter starts here.</h1>
+  <p class="launch-copy">A fresh way to explore digital activities, follow your progress and connect with your growing community is getting ready. We’re putting the finishing touches in place ahead of the official GenZBag launch.</p>
   <div class="launch-timer" aria-label="Time remaining until launch">
    <div class="launch-time-unit"><span class="launch-number" id="gb-launch-days">00</span><span class="launch-unit-label">Days</span></div>
    <div class="launch-time-unit"><span class="launch-number" id="gb-launch-hours">00</span><span class="launch-unit-label">Hours</span></div>
@@ -11285,7 +11300,16 @@ html body #authGate .auth-brand .auth-live-pill{
   </div>
   <p class="launch-date">10 December 2026 · 2:00 PM (East Africa Time)</p>
   <p class="launch-tagline">Smaller Steps, Bigger Wins.</p>
-  <p class="launch-footer">© GenZBag · We're preparing for launch</p>
+  <div class="launch-divider" aria-hidden="true"></div>
+  <h2 class="launch-section-title">What to expect from GenZBag</h2>
+  <p class="launch-section-copy">A connected member experience, with tools designed to help you take part and keep track of your activity.</p>
+  <section class="launch-highlights" aria-label="GenZBag platform highlights">
+   <article class="launch-card"><span class="launch-card-icon" aria-hidden="true">↗</span><h2>Activities &amp; opportunities</h2><p>Explore available tasks and platform activities from one member space.</p></article>
+   <article class="launch-card"><span class="launch-card-icon" aria-hidden="true">◎</span><h2>Team &amp; referrals</h2><p>View your referral connections and follow your team’s progress.</p></article>
+   <article class="launch-card"><span class="launch-card-icon" aria-hidden="true">▤</span><h2>Your member dashboard</h2><p>Keep important account information and activity updates organised in one place.</p></article>
+  </section>
+  <p class="launch-note">Please note: features, activities and any associated rewards are subject to availability, eligibility and the platform’s terms. Participation does not guarantee earnings or rewards.</p>
+  <p class="launch-footer">Thank you for being part of the journey.<br>© GenZBag · Official launch information</p>
  </main>
 </div>
 <script id="genzbag-launch-countdown-script-v1">
