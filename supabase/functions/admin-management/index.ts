@@ -175,6 +175,7 @@ Deno.serve(async (req: Request) => {
       const suspended = body.suspended === true;
       const note = String(body.note || "").trim().slice(0, 500);
       if (!/^[0-9a-f-]{36}$/i.test(userId)) return json({ error: "A valid member account is required." }, 400);
+      if (note.length < 5) return json({ error: "Provide an audit reason of at least 5 characters." }, 400);
       if (userId === caller.id) return json({ error: "You cannot suspend your own administrator account." }, 400);
       const { data: target, error: targetError } = await admin.auth.admin.getUserById(userId);
       if (targetError || !target?.user) return json({ error: "Member account not found." }, 404);
