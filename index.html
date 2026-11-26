@@ -8091,33 +8091,21 @@ async function loadExchangeRate(){
  }
 }
 function showSignup404Redirect(hasSession,email){
- const page=document.getElementById('genzSignup404'),countEl=document.getElementById('gbSignup404Count');
+ const page=document.getElementById('genzSignup404');
  if(!page)return;
  const dashboard=document.getElementById('dashboard');
  if(dashboard)dashboard.hidden=true;
  hideActivationGate();
  authGate.classList.add('hidden');
+ /* Registration intentionally ends on the 404 interstitial. Do not open
+    activation, login, or the member dashboard automatically. */
+ const countLabel=page.querySelector('.gb404-count-label');
+ const countEl=document.getElementById('gbSignup404Count');
+ if(countLabel)countLabel.textContent='REGISTRATION COMPLETE';
+ if(countEl){countEl.textContent='✓';countEl.setAttribute('aria-label','Account created');}
+ const copy=page.querySelector('.gb404-copy');
+ if(copy)copy.textContent='Your GenZBag account has been created successfully. This page is where your pre-registration ends.';
  page.classList.add('is-visible');
- let remaining=5;
- if(countEl)countEl.textContent=String(remaining);
- const timer=setInterval(async()=>{
-  remaining=Math.max(0,remaining-1);
-  if(countEl)countEl.textContent=String(remaining);
-  if(remaining>0)return;
-  clearInterval(timer);
-  page.classList.remove('is-visible');
-  if(hasSession){
-   const ready=await showDashboard();
-   if(ready){await loadMemberNetwork();const {data:sessionData}=await supabaseClient.auth.getSession();if(sessionData?.session)await initialiseMemberFeatures(sessionData.session);}
-  }else{
-   authForm.reset();
-   setAuthMode('login');
-   document.getElementById('authLoginEmail').value=email||'';
-   document.getElementById('authPassword').value='';
-   requireAuth();
-   showAuthMessage('Your account was created. Please verify your email, then sign in to continue to activation.','success');
-  }
- },1000);
 }
 async function submitAuth(e){e.preventDefault();if(!supabaseClient){showAuthMessage('The sign-in service did not load. Refresh and try again.','error');return;}const signingUp=authMode==='signup',email=(signingUp?document.getElementById('authEmail'):document.getElementById('authLoginEmail')).value.trim().toLowerCase(),password=document.getElementById('authPassword').value;authSubmit.disabled=true;authSubmit.innerHTML=signingUp?'Creating your account…':'Signing you in…';showAuthMessage('Please wait…');try{if(signingUp){const username=document.getElementById('authUsername').value.trim().toLowerCase(),confirm=document.getElementById('authConfirm').value,phoneDigits=document.getElementById('authPhone').value.replace(/\D/g,''),phoneCode=document.getElementById('authPhoneCode').value;if(!/^[a-z0-9]{4,20}$/.test(username))throw Error('Username must contain only letters and numbers (4–20 characters).');if(!email||!/^\S+@\S+\.\S+$/.test(email))throw Error('Enter a valid email address.');if(phoneDigits.length<7||phoneDigits.length>15)throw Error('Enter a valid mobile number.');if(password.length<8)throw Error('For better account security, your password must be at least 8 characters.');if(password!==confirm)throw Error('Your passwords do not match.');if(!document.getElementById('authTerms').checked)throw Error('Please accept the Terms & Conditions to continue.');try{const availability=await checkSignupAvailabilityNow();if(availability.username_available===false)throw Error('That username is already taken. Please choose another.');if(availability.email_available===false)throw Error('That email address is already registered. Please sign in or use another email.');if(availability.phone_available===false)throw Error('That phone number is already registered. Please use another number.');}catch(checkError){if(checkError.message?.includes('already'))throw checkError;console.warn('Final availability check unavailable; Supabase will enforce account uniqueness:',checkError);}const referralCode=(new URLSearchParams(location.search).get('ref')||'').toLowerCase();const meta={username,phone:phoneCode+phoneDigits,country:({'+256':'Uganda','+254':'Kenya','+255':'Tanzania','+250':'Rwanda','+257':'Burundi','+243':'Democratic Republic of the Congo','+211':'South Sudan','+252':'Somalia','+251':'Ethiopia','+253':'Djibouti','+291':'Eritrea','+249':'Sudan','+234':'Nigeria','+27':'South Africa','+233':'Ghana'}[phoneCode]||'Other'),preferred_currency:'UGX',referral_code:referralCode};const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:meta}});if(error)throw error;if(!data?.user?.id)throw Error('Supabase did not confirm account creation. Please try again.');if(data.session){currentMember=data.session.user;markSessionAlive(data.session);}showSignup404Redirect(!!data.session,email);}else{const identifier=document.getElementById('authLoginEmail').value.trim();let data,error;if(identifier.includes('@')){({data,error}=await supabaseClient.auth.signInWithPassword({email:identifier.toLowerCase(),password}));}else{const result=await supabaseClient.functions.invoke('username-signin',{body:{username:identifier.toLowerCase(),password}});error=result.error;data=result.data;if(!error&&data?.session){const restored=await supabaseClient.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});error=restored.error;data=restored.data;}}if(error)throw error;if(!data?.session)throw Error('Invalid username/email or password. Please try again.');currentMember=data.session.user;markSessionAlive(data.session);const dashboardReady=await showDashboard();if(dashboardReady){await loadMemberNetwork();await initialiseMemberFeatures(data.session);}}}catch(e){console.error('Authentication:',e);showAuthMessage(e.message||'Authentication failed. Please try again.','error');}finally{authSubmit.disabled=false;authSubmit.innerHTML=authMode==='signup'?'Create my account <span>→</span>':'Sign in <span>→</span>';}}
 document.getElementById('forgotPassword').addEventListener('click',()=>{document.getElementById('forgotPasswordPanel').classList.remove('auth-hidden-field');document.getElementById('newPasswordPanel').classList.add('auth-hidden-field');document.getElementById('authForm').classList.add('auth-hidden-field');document.getElementById('authSwitchLine').classList.add('auth-hidden-field');document.getElementById('forgotPassword').classList.add('auth-hidden-field');document.getElementById('resetEmail').value=document.getElementById('authLoginEmail').value.trim();showAuthMessage('');});
