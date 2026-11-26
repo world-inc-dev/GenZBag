@@ -10645,5 +10645,15 @@ html body #genzActivationGate .genz-activation-status.rejected{
  display:flex!important;flex-direction:column!important;
 }
 </style>
+
+<style id="genzbag-dashboard-hidden-first-paint-fix">
+/* The dashboard has an explicit display:block rule; preserve the HTML hidden state
+   so it cannot flash before Supabase finishes restoring the session. */
+#dashboard[hidden],
+main.main[hidden],
+#authGate[hidden]{
+ display:none!important;
+}
+</style>
 </body>
 </html>
