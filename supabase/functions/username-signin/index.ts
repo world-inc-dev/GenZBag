@@ -11,11 +11,13 @@ Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   const headers = { ...cors, "Content-Type": "application/json" };
   if (req.method !== "POST") return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers });
+  const declaredLength = Number(req.headers.get("content-length") || 0);
+  if (declaredLength > 4096) return new Response(JSON.stringify({ error: "Request is too large." }), { status: 413, headers });
 
   try {
     const { username, password } = await req.json();
     const normalized = String(username ?? "").trim().toLowerCase();
-    if (!/^[a-z0-9]{4,20}$/.test(normalized) || typeof password !== "string" || !password) {
+    if (!/^[a-z0-9]{4,20}$/.test(normalized) || typeof password !== "string" || password.length < 1 || password.length > 256) {
       return new Response(JSON.stringify({ error: "Invalid username or password." }), { status: 400, headers });
     }
 
