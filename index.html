@@ -8890,7 +8890,7 @@ async function loadAdminProfileDirectory(){
   list.innerHTML='<p class="activity-empty">Searching member records…</p>';
   let query=supabaseClient.from('profiles').select('id,username,contact_email,phone,country,created_at').order('created_at',{ascending:false}).limit(100);
   if(term){
-   const safe=term.replace(/[,%()\\\\]/g,' ').replace(/\\s+/g,' ').trim();
+   const safe=term.replace(/[,%()\\\\]/g,' ').replace(/\s+/g,' ').trim();
    if(!safe){list.innerHTML='<p class="activity-empty">Enter a name, username or phone number to search.</p>';return;}
    query=query.or('username.ilike.%'+safe+'%,contact_email.ilike.%'+safe+'%,phone.ilike.%'+safe+'%,country.ilike.%'+safe+'%');
   }
