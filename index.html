@@ -10417,6 +10417,58 @@ html body #genzActivationGate .genz-activation-status.rejected{
   width:100%!important;border-radius:22px!important;padding:22px!important;
  }
 }
+
+/* Keep the complete registration/sign-in surface in the same pink glass theme as its backdrop. */
+html body #authGate .auth-panel,
+html body #authGate .auth-panel-live{
+ background:linear-gradient(145deg,rgba(255,239,247,.98) 0%,rgba(255,226,239,.97) 48%,rgba(250,232,255,.97) 100%)!important;
+ border:1px solid rgba(255,255,255,.98)!important;
+ box-shadow:0 20px 55px rgba(180,72,125,.16),inset 0 1px 0 rgba(255,255,255,.98)!important;
+}
+html body #authGate .auth-form,
+html body #authGate .auth-form-live,
+html body #authGate #signupExtra,
+html body #authGate .auth-field{
+ background:transparent!important;
+}
+html body #authGate .auth-welcome-art{
+ background:linear-gradient(115deg,#ffd3e5 0%,#ffc1dc 48%,#f3d8ff 100%)!important;
+ box-shadow:0 10px 24px rgba(221,91,151,.12)!important;
+}
+html body #authGate .auth-art-g{color:#d63384!important;text-shadow:0 8px 20px rgba(214,51,132,.15)!important}
+html body #authGate .auth-orbit,
+html body #authGate .auth-art-spark{color:#d63384!important;border-color:rgba(214,51,132,.35)!important}
+html body #authGate .auth-panel-live:before{
+ background:linear-gradient(90deg,#ff70aa,#e84d91,#c77be8,#ff9fc4)!important;
+}
+html body #authGate .auth-form-live .auth-field,
+html body #authGate .auth-form-live .auth-field-label,
+html body #authGate .auth-form label{color:#71334f!important}
+html body #authGate .auth-form-live input:not([type="checkbox"]),
+html body #authGate .auth-form-live select,
+html body #authGate .auth-phone-row input,
+html body #authGate .auth-phone-row select{
+ background:rgba(255,255,255,.82)!important;
+ border:1px solid rgba(232,142,180,.38)!important;
+ color:#54263d!important;
+}
+html body #authGate .auth-form-live input:focus,
+html body #authGate .auth-form-live select:focus,
+html body #authGate .auth-phone-row input:focus,
+html body #authGate .auth-phone-row select:focus{
+ border-color:#e85b98!important;
+ box-shadow:0 0 0 3px rgba(232,91,152,.16)!important;
+}
+html body #authGate .auth-submit{
+ background:linear-gradient(110deg,#f06aa5,#d9468b)!important;
+ border:1px solid rgba(190,48,111,.18)!important;
+ color:#fff!important;
+ box-shadow:0 9px 20px rgba(217,70,139,.22)!important;
+}
+html body #authGate .auth-link,
+html body #authGate .auth-message{color:#c13f7b!important}
+html body #authGate .auth-panel h1,
+html body #authGate .auth-reset-panel h2{color:#54263d!important}
 </style>
 
 </body>
