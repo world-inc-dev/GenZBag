@@ -133,28 +133,53 @@ Deno.serve(async (req: Request) => {
       const username = String(body.username || "").trim().toLowerCase();
       const email = String(body.email || "").trim().toLowerCase();
       const phone = String(body.phone || "").trim();
-      if (!userId || !/^[a-z0-9_]{3,30}$/.test(username) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phone.length > 32) {
-        return json({ error: "Enter a valid username, email address and phone number." }, 400);
+      const uplineId = body.upline_id ? String(body.upline_id) : null;
+      if (!/^[0-9a-f-]{36}$/i.test(userId) || !/^[a-z0-9_]{3,30}$/.test(username) ||
+          !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || phone.length > 32 ||
+          (uplineId && !/^[0-9a-f-]{36}$/i.test(uplineId))) {
+        return json({ error: "Enter a valid username, email address, phone number and upline." }, 400);
       }
+      if (uplineId === userId) return json({ error: "A member cannot be their own upline." }, 400);
       const { data: existing, error: lookupError } = await admin.auth.admin.getUserById(userId);
       if (lookupError || !existing?.user) return json({ error: "Member account not found." }, 404);
-      const before = { username: null as string | null, email: existing.user.email || null, phone: null as string | null };
-      const { data: oldProfile } = await admin.from("profiles").select("username,phone,contact_email").eq("id", userId).maybeSingle();
-      before.username = oldProfile?.username || null;
-      before.phone = oldProfile?.phone || null;
+      const { data: oldProfile, error: profileLookupError } = await admin.from("profiles")
+        .select("id,username,phone,contact_email,referred_by").eq("id", userId).maybeSingle();
+      if (profileLookupError || !oldProfile) return json({ error: "Member profile not found." }, 404);
+
+      if (uplineId) {
+        const { data: upline, error: uplineError } = await admin.from("profiles")
+          .select("id").eq("id", uplineId).maybeSingle();
+        if (uplineError || !upline) return json({ error: "The selected upline does not exist." }, 400);
+        // Walk the proposed upline chain to prevent direct or indirect referral cycles.
+        let cursor: string | null = uplineId;
+        const visited = new Set<string>();
+        for (let depth = 0; cursor && depth < 100; depth++) {
+          if (cursor === userId) return json({ error: "This upline would create a referral cycle. Choose another member." }, 400);
+          if (visited.has(cursor)) return json({ error: "The existing upline chain contains a cycle and cannot be changed safely." }, 409);
+          visited.add(cursor);
+          const { data: ancestor, error: ancestorError } = await admin.from("profiles")
+            .select("referred_by").eq("id", cursor).maybeSingle();
+          if (ancestorError) return json({ error: "Could not validate the selected upline chain." }, 400);
+          cursor = ancestor?.referred_by || null;
+        }
+        if (cursor) return json({ error: "The selected upline chain is too deep to validate safely." }, 400);
+      }
+
+      const before = { username: oldProfile.username || null, email: existing.user.email || null,
+        phone: oldProfile.phone || null, upline_id: oldProfile.referred_by || null };
       if (existing.user.email !== email) {
         const { error } = await admin.auth.admin.updateUserById(userId, { email, email_confirm: true });
         if (error) return json({ error: "Email update failed: " + error.message }, 400);
       }
       const { error: profileError } = await admin.from("profiles").update({
-        username, contact_email: email, phone: phone || null, updated_at: now,
+        username, contact_email: email, phone: phone || null, referred_by: uplineId, updated_at: now,
       }).eq("id", userId);
       if (profileError) return json({ error: "Profile update failed: " + profileError.message }, 400);
       await admin.from("admin_audit_logs").insert({
         admin_id: caller.id, action: "member_profile_updated", target_type: "user", target_id: userId,
-        details: { before, after: { username, email, phone } },
+        details: { before, after: { username, email, phone, upline_id: uplineId } },
       });
-      return json({ ok: true, message: "Member details updated." });
+      return json({ ok: true, message: "Member details and upline updated." });
     }
 
     if (action === "list_member_access") {
