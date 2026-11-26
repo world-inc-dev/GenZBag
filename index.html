@@ -7412,6 +7412,7 @@ let authMode='login';
 function updateSignupReferralInvite(){
  const box=document.getElementById('signupReferralInvite');
  if(!box)return;
+ if(authMode!=='signup'){box.hidden=true;box.textContent='';return;}
  const code=(new URLSearchParams(location.search).get('ref')||'').trim().replace(/[^a-z0-9_-]/gi,'').slice(0,32);
  if(!code){box.hidden=true;box.textContent='';return;}
  const displayName=code.replace(/[_-]+/g,' ').replace(/\b[a-z]/g,c=>c.toUpperCase());
@@ -11058,6 +11059,40 @@ html body #adminPage {
   margin:10px 0 0!important;
 }
 #authGate #signupReferralInvite[hidden]{display:none!important}
+</style>
+
+<style id="genzbag-auth-signup-compact-and-referral-scope-v1">
+/* Referral invitation is signup-only, and remains directly below the submit button. */
+#authGate[data-auth-mode="login"] #signupReferralInvite{display:none!important}
+#authGate[data-auth-mode="signup"] #signupReferralInvite:not([hidden]){
+ display:block!important;position:static!important;width:100%!important;
+ margin:8px 0 0!important;padding:9px 11px!important;order:22!important;
+ flex:0 0 auto!important;grid-column:1 / -1!important;
+}
+/* Slightly tighten the signup panel without changing its layout or fields. */
+#authGate .auth-panel-live{padding:23px clamp(18px,3.5vw,28px) 19px!important}
+#authGate .auth-brand{margin-bottom:15px!important}
+#authGate #authTitle{font-size:27px!important;margin-bottom:7px!important}
+#authGate .auth-intro{font-size:13px!important;line-height:1.45!important;margin-bottom:17px!important}
+#authGate .genzbag-fresh-signup{gap:14px!important}
+#authGate #signupExtra{gap:14px!important}
+#authGate .genzbag-fresh-signup .auth-field,
+#authGate #signupExtra .auth-field,
+#authGate .genz-signup-group{gap:6px!important}
+#authGate input:not([type=checkbox]),#authGate .auth-phone-row select{
+ height:52px!important;padding-left:14px!important;padding-right:14px!important;
+ border-radius:14px!important;font-size:14px!important;
+}
+#authGate #authPhoneCode{height:52px!important}
+#authGate #authSubmit{min-height:54px!important;border-radius:15px!important;font-size:15px!important}
+#authGate #termsWrap{font-size:12px!important;gap:9px!important}
+#authGate .auth-switchline{margin-top:16px!important}
+@media(max-width:520px){
+ #authGate .auth-panel-live{padding:20px 16px 16px!important;border-radius:23px!important}
+ #authGate #authTitle{font-size:25px!important}
+ #authGate .auth-intro{margin-bottom:14px!important}
+ #authGate #signupExtra{gap:12px!important}
+}
 </style>
 </body>
 </html>
