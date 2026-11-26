@@ -11468,6 +11468,19 @@ html body #authGate .auth-brand .auth-live-pill{
 (()=>{
  const page=document.getElementById('genzbag-launch-countdown-v1');
  if(!page)return;
+ /* Direct pre-registration URL: ?register=1 bypasses the public launch countdown. */
+ const directRegistration=new URLSearchParams(window.location.search).get('register')==='1';
+ if(directRegistration){
+  page.hidden=true;
+  if(typeof setAuthMode==='function')setAuthMode('signup');
+  const accountGate=document.getElementById('authGate');
+  if(accountGate){accountGate.style.visibility='';accountGate.classList.remove('hidden');}
+  const memberDashboard=document.getElementById('dashboard');
+  if(memberDashboard)memberDashboard.hidden=true;
+  const activationScreen=document.getElementById('genzActivationGate');
+  if(activationScreen)activationScreen.classList.remove('visible');
+  return;
+ }
  const target=new Date('2026-12-10T14:00:00+03:00').getTime();
  const fields={days:document.getElementById('gb-launch-days'),hours:document.getElementById('gb-launch-hours'),minutes:document.getElementById('gb-launch-minutes'),seconds:document.getElementById('gb-launch-seconds')};
  const pad=n=>String(n).padStart(2,'0');
