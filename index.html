@@ -6377,6 +6377,14 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
 @media(max-width:520px){#authGate:has(#signupExtra:not(.auth-hidden-field)){align-items:flex-start!important;padding:16px 12px 24px!important}#authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-panel-live{width:100%!important;padding:25px 20px!important;border-radius:22px!important}}
 @media(max-width:360px){#authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-phone-row{grid-template-columns:108px minmax(0,1fr)!important;gap:7px!important}#authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-panel-live{padding-left:16px!important;padding-right:16px!important}}
 </style>
+<style id="genzbag-signup-final-fixes">
+/* Hide the login-only identifier even against legacy auth-field display rules. */
+#authGate:has(#signupExtra:not(.auth-hidden-field)) .genzbag-fresh-signup #loginIdentifierWrap.auth-hidden-field{display:none!important}
+#authGate:has(#signupExtra:not(.auth-hidden-field)) .genzbag-fresh-signup #termsWrap{order:20!important}
+#authGate:has(#signupExtra:not(.auth-hidden-field)) .genzbag-fresh-signup #authSubmit{order:21!important}
+#authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-switchline button,
+#authGate:has(#signupExtra:not(.auth-hidden-field)) #switchAuthMode{display:inline!important;position:static!important;min-width:0!important;min-height:0!important;width:auto!important;height:auto!important;margin:0 0 0 5px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#c23879!important;font:inherit!important;font-weight:900!important;text-decoration:underline!important}
+</style>
 </head>
 
 <body>
