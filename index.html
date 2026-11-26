@@ -11332,6 +11332,13 @@ html body #authGate .auth-brand .auth-live-pill{
 #genzbag-launch-countdown-v1 .launch-footer{border-color:#35202b!important;color:#a994a0!important}
 #genzbag-launch-countdown-v1 .launch-network-bg{opacity:.72}
 </style>
+
+<style id="genzbag-launch-visible-wires-v1">
+/* Brighter network lines so the rotating background is clearly visible on pure black. */
+#genzbag-launch-countdown-v1 .launch-network-bg{opacity:1!important;background:repeating-conic-gradient(from 0deg at 50% 50%,transparent 0deg 7.7deg,rgba(255,105,176,.58) 7.85deg 8.12deg,transparent 8.3deg 15deg)!important;-webkit-mask-image:radial-gradient(ellipse at center,#000 8%,rgba(0,0,0,.95) 52%,transparent 79%)!important;mask-image:radial-gradient(ellipse at center,#000 8%,rgba(0,0,0,.95) 52%,transparent 79%)!important;filter:drop-shadow(0 0 5px rgba(255,91,170,.32))}
+#genzbag-launch-countdown-v1 .launch-network-bg:before{border-color:rgba(255,143,196,.48)!important;box-shadow:0 0 0 42px rgba(255,105,176,.13),0 0 0 90px rgba(255,105,176,.09),inset 0 0 65px rgba(255,105,176,.12)!important}
+#genzbag-launch-countdown-v1 .launch-network-bg:after{background-image:radial-gradient(circle,rgba(255,177,213,.9) 1.35px,transparent 2px)!important;opacity:.78!important}
+</style>
 <div id="genzbag-launch-countdown-v1" role="dialog" aria-modal="true" aria-labelledby="genzbag-launch-title" aria-live="polite">
  <div class="launch-network-bg" aria-hidden="true"></div>
  <main class="launch-shell">
