@@ -9,7 +9,7 @@ const cors = {
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
-  const headers = { ...cors, "Content-Type": "application/json" };
+  const headers = { ...cors, "Content-Type": "application/json", "Cache-Control": "no-store" };
   if (req.method !== "POST") return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers });
   const declaredLength = Number(req.headers.get("content-length") || 0);
   if (declaredLength > 4096) return new Response(JSON.stringify({ error: "Request is too large." }), { status: 413, headers });
