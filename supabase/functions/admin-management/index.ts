@@ -157,9 +157,10 @@ Deno.serve(async (req: Request) => {
           if (cursor === userId) return json({ error: "This upline would create a referral cycle. Choose another member." }, 400);
           if (visited.has(cursor)) return json({ error: "The existing upline chain contains a cycle and cannot be changed safely." }, 409);
           visited.add(cursor);
-          const { data: ancestor, error: ancestorError } = await admin.from("profiles")
+          const { data: ancestorData, error: ancestorError } = await admin.from("profiles")
             .select("referred_by").eq("id", cursor).maybeSingle();
           if (ancestorError) return json({ error: "Could not validate the selected upline chain." }, 400);
+          const ancestor = ancestorData as { referred_by?: string | null } | null;
           cursor = ancestor?.referred_by || null;
         }
         if (cursor) return json({ error: "The selected upline chain is too deep to validate safely." }, 400);
