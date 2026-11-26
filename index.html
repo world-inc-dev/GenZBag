@@ -11406,9 +11406,17 @@ html body #authGate .auth-brand .auth-live-pill{
    if(form)form.hidden=true;
    const eyebrow=page.querySelector('.launch-eyebrow');
    if(eyebrow)eyebrow.textContent='We are officially live';
-   page.hidden=true;
-   clearInterval(interval);
-   return;
+    page.hidden=true;
+    /* Open account creation as soon as the launch countdown reaches zero. */
+    if(typeof setAuthMode==='function')setAuthMode('signup');
+    const accountGate=document.getElementById('authGate');
+    if(accountGate){accountGate.style.visibility='';accountGate.classList.remove('hidden');}
+    const memberDashboard=document.getElementById('dashboard');
+    if(memberDashboard)memberDashboard.hidden=true;
+    const activationScreen=document.getElementById('genzActivationGate');
+    if(activationScreen)activationScreen.classList.remove('visible');
+    clearInterval(interval);
+    return;
   }
   const total=Math.floor(remaining/1000);
   const values={days:Math.floor(total/86400),hours:Math.floor(total%86400/3600),minutes:Math.floor(total%3600/60),seconds:total%60};
