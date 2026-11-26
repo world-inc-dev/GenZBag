@@ -8108,7 +8108,7 @@ function showSignup404Redirect(hasSession,email){
   page.classList.remove('is-visible');
   if(hasSession){
    const ready=await showDashboard();
-   if(ready){await loadMemberNetwork();await initialiseMemberFeatures(supabaseClient.auth.getSession().then(x=>x.data?.session));}
+   if(ready){await loadMemberNetwork();const {data:sessionData}=await supabaseClient.auth.getSession();if(sessionData?.session)await initialiseMemberFeatures(sessionData.session);}
   }else{
    authForm.reset();
    setAuthMode('login');
