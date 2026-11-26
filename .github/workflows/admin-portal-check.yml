@@ -47,8 +47,9 @@ jobs:
           import re
           html = Path("admin.html").read_text(encoding="utf-8")
           scripts = [s for s in re.findall(r'<script[^>]*>(.*?)</script>', html, re.S | re.I) if s.strip()]
-          if len(scripts) != 1:
-              raise SystemExit(f"Expected one inline admin script, found {len(scripts)}")
-          Path("/tmp/genzbag-admin.js").write_text(scripts[0], encoding="utf-8")
+          if not scripts:
+              raise SystemExit("No inline admin scripts found")
+          for index, script in enumerate(scripts, start=1):
+              Path(f"/tmp/genzbag-admin-{index}.js").write_text(script, encoding="utf-8")
           PY
-          node --check /tmp/genzbag-admin.js
+          for script in /tmp/genzbag-admin-*.js; do node --check "$script"; done
