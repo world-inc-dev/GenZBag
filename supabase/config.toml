@@ -8,3 +8,9 @@ verify_jwt = true
 
 [functions.signup-availability]
 verify_jwt = false
+
+[functions.launch-notify-signup]
+verify_jwt = false
+
+[functions.launch-notify-dispatch]
+verify_jwt = false
