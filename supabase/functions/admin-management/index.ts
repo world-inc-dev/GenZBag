@@ -7,7 +7,7 @@ const cors = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json" } });
+  new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json", "Cache-Control": "no-store" } });
 
 async function dispatchReferralEmails(admin: any, activationId: string, adminTestRecipient: string) {
   const { data: queued, error } = await admin
@@ -87,6 +87,19 @@ Deno.serve(async (req: Request) => {
     }
 
     const admin = createClient(url, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
+    const rateLimitBytes = new TextEncoder().encode("admin-management:" + caller.id + ":" + serviceKey);
+    const rateLimitDigest = await crypto.subtle.digest("SHA-256", rateLimitBytes);
+    const rateLimitHash = Array.from(new Uint8Array(rateLimitDigest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+    const { data: adminAllowed, error: adminLimitError } = await admin.rpc("consume_edge_rate_limit", {
+      p_key_hash: rateLimitHash, p_limit: 300, p_window_seconds: 900,
+    });
+    if (adminLimitError) {
+      console.error("Admin API rate limit failed:", adminLimitError.message);
+      return json({ error: "Administrator service is temporarily unavailable." }, 503);
+    }
+    if (adminAllowed !== true) return json({ error: "Administrator request limit reached. Wait 15 minutes and try again." }, 429);
+    const declaredLength = Number(req.headers.get("content-length") || 0);
+    if (declaredLength > 65536) return json({ error: "Request is too large." }, 413);
     const body = await req.json();
     const action = String(body?.action || "");
     const now = new Date().toISOString();
