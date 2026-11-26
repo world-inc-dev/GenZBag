@@ -11022,5 +11022,15 @@ html body #genzActivationGate .genz-activation-status.rejected {
 html body #genzActivationGate [hidden] {display:none!important}
 </style>
 
+
+<style id="genzbag-remove-embedded-admin-from-member-dashboard-v1">
+/* The admin workspace is maintained in the standalone admin portal.
+   Do not expose the embedded Admin Control Centre in the member dashboard,
+   including when the signed-in member has the administrator role. */
+html body #adminConsoleNav,
+html body #adminPage {
+  display: none !important;
+}
+</style>
 </body>
 </html>
