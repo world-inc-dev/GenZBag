@@ -10799,5 +10799,91 @@ html body #genzActivationGate .genz-activation-status.rejected{
  }
 }
 </style>
+
+<style id="genzbag-activation-black-text-all-screens-v4">
+/* Final activation-page consistency and contrast fix.
+   Covers the method chooser, MTN/Airtel instruction screens and confirmation form. */
+html body #genzActivationGate,
+html body #genzActivationGate .genz-activation-card,
+html body #genzActivationGate .genz-activation-page,
+html body #genzActivationGate .genz-fast-payment-page{
+ color:#17121a!important;
+ background-color:transparent!important;
+}
+html body #genzActivationGate .genz-activation-card{
+ background:linear-gradient(145deg,#fff0f6 0%,#ffe2ef 52%,#f8eaff 100%)!important;
+ border:1px solid #fff!important;
+ box-shadow:0 20px 55px rgba(180,72,125,.16),inset 0 1px 0 #fff!important;
+}
+html body #genzActivationGate .genz-fast-hero{
+ background:linear-gradient(115deg,#ffd8e9 0%,#ffc6df 52%,#f3ddff 100%)!important;
+ border:1px solid rgba(232,142,180,.38)!important;
+}
+html body #genzActivationGate .genz-fast-method,
+html body #genzActivationGate .genz-fast-amount,
+html body #genzActivationGate .genz-fast-instruction,
+html body #genzActivationGate .genz-fast-confirm,
+html body #genzActivationGate .genz-activation-form,
+html body #genzActivationGate .genz-activation-actions,
+html body #genzActivationGate .genz-activation-status,
+html body #genzActivationGate .genz-fast-progress>div{
+ background:rgba(255,255,255,.94)!important;
+ border:1px solid rgba(226,137,175,.42)!important;
+ border-radius:15px!important;
+ box-shadow:0 6px 18px rgba(180,72,125,.07)!important;
+}
+/* Force readable near-black text against the light pink surfaces.
+   This overrides legacy global white-text and old blue-screen declarations. */
+html body #genzActivationGate :is(h1,h2,h3,h4,h5,h6,p,span,small,label,strong,b,em,li,td,th,a,button,div){
+ color:#17121a!important;
+ -webkit-text-fill-color:#17121a!important;
+}
+html body #genzActivationGate .genz-fast-network{
+ color:#17121a!important;
+ -webkit-text-fill-color:#17121a!important;
+}
+html body #genzActivationGate .genz-fast-method *,
+html body #genzActivationGate .genz-fast-amount *,
+html body #genzActivationGate .genz-fast-instruction *,
+html body #genzActivationGate .genz-fast-payment-heading *,
+html body #genzActivationGate .genz-fast-detail-top *,
+html body #genzActivationGate .genz-fast-progress *,
+html body #genzActivationGate .genz-activation-form *{
+ color:#17121a!important;
+ -webkit-text-fill-color:#17121a!important;
+}
+html body #genzActivationGate input,
+html body #genzActivationGate select,
+html body #genzActivationGate textarea,
+html body #genzActivationGate input::placeholder,
+html body #genzActivationGate textarea::placeholder{
+ color:#17121a!important;
+ -webkit-text-fill-color:#17121a!important;
+ background:#fff!important;
+}
+html body #genzActivationGate .genz-fast-logout,
+html body #genzActivationGate .genz-fast-confirm,
+html body #genzActivationGate .genz-fast-submit,
+html body #genzActivationGate .genz-activation-submit,
+html body #genzActivationGate .genz-activation-secondary,
+html body #genzActivationGate .genz-fast-choose-another{
+ background:linear-gradient(110deg,#f5a0c3,#ec83b2)!important;
+ color:#17121a!important;
+ -webkit-text-fill-color:#17121a!important;
+ border:1px solid rgba(190,48,111,.24)!important;
+}
+html body #genzActivationGate .genz-activation-status.pending{
+ background:#fff4d2!important;border-color:#d6b65d!important;
+}
+html body #genzActivationGate .genz-activation-status.rejected{
+ background:#ffe8ec!important;border-color:#d98b9b!important;
+}
+html body #genzActivationGate [hidden]{display:none!important}
+@media(max-width:540px){
+ html body #genzActivationGate .genz-fast-payment-page{
+  width:100%!important;max-width:100%!important;
+ }
+}
+</style>
 </body>
 </html>
