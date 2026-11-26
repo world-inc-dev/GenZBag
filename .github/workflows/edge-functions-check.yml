@@ -1,0 +1,26 @@
+name: GenZBag Supabase Edge Function checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - "supabase/functions/**"
+      - ".github/workflows/edge-functions-check.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "supabase/functions/**"
+      - ".github/workflows/edge-functions-check.yml"
+
+jobs:
+  deno-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check public Edge Functions
+        run: |
+          deno check supabase/functions/username-signin/index.ts
+          deno check supabase/functions/signup-availability/index.ts
+          deno check supabase/functions/admin-management/index.ts
