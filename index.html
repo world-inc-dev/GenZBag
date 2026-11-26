@@ -11283,7 +11283,7 @@ html body #authGate .auth-brand .auth-live-pill{
    <div class="launch-time-unit"><span class="launch-number" id="gb-launch-minutes">00</span><span class="launch-unit-label">Minutes</span></div>
    <div class="launch-time-unit"><span class="launch-number" id="gb-launch-seconds">00</span><span class="launch-unit-label">Seconds</span></div>
   </div>
-  <p class="launch-date">10 December 2026 · 12:00 AM (East Africa Time)</p>
+  <p class="launch-date">10 December 2026 · 2:00 PM (East Africa Time)</p>
   <p class="launch-tagline">Smaller Steps, Bigger Wins.</p>
   <p class="launch-footer">© GenZBag · We're preparing for launch</p>
  </main>
@@ -11292,7 +11292,7 @@ html body #authGate .auth-brand .auth-live-pill{
 (()=>{
  const page=document.getElementById('genzbag-launch-countdown-v1');
  if(!page)return;
- const target=new Date('2026-12-10T00:00:00+03:00').getTime();
+ const target=new Date('2026-12-10T14:00:00+03:00').getTime();
  const fields={days:document.getElementById('gb-launch-days'),hours:document.getElementById('gb-launch-hours'),minutes:document.getElementById('gb-launch-minutes'),seconds:document.getElementById('gb-launch-seconds')};
  let interval;
  const pad=n=>String(n).padStart(2,'0');
