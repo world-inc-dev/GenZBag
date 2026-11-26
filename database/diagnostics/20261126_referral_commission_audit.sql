@@ -40,6 +40,7 @@ select
 from pg_proc p
 join pg_namespace n on n.oid = p.pronamespace
 where n.nspname in ('public', 'private')
+  and p.prokind in ('f', 'p')
   and (
     p.proname ilike '%referr%'
     or p.proname ilike '%commission%'
