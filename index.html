@@ -6343,6 +6343,64 @@ body :is(h1,h2,h3,h4,h5,h6,strong,b,.balance-card strong,.profit-box strong,.exp
  color:#354253!important;
 }
 </style>
+<style id="genzbag-signup-redesign">
+/* Spacious signup: balanced desktop columns and readable mobile stacking. */
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)){align-items:flex-start!important;padding:clamp(22px,4vh,42px) 18px 36px!important;background:radial-gradient(ellipse at 12% 8%,rgba(255,190,218,.58),transparent 38%),radial-gradient(ellipse at 88% 18%,rgba(225,204,255,.58),transparent 40%),linear-gradient(145deg,#fff4f8,#f7f1ff 55%,#fff8f1)!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-panel-live{width:min(100%,700px)!important;max-width:700px!important;margin:0 auto!important;padding:30px clamp(24px,4vw,42px) 28px!important;border:1px solid #ffffff!important;border-radius:28px!important;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(255,247,251,.98))!important;box-shadow:0 22px 65px rgba(115,69,104,.14),inset 0 1px 0 #fff!important;overflow:visible!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-panel-live:before{height:4px!important;background:linear-gradient(90deg,#ed8bb7,#b58ae8,#f3b5c9)!important;animation:none!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-brand{font-size:20px!important;font-weight:850!important;color:#452b3b!important;margin:0 0 14px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-brand-mark{width:42px!important;height:42px!important;border-radius:14px!important;background:linear-gradient(145deg,#df83ad,#aa80dc)!important;box-shadow:0 7px 18px rgba(190,112,157,.22)!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-live-pill{background:#fceaf2!important;color:#a94d78!important;font-size:9px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-welcome-art{height:64px!important;margin:0 0 18px!important;border-radius:16px!important;background:linear-gradient(110deg,#fff0f6,#f7efff 58%,#fff4f7)!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-art-g{font-size:43px!important;color:#c16f9c!important;text-shadow:none!important;animation:none!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-orbit{border-color:#dba4c7!important;animation:none!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-art-spark{color:#c58bd4!important;animation:none!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-panel-live h1{color:#492c3d!important;font-size:26px!important;line-height:1.2!important;letter-spacing:-.5px!important;margin:0 0 7px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-intro{color:#827181!important;font-size:13px!important;line-height:1.55!important;margin:0 0 22px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;column-gap:18px!important;row-gap:15px!important;align-items:start!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #usernameWrap{grid-column:1!important;grid-row:1!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupExtra{display:contents!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupExtra>*:nth-child(-n+3){grid-column:2!important;grid-row:1!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupExtra>*:nth-child(n+4):nth-child(-n+6){grid-column:1!important;grid-row:2!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupExtra>*:nth-child(n+7){grid-column:2!important;grid-row:2!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #authLoginEmail{display:none!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live>.auth-field:has(#authPassword){grid-column:1!important;grid-row:3!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #confirmWrap{grid-column:2!important;grid-row:3!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupProgress{grid-column:1/-1!important;grid-row:4!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #authSubmit{grid-column:1/-1!important;grid-row:5!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #termsWrap{grid-column:1/-1!important;grid-row:6!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-field{display:grid!important;gap:7px!important;min-width:0!important;color:#554354!important;font-size:11px!important;font-weight:750!important;line-height:1.35!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-field-label{color:#554354!important;font-size:11px!important;font-weight:750!important;margin:0 0 7px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live input:not([type=checkbox]),html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live select,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-phone-row input,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-phone-row select{width:100%!important;min-width:0!important;min-height:49px!important;box-sizing:border-box!important;padding:12px 14px!important;border:1px solid #eadce6!important;border-radius:13px!important;background:#fff!important;color:#342737!important;font-size:13px!important;box-shadow:0 2px 7px rgba(90,50,80,.035)!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live input:focus,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live select:focus{border-color:#d88bb2!important;box-shadow:0 0 0 3px rgba(216,139,178,.16)!important;outline:none!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-phone-row{display:grid!important;grid-template-columns:116px minmax(0,1fr)!important;gap:9px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .field-availability{min-height:0!important;font-size:10px!important;line-height:1.35!important;margin:2px 0 0!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-field small{font-size:10px!important;line-height:1.4!important;color:#928392!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupProgress{padding:14px 15px!important;border:1px solid #f0dfe9!important;border-radius:14px!important;background:#fff8fb!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .signup-progress-head{font-size:11px!important;color:#50384a!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .signup-progress-head span{color:#bd6794!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .signup-progress-track{background:#f1e5ed!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .signup-progress-track span{background:linear-gradient(90deg,#e48db5,#b58bdc)!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .signup-checks span{background:#f5edf2!important;color:#8b7887!important;font-size:9px!important;padding:5px 8px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .signup-checks span.complete{background:#fbe7f0!important;color:#a84e79!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #authSubmit{min-height:52px!important;border:0!important;border-radius:14px!important;background:linear-gradient(100deg,#d982aa,#b181d5)!important;color:#fff!important;box-shadow:0 9px 20px rgba(190,112,157,.2)!important;font-size:14px!important;font-weight:850!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-terms{color:#847383!important;font-size:10px!important;line-height:1.5!important;gap:9px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-terms input{accent-color:#c779a2!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-inline-link,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-link{color:#b85f8d!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-switchline{margin-top:20px!important;padding-top:16px!important;border-top:1px solid #f0e4eb!important;color:#847383!important;font-size:11px!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-message{color:#a84e79!important}
+html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-foot{color:#958694!important;border-color:#f1e7ed!important;margin-top:12px!important;padding-top:12px!important}
+@media(max-width:620px){
+ html body #authGate:has(#signupExtra:not(.auth-hidden-field)){padding:14px 10px 26px!important}
+ html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-panel-live{width:min(100%,500px)!important;padding:22px 19px 21px!important;border-radius:23px!important}
+ html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live{grid-template-columns:minmax(0,1fr)!important;column-gap:0!important;row-gap:13px!important}
+ html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #usernameWrap,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupExtra>*,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-form-live>.auth-field:has(#authPassword),html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #confirmWrap,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupProgress,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #authSubmit,html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #termsWrap{grid-column:1!important;grid-row:auto!important}
+ html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupExtra{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ html body #authGate:has(#signupExtra:not(.auth-hidden-field)) #signupExtra>*{grid-column:1!important;grid-row:auto!important}
+ html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-phone-row{grid-template-columns:116px minmax(0,1fr)!important}
+}
+@media(max-width:360px){html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-panel-live{padding-left:15px!important;padding-right:15px!important}html body #authGate:has(#signupExtra:not(.auth-hidden-field)) .auth-phone-row{grid-template-columns:100px minmax(0,1fr)!important}}
+</style>
 </head>
 
 <body>
