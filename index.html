@@ -11158,5 +11158,35 @@ input,select,textarea,button{
 }
 </style>
 
+
+<style id="genzbag-horizontal-overflow-root-cause-fix-v2">
+/* Remove viewport-width sizing that can exceed the usable mobile layout width. */
+@media(max-width:700px){
+ html,body{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-x:none!important;
+ }
+ body{position:relative!important}
+ .main,#dashboard,#dashboardPage,.page-view{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+ }
+ #genzActivationGate.visible,.genz-activation-gate.visible{
+  left:0!important;
+  right:0!important;
+  width:auto!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  overflow-x:hidden!important;
+ }
+}
+</style>
+
 </body>
 </html>
