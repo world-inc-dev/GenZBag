@@ -7407,7 +7407,7 @@ const authGate=document.getElementById('authGate'),authForm=document.getElementB
 let authMode='login';
 function showAuthMessage(m,t){authMessage.textContent=m||'';authMessage.className='auth-message'+(t?' '+t:'');}
 function launchSignupCelebration(){const modal=document.getElementById('signupSuccessModal');if(!modal)return;const layer=document.createElement('div');layer.className='signup-confetti-layer';layer.setAttribute('aria-hidden','true');const pieces=['🎉','🥳','🎊','✨','💫','🎈','🌟','💖'];for(let i=0;i<38;i++){const piece=document.createElement('span');piece.className='signup-confetti-piece';piece.textContent=pieces[i%pieces.length];piece.style.left=(Math.random()*100)+'%';piece.style.setProperty('--drift',((Math.random()-.5)*220)+'px');piece.style.setProperty('--duration',(2.1+Math.random()*2.3)+'s');piece.style.setProperty('--delay',(Math.random()*.65)+'s');piece.style.setProperty('--spin',(Math.random()*720-360)+'deg');layer.appendChild(piece);}modal.appendChild(layer);setTimeout(()=>layer.remove(),5200);}
-function setAuthMode(mode){authMode=mode;const s=mode==='signup';document.getElementById('authTitle').textContent=s?'Join GenZBag':'Welcome back';document.getElementById('authIntro').textContent=s?'Create your free account in less than a minute.':'Sign in to continue your digital income journey.';['usernameWrap','signupExtra','confirmWrap','signupProgress','termsWrap'].forEach(id=>document.getElementById(id).classList.toggle('auth-hidden-field',!s));document.getElementById('forgotPassword').classList.toggle('auth-hidden-field',s);document.getElementById('authUsername').required=s;document.getElementById('authPhone').required=s;document.getElementById('authConfirm').required=s;document.getElementById('authTerms').required=s;document.getElementById('loginIdentifierWrap').classList.toggle('auth-hidden-field',s);document.getElementById('authEmail').classList.toggle('auth-hidden-field',!s);document.getElementById('authPassword').autocomplete=s?'new-password':'current-password';document.getElementById('authPassword').placeholder=s?'Create password':'Enter your password';authSubmit.innerHTML=s?'Create my account <span>→</span>':'Sign in <span>→</span>';document.getElementById('switchAuthMode').textContent=s?'Sign in':'Create your free account';document.getElementById('authSwitchLine').firstElementChild.textContent=s?'Already have an account?':'New to GenZBag?';document.getElementById('togglePassword').textContent='Show';document.getElementById('authPassword').type='password';showAuthMessage('');updateSignupProgress();}
+function setAuthMode(mode){authMode=mode;authGate.dataset.authMode=mode;const s=mode==='signup';document.getElementById('authTitle').textContent=s?'Join GenZBag':'Welcome back';document.getElementById('authIntro').textContent=s?'Create your free account in less than a minute.':'Sign in to continue your digital income journey.';['usernameWrap','signupExtra','confirmWrap','signupProgress','termsWrap'].forEach(id=>document.getElementById(id).classList.toggle('auth-hidden-field',!s));document.getElementById('forgotPassword').classList.toggle('auth-hidden-field',s);document.getElementById('authUsername').required=s;document.getElementById('authPhone').required=s;document.getElementById('authConfirm').required=s;document.getElementById('authTerms').required=s;document.getElementById('loginIdentifierWrap').classList.toggle('auth-hidden-field',s);document.getElementById('authEmail').classList.toggle('auth-hidden-field',!s);document.getElementById('authPassword').autocomplete=s?'new-password':'current-password';document.getElementById('authPassword').placeholder=s?'Create password':'Enter your password';authSubmit.innerHTML=s?'Create my account <span>→</span>':'Sign in <span>→</span>';document.getElementById('switchAuthMode').textContent=s?'Sign in':'Create your free account';document.getElementById('authSwitchLine').firstElementChild.textContent=s?'Already have an account?':'New to GenZBag?';document.getElementById('togglePassword').textContent='Show';document.getElementById('authPassword').type='password';showAuthMessage('');updateSignupProgress();}
 async function showDashboard(){const dashboard=document.getElementById('dashboard');if(dashboard)dashboard.hidden=true;removeSessionNotice();if(currentMember?.app_metadata?.role==='admin'){hideActivationGate();}else{await refreshActivationGate();}authGate.classList.add('hidden');const ready=!activationGate?.classList.contains('visible');if(dashboard)dashboard.hidden=!ready;return ready;}
 function requireAuth(){const dashboard=document.getElementById('dashboard');if(dashboard)dashboard.hidden=true;hideActivationGate();authGate.style.visibility='';authGate.classList.remove('hidden');}
 const activationGate=document.getElementById('genzActivationGate'),activationStatusEl=document.getElementById('genzActivationStatus'),activationForm=document.getElementById('genzActivationForm'),activationSubmit=document.getElementById('genzActivationSubmit');
@@ -10628,6 +10628,21 @@ html body #genzActivationGate .genz-activation-status.rejected{
  html body #genzActivationGate .genz-activation-card{
   width:100%!important;border-radius:22px!important;padding:22px!important;
  }
+}
+</style>
+
+<style id="genzbag-auth-mode-field-visibility-fix">
+/* Keep signup-only fields out of the login screen even when broad form styles use !important. */
+#authGate[data-auth-mode="login"] #usernameWrap,
+#authGate[data-auth-mode="login"] #signupExtra,
+#authGate[data-auth-mode="login"] #confirmWrap,
+#authGate[data-auth-mode="login"] #signupProgress,
+#authGate[data-auth-mode="login"] #termsWrap,
+#authGate[data-auth-mode="signup"] #loginIdentifierWrap{
+ display:none!important;
+}
+#authGate[data-auth-mode="login"] #loginIdentifierWrap{
+ display:flex!important;flex-direction:column!important;
 }
 </style>
 </body>
