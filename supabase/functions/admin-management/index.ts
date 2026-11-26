@@ -9,7 +9,7 @@ const cors = {
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json" } });
 
-async function dispatchReferralEmails(admin: ReturnType<typeof createClient>, activationId: string, adminTestRecipient: string) {
+async function dispatchReferralEmails(admin: any, activationId: string, adminTestRecipient: string) {
   const { data: queued, error } = await admin
     .from("email_outbox")
     .select("id,user_id,recipient_email,subject,html_body,text_body,attempts")
@@ -183,7 +183,9 @@ Deno.serve(async (req: Request) => {
     }
 
     if (action === "list_member_access") {
-      const userIds = Array.isArray(body.user_ids) ? [...new Set(body.user_ids.map((v: unknown) => String(v || "")))].filter((v: string) => /^[0-9a-f-]{36}$/i.test(v)).slice(0, 500) : [];
+      const rawUserIds: unknown[] = Array.isArray(body.user_ids) ? body.user_ids : [];
+      const userIds: string[] = Array.from(new Set<string>(rawUserIds.map((v: unknown) => String(v || ""))))
+        .filter((v: string) => /^[0-9a-f-]{36}$/i.test(v)).slice(0, 500);
       if (!userIds.length) return json({ ok: true, members: [] });
       const results = await Promise.all(userIds.map(async (userId: string) => {
         const { data, error } = await admin.auth.admin.getUserById(userId);
@@ -262,7 +264,7 @@ Deno.serve(async (req: Request) => {
       }).eq("id", id).eq("status", "pending").select("id,user_id,status").maybeSingle();
       if (error || !data) return json({ error: error?.message || "Activation could not be reviewed. Refresh and try again." }, 400);
 
-      let emailDelivery = { sent: 0, queued: 0, setupRequired: false as boolean, error: undefined as string | undefined };
+      let emailDelivery: { sent: number; queued: number; setupRequired: boolean; error?: string } = { sent: 0, queued: 0, setupRequired: false };
       if (status === "verified") emailDelivery = await dispatchReferralEmails(admin, id, String(caller.email || "").trim());
 
       await admin.from("admin_audit_logs").insert({
