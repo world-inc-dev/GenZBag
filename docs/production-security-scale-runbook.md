@@ -11,7 +11,7 @@ Run these in order, after confirming the project reference is the intended produ
 1. `database/patches/20261126_scale_readiness_indexes.sql`
 2. `database/patches/20261126_edge_rate_limiting.sql`
 
-The first patch adds query indexes. The second creates the private rate-limit store and the RPCs used by the public Edge Functions. The second patch is required before deploying the updated sign-in function.
+The first patch adds query indexes. The second creates the private rate-limit store and the RPCs used by the Edge Functions. The second patch is required before deploying the updated functions. The current limits are 60 sign-in attempts per IP per 15 minutes, 8 per IP+username, 20 availability checks per IP, and 300 admin API requests per administrator per 15 minutes. Authentication responses are marked no-store.
 
 After applying the rate-limit patch, verify the functions exist:
 
