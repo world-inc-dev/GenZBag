@@ -48,9 +48,15 @@ begin
         updated_at = v_now
   returning request_count into v_count;
 
+  -- Opportunistically prune expired hashes so the limiter table stays bounded.
+  if random() < 0.01 then
+    delete from private.edge_rate_limits
+    where updated_at < v_now - interval '2 days';
+  end if;
+
   return v_count <= p_limit;
 end;
-$$;
+$;
 
 create or replace function public.consume_signup_availability_rate_limit(p_ip_hash text)
 returns boolean
