@@ -9577,6 +9577,7 @@ authGate.style.visibility='hidden';
 setAuthMode('signup');
 renderNetwork(0,0);
 document.querySelectorAll('[data-gb-auth]').forEach(button=>button.addEventListener('click',()=>openLandingAuth(button.dataset.gbAuth)));
+showPublicLanding();
 
 if(supabaseClient){
   supabaseClient.auth.getSession().then(async({data,error})=>{
